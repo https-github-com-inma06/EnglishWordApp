@@ -29,7 +29,7 @@ class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.frag
     }
 
     /**
-     * 온크레이트 바깥함수에서는
+     * 온크레이트 바깥함수 에서 데바 사용할때
      * binding.뷰이름 으로 가져오시면 됩니다.
      **/
     fun example() {
