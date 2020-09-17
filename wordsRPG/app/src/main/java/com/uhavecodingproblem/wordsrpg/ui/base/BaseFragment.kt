@@ -23,14 +23,12 @@ open class BaseFragment<VDB:ViewDataBinding>(@LayoutRes val layoutRes:Int): Frag
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =DataBindingUtil.inflate<VDB>(inflater,layoutRes,container,false).run{
-        binding = this
-        onCreateView()
-
-        root
+    ): View? {
+        binding = DataBindingUtil.inflate<VDB>(inflater,layoutRes,container,false)
+        binding.onCreateView()
+        return binding.root
     }
 
     open fun VDB.onCreateView() = Unit
-
 
 }

@@ -12,15 +12,9 @@ open class BaseActivity<VDB:ViewDataBinding>(@LayoutRes val layoutRes:Int):AppCo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<VDB>(this,layoutRes).run {
-
-            binding=this
-            onCreateSetData()
-            root
-        }
-
+        binding = DataBindingUtil.setContentView(this,layoutRes)
+        binding.onCreateSetData()
     }
-
     open fun VDB.onCreateSetData() = Unit
 
 }
