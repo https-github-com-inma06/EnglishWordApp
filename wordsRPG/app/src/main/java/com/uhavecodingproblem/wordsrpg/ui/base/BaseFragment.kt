@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 /**
  * wordsrpg
  * Class: BaseFragment.
- * Created by leedonghun.
+ * Created by Loner.
  * Created On 2020-09-17.
  * Description:
  */
