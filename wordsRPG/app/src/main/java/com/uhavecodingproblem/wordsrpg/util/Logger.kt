@@ -1,7 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.util
 
 import android.util.Log
-import com.uhavecodingproblem.wordsrpg.BuildConfig
+import androidx.databinding.library.BuildConfig
+import com.uhavecodingproblem.wordsrpg.application.Application
 
 /**
  * wordsrpg
@@ -16,8 +17,7 @@ import com.uhavecodingproblem.wordsrpg.BuildConfig
 class Logger private constructor(){
     companion object{
 
-
-        private  val DEBUG= BuildConfig.DEBUG
+        private val DEBUG = Application.DEBUG_AVAILABLE
         private const val TAG = "english_rpg_game"
 
         fun v(msg: String) = logger(Log.VERBOSE, msg)
@@ -40,22 +40,5 @@ class Logger private constructor(){
             }
         }
     }
-
-
-    //TODO 2020-09-16 아래 부분의 경우  위  BuildConfig.DEBUG 보다 좀더 확실하게  release 버전에서 사라짐.
-    //TODO: 앱  시작시마다  체크를 하기 위해서  APPLICATION 클래스에  적용 해야됨.  ->  현재 APPLICATION 클래스 어디다 둘지 몰라서 아래 처럼 처리.
-
-    //private val DEBUG = GlobalClass.DEBUG_AVAILABLE
-
-
-    //TODO://아래는 APPLICATION CLASS에  적용될  코드
-    //debug 가능 여부 넣어줌.
-    //DEBUG_AVAILABLE=isDebuggable(this)
-
-    //debug 가능 여부를  체크해준다. (logger 안보이게 할려고)
-    //release 버전에서는  false 로 체크된다.
-    //fun isDebuggable(context: Context): Boolean {
-    //   return context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
-    //}
 
 }
