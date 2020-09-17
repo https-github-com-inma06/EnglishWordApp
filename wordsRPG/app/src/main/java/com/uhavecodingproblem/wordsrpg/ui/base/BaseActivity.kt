@@ -14,7 +14,7 @@ open class BaseActivity<VDB:ViewDataBinding>(@LayoutRes val layoutRes:Int):AppCo
         super.onCreate(savedInstanceState)
         DataBindingUtil.setContentView<VDB>(this,layoutRes).run {
 
-            binding
+            binding=this
             onCreateSetData()
             root
         }
