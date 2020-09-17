@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">wordsrpg</string>
+
+    <!-- 메인 bottom 네비게이션    -->
+    <string name="menu_for_home">홈</string>
+    <string name="menu_for_library">라이브러리</string>
+    <string name="menu_for_board">게시판</string>
+    <string name="menu_for_battle">배틀</string>
+    <string name="menu_for_my_room">마이룸</string>
+</resources>

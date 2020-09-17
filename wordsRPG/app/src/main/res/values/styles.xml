@@ -1,0 +1,19 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- 메인 화면  bottom 네비게이션 뷰 스타일
+         현재는 글씨 확대 이슈 해결 위한  textsize만 지정 -->
+    <style name="bottom_nav_menu_theme">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+</resources>
+

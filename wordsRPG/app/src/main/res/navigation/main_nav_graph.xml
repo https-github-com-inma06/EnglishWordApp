@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainHomeFragment"
+        android:label="MainHomeFragment"
+        tools:layout="@layout/fragment_main_home">
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/library"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainLibraryFragment"
+        android:label="MainLibraryFragment"
+        tools:layout="@layout/fragment_main_library">
+
+    </fragment>
+    <fragment
+        android:id="@+id/board"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBoardFragment"
+        android:label="MainBoardFragment"
+        tools:layout="@layout/fragment_main_board">
+
+    </fragment>
+    <fragment
+        android:id="@+id/battle"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBattleFragment"
+        android:label="MainBattleFragment"
+        tools:layout="@layout/fragment_main_battle">
+
+    </fragment>
+    <fragment
+        android:id="@+id/my_room"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainMyRoomFragment"
+        android:label="MainMyRoomFragment"
+        tools:layout="@layout/fragment_main_my_room">
+
+    </fragment>
+
+
+</navigation>
