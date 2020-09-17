@@ -27,7 +27,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,NavigationView.OnNavigationItemSelectedListener {
 
-    override fun ActivityMainBinding.onCreateSetData() {
+    override fun ActivityMainBinding.onCreate() {
         Logger.v("실행")
 
         configureToolbar()//1-1

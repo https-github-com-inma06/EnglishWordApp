@@ -16,7 +16,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
  */
 class SettingActivity:BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
 
-    override fun ActivitySettingBinding.onCreateSetData() {
+    override fun ActivitySettingBinding.onCreate() {
         Logger.v("실행")
     }
 }
