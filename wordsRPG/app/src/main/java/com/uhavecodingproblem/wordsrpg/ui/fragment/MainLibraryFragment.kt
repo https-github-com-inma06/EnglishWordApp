@@ -2,6 +2,7 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import com.google.android.material.tabs.TabLayoutMediator
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.MainLibraryViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainLibraryBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
