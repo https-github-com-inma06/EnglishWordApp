@@ -15,7 +15,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
  * 라이브러리 프레그먼트입니다.
  */
 class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fragment_main_library) {
-
+    
     override fun FragmentMainLibraryBinding.onCreateView() {
         Logger.v("실행")
     }
