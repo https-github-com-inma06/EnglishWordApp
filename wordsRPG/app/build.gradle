@@ -98,4 +98,11 @@ dependencies {
     //kotlin 용 확장 및  코루틴 적용  room
     implementation "androidx.room:room-ktx:$room_version"
 
+    def viewpager2_version = "1.0.0"
+    implementation "androidx.viewpager2:viewpager2:$viewpager2_version"
+
+    def material_version = "1.2.1"
+    implementation "com.google.android.material:material:$material_version"
+
+
 }
