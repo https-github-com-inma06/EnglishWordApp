@@ -24,7 +24,7 @@ open class BaseFragment<VDB:ViewDataBinding>(@LayoutRes val layoutRes:Int): Frag
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<VDB>(inflater,layoutRes,container,false)
+        binding = DataBindingUtil.inflate(inflater,layoutRes,container,false)
         binding.onCreateView()
         return binding.root
     }

@@ -7,4 +7,5 @@
     <string name="menu_for_board">게시판</string>
     <string name="menu_for_battle">배틀</string>
     <string name="menu_for_my_room">마이룸</string>
+    <string name="splash_logoName">로고네임</string>
 </resources>

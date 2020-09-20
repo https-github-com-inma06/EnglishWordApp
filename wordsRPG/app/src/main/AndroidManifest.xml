@@ -9,22 +9,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".ui.activity.MainActivity">
+        </activity>
+
+        <activity android:name=".ui.activity.NotificationActivity">
+        </activity>
+
+        <activity android:name=".ui.activity.WrongAnswerActivity">
+        </activity>
+
+        <activity android:name=".ui.activity.SettingActivity">
+        </activity>
+
+<!--        INTRO-->
+        <activity android:name=".ui.activity.intro.FindIDActivity">
+        </activity>
+        <activity android:name=".ui.activity.intro.FindPasswordActivity">
+        </activity>
+        <activity android:name=".ui.activity.intro.LoginActivity">
+        </activity>
+        <activity android:name=".ui.activity.intro.RegisterActivity">
+        </activity>
+
+        <activity android:name=".ui.activity.intro.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.NotificationActivity">
+<!--        INTRO - END-->
 
+        <activity android:name=".ui.activity.itemStoreActivity.ItemStoreActivity">
         </activity>
-        <activity android:name=".ui.activity.WrongAnswerActivity">
 
-        </activity>
-        <activity android:name=".ui.activity.SettingActivity">
 
-        </activity>
     </application>
 
 
