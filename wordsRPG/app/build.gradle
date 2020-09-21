@@ -98,4 +98,7 @@ dependencies {
     //kotlin 용 확장 및  코루틴 적용  room
     implementation "androidx.room:room-ktx:$room_version"
 
+    def circularImageView_version = '4.2.0'
+    implementation "com.mikhaellopez:circularimageview:$circularImageView_version"
+
 }

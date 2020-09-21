@@ -2,6 +2,7 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -13,6 +14,7 @@
         android:ems="10"
         android:maxLength="16"
         android:maxLines="1"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +25,9 @@
         android:id="@+id/et_passwordLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
+        android:inputType="textPassword"
         android:maxLength="16"
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="@+id/et_idLogin"
@@ -33,21 +36,20 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="186dp"
+        android:layout_height="186dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35000002"
-        app:srcCompat="@drawable/ic_launcher_background" />
+        app:layout_constraintVertical_bias="0.25"
+        app:srcCompat="@drawable/myroom_game_character_sample" />
 
     <TextView
         android:id="@+id/tv_idLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="아이디:"
+        android:text="@string/login_idLogin"
         app:layout_constraintBottom_toBottomOf="@+id/et_idLogin"
         app:layout_constraintEnd_toStartOf="@+id/et_idLogin"
         app:layout_constraintTop_toTopOf="@+id/et_idLogin" />
@@ -56,9 +58,7 @@
         android:id="@+id/tv_passwordLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:text="비밀번호:"
-        android:onClick="btnGoToTheRegisterClickEvent"
+        android:text="@string/login_passwordLogin"
         app:layout_constraintBottom_toBottomOf="@+id/et_passwordLogin"
         app:layout_constraintEnd_toStartOf="@+id/et_passwordLogin"
         app:layout_constraintTop_toTopOf="@+id/et_passwordLogin" />
@@ -68,9 +68,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Button"
+        android:text="@string/login_login"
+        android:onClick="btnLoginClickEvent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_goToTheRegister"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_passwordLogin" />
@@ -80,12 +81,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:text="Button"
+        android:text="@string/login_register"
+        android:onClick="btnGoToTheRegisterClickEvent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
