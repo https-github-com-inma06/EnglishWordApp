@@ -1,7 +1,11 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
+import android.content.Intent
+import android.util.Log
+import android.view.View
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -16,5 +20,12 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
+        binding.basicFragment = this@BasicPackageFragment
+    }
+
+    fun moveLibrary(v: View){
+        Intent(requireActivity(), LibraryActivity::class.java).also{
+            startActivity(it)
+        }
     }
 }

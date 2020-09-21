@@ -36,7 +36,7 @@ class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fr
 
     private fun setViewPager(){
         binding.viewpager2Library.apply {
-            this.adapter = MainLibraryViewPagerAdapter(requireActivity())
+            adapter = MainLibraryViewPagerAdapter(requireActivity())
         }
     }
 
