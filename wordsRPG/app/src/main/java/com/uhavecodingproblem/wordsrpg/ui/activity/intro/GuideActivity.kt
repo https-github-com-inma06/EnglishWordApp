@@ -14,29 +14,21 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 
 class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide) {
 
-
-
     private val pref by lazy{ getSharedPreferences(packageName, MODE_PRIVATE)}
     companion object {
-
         const val AppFirstRunCheck = "AppFirstRunCheck"
     }
 
     private var prevPosition = 0
 
     override fun ActivityGuideBinding.onCreate() {
+        val imageList = setAdapter()
+        setIndicatorLogic(imageList)
+    }
 
-
-        val imageList = MutableList(4) { "" }
-        for (i in imageList.indices) {
-            imageList[i] = RESOURCE_PATH + resources.getIdentifier(
-                "guide_sampleimage${i + 1}",
-                "drawable", packageName
-            ).toString()
-        }
-
-
-        guideViewPager.adapter = GuideViewPagerAdapter(imageList)
+    private fun ActivityGuideBinding.setIndicatorLogic(
+        imageList: MutableList<String>
+    ) {
         ivGuideIndicator0.isSelected = true
         guideViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
@@ -73,6 +65,18 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
             }
 
         })
+    }
+
+    private fun ActivityGuideBinding.setAdapter(): MutableList<String> {
+        val imageList = MutableList(4) { "" }
+        for (i in imageList.indices) {
+            imageList[i] = RESOURCE_PATH + resources.getIdentifier(
+                "guide_sampleimage${i + 1}",
+                "drawable", packageName
+            ).toString()
+        }
+        guideViewPager.adapter = GuideViewPagerAdapter(imageList)
+        return imageList
     }
 
     fun setBtnAppStartClickListener(view:View) {

@@ -27,28 +27,31 @@ class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.frag
     /**
      * TODO: 로그인 방법 구체화 시키면 아래 구문은 삭제할 예정임.
      */
-    companion object{
+    companion object {
         var loginCheck = false
     }
 
     override fun FragmentMainMyRoomBinding.onCreateView() {
         Logger.v("실행")
 
+        //true 라면 유저모드, false 라면 비 로그인 모드 UI설정
+        setLoginCheckUIControl(loginCheck)
+        setAdapter()
+        setButtonClickListeners()
 
-        if(!loginCheck) {
-            layoutAnonymousUser.visibility = View.VISIBLE
-            rootViewGroupMyRoom.getChildAt(1).visibility = View.GONE
-            for (i in 2 until rootViewGroupMyRoom.childCount) {
-                rootViewGroupMyRoom.getChildAt(i).visibility = View.GONE
-            }
-        } else{
-            layoutAnonymousUser.visibility = View.GONE
-            rootViewGroupMyRoom.getChildAt(1).visibility = View.GONE
-            for (i in 2 until rootViewGroupMyRoom.childCount) {
-                rootViewGroupMyRoom.getChildAt(i).visibility = View.VISIBLE
-            }
+    }
+
+    private fun FragmentMainMyRoomBinding.setButtonClickListeners() {
+        btnGoToTheItemStore.setOnClickListener {
+            startActivity(Intent(requireContext(), ItemStoreActivity::class.java))
         }
 
+        btnGoToTheLogin.setOnClickListener {
+            startActivity(Intent(requireContext(), LoginActivity::class.java))
+        }
+    }
+
+    private fun FragmentMainMyRoomBinding.setAdapter() {
         val imageList = MutableList(6) { "" }
         for (i in imageList.indices) {
             imageList[i] = RESOURCE_PATH + resources.getIdentifier(
@@ -58,15 +61,23 @@ class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.frag
         }
 
         rvMyRoom.adapter = MyRoomRecyclerViewAdapter(imageList)
+    }
 
-        btnGoToTheItemStore.setOnClickListener {
-            startActivity(Intent(requireContext(), ItemStoreActivity::class.java))
+    private fun FragmentMainMyRoomBinding.setLoginCheckUIControl(anonymousUserMode: Boolean) {
+        if (!anonymousUserMode) {
+            layoutAnonymousUser.visibility = View.VISIBLE
+            rootViewGroupMyRoom.getChildAt(1).visibility = View.VISIBLE
+            for (i in 2 until rootViewGroupMyRoom.childCount) {
+                rootViewGroupMyRoom.getChildAt(i).visibility = View.GONE
+            }
+            return
         }
 
-        btnGoToTheLogin.setOnClickListener {
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+        layoutAnonymousUser.visibility = View.GONE
+        rootViewGroupMyRoom.getChildAt(1).visibility = View.GONE
+        for (i in 2 until rootViewGroupMyRoom.childCount) {
+            rootViewGroupMyRoom.getChildAt(i).visibility = View.VISIBLE
         }
-
     }
 
 

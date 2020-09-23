@@ -3,21 +3,25 @@ package com.uhavecodingproblem.wordsrpg.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.databinding.ItemGuideViewpagerBinding
 import com.uhavecodingproblem.wordsrpg.util.imageUrl
 import kotlinx.android.synthetic.main.item_guide_viewpager.view.*
 
-class GuideViewPagerAdapter(val imageList: MutableList<String>) : PagerAdapter() {
+class GuideViewPagerAdapter(private val imageList: MutableList<String>) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = LayoutInflater.from(container.context)
-            .inflate(R.layout.item_guide_viewpager, container, false)
-
-        imageUrl(view.iv_guideImage, imageList[position])
-        container.addView(view)
-        return view
+        DataBindingUtil.inflate<ItemGuideViewpagerBinding>(
+            LayoutInflater.from(container.context),
+            R.layout.item_guide_viewpager, container, false
+        ).also {
+            it.imageUrl = imageList[position]
+            container.addView(it.root)
+            return it.root
+        }
     }
 
     override fun getCount() = imageList.size
