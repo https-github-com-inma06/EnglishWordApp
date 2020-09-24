@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,6 +12,14 @@
          현재는 글씨 확대 이슈 해결 위한  textsize만 지정 -->
     <style name="bottom_nav_menu_theme">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- material design chip 형태의 '태그' 뷰 style     -->
+    <style name="tag_view_style" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="android:checkable">false</item>
+        <item name="closeIconVisible">true</item>
+        <item name="chipBackgroundColor">@color/colorWhite</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 
 
