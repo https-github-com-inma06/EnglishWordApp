@@ -17,8 +17,16 @@
 
     <!-- My(내) 패키지 -->
     <string name="toolbar_menu_for_add_word">단어 추가하기</string>
+    <string name="str_package_search">패키지 검색하기</string>
+
 
     <!-- Different(구독/다른사람의) 패키지 -->
     <string name="toolbar_menu_for_search_more_package">패키지 더보기</string>
+
+
+
+
+
+
 
 </resources>
