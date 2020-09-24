@@ -1,9 +1,11 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
+import android.content.Intent
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -42,7 +44,10 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     fun moveToAddNewCustomPackageActivity(view: View){
         Logger.v("fab 버튼 클릭 ->  새 커스텀 패키지 추가 엑티비티로 이동")
 
+        startActivity(Intent(requireActivity(),AddNewCustomPackageActivity::class.java))
+
     }
+
 
 
 }//class 끝

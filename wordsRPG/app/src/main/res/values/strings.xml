@@ -27,6 +27,16 @@
     <!-- fragment_my_custom_package  str -->
     <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
 
+    <!-- activity_add_new_custom_package str   -->
+    <string name="str_activity_title">내 커스텀 패키지 추가</string>
+    <string name="str_package_name_title">패키지 이름</string>
+    <string name="str_add_package_name_hint">패키지 이름을 지어주세요</string>
+    <string name="str_package_thumbnail_title">패키지 대표 이미지 등록 (선택)</string>
+    <string name="str_package_preview">미리보기</string>
+    <string name="str_add_new_tag_hint">추가할 태그를 입력해주세요</string>
+    <string name="str_complete">완료</string>
+    <string name="str_add">추가</string>
+    <string name="str_tag_size_max">태그는 최대 3개 입니다. </string>
 
 
 </resources>
