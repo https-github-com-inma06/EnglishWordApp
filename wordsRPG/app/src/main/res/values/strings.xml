@@ -24,8 +24,8 @@
     <string name="toolbar_menu_for_search_more_package">패키지 더보기</string>
 
 
-
-
+    <!-- fragment_my_custom_package  str -->
+    <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
 
 
 

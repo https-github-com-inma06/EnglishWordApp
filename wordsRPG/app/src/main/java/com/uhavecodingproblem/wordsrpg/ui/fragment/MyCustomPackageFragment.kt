@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
@@ -28,6 +29,12 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     fun searchMyCustomPackage(view: View){
         Logger.v("내 패키지 검색 엑티비티 실행")
 
+
+        //네비게이션 내패키지 검색 fragment로 이동
+        findNavController().navigate(
+            R.id.action_library_to_search_fragment,
+            arguments
+        )
 
     }
 

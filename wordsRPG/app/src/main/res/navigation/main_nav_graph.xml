@@ -19,6 +19,9 @@
         android:label="MainLibraryFragment"
         tools:layout="@layout/fragment_main_library">
 
+        <action
+            android:id="@+id/action_library_to_search_fragment"
+            app:destination="@id/search_fragment" />
     </fragment>
     <fragment
         android:id="@+id/board"
@@ -41,6 +44,12 @@
         tools:layout="@layout/fragment_main_my_room">
 
     </fragment>
+    <fragment
+        android:id="@+id/search_fragment"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment"
+        android:label="SearchCustomPackageFragment"
+        tools:layout="@layout/fragment_search_custom_package"/>
+
 
 
 </navigation>
