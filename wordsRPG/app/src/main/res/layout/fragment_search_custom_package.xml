@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-
+       <variable
+           name="thisFragment"
+           type="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,6 +14,7 @@
         android:id="@+id/img_back_btn"
         android:layout_width="50dp"
         android:layout_height="45dp"
+        android:onClick="@{thisFragment::backToMyCustomPackageFragment}"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintEnd_toStartOf="@id/edit_tv_search_package"

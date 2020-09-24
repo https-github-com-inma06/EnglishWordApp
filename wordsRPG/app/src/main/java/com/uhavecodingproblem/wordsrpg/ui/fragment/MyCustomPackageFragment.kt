@@ -21,16 +21,22 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     override fun FragmentMyCustomPackageBinding.onCreateView() {
         Logger.v("실행")
 
-        thisFragment=this@MyCustomPackageFragment
+        thisFragment = this@MyCustomPackageFragment
 
     }//onCreateView()끝
 
+
+    // TODO: 2020-09-24  recycerview 추가 작업 진행 할것
+    private fun initRecyclerView(){
+
+
+
+    }
 
 
     //내 패키지 검색 tv 클릭 event
     fun searchMyCustomPackage(view: View){
         Logger.v("내 패키지 검색 엑티비티 실행")
-
 
         //네비게이션 내패키지 검색 fragment로 이동
         findNavController().navigate(
@@ -38,15 +44,18 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
             arguments
         )
 
-    }
+    }//searchMyCustomPackage() 끝
 
-    //새 커스텀 패키지 추가 엑티비티로 이동
+
+
+
+    //fab 버튼 클릭 -> 새 커스텀 패키지 추가 엑티비티로 이동
     fun moveToAddNewCustomPackageActivity(view: View){
-        Logger.v("fab 버튼 클릭 ->  새 커스텀 패키지 추가 엑티비티로 이동")
+        Logger.v("AddNewCustomPackageActivity 로 이동")
 
         startActivity(Intent(requireActivity(),AddNewCustomPackageActivity::class.java))
 
-    }
+    }//moveToAddNewCustomPackageActivity() 끝
 
 
 
