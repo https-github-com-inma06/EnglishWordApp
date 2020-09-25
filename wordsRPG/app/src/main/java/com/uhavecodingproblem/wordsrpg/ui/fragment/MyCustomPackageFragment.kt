@@ -3,7 +3,10 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 import android.content.Intent
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.data.mockdata.mockCustomPackageList
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
@@ -18,20 +21,29 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  */
 class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.layout.fragment_my_custom_package) {
 
+
     override fun FragmentMyCustomPackageBinding.onCreateView() {
         Logger.v("실행")
 
         thisFragment = this@MyCustomPackageFragment
 
+        setRecyclerView()
+
     }//onCreateView()끝
 
 
-    // TODO: 2020-09-24  recycerview 추가 작업 진행 할것
-    private fun initRecyclerView(){
+
+    //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
+    private fun setRecyclerView(){
+         binding.recyclerviewMyCustomList.apply {
+             layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
+
+             // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨. 
+             adapter = CustomPackageRecyclerViewAdapter(mockCustomPackageList())//adatper 연결 
+         }
+    }//initRecyclerView()끝
 
 
-
-    }
 
 
     //내 패키지 검색 tv 클릭 event
@@ -49,11 +61,12 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
 
 
+
     //fab 버튼 클릭 -> 새 커스텀 패키지 추가 엑티비티로 이동
     fun moveToAddNewCustomPackageActivity(view: View){
         Logger.v("AddNewCustomPackageActivity 로 이동")
 
-        startActivity(Intent(requireActivity(),AddNewCustomPackageActivity::class.java))
+        startActivityForResult(Intent(requireActivity(),AddNewCustomPackageActivity::class.java),101)
 
     }//moveToAddNewCustomPackageActivity() 끝
 

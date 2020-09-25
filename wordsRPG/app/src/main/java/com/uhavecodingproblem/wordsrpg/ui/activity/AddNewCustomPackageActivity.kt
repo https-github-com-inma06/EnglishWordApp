@@ -32,6 +32,7 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
     }
 
 
+
     //검색용 태그 추가하기
     fun addTag(view: View){
 
@@ -70,6 +71,7 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
 
 
+
     //chipgroup 에 유저가 입력한  태그 내용을
     //chip뷰에 담아 동적 추가 진행
     private fun addTagViewInChipGroup(tagString:String){
@@ -92,18 +94,16 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
             anim.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(animation: Animation?) {}
-
+                override fun onAnimationStart(animation: Animation?) {}
                 override fun onAnimationEnd(animation: Animation?) {//애니메이션 끝났을때  chipgroup에서  해당 chip 삭제
                     binding.chipGroup.removeView(it)
                 }
-
-                override fun onAnimationStart(animation: Animation?) {}
             })
-
             it.startAnimation(anim)
-
         }
+
     }//addTagViewInChipGroup() 끝
+
 
 
 
@@ -115,10 +115,12 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
 
 
+
     //패키지 썸네일 이미지 갤러리에서 가져오기
     fun pickThumbNailImageFromGallery(view: View){
         Logger.v("썸네일 이미지 가져오기 실행")
 
+        // TODO: 2020-09-24 이미지 추가  넣기
         AlertDialog.Builder(this)
             .setMessage("이미지 가져오기 준비중")
             .setPositiveButton("확인"){dialog,i->
@@ -127,6 +129,7 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
             .show()
 
     }//pickThumbNailImageFromGallery() 끝
+
 
 
     //완료 버튼 event
