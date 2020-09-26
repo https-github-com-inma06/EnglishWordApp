@@ -1,11 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.battle
 
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBattleBinding
+import com.uhavecodingproblem.wordsrpg.ext.startActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 
 /**
@@ -19,30 +16,25 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
  * DataBindingSetting by Loner
  *  Created On 2020-09-17.
  */
-class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
 
-    private val tabLayoutTextArray = arrayOf("ALL PLAYERS", "FOLLOWERS", "FOLLOWING")
+class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
 
     override fun FragmentMainBattleBinding.onCreateView() {
 
-        viewPager.adapter = ViewPagerAdapter(requireActivity())
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabLayoutTextArray[position]
-        }.attach()
+        fabPlayBattle.setOnClickListener {
+            context?.startActivity(BattleUserListActivity::class.java)
+        }
 
     }
 
-    private inner class ViewPagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount() = tabLayoutTextArray.size
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                0 -> TabAllPlayers()
-                1 -> TabFollowers()
-                2 -> TabFollowing()
-                else -> this@MainBattleFragment
-            }
-        }
+    //BattlePlayActivity에서 배틀이 끝나고 온후
+    //배틀이 진행중일때와 끝났을때를 분기하여 ui 처리 - 탭을 만들거나, 솔로런처럼 한 화면에 나누거나
+
+   companion object {
+
+       //기본은 진행중, 상대방의 결과가 나오면 서버에서 결과 보내줌
+        const val WAITING = true
+        const val FINISHED = true
     }
 }
 

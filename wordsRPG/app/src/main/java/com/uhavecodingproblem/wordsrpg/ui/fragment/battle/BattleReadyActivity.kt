@@ -1,31 +1,32 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.battle
 
 import android.content.Intent
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.databinding.ActivityBattleReadyBinding
 import com.uhavecodingproblem.wordsrpg.ext.loadImage
-import kotlinx.android.synthetic.main.activity_battle_ready.*
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 
-class BattleReadyActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_battle_ready)
+class BattleReadyActivity : BaseActivity<ActivityBattleReadyBinding>(R.layout.activity_battle_ready) {
+    
+    override fun ActivityBattleReadyBinding.onCreate() {
 
-        val intent = intent
-        val playerProfileImageUrl = intent.getStringExtra("profileImage")
-        val playerId = intent.getStringExtra("playerId")
-        val playerLevel = intent.getStringExtra("playerLevel")
-        playerProfileImageUrl?.let { iv_players_profile_image.loadImage(it) }
-        tv_players_id.text = playerId
-        tv_players_level.text = "LEVEL $playerLevel"
+        //상대방의 프로필, 아이디, 레벨
+        val getIntent = intent
+        val playerProfileImageUrl = getIntent.getStringExtra("profileImage")
+        val playerId = getIntent.getStringExtra("playerId")
+        val playerLevel = getIntent.getStringExtra("playerLevel")
+        playerProfileImageUrl?.let { ivPlayersProfileImage.loadImage(it) }
+        tvPlayersId.text = playerId
+        tvPlayersLevel.text = "LEVEL $playerLevel"
 
-        btn_start.setOnClickListener {
-            val intent = Intent(this, BattlePlayActivity::class.java)
+        btnStart.setOnClickListener {
+            val intent = Intent(this@BattleReadyActivity, BattlePlayActivity::class.java)
             intent.putExtra("profileImage", playerProfileImageUrl)
             intent.putExtra("playerId", playerId)
             intent.putExtra("playerLevel", playerLevel)
+            startActivity(intent)
+            finish()
         }
-
     }
+
 }
