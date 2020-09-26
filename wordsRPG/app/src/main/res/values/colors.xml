@@ -6,4 +6,8 @@
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
+    
+    
+    <color name="tab_background_selected">#969696</color>
+    <color name="tab_background_unselected">#FFFFFF</color>
 </resources>

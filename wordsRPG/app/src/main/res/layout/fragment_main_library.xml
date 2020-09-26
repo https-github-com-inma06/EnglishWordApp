@@ -2,6 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="libraryviewmodel"
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel" />
+
+        <variable
+            name="activityfragment"
+            type="androidx.fragment.app.FragmentActivity" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -12,7 +23,10 @@
             android:layout_height="60dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:setTabContent="@{libraryviewmodel.tabItem}"
+            app:setViewModel="@{libraryviewmodel}"
+            app:setViewPosition="@{libraryviewmodel.position}"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager2_library"
@@ -21,6 +35,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_package_name" />
+            app:layout_constraintTop_toBottomOf="@id/tab_package_name"
+            app:setFragmentActivity="@{activityfragment}"
+            app:setViewModel="@{libraryviewmodel}"
+            app:setViewPosition="@{libraryviewmodel.position}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

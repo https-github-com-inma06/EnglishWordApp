@@ -4,6 +4,11 @@
 
 
     <data>
+
+        <variable
+            name="libraryviewmodel"
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel" />
+
         <variable
             name="basicFragment"
             type="com.uhavecodingproblem.wordsrpg.ui.fragment.BasicPackageFragment" />
@@ -19,11 +24,28 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{basicFragment::moveLibrary}"
             android:text="기본 패키지 프래그먼트"
-            android:onClick="@{basicFragment.moveLibrary}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/basic_tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabBackground="@drawable/basic_package_change_click"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setTabContent="@{libraryviewmodel.tabItem}"
+            app:setViewModel="@{libraryviewmodel}"
+            app:setViewPosition="@{libraryviewmodel.position}"
+            app:tabGravity="center"
+            app:tabMode="auto" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,11 +1,12 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.MainLibraryViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainLibraryBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.util.Logger
 
 
 /**
@@ -18,25 +19,21 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
  */
 class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fragment_main_library) {
 
-    private val tabItemName = arrayOf("기본 패키지", "내 패키지", "구독 패키지")
+    private val tabLayoutName = listOf("기본 패키지", "내 패키지", "구독 패키지")
+    private val mainLibraryViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabLayoutName) }
 
     override fun FragmentMainLibraryBinding.onCreateView() {
+
         Logger.v("실행")
 
-        setViewPager()
-        setTabLayout()
-
+        initBinding()
     }
 
-    private fun setTabLayout(){
-        TabLayoutMediator(binding.tabPackageName, binding.viewpager2Library){tab, position ->
-            tab.text = tabItemName[position]
-        }.attach()
-    }
-
-    private fun setViewPager(){
-        binding.viewpager2Library.apply {
-            adapter = MainLibraryViewPagerAdapter(requireActivity())
+    private fun initBinding(){
+        binding.run {
+            libraryviewmodel = mainLibraryViewModel
+            activityfragment = requireActivity()
+            lifecycleOwner = this@MainLibraryFragment
         }
     }
 
