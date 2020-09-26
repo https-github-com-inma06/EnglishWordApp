@@ -13,4 +13,8 @@
     <string name="login_idLogin">아이디:</string>
     <string name="login_passwordLogin">비밀번호:</string>
     <string name="guide_appStart">시작 하기</string>
+
+<!--    회원가입-->
+    <string name="register_datePickerSetText">"%d년 %d월 %d일"</string>
+
 </resources>

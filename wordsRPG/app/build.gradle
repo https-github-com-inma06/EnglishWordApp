@@ -101,4 +101,6 @@ dependencies {
     def circularImageView_version = '4.2.0'
     implementation "com.mikhaellopez:circularimageview:$circularImageView_version"
 
+    def ted_permission_version='2.2.3'
+    implementation "gun0912.ted:tedpermission:$ted_permission_version"
 }

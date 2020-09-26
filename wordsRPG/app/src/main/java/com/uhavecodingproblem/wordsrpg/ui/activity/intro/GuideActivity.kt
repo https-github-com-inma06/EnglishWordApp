@@ -7,7 +7,7 @@ import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityGuideBinding
-import com.uhavecodingproblem.wordsrpg.resource_path.ResourcePath.RESOURCE_PATH
+import com.uhavecodingproblem.wordsrpg.util.ResourcePath.RESOURCE_PATH
 import com.uhavecodingproblem.wordsrpg.ui.activity.MainActivity
 import com.uhavecodingproblem.wordsrpg.ui.adapter.GuideViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity

@@ -4,52 +4,79 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_registerRootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+
+
+        <EditText
+            android:id="@+id/et_crateId"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_createId"
+            app:layout_constraintTop_toBottomOf="@+id/tv_createId" />
+
+
+
+        <EditText
+            android:id="@+id/et_createPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        <EditText
+            android:id="@+id/et_passwordDoubleCheck"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        <EditText
+            android:id="@+id/et_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/ibn_profileImage"
+            app:layout_constraintStart_toStartOf="@+id/tv_nickName" />
+        <EditText
+            android:id="@+id/et_phoneNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:inputType="phone"
+            app:layout_constraintEnd_toStartOf="@+id/btn_phoneNumberDoubleCheck"
+            app:layout_constraintStart_toStartOf="@+id/tv_phoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/tv_phoneNumber" />
+
 
         <TextView
             android:id="@+id/tv_createId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="아이디:"
-            app:layout_constraintBottom_toBottomOf="@+id/et_crateId"
-            app:layout_constraintEnd_toStartOf="@+id/et_crateId"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/et_crateId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintEnd_toEndOf="@+id/btn_registerComplete"
-            app:layout_constraintStart_toStartOf="@+id/btn_registerComplete"
+            android:layout_marginStart="8dp"
+            android:text="사용할 이메일"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="비밀번호:"
-            app:layout_constraintBottom_toBottomOf="@+id/et_createPassword"
-            app:layout_constraintEnd_toStartOf="@+id/et_createPassword"
-            app:layout_constraintTop_toTopOf="@+id/et_createPassword" />
-
-        <EditText
-            android:id="@+id/et_createPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:ems="10"
-            android:text="Name"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="@+id/btn_registerComplete"
-            app:layout_constraintStart_toStartOf="@+id/btn_registerComplete"
+            android:text="비밀번호:"
+            app:layout_constraintStart_toStartOf="@+id/et_crateId"
             app:layout_constraintTop_toBottomOf="@+id/et_crateId" />
-
         <Button
             android:id="@+id/btn_registerComplete"
             android:layout_width="wrap_content"
@@ -59,6 +86,99 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btn_birthDaySearch" />
+
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="비밀번호 재확인:"
+            app:layout_constraintStart_toStartOf="@+id/et_createPassword"
+            app:layout_constraintTop_toBottomOf="@+id/et_createPassword" />
+
+        <TextView
+            android:id="@+id/tv_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            app:layout_constraintBottom_toTopOf="@+id/et_nickName"
+            app:layout_constraintStart_toStartOf="@+id/et_passwordDoubleCheck" />
+
+
+
+        <TextView
+            android:id="@+id/tv_phoneNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="전화번호"
+            app:layout_constraintStart_toStartOf="@+id/et_nickName"
+            app:layout_constraintTop_toBottomOf="@+id/ibn_profileImage" />
+
+
+
+        <Button
+            android:id="@+id/btn_phoneNumberDoubleCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="중복확인"
+            app:layout_constraintBottom_toBottomOf="@+id/et_phoneNumber"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibn_profileImage"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginTop="8dp"
+            android:onClick="ibnClickListener"
+            app:layout_constraintEnd_toEndOf="@+id/tv_profileImage"
+            app:layout_constraintStart_toStartOf="@+id/tv_profileImage"
+            app:layout_constraintTop_toBottomOf="@+id/tv_profileImage"
+            android:src="@drawable/ic_baseline_add_photo_alternate_86" />
+
+        <TextView
+            android:id="@+id/tv_profileImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="프로필 사진 설정"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/et_nickName"
+            app:layout_constraintTop_toBottomOf="@+id/et_passwordDoubleCheck" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="생년월일"
+            app:layout_constraintStart_toStartOf="@+id/et_phoneNumber"
+            app:layout_constraintTop_toBottomOf="@+id/et_phoneNumber" />
+
+        <Button
+            android:id="@+id/btn_birthDaySearch"
+            android:layout_width="86dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="4dp"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:onClick="btnBirthDaySearchClickListener"
+            android:text="검색"
+            app:layout_constraintStart_toStartOf="@+id/textView18"
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+        <TextView
+            android:id="@+id/tv_userbirthDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:hint="왼쪽 버튼에서 생년 월일을 설정해주세요"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_birthDaySearch"
+            app:layout_constraintStart_toEndOf="@+id/btn_birthDaySearch"
+            app:layout_constraintTop_toTopOf="@+id/btn_birthDaySearch" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

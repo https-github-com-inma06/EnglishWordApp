@@ -2,12 +2,10 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Intent
 import android.view.View
-import android.widget.Adapter
-import androidx.appcompat.app.AppCompatActivity
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainMyRoomBinding
-import com.uhavecodingproblem.wordsrpg.resource_path.ResourcePath.RESOURCE_PATH
+import com.uhavecodingproblem.wordsrpg.util.ResourcePath.RESOURCE_PATH
 import com.uhavecodingproblem.wordsrpg.ui.activity.intro.LoginActivity
 import com.uhavecodingproblem.wordsrpg.ui.activity.itemStoreActivity.ItemStoreActivity
 import com.uhavecodingproblem.wordsrpg.ui.adapter.MyRoomRecyclerViewAdapter

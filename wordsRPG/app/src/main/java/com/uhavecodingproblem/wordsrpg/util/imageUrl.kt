@@ -14,4 +14,6 @@ fun imageUrl(view:ImageView,url:String) = Glide.with(view.context).load(url).int
 
 fun imageUrlReSize(view:ImageView,url:String,width:Int,height:Int){
     Glide.with(view.context).load(url).apply(RequestOptions().override(width,height)).centerCrop().into(view)
+
+
 }

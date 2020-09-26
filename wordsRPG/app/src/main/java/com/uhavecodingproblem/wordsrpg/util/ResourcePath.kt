@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.resource_path
+package com.uhavecodingproblem.wordsrpg.util
 
 object ResourcePath {
     const val RESOURCE_PATH =
