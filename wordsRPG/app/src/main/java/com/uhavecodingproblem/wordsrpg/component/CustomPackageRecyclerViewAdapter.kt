@@ -15,6 +15,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerView
  *
  * 커스텀 패키지 리사이클러뷰  어뎁터
  * 내 패키지 및  전체 패키지 공동 사용 (예상)
+ *
  */
 class CustomPackageRecyclerViewAdapter(
     private val customPackageList:MutableList<CustomPackageData>
@@ -28,6 +29,8 @@ class CustomPackageRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: CustomPackageViewHolder, position: Int) {
+
+        // TODO: 2020-09-25 각  유저 판별 값으로  내 패키지,  구도패키지  등등  분기할 처리들 진행해야됨.
        holder.onBind(customPackageList[position])
     }
 

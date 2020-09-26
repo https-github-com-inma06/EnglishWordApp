@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Intent
+
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,14 +28,14 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
         thisFragment = this@MyCustomPackageFragment
 
-        setRecyclerView()
+        setCustomPackageRecyclerView()
 
     }//onCreateView()끝
 
 
 
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
-    private fun setRecyclerView(){
+    private fun setCustomPackageRecyclerView(){
          binding.recyclerviewMyCustomList.apply {
              layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
 
@@ -42,7 +43,6 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
              adapter = CustomPackageRecyclerViewAdapter(mockCustomPackageList())//adatper 연결 
          }
     }//initRecyclerView()끝
-
 
 
 
@@ -57,7 +57,6 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
         )
 
     }//searchMyCustomPackage() 끝
-
 
 
 

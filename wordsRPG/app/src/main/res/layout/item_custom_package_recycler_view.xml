@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/img_package_thumbnail"
         android:layout_width="0dp"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         app:image="@{data.profileImageUrl}"
         app:error="@{@drawable/on_my_room}"
         app:layout_constraintEnd_toEndOf="parent"

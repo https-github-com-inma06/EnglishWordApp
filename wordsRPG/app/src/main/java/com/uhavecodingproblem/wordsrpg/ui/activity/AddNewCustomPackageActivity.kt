@@ -1,17 +1,26 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
 import android.app.AlertDialog
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.size
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.CustomPackageBindingAdapter
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityAddNewCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import gun0912.tedimagepicker.builder.TedImagePicker
+import gun0912.tedimagepicker.builder.type.ButtonGravity
+import gun0912.tedimagepicker.builder.type.MediaType
 
 /**
  * wordsrpg
@@ -29,7 +38,11 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
         thisActivity=this@AddNewCustomPackageActivity
 
+
+
     }
+
+
 
 
 
@@ -122,14 +135,36 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
         // TODO: 2020-09-24 이미지 추가  넣기
         AlertDialog.Builder(this)
-            .setMessage("이미지 가져오기 준비중")
-            .setPositiveButton("확인"){dialog,i->
+            .setMessage("갤러리에서 이미지를 가져오시겠습니까?")
+            .setPositiveButton("네"){dialog,i->
+
+
+                // TODO: 2020-09-25 임시적으로  ted image_picker 적용  회의에서 사용 여부 결정
+                //앨범에서 커스텀 패키지용으로 사용할 이미지를 가지고온다.
+                TedImagePicker.with(this)
+                    .title("패키지 이미지 고르기")
+                    .mediaType(MediaType.IMAGE)
+                    .scrollIndicatorDateFormat("YYYYMMDD")
+                    .buttonGravity(ButtonGravity.BOTTOM)
+                    .showCameraTile(false)
+                    .errorListener { message -> Logger.v("ted image_picker error -> $message") }
+                    .startAnimation(R.anim.to_left_slide,R.anim.fade_out)
+                    .start {
+
+                        //썸네일 이미지뷰 및 썸네일 프리뷰에 가져온 이미지 넣어줌.
+                        Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPackageThumbnail)
+                        Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPreviewThumbnail)
+
+                    }
+
+                dialog.dismiss()
+            }.setNegativeButton("아니오"){dialog, i->
+
                 dialog.dismiss()
             }
             .show()
 
     }//pickThumbNailImageFromGallery() 끝
-
 
 
     //완료 버튼 event
