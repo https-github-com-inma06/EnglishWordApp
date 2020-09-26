@@ -13,6 +13,7 @@ import com.uhavecodingproblem.wordsrpg.ui.fragment.SubscribePackageFragment
  * Created by pyg10.
  * Created On 2020-09-18.
  * Description:
+ * MainLibrary ViewPager2 Adapter
  */
 class MainLibraryViewPagerAdapter(fragment: FragmentActivity): FragmentStateAdapter(fragment) {
 

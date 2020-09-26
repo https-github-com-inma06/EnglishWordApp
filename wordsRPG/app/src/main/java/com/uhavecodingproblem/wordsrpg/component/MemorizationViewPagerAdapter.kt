@@ -12,6 +12,11 @@ import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
  * Created by pyg10.
  * Created On 2020-09-21.
  * Description:
+ *
+ * Memorization ViewPager2 Adapter
+ * no fragment swipe
+ * image swipe ViewPager2
+ *
  */
 class MemorizationViewPagerAdapter(private val word: List<String>, private val listener: ItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
