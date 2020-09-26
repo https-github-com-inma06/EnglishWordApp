@@ -5,9 +5,10 @@
 
     <data>
 
-      <variable
-          name="battleSystemData"
-          type="com.uhavecodingproblem.wordsrpg.data.model.BattleSystemData" />
+        <variable
+            name="battleSystemData"
+            type="com.uhavecodingproblem.wordsrpg.data.model.BattleSystemData" />
+
         <variable
             name="myUserData"
             type="com.uhavecodingproblem.wordsrpg.data.model.BattlePlayersItem" />
@@ -15,6 +16,7 @@
         <variable
             name="opponentUserData"
             type="com.uhavecodingproblem.wordsrpg.data.model.BattlePlayersItem" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -129,5 +131,16 @@
             app:layout_constraintEnd_toStartOf="@+id/tv_opponentUserId"
             app:layout_constraintStart_toEndOf="@+id/tv_myUserId"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
