@@ -55,8 +55,8 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
 //            if (userBirthDayConverter > date) {
 //                Log.d("dateCheck", "${date},${tvUserbirthDay.text.toString().toInt()}")
 //                ToastUtil.toastShow("올바른 생년월일을 선택해주세요",null)
-                return
-            }
+//                return
+
 
         }
 
