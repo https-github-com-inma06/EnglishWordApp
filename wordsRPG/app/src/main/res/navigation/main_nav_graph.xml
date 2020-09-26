@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/battle"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBattleFragment"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.battle.MainBattleFragment"
         android:label="MainBattleFragment"
         tools:layout="@layout/fragment_main_battle">
 
