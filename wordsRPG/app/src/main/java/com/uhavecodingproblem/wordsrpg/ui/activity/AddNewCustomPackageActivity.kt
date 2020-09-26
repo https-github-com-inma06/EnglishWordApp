@@ -1,6 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.View
@@ -21,6 +23,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
+import org.json.JSONArray
 
 /**
  * wordsrpg
@@ -33,17 +36,15 @@ import gun0912.tedimagepicker.builder.type.MediaType
  */
 class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBinding>(R.layout.activity_add_new_custom_package){
 
+    val tagArray=ArrayList<String>()
+
+
     override fun ActivityAddNewCustomPackageBinding.onCreate() {
         Logger.v("실행")
 
         thisActivity=this@AddNewCustomPackageActivity
 
-
-
     }
-
-
-
 
 
     //검색용 태그 추가하기
@@ -97,6 +98,8 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
 
         //chipgroup에 동적 추가
         binding.chipGroup.addView(chip)
+
+        tagArray.add(tagString)
 
         //chip뷰에  close icon 클릭 event
         chip.setOnCloseIconClickListener {
@@ -155,6 +158,9 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
                         Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPackageThumbnail)
                         Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPreviewThumbnail)
 
+                        // TODO: 2020-09-26 뷰모델 적용시  지울것 
+                        intent.putExtra("uri",it)
+
                     }
 
                 dialog.dismiss()
@@ -167,11 +173,19 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
     }//pickThumbNailImageFromGallery() 끝
 
 
+
+
+
     //완료 버튼 event
     fun completeAddNewCustomPackage(view: View){
         Logger.v("커스텀 패키지 추가 완료 버튼 클릭")
 
+        // TODO: 2020-09-26 현재  일단 startactivityforresult 로  값 가져가서  추가 하는 형태  뷰모델 적용시 구조 바뀔수 있음
         // TODO: 2020-09-24 일단  엑티비티 종료로 넣어둠  나중에  패키지 추가 작업 필요
+        intent.putExtra("name",binding.editTvPackageName.text.toString())
+        intent.putExtra("tagList",tagArray)
+        setResult(Activity.RESULT_OK,intent)
+        
         finish()
     }//completeAddNewCustomPackage() 끝
 

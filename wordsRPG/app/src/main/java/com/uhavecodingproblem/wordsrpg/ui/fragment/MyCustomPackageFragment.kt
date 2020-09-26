@@ -1,17 +1,21 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.data.mockdata.mockCustomPackageList
+import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.util.MAKE_CUSTOM_PACKAGE_REQUEST_CODE
 
 /**
  * wordsrpg
@@ -21,6 +25,9 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Description:
  */
 class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.layout.fragment_my_custom_package) {
+
+    private val mockMyPackageDataList =CustomMyPackageListMocKData.list
+    lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
 
 
     override fun FragmentMyCustomPackageBinding.onCreateView() {
@@ -34,15 +41,20 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
 
 
+
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
     private fun setCustomPackageRecyclerView(){
+
+        recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList)//adatper 연결
          binding.recyclerviewMyCustomList.apply {
              layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
 
              // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨. 
-             adapter = CustomPackageRecyclerViewAdapter(mockCustomPackageList())//adatper 연결 
+             adapter = recyclerViewAdapter
          }
     }//initRecyclerView()끝
+
+
 
 
 
@@ -65,9 +77,37 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     fun moveToAddNewCustomPackageActivity(view: View){
         Logger.v("AddNewCustomPackageActivity 로 이동")
 
-        startActivityForResult(Intent(requireActivity(),AddNewCustomPackageActivity::class.java),101)
+        startActivityForResult(
+            Intent(requireActivity(),
+            AddNewCustomPackageActivity::class.java),
+            MAKE_CUSTOM_PACKAGE_REQUEST_CODE)
 
     }//moveToAddNewCustomPackageActivity() 끝
+
+
+    // TODO: 2020-09-26 뷰모델 생성시  뷰모델에 bind 하는 형태로  고려  일단    onactivity result로 값 적용
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when(resultCode == Activity.RESULT_OK) {
+            requestCode == MAKE_CUSTOM_PACKAGE_REQUEST_CODE -> {
+
+
+                val name=data?.getStringExtra("name").toString()
+                val uri=data?.getParcelableExtra<Uri>("uri").toString()
+                val uid = mockMyPackageDataList.size+1
+                val ownerUid= 3
+                val tagList=data?.getStringArrayListExtra("tagList")
+                Logger.v("실행됨  $name     uri -> $uri  uid -> $uid, 어레이 -> $tagList" )
+
+                //mockdata list 에 넣어줌.
+                mockMyPackageDataList.add(CustomPackageData( uid,ownerUid,name,uri,0,0, tagList!!))
+                recyclerViewAdapter.notifyDataSetChanged()//리사이클러뷰 data update
+            }
+
+        }
+
+    }
 
 
 
