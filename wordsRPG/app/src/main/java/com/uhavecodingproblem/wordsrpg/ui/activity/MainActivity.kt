@@ -1,7 +1,9 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -38,12 +40,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
 
     }
 
-
-
-
     //toolbar  setting
     private fun configureToolbar(){//1-1
-
         //action bar로 연결
         setSupportActionBar(binding.mainToolbar)
 

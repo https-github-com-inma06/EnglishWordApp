@@ -13,6 +13,6 @@ import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
  * ViewModel 매개변수 넘기기 위해서 사용
  */
 
-class ViewModelFactory(private val tabName: List<String>): ViewModelProvider.NewInstanceFactory(){
+class ViewModelFactory(private val tabName: Array<String>): ViewModelProvider.NewInstanceFactory(){
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = LibraryViewModel(tabName) as T
 }

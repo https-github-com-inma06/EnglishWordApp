@@ -6,9 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.ByCategoryRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.ByLevelRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.ByTestRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding

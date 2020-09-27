@@ -27,7 +27,7 @@ class Application:Application() {
 
     //debug 가능 여부를  체크해준다. (logger 안보이게 할려고)
     //release 버전에서는  false 로 체크된다.
-    fun isDebuggable(context: Context): Boolean {
+    private fun isDebuggable(context: Context): Boolean {
         return context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
     }
 }

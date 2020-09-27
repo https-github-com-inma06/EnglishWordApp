@@ -19,8 +19,10 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  */
 class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fragment_main_library) {
 
-    private val tabLayoutName = listOf("기본 패키지", "내 패키지", "구독 패키지")
+
+    private val tabLayoutName = arrayOf("기본 패키지", "내 패키지", "전체 패키지")
     private val mainLibraryViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabLayoutName) }
+
 
     override fun FragmentMainLibraryBinding.onCreateView() {
 

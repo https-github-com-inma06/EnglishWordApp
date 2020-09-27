@@ -17,8 +17,33 @@
 
     <!-- My(내) 패키지 -->
     <string name="toolbar_menu_for_add_word">단어 추가하기</string>
+    <string name="str_package_search">패키지 검색하기</string>
+
 
     <!-- Different(구독/다른사람의) 패키지 -->
     <string name="toolbar_menu_for_search_more_package">패키지 더보기</string>
 
+
+    <!-- fragment_my_custom_package  str -->
+    <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
+
+    <!-- activity_add_new_custom_package str   -->
+    <string name="str_activity_title">내 커스텀 패키지 추가</string>
+    <string name="str_package_name_title">패키지 이름</string>
+    <string name="str_add_package_name_hint">패키지 이름을 지어주세요</string>
+    <string name="str_package_thumbnail_title">패키지 대표 이미지 등록 (선택)</string>
+    <string name="str_package_preview">미리보기</string>
+    <string name="str_add_new_tag_hint">추가할 태그를 입력해주세요</string>
+    <string name="str_complete">완료</string>
+    <string name="str_add">추가</string>
+    <string name="str_tag_size_max">태그는 최대 3개 입니다. </string>
+    <string name="str_tag_detect_space">태그는 단어 한개로 구성해주세요</string>
+    <string name="str_tag_no_content">적은 태그 내용이 없습니다.</string>
+    <string name="str_add_new_tag_title">패키지를 표현할 태그를 최대 3개 추가해주세요</string>
+    <string name="str_default_package_name_shown_in_xml">패키지 이름</string>
+    <string name="str_package_like_count_example">하트 3개</string>
+
+     <!-- item_custom_package_recycler_view  str -->
+    <string name="str_liked_count">%1$d 개</string>
+    
 </resources>

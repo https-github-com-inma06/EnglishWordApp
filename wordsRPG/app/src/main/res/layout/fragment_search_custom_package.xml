@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+       <variable
+           name="thisFragment"
+           type="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:padding="15dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_back_btn"
+        app:layout_constraintBottom_toTopOf="@id/recyclerview_searched_package_list"
+        android:text="제목" />
+
+    <TextView
+        android:id="@+id/tv_tag_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:padding="15dp"
+        android:gravity="center"
+        app:layout_constraintStart_toEndOf="@+id/tv_title_filter"
+        app:layout_constraintTop_toBottomOf="@id/img_back_btn"
+        app:layout_constraintBottom_toTopOf="@id/recyclerview_searched_package_list"
+        android:text="태그" />
+
+
+    <ImageView
+        android:id="@+id/img_back_btn"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:onClick="@{thisFragment::backToMyCustomPackageFragment}"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintEnd_toStartOf="@id/edit_tv_search_package"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <EditText
+        android:id="@+id/edit_tv_search_package"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="text"
+        android:focusable="true"
+        android:imeOptions="actionSearch"
+        android:focusableInTouchMode="true"
+        app:searchAction="@{thisFragment.searchAction}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_back_btn"
+        android:textColorHint="@color/colorGray"
+        android:hint="@string/str_search_edit_tv_hint">
+        <requestFocus/>
+    </EditText>
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_searched_package_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_filter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
