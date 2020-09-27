@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.uhavecodingproblem.wordsrpg.ui.fragment.BasicPackageFragment
+import com.uhavecodingproblem.wordsrpg.ui.fragment.EntireCustomPackageFragment
 import com.uhavecodingproblem.wordsrpg.ui.fragment.MyCustomPackageFragment
-import com.uhavecodingproblem.wordsrpg.ui.fragment.SubscribePackageFragment
 
 /**
  * wordsrpg
@@ -24,7 +24,7 @@ class MainLibraryViewPagerAdapter(fragment: FragmentActivity): FragmentStateAdap
         return when(position){
             0 -> BasicPackageFragment()
             1 -> MyCustomPackageFragment()
-            else-> SubscribePackageFragment()
+            else-> EntireCustomPackageFragment()
         }
     }
 }
