@@ -15,10 +15,12 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.ui.fragment.MainMyRoomFragment
 import com.uhavecodingproblem.wordsrpg.util.imageUrlReSize
 import com.uhavecodingproblem.wordsrpg.util.tedPermissionCheck
+import com.uhavecodingproblem.wordsrpg.util.toastShow
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity_register) {
+
     companion object {
         const val REQUEST_IMAGE_CODE = 7852
     }
@@ -28,45 +30,35 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
     }
 
     fun btnRegisterComplete(view: View) {
-        binding.apply {
-
-//            val date = (SimpleDateFormat("yyyyMMdd", Locale.KOREA).format(Date())).toInt()
-//            val userBirthDayConverter =
-//                tvUserbirthDay.text.toString().replace("[^0-9]".toRegex(), "").toInt()
-//
+        with(binding) {
 
             //하나라도 text 가 비었을 때 return
             if (etCrateId.text.toString().isEmpty() || etCreatePassword.text.toString().isEmpty() ||
-                etNickName.text.toString().isEmpty() || etPasswordDoubleCheck.text.toString()
-                    .isEmpty() ||
-                etPhoneNumber.text.toString().isEmpty() || tvUserbirthDay.text.isEmpty()
+                etNickName.text.toString().isEmpty() || etPasswordDoubleCheck.text.toString().isEmpty() ||
+                etPhoneNumber.text.toString().isEmpty()
             ) {
-//                ToastUtil.toastShow("모두 작성하셔야 합니다.",null)
+                toastShow("모두 작성하셔야 합니다.")
                 return
             }
             //새로 생성할 비밀번호가 중복체크와 맞지 않을때 return
             if (etCreatePassword.text.toString() != etPasswordDoubleCheck.text.toString()) {
-//                ToastUtil.toastShow("비밀번호가 같지 않습니다.",null)
-
+                toastShow("비밀번호가 같지 않습니다.")
                 return
             }
 
-//                선택한 생년월일이 오늘의 날짜보다 미래일때 return
-//            if (userBirthDayConverter > date) {
-//                Log.d("dateCheck", "${date},${tvUserbirthDay.text.toString().toInt()}")
-//                ToastUtil.toastShow("올바른 생년월일을 선택해주세요",null)
-//                return
+            if(tvUserbirthDay.text.isEmpty()){
+                toastShow("생년 월일을 선택해주세요")
+                return
+            }
 
 
+            startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+
+            /**
+             * TODO:임시로 지정,로직 결정 후 변경 예정
+             */
+            MainMyRoomFragment.loginCheck = true
         }
-
-        Toast.makeText(this@RegisterActivity, "메인 액티비티로 이동 ", Toast.LENGTH_SHORT).show()
-        startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
-
-        /**
-         * TODO:임시로 지정,로직 결정 후 변경 예정
-         */
-        MainMyRoomFragment.loginCheck = true
     }
 
     fun ibnClickListener(view: View) {
@@ -91,24 +83,37 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
 
 
     fun btnBirthDaySearchClickListener(view: View) {
-
         val toDayYear = SimpleDateFormat("yyyy", Locale.KOREA).format(Date()).toInt()
-        val toDayMonth = (SimpleDateFormat("MM", Locale.KOREA).format(Date()).toInt())
+        val toDayMonth = (SimpleDateFormat("MM", Locale.KOREA).format(Date()).toInt() - 1)
         val toDay = SimpleDateFormat("dd", Locale.KOREA).format(Date()).toInt()
+
+        val minDate = Calendar.getInstance()
+        val maxDate = Calendar.getInstance()
 
         DatePickerDialog(
             this@RegisterActivity,
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-                binding.tvUserbirthDay.text =
-                    getString(R.string.register_datePickerSetText, year, monthOfYear, dayOfMonth)
+
+                binding.tvUserbirthDay.text = getString(R.string.register_datePickerSetText,
+                        year,
+                        monthOfYear + 1,
+                        dayOfMonth
+                    )
             },
             toDayYear,
             toDayMonth,
             toDay
         ).apply {
-            datePicker.touchables[0].performClick()
+            minDate.set(toDayYear - 80, toDayMonth, toDay)
+            maxDate.set(toDayYear, toDayMonth, toDay)
+
+            with(datePicker) {
+                this.minDate = minDate.timeInMillis
+                this.maxDate = maxDate.timeInMillis
+                touchables[0].performClick()
+            }
+            setTitle("")
             show()
         }
-
     }
 }
