@@ -16,5 +16,7 @@
 
 <!--    회원가입-->
     <string name="register_datePickerSetText">"%d년 %d월 %d일"</string>
+    <string name="login_passwordFind">비밀번호 찾기</string>
+    <string name="login_greeting">어서오세요 영단어 RPG 입니다</string>
 
 </resources>

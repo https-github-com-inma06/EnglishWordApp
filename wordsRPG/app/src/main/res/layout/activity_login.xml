@@ -82,12 +82,34 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:text="@string/login_register"
         android:onClick="btnGoToTheRegisterClickEvent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/login_register"
+        app:layout_constraintBottom_toTopOf="@+id/btn_findPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+
+    <Button
+        android:id="@+id/btn_findPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/login_passwordFind"
+        android:onClick="btnFindPasswordClickEvent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_goToTheRegister"
+        app:layout_constraintStart_toStartOf="@+id/btn_goToTheRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btn_goToTheRegister" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_greeting"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
