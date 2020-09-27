@@ -7,9 +7,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.MemorizationViewPagerAdapter
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMemorizationBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
@@ -18,7 +21,8 @@ import java.util.*
 class MemorizationActivity :
     BaseActivity<ActivityMemorizationBinding>(R.layout.activity_memorization), MemorizationViewPagerAdapter.ItemClickListener {
 
-    private val word = arrayListOf<String>("Apple", "Banana", "Circle")
+    private val memorizationViewModel: WordViewModel by viewModels { WordViewModelFactory() }
+    private var word : List<String> = listOf()
     private var textToSpeech: TextToSpeech? = null
 
     override fun ActivityMemorizationBinding.onCreate() {
@@ -26,7 +30,16 @@ class MemorizationActivity :
 
         initTextToSpeech()
         setToolbarTitle()
+        initBinding()
         setViewPager()
+    }
+
+    private fun initBinding(){
+        binding.run {
+            memorizationviewmodel = memorizationViewModel
+            lifecycleOwner = this@MemorizationActivity
+            word = memorizationViewModel.getByLevelWord()
+        }
     }
 
     private fun setViewPager(){

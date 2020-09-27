@@ -18,7 +18,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
  * image swipe ViewPager2
  *
  */
-class MemorizationViewPagerAdapter(private val word: List<String>, private val listener: ItemClickListener) :
+class MemorizationViewPagerAdapter(private var word: List<String>, private val listener: ItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface ItemClickListener{
@@ -53,7 +53,5 @@ class MemorizationViewPagerAdapter(private val word: List<String>, private val l
                 listener.micClick(it, adapterPosition)
             }
         }
-
     }
-
 }
