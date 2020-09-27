@@ -29,6 +29,7 @@ class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fr
         Logger.v("실행")
 
         initBinding()
+        setDisableSwipe()
     }
 
     private fun initBinding(){
@@ -37,6 +38,10 @@ class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fr
             activityfragment = requireActivity()
             lifecycleOwner = this@MainLibraryFragment
         }
+    }
+
+    private fun setDisableSwipe(){
+        binding.viewpager2Library.isUserInputEnabled = false
     }
 
 }
