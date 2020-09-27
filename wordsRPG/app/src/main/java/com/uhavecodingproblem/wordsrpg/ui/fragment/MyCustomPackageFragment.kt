@@ -45,11 +45,11 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
     private fun setCustomPackageRecyclerView(){
 
+        // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
         recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList)//adatper 연결
+
          binding.recyclerviewMyCustomList.apply {
              layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
-
-             // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨. 
              adapter = recyclerViewAdapter
          }
     }//initRecyclerView()끝

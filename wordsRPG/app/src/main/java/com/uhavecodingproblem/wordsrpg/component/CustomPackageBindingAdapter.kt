@@ -1,7 +1,9 @@
 package com.uhavecodingproblem.wordsrpg.component
 
 import android.graphics.drawable.Drawable
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -29,4 +31,13 @@ object CustomPackageBindingAdapter {
             .centerCrop()
             .into(imageView)
     }
+
+
+    //editext search action binding 용
+    @BindingAdapter("searchAction")
+    @JvmStatic
+    fun keyboardSearchAction(editText: EditText,editorActionListener: TextView.OnEditorActionListener){
+        editText.setOnEditorActionListener(editorActionListener)
+    }
+
 }
