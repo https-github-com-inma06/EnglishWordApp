@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -15,6 +16,7 @@ import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapte
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.MemorizationActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TYPE
@@ -63,7 +65,7 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
 
 
-    //키보드  search action 처리
+    //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
     val searchAction = TextView.OnEditorActionListener { _, actionId, _ ->
 
         when(actionId){
@@ -71,7 +73,7 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
                 Logger.v("검색버튼 눌림")
 
-                //검색 필터 적용
+                //editext에 적힌 내용으로  검색 필터 적용
                 recyclerViewAdapter.filter.filter(binding.editTvSearchPackage.text.toString())
                 
                 true
@@ -96,6 +98,19 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
             layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
             adapter = recyclerViewAdapter
         }
+
+
+        //각 패키지 아이템 클릭시  넘어감 처리  구현
+        recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, packageName: String) {
+
+
+                Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName",Toast.LENGTH_SHORT).show()
+                val i= Intent(requireActivity(),MemorizationActivity::class.java)
+                i.putExtra("packagename",packageName)
+                startActivity(i)
+            }
+        })
 
 
     }//initRecyclerView()끝

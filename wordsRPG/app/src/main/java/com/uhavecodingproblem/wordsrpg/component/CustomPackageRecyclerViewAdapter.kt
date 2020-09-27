@@ -1,11 +1,10 @@
 package com.uhavecodingproblem.wordsrpg.component
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerViewBinding
@@ -27,6 +26,9 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TYPE
 class CustomPackageRecyclerViewAdapter(
     private val customPackageList:MutableList<CustomPackageData>, private val recyclerviewType:Int
 ) : RecyclerView.Adapter<CustomPackageRecyclerViewAdapter.CustomPackageViewHolder>(),Filterable {
+
+
+    private var onItemClickListener: OnItemClickListener? =null
 
     //필터링이 된 list -> 최종적으로  해당 list의 값들이 recyclerview에 뿌려짐.
     private  var filterList: MutableList<CustomPackageData>//1-1
@@ -110,7 +112,17 @@ class CustomPackageRecyclerViewAdapter(
         }
     }
 
+    //아이템 클릭 이벤트 받을  리스너 인터페이스
+    interface  OnItemClickListener {
+        fun onItemClick(view:View,packageName:String)
+        // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
+    }
 
+
+    //외부에서  아이템 클릭 처리할 리스너
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+        this.onItemClickListener = onItemClickListener
+    }
 
 
   //뷰홀더
@@ -119,6 +131,17 @@ class CustomPackageRecyclerViewAdapter(
       //item 뷰에  데이터 바인딩 적용
       fun onBind(data : CustomPackageData){
           binding.data = data
+
+          binding.containerItem.setOnClickListener {
+              val pos = adapterPosition
+              filterList[pos].packageName
+              if (pos != RecyclerView.NO_POSITION) {
+                  // 리스너 객체의 메서드 호출.
+                  onItemClickListener?.onItemClick(view = it,packageName =  filterList[pos].packageName)
+              }
+          }
+
+
       }
   }
 }

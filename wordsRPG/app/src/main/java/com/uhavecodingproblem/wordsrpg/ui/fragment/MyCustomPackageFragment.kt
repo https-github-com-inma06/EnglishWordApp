@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 
 import android.view.View
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
@@ -13,6 +14,7 @@ import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.MemorizationActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.MAKE_CUSTOM_PACKAGE_REQUEST_CODE
@@ -54,6 +56,21 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
              layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
              adapter = recyclerViewAdapter
          }
+
+
+        //각 패키지 아이템 클릭시  넘어감 처리  구현
+        recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
+            override fun onItemClick(view: View, packageName: String) {
+
+
+                Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
+                val i= Intent(requireActivity(), MemorizationActivity::class.java)
+                i.putExtra("packagename",packageName)
+                startActivity(i)
+            }
+        })
+
+
     }//initRecyclerView()끝
 
 
