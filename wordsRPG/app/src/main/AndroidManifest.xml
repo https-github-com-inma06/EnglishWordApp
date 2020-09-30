@@ -27,10 +27,6 @@
         </activity>
 
 <!--        INTRO-->
-        <activity android:name=".ui.activity.intro.FindIDActivity">
-        </activity>
-        <activity android:name=".ui.activity.intro.FindPasswordActivity">
-        </activity>
         <activity android:name=".ui.activity.intro.LoginActivity">
         </activity>
         <activity android:name=".ui.activity.intro.RegisterActivity">
