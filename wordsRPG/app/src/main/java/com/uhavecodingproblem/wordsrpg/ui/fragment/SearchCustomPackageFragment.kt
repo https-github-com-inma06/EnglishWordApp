@@ -154,16 +154,14 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
     override fun onResume() {
         super.onResume()
         keyboardToggle(visible = true)//키보드 보이기
-        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()//메인엑티비티 toolbar  hide
+
     }
-
-
 
 
     override fun onPause() {
         super.onPause()
         keyboardToggle(visible = false)//키보드 숨기기
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()//메인엑티비티 toolbar  show
+
     }
 
 

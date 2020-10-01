@@ -13,6 +13,7 @@ object CustomMyPackageListMocKData {
 
 
     val list= mockCustomPackageList()
+    //val list= ArrayList<CustomPackageData>()//아무것도 없게
 
 
     private fun mockCustomPackageList() =

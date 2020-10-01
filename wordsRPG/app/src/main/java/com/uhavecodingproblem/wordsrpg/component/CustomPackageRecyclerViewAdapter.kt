@@ -64,6 +64,8 @@ class CustomPackageRecyclerViewAdapter(
     override fun getItemCount(): Int = filterList.size
 
 
+
+
     // TODO: 2020-09-27 여기서 검색어에 대한 search  필터,  검색 search 필터
     //여러 필터 적용 진행시 동작
     override fun getFilter(): Filter {
@@ -111,6 +113,9 @@ class CustomPackageRecyclerViewAdapter(
             }
         }
     }
+
+
+
 
     //아이템 클릭 이벤트 받을  리스너 인터페이스
     interface  OnItemClickListener {
