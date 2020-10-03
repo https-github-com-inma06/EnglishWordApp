@@ -24,9 +24,6 @@
     <string name="toolbar_menu_for_search_more_package">패키지 더보기</string>
 
 
-    <!-- fragment_my_custom_package  str -->
-    <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
-
     <!-- activity_add_new_custom_package str   -->
     <string name="str_activity_title">내 커스텀 패키지 추가</string>
     <string name="str_package_name_title">패키지 이름</string>
@@ -42,6 +39,14 @@
     <string name="str_add_new_tag_title">패키지를 표현할 태그를 최대 3개 추가해주세요</string>
     <string name="str_default_package_name_shown_in_xml">패키지 이름</string>
     <string name="str_package_like_count_example">하트 3개</string>
+
+
+    <!-- fragment_search_custom_package str  -->
+    <string name="str_filter_title">제목</string>
+    <string name="str_filter_tag">태그</string>
+    <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
+
+
 
      <!-- item_custom_package_recycler_view  str -->
     <string name="str_liked_count">%1$d 개</string>

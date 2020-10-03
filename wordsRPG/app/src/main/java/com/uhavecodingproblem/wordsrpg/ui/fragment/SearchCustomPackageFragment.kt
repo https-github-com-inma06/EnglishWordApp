@@ -19,7 +19,8 @@ import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBi
 import com.uhavecodingproblem.wordsrpg.ui.activity.MemorizationActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TYPE
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
 
 
 
@@ -39,14 +40,13 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
     lateinit var inputMethodManager:InputMethodManager//1-1
 
     //검색 로딩
-    lateinit var loadingDialog: SearchLoadingDialog//1-2
+    private lateinit var loadingDialog: SearchLoadingDialog//1-2
 
     //내패키지용 mockdata list 적용
     private val mockMyPackageDataList = CustomMyPackageListMocKData.list
 
     //recyclerview adatoer
-    lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
-
+    private lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
 
 
     override fun FragmentSearchCustomPackageBinding.onCreateView() {
@@ -63,6 +63,36 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
     }//onCreateView() 끝
 
 
+
+
+    //필터 change
+    fun setFilterChange(view: View){
+
+        if(view == binding.tvTagFilter){//태그 필터 클릭시
+            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TAG)
+            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TAG)
+        }else{
+            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TITLE)
+            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
+        }
+
+        //필터가 바뀌면  우선, filter에 null값을 줘서  list 를   reset 시킨다.
+        recyclerViewAdapter.filter.filter(null)
+    }
+
+
+
+     //체크된  필터  스타일 바꿔줌.
+    // TODO: 2020-10-03 우선  필터 클릭에 따른  뷰 스타일  backgoround 변경으로 진행함.->  디자인에 따라  다르게 변경 적용되야 됨
+    private fun filterClickedStyleChange(filterCheck : Int ){
+        if(filterCheck == SEARCH_PACKAGE_TAG){//태그 클릭시
+            binding.tvTagFilter.setBackgroundResource(R.color.colorDarkGray)
+            binding.tvTitleFilter.setBackgroundResource(R.color.colorGray)
+        }else if(filterCheck == SEARCH_PACKAGE_TITLE){//타이틀 클릭시
+            binding.tvTagFilter.setBackgroundResource(R.color.colorGray)
+            binding.tvTitleFilter.setBackgroundResource(R.color.colorDarkGray)
+        }
+    }
 
 
     //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
@@ -91,11 +121,13 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
         recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            SEARCH_PACKAGE_TYPE)//adatper 연결 -> 타입은 검색용
+            SEARCH_PACKAGE_TITLE)//adatper 연결 -> default 검색 타입은 제목
 
+        //필터 스타일도 TITLE 적용된걸로 바꿈.
+        filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
 
         binding.recyclerviewSearchedPackageList.apply {
-            layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
+            layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌 (가로 최대 3개 아이템)
             adapter = recyclerViewAdapter
         }
 
