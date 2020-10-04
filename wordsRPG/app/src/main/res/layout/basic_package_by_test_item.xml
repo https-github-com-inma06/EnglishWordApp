@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="data"
+            type="com.uhavecodingproblem.wordsrpg.data.WordType" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/basic_package_layout"
         android:layout_width="match_parent"
+        backgroundImage="@{data.backgroundImage}"
+        error="@{@drawable/ic_launcher_background}"
         android:layout_height="150sp"
         android:layout_margin="8dp">
 
@@ -12,6 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
+            android:text="@{data.name}"
             app:autoSizeTextType="uniform"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="12sp"
@@ -22,10 +32,11 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_package_description"
+            android:id="@+id/tv_package_count"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
+            count="@{data.words}"
             app:autoSizeTextType="uniform"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="12sp"

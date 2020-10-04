@@ -18,3 +18,7 @@ const val ORIGINAL_PACKAGE_TYPE = 1001// 기본적으로 뿌려주는 형태
 const val SEARCH_PACKAGE_TYPE = 1002//타이틀 검색으로 필터링 -> 태그랑  제목으로 나뉘어야됨.
 const val MY_SUBSCRIBE_FILTER_TYPE = 1003//내가 구독한 유저의 패키지로 필터링
 const val MY_HEART_FILTER_TYPE = 1004//내가 하트 표시한 유저의 패키지로 필터링
+
+//기본 패키지 수준별
+const val ITEM_HEADER_TYPE = 0
+const val ITEM_GIRD_TYPE = 1
