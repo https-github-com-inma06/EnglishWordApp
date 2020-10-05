@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.fragment.battle.BattleUserListActivity"></activity>
+        <activity android:name=".ui.fragment.battle.BattleUserListForInviteActivity"></activity>
+        <activity android:name=".ui.fragment.battle.BattleUserListActivity" />
         <activity android:name=".ui.fragment.battle.BattlePlayActivity" />
         <activity android:name=".ui.fragment.battle.BattleReadyActivity" />
         <activity android:name=".ui.activity.MainActivity">
