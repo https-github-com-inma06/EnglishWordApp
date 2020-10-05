@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.component
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,10 +81,10 @@ class CustomPackageRecyclerViewAdapter(
             override fun performFiltering(getFilterValue: CharSequence?): FilterResults {
 
             //필터를 통해 들어온  charsequence 값 -> 검색에서 사용됨
-            val filterValue = getFilterValue?.toString()
+            val searchValue = getFilterValue?.toString()
 
             //검색어가 없는 경우 필터 타입에 따라 리스트를 filterlist에 적용한다.
-            filterList = if(filterValue.isNullOrEmpty()){
+            filterList = if(searchValue.isNullOrEmpty()){
                   when(filterType){
                       SEARCH_PACKAGE_TITLE, SEARCH_PACKAGE_TAG-> ArrayList() //검색, 태그 필터의 경우는 검색어가 없으면  빈 array를 뿌려준다.
                       else ->customPackageList// 그 외에는  필터 적용시  각각의 맞는  리스트를  뿌려줌.
@@ -98,7 +99,7 @@ class CustomPackageRecyclerViewAdapter(
 
                         //받아온 리스트에서  해당 검색어 포함  리스트 필터링
                         for (i in 0 until customPackageList.size) {
-                            if (customPackageList[i].packageName.contains(filterValue)) {
+                            if (customPackageList[i].packageName.contains(searchValue)) {
                                 searchedFilterList.add(customPackageList[i])
                                 Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
                             }
@@ -107,11 +108,11 @@ class CustomPackageRecyclerViewAdapter(
 
                         for (i in 0 until customPackageList.size) {
 
-                            //해시 태그 리스트에서   검색어 포함시  리스트 필터링
-                            customPackageList[i].hashList.filter {
-                                if(it.contains(filterValue)){
+                            //태그리스트 filter 해서  가장 마지막에  필터된  태그값  가진 패키지 넣어줌.
+                            customPackageList[i].hashList.findLast {
+                                Logger.v("pos -> $i   searchvalue-> $searchValue  find-> last-> $it")
+                                if(it.contains(searchValue)){
                                     searchedFilterList.add(customPackageList[i])
-                                    true
                                 }else{
                                     false
                                 }
