@@ -13,11 +13,15 @@ package com.uhavecodingproblem.wordsrpg.util
 const val MAKE_CUSTOM_PACKAGE_REQUEST_CODE = 101
 
 
-//커스텀 패키지 별  리사이클러뷰 필터 타입 나눔
-const val ORIGINAL_PACKAGE_TYPE = 1001// 기본적으로 뿌려주는 형태
-const val SEARCH_PACKAGE_TYPE = 1002//타이틀 검색으로 필터링 -> 태그랑  제목으로 나뉘어야됨.
+//커스텀 패키지 검색시  필터 종류
+const val SEARCH_PACKAGE_TITLE = 1000
+const val SEARCH_PACKAGE_TAG = 1001
+
+//일반 커스텀 패키지 리스트 필터 종류
+const val ORIGINAL_PACKAGE_TYPE = 1002// 기본적으로 뿌려주는 형태(최근 순으로)
 const val MY_SUBSCRIBE_FILTER_TYPE = 1003//내가 구독한 유저의 패키지로 필터링
 const val MY_HEART_FILTER_TYPE = 1004//내가 하트 표시한 유저의 패키지로 필터링
+
 
 //기본 패키지 수준별
 const val ITEM_HEADER_TYPE = 0

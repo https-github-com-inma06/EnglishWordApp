@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerViewBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TYPE
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
 
 
 /**
@@ -24,7 +25,7 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TYPE
  *
  */
 class CustomPackageRecyclerViewAdapter(
-    private val customPackageList:MutableList<CustomPackageData>, private val recyclerviewType:Int
+    private val customPackageList:MutableList<CustomPackageData>, private var filterType:Int
 ) : RecyclerView.Adapter<CustomPackageRecyclerViewAdapter.CustomPackageViewHolder>(),Filterable {
 
 
@@ -38,7 +39,7 @@ class CustomPackageRecyclerViewAdapter(
         //1-1
         filterList =
 
-        if(recyclerviewType == SEARCH_PACKAGE_TYPE){//해시,  제목 같은 검색용 리스트는  처음에  빈 list를 보여준다.
+        if(filterType == SEARCH_PACKAGE_TITLE || filterType == SEARCH_PACKAGE_TAG){//검색용 리스트는  처음에  빈 list를 보여준다
             ArrayList()
 
         }else{//그외 리스트들은 우선  받아온  리스트를 그대로 뿌려준다.
@@ -61,7 +62,13 @@ class CustomPackageRecyclerViewAdapter(
         holder.onBind(filterList[position])
     }
 
+
     override fun getItemCount(): Int = filterList.size
+
+
+    //필터 타입을 외부에서  변경할때  사용한다.
+    fun changeType(newFilterType: Int){  this.filterType = newFilterType }
+
 
 
     // TODO: 2020-09-27 여기서 검색어에 대한 search  필터,  검색 search 필터
@@ -72,31 +79,50 @@ class CustomPackageRecyclerViewAdapter(
             //필터링 진행
             override fun performFiltering(getFilterValue: CharSequence?): FilterResults {
 
-                //필터 값
-                val filterValue = getFilterValue.toString()
+            //필터를 통해 들어온  charsequence 값 -> 검색에서 사용됨
+            val filterValue = getFilterValue?.toString()
 
-                filterList= if(filterValue.isEmpty()){//검색 필터가 아닌 경우  위 필터 내용으로 바뀌어야됨 ->  앞으로 필터 추가 예정
-
-                  when(recyclerviewType){
-                      SEARCH_PACKAGE_TYPE-> ArrayList() //검색 타입의 경우 아무것도 없으면 빈 array적용
-                      else ->customPackageList
+            //검색어가 없는 경우 필터 타입에 따라 리스트를 filterlist에 적용한다.
+            filterList = if(filterValue.isNullOrEmpty()){
+                  when(filterType){
+                      SEARCH_PACKAGE_TITLE, SEARCH_PACKAGE_TAG-> ArrayList() //검색, 태그 필터의 경우는 검색어가 없으면  빈 array를 뿌려준다.
+                      else ->customPackageList// 그 외에는  필터 적용시  각각의 맞는  리스트를  뿌려줌.
                   }
 
-
-
-                }else {//검색 필터의 경우 진행
+            }else {//필터에  검색어가 적용될때
 
                     //검색된 필터  리스트
                     val searchedFilterList = ArrayList<CustomPackageData>()
 
-                    //받아온 리스트에서  해당 검색어 포함  리스트 필터링
-                    for (i in 0 until customPackageList.size) {
-                        if (customPackageList[i].packageName.contains(filterValue)) {
-                            searchedFilterList.add(customPackageList[i])
-                            Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
-                        }
-                    }
-                    searchedFilterList
+                    if(filterType == SEARCH_PACKAGE_TITLE) {//제목 필터가 적용될때
+
+                        //받아온 리스트에서  해당 검색어 포함  리스트 필터링
+                        for (i in 0 until customPackageList.size) {
+                            if (customPackageList[i].packageName.contains(filterValue)) {
+                                searchedFilterList.add(customPackageList[i])
+                                Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
+                            }
+                        }//for문 끝
+                    }else if(filterType == SEARCH_PACKAGE_TAG){//태그 필터 적용되었을때
+
+                        for (i in 0 until customPackageList.size) {
+
+                            //해시 태그 리스트에서   검색어 포함시  리스트 필터링
+                            customPackageList[i].hashList.filter {
+                                if(it.contains(filterValue)){
+                                    searchedFilterList.add(customPackageList[i])
+                                    true
+                                }else{
+                                    false
+                                }
+                            }
+
+                        }//for문 끝
+
+                    }//태그 필터 끝
+
+
+                    searchedFilterList//검색으로 필터링된  리스트 filterlist에 적용
                 }
 
                 val filterResults = FilterResults()
@@ -104,13 +130,18 @@ class CustomPackageRecyclerViewAdapter(
                 return filterResults
             }
 
-            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {//filter 결과  발행
                 filterList  = p1?.values as MutableList<CustomPackageData>
                 Logger.v("필터 결과 ->  $filterList")
                 notifyDataSetChanged()//필터된 내용으로 데이터 업데이트.
             }
         }
-    }
+
+
+    }//getFilter() 끝
+
+
+
 
     //아이템 클릭 이벤트 받을  리스너 인터페이스
     interface  OnItemClickListener {
@@ -133,12 +164,17 @@ class CustomPackageRecyclerViewAdapter(
           binding.data = data
 
           binding.containerItem.setOnClickListener {
-              val pos = adapterPosition
+
+              val pos = adapterPosition//클릭된 아이템 포지션
               filterList[pos].packageName
+
               if (pos != RecyclerView.NO_POSITION) {
+
                   // 리스너 객체의 메서드 호출.
                   onItemClickListener?.onItemClick(view = it,packageName =  filterList[pos].packageName)
+
               }
+
           }
 
 

@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
@@ -117,6 +118,27 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
 
 
 
+    //네이게이션의  현재 fragment 변경 사항을 listen 한다. ( 안쓴 값  _ 처리)
+    private val navDestinationChangedListener = NavController.OnDestinationChangedListener {
+            _, destination, _ ->
+
+        //navigation에 설정한 label로
+        //바뀐 fragment가 무엇인지 감지한다.
+        when(destination.label){
+
+
+            //현재 fragment가  검색 프래그먼트 일때  액션바  숨겨줌.
+            "SearchCustomPackageFragment" -> { supportActionBar!!.hide() }
+
+
+
+            //검색프래그먼트 이외에는 액션바 보여준다.
+            else ->{ supportActionBar!!.show()}
+
+        }
+    }
+
+
 
     //bottom navigation을  jetpack navigation controller로 연결
     private fun setUpNavigation() {//1-2
@@ -125,6 +147,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment?
 
         val navController=navHostFragment!!.navController
+
+
+        //네비게이션  현재 fragment  측정하기 위한 리스너
+        navController.addOnDestinationChangedListener(navDestinationChangedListener)
+
 
         NavigationUI.setupWithNavController(
             binding.bottomNavigationView,
