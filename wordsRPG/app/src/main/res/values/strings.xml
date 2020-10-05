@@ -51,5 +51,10 @@
 
      <!-- item_custom_package_recycler_view  str -->
     <string name="str_liked_count">%1$d 개</string>
-    
+
+    <string name="battlePlay_currentQuestionCount">현재 풀고 있는 문제(%d)번</string>
+    <string name="battlePlay_currentDifficulty">게임 난이도: (%s)</string>
+    <string name="battlePlay_completeQuestionCount">지금까지 풀었던 문제 갯수(%d)개</string>
+    <string name="battlePlay_opponentUserCompleteQuestionCount">상대가 풀었던 문제 갯수(%d)개</string>
+
 </resources>

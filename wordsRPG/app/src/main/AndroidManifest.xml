@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.uhavecodingproblem.wordsrpg">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -11,10 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MemorizationActivity"/>
+        <activity android:name=".ui.activity.MemorizationActivity" />
         <activity android:name=".ui.activity.LibraryActivity" />
-        <activity android:name=".ui.activity.MainActivity"
-                  android:windowSoftInputMode="adjustPan" >
+        <activity android:name=".ui.fragment.battle.BattleUserListActivity" />
+        <activity android:name=".ui.fragment.battle.BattlePlayActivity" />
+        <activity android:name=".ui.fragment.battle.BattleReadyActivity" />
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +29,7 @@
         <activity android:name=".ui.activity.NotificationActivity" />
         <activity android:name=".ui.activity.WrongAnswerActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
-        <activity android:name=".ui.activity.AddNewCustomPackageActivity"/>
+        <activity android:name=".ui.activity.AddNewCustomPackageActivity" />
     </application>
 
 </manifest>
