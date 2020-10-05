@@ -40,7 +40,7 @@ object WordBindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("count")
+    @BindingAdapter("passCount")
     fun setCount(textView: TextView, item: MutableList<WordData>) {
         var count = 0
         for (i in item.indices) {

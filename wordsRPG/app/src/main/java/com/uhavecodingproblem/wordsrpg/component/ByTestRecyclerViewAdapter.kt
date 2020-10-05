@@ -35,6 +35,10 @@ class ByTestRecyclerViewAdapter(val item: MutableList<WordType>,val listener: By
     inner class ItemViewHolder(val binding: BasicPackageByTestItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(data: WordType){
             binding.data = data
+
+            binding.root.setOnClickListener {
+                listener.onByTestItemClick(it, adapterPosition)
+            }
         }
     }
 }

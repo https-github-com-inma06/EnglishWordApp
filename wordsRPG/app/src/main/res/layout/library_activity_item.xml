@@ -39,7 +39,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:textStyle="bold"
-            count="@{data.words}"
+            passCount="@{data.words}"
             app:autoSizeMinTextSize="12dp"
             app:autoSizeMaxTextSize="20dp"
             app:autoSizeTextType="uniform"

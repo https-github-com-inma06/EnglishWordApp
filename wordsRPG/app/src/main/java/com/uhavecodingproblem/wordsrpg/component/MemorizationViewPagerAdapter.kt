@@ -1,11 +1,13 @@
 package com.uhavecodingproblem.wordsrpg.component
 
+import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
 
 /**
@@ -20,10 +22,25 @@ import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
  * image swipe ViewPager2
  *
  */
-class MemorizationViewPagerAdapter(private var word: MutableList<WordData>, private val listener: ItemClickListener) :
+class MemorizationViewPagerAdapter(
+    private var word: MutableList<WordData>,
+    private val listener: ItemClickListener
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface ItemClickListener{
+    /**
+        설정저장이 필요한가?
+
+     */
+
+
+//    private var wordSparseBooleanArray = SparseBooleanArray()
+//    private var meanSparseBooleanArray = SparseBooleanArray()
+
+    var hideWordCheck = false
+    var hideMeanCheck = false
+
+    interface ItemClickListener {
         fun micClick(v: View, position: Int)
     }
 
@@ -46,14 +63,47 @@ class MemorizationViewPagerAdapter(private var word: MutableList<WordData>, priv
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: WordData) {
-            val count = "${adapterPosition+1} / ${word.size}"
+            binding.adapter = this@MemorizationViewPagerAdapter
+            binding.data = item
+
+            val count = "${adapterPosition + 1} / ${word.size}"
             binding.wordCount.text = count
-            binding.word.text = item.word
-            binding.mean.text = item.mean
+
+            binding.word.setOnClickListener{
+                hideShowText(view = it, position = adapterPosition, isWord = true)
+            }
+
+            binding.mean.setOnClickListener {
+                hideShowText(view = it, position = adapterPosition, isWord = false)
+            }
 
             binding.wordMic.setOnClickListener {
                 listener.micClick(it, adapterPosition)
             }
         }
+
+        private fun hideShowText(view: View, position: Int, isWord: Boolean){
+            val textView = view as TextView
+            if (textView.text.isNullOrEmpty()){
+                if (isWord) {
+                    textView.text = word[position].word
+                }
+                else {
+                    textView.text = word[position].mean
+                }
+            }else{
+                textView.text = null
+            }
+        }
+    }
+
+    fun hideWord() {
+        hideWordCheck = !hideWordCheck
+        notifyDataSetChanged()
+    }
+
+    fun hideMean() {
+        hideMeanCheck = !hideMeanCheck
+        notifyDataSetChanged()
     }
 }

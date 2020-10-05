@@ -14,6 +14,7 @@
     <string name="toolbar_menu_for_hide_all_word">단어만 모두 가리기</string>
     <string name="toolbar_menu_for_hide_all_mean">뜻만 모두 가리기</string>
     <string name="toolbar_menu_for_print_test_paper_as_pdf">시험지 PDF 출력</string>
+    <string name="toolbar_menu_for_take_an_exam">시험 보기</string>
 
     <!-- My(내) 패키지 -->
     <string name="toolbar_menu_for_add_word">단어 추가하기</string>

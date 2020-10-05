@@ -1,8 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
-import android.content.Intent
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,18 +14,20 @@ import com.uhavecodingproblem.wordsrpg.component.MemorizationViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMemorizationBinding
+import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.util.*
 
 class MemorizationActivity :
-    BaseActivity<ActivityMemorizationBinding>(R.layout.activity_memorization), MemorizationViewPagerAdapter.ItemClickListener {
+    BaseActivity<ActivityMemorizationBinding>(R.layout.activity_memorization),
+    MemorizationViewPagerAdapter.ItemClickListener {
 
     private val memorizationViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var word : MutableList<WordData> = mutableListOf()
+    private var word: MutableList<WordData> = mutableListOf()
     private var textToSpeech: TextToSpeech? = null
+    private lateinit var memorizationRecyclerviewAdapter: MemorizationViewPagerAdapter
 
     override fun ActivityMemorizationBinding.onCreate() {
         Logger.v("실행")
@@ -37,27 +39,28 @@ class MemorizationActivity :
         setViewPager()
     }
 
-    private fun initBinding(){
+    private fun initBinding() {
         binding.run {
             memorizationviewmodel = memorizationViewModel
             lifecycleOwner = this@MemorizationActivity
         }
     }
 
-    private fun setWord(){
+    private fun setWord() {
         intent?.let {
             word = it.getParcelableArrayListExtra<WordData>("Memorization")?.toMutableList()!!
         }
     }
 
-    private fun setViewPager(){
+    private fun setViewPager() {
         binding.memorization.apply {
-            adapter = MemorizationViewPagerAdapter(word, this@MemorizationActivity)
+            memorizationRecyclerviewAdapter = MemorizationViewPagerAdapter(word, this@MemorizationActivity)
+            adapter = memorizationRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
     }
 
-    private fun setToolbarTitle(){
+    private fun setToolbarTitle() {
         setSupportActionBar(binding.memorizationToolbar)
 
         val actionbar = supportActionBar
@@ -72,30 +75,42 @@ class MemorizationActivity :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home ->{
-               finish()
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
             }
-            R.id.hide_word->{
-                Toast.makeText(this@MemorizationActivity, R.string.toolbar_menu_for_hide_all_word, Toast.LENGTH_SHORT).show()
+            R.id.hide_word -> {
+                memorizationRecyclerviewAdapter.hideWord()
             }
-            R.id.hide_mean->{
-                Toast.makeText(this@MemorizationActivity, R.string.toolbar_menu_for_hide_all_mean, Toast.LENGTH_SHORT).show()
+            R.id.hide_mean -> {
+                memorizationRecyclerviewAdapter.hideMean()
             }
-            R.id.print_test_paper->{
-                Toast.makeText(this@MemorizationActivity, R.string.toolbar_menu_for_print_test_paper_as_pdf, Toast.LENGTH_SHORT).show()
+            R.id.print_test_paper -> {
+                Toast.makeText(
+                    this@MemorizationActivity,
+                    R.string.toolbar_menu_for_print_test_paper_as_pdf,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            R.id.take_an_exam -> {
+                Toast.makeText(
+                    this@MemorizationActivity,
+                    R.string.toolbar_menu_for_take_an_exam,
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
         return true
     }
 
-    private fun initTextToSpeech(){
-         textToSpeech = TextToSpeech(this@MemorizationActivity
-         ) { status ->
-             if (status != ERROR) {
-                 textToSpeech?.language = Locale.ENGLISH
-             }
-         }
+    private fun initTextToSpeech() {
+        textToSpeech = TextToSpeech(
+            this@MemorizationActivity
+        ) { status ->
+            if (status != ERROR) {
+                textToSpeech?.language = Locale.ENGLISH
+            }
+        }
     }
 
     override fun micClick(v: View, position: Int) {
@@ -108,7 +123,7 @@ class MemorizationActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        if(textToSpeech != null){
+        if (textToSpeech != null) {
             textToSpeech!!.stop()
             textToSpeech!!.shutdown()
             textToSpeech = null

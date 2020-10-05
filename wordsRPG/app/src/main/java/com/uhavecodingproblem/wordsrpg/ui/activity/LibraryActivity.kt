@@ -56,10 +56,9 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         when(item.itemId){
             android.R.id.home ->{
                 finish()
-                return true
             }
         }
-        return false
+        return true
     }
 
     private fun setToolbarTitle(){
