@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageHeaderBinding
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageItemBinding
+import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.databinding.*
+import com.uhavecodingproblem.wordsrpg.util.ITEM_GIRD_TYPE
+import com.uhavecodingproblem.wordsrpg.util.ITEM_HEADER_TYPE
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
@@ -16,15 +18,12 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-09-27.
  * Description:
  */
-const val ITEM_HEADER_TYPE = 0
-const val ITEM_GIRD_TYPE = 1
 
-class ByLevelRecyclerViewAdapter(val item: List<String>, val listener: GridItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var headerCount = 0
+class ByLevelRecyclerViewAdapter(val item: MutableList<WordType>, val listener: ByLevelGridItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface GridItemClickListener{
-        fun onItemClick(view: View, position: Int)
+    interface ByLevelGridItemClickListener{
+        fun onByLevelItemClick(view: View, position: Int)
     }
 
     fun isHeader(position: Int): Boolean{
@@ -33,10 +32,9 @@ class ByLevelRecyclerViewAdapter(val item: List<String>, val listener: GridItemC
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if(viewType == ITEM_HEADER_TYPE){
-            headerCount++
-            HeaderViewHolder(BasicPackageHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            HeaderViewHolder(BasicPackageByLevelHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }else{
-            ItemViewHolder(BasicPackageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            ItemViewHolder(BasicPackageByLevelItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -44,7 +42,7 @@ class ByLevelRecyclerViewAdapter(val item: List<String>, val listener: GridItemC
         if (getItemViewType(position) == ITEM_HEADER_TYPE )
             (holder as HeaderViewHolder).bind()
         else
-            (holder as ItemViewHolder).bind()
+            (holder as ItemViewHolder).bind(item[position])
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -55,32 +53,34 @@ class ByLevelRecyclerViewAdapter(val item: List<String>, val listener: GridItemC
         return if (item.isNullOrEmpty()) 0 else item.size + 3
     }
 
-    inner class HeaderViewHolder(private val binding: BasicPackageHeaderBinding): RecyclerView.ViewHolder(binding.root){
+    class HeaderViewHolder(private val binding: BasicPackageByLevelHeaderBinding): RecyclerView.ViewHolder(binding.root){
 
         fun bind(){
-            when(headerCount){
-                1->binding.tvBasicPackageHeader.text = "초등"
-                2->binding.tvBasicPackageHeader.text = "중등"
-                3->binding.tvBasicPackageHeader.text = "고등"
+            when(adapterPosition){
+                0->binding.tvBasicPackageHeader.text = "초등학교"
+                7->binding.tvBasicPackageHeader.text = "중학교"
+                11->binding.tvBasicPackageHeader.text = "고등학교"
             }
 
         }
     }
 
-    inner class ItemViewHolder(private val binding: BasicPackageItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(){
-            Logger.v("현재위치 : ${adapterPosition-headerCount} 전체크기 : ${item.size}")
-            binding.basicPackageLayout.setBackgroundResource(R.drawable.ic_launcher_background)
-            binding.tvPackageTitle.text = item[adapterPosition-headerCount]
-            binding.tvPackageDescription.text = item[adapterPosition-headerCount]
+    inner class ItemViewHolder(private val binding: BasicPackageByLevelItemBinding): RecyclerView.ViewHolder(binding.root){
+
+        fun bind(data: WordType){
+            binding.data = data
 
             binding.root.setOnClickListener{
-                Logger.v("클릭됐음")
-                listener.onItemClick(it, adapterPosition-headerCount)
+                listener.onByLevelItemClick(it,adapterPosition-getHeaderCount())
+            }
+        }
+        private fun getHeaderCount() : Int{
+            return when(adapterPosition){
+                0 -> 0
+                in 1..6 -> 1
+                in 7..10 -> 2
+                else -> 3
             }
         }
     }
-
-
-
 }

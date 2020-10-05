@@ -9,6 +9,10 @@
             name="libraryviewmodel"
             type="com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel" />
 
+        <variable
+            name="librarywordviewmodel"
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

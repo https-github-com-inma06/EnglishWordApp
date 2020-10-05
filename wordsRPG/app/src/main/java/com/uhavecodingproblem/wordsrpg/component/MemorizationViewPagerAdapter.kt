@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.uhavecodingproblem.wordsrpg.data.WordData
+import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
 
 /**
@@ -18,7 +20,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
  * image swipe ViewPager2
  *
  */
-class MemorizationViewPagerAdapter(private var word: List<String>, private val listener: ItemClickListener) :
+class MemorizationViewPagerAdapter(private var word: MutableList<WordData>, private val listener: ItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface ItemClickListener{
@@ -43,11 +45,11 @@ class MemorizationViewPagerAdapter(private var word: List<String>, private val l
     inner class PagerViewHolder(private val binding: MemorizationItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(alphabet: String) {
+        fun bind(item: WordData) {
             val count = "${adapterPosition+1} / ${word.size}"
             binding.wordCount.text = count
-            binding.word.text = alphabet
-            binding.mean.text = alphabet
+            binding.word.text = item.word
+            binding.mean.text = item.mean
 
             binding.wordMic.setOnClickListener {
                 listener.micClick(it, adapterPosition)

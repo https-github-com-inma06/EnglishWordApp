@@ -13,6 +13,8 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.MemorizationViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
+import com.uhavecodingproblem.wordsrpg.data.WordData
+import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMemorizationBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
@@ -22,7 +24,7 @@ class MemorizationActivity :
     BaseActivity<ActivityMemorizationBinding>(R.layout.activity_memorization), MemorizationViewPagerAdapter.ItemClickListener {
 
     private val memorizationViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var word : List<String> = listOf()
+    private var word : MutableList<WordData> = mutableListOf()
     private var textToSpeech: TextToSpeech? = null
 
     override fun ActivityMemorizationBinding.onCreate() {
@@ -30,6 +32,7 @@ class MemorizationActivity :
 
         initTextToSpeech()
         setToolbarTitle()
+        setWord()
         initBinding()
         setViewPager()
     }
@@ -38,7 +41,12 @@ class MemorizationActivity :
         binding.run {
             memorizationviewmodel = memorizationViewModel
             lifecycleOwner = this@MemorizationActivity
-            word = memorizationViewModel.getByLevelWord()
+        }
+    }
+
+    private fun setWord(){
+        intent?.let {
+            word = it.getParcelableArrayListExtra<WordData>("Memorization")?.toMutableList()!!
         }
     }
 
@@ -66,10 +74,7 @@ class MemorizationActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             android.R.id.home ->{
-                Intent(this@MemorizationActivity, LibraryActivity::class.java).also {
-                    startActivity(it)
-                    finish()
-                }
+               finish()
             }
             R.id.hide_word->{
                 Toast.makeText(this@MemorizationActivity, R.string.toolbar_menu_for_hide_all_word, Toast.LENGTH_SHORT).show()
@@ -97,7 +102,7 @@ class MemorizationActivity :
         textToSpeech?.let {
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
-            it.speak(word[position], TextToSpeech.QUEUE_FLUSH, null, null)
+            it.speak(word[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
@@ -108,5 +113,9 @@ class MemorizationActivity :
             textToSpeech!!.shutdown()
             textToSpeech = null
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
