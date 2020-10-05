@@ -41,7 +41,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
         initBinding()
         observeTabLayoutPosition()
-        basicRecyclerView()
+        byLevelRecyclerView()
     }
 
     private fun initBinding(){
@@ -54,7 +54,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         }
     }
 
-    private fun basicRecyclerView(){
+    private fun byLevelRecyclerView(){
         basicRecyclerViewAdapter = ByLevelRecyclerViewAdapter(byLevelWord, this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
@@ -115,7 +115,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     private fun observeTabLayoutPosition(){
         basicViewModel.position.observe(viewLifecycleOwner, Observer {
             when(it){
-                0 -> basicRecyclerView()
+                0 -> byLevelRecyclerView()
                 1 -> testRecyclerView()
                 2 -> setDialog()
             }
