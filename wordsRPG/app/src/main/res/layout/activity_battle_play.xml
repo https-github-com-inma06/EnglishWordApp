@@ -95,7 +95,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:hint="내가 풀었던 문제 갯수"
-            android:text="@{@string/battlePlay_battlePlay_completeQuestionCount(battleSystemData.completeQuestion)}"
+            android:text="@{@string/battlePlay_completeQuestionCount(battleSystemData.completeQuestion)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_myLevel" />
 
@@ -106,7 +106,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:hint="현재 풀고 있는 문제"
-            android:text="@{@string/battlePlay_battlePlay_currentQuestionCount(battleSystemData.currentQuestion)}"
+            android:text="@{@string/battlePlay_currentQuestionCount(battleSystemData.currentQuestion)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_completeQuestion" />
 
@@ -117,7 +117,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:hint="상대방이 풀은 문제 갯수"
-            android:text="@{@string/battlePlay_battlePlay_opponentUserCompleteQuestionCount(battleSystemData.opponentQuestion)}"
+            android:text="@{@string/battlePlay_opponentUserCompleteQuestionCount(battleSystemData.opponentQuestion)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:hint="현재 난이도"
-            android:text="@{@string/battlePlay_battlePlay_currentDifficulty(battleSystemData.currentDifficulty)}"
+            android:text="@{@string/battlePlay_currentDifficulty(battleSystemData.currentDifficulty)}"
             app:layout_constraintEnd_toStartOf="@+id/tv_opponentUserId"
             app:layout_constraintStart_toEndOf="@+id/tv_myUserId"
             app:layout_constraintTop_toTopOf="parent" />
