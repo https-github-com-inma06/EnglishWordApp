@@ -2,10 +2,12 @@ package com.uhavecodingproblem.wordsrpg.ui.activity.intro
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import com.kakao.sdk.auth.LoginClient
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityLoginBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogFindPasswordBinding
@@ -53,6 +55,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.btnSendToEmail.setOnClickListener {
             toastShow("${binding.etEmailCheck.text}의 메일을 확인해주세요")
             createDialog.dismiss()
+        }
+    }
+
+    fun setBtnKaKaoTalkLoginClickListener(v:View){
+        LoginClient.instance.loginWithKakaoTalk(this) { token, error ->
+            if (error != null) {
+                Log.d("TAG", "로그인 실패", error)
+            }
+            else if (token != null) {
+                Log.d("TAG", "로그인 성공 ${token.accessToken}")
+            }
         }
     }
 }

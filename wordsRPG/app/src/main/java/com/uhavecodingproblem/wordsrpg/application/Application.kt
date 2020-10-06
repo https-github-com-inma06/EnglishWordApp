@@ -1,7 +1,11 @@
 package com.uhavecodingproblem.wordsrpg.application
+
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
+import com.kakao.sdk.common.KakaoSdk
+import com.uhavecodingproblem.wordsrpg.R
+
 
 /**
  * wordsrpg
@@ -10,11 +14,11 @@ import android.content.pm.ApplicationInfo
  * Created On 2020-09-17.
  * Description:
  */
-class Application:Application() {
-    companion object{
+class Application : Application() {
+    companion object {
 
         //debug 가능 여부 -> default 값은  false
-        var DEBUG_AVAILABLE:Boolean=false
+        var DEBUG_AVAILABLE: Boolean = false
 
     }
 
@@ -22,7 +26,10 @@ class Application:Application() {
         super.onCreate()
 
         //debug 가능 여부 넣어줌.
-        DEBUG_AVAILABLE=isDebuggable(this)
+        DEBUG_AVAILABLE = isDebuggable(this)
+
+        // Kakao Sdk 초기화
+        KakaoSdk.init(this, resources.getString(R.string.kakao_app_key))
     }
 
     //debug 가능 여부를  체크해준다. (logger 안보이게 할려고)
@@ -30,4 +37,8 @@ class Application:Application() {
     fun isDebuggable(context: Context): Boolean {
         return context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
     }
+
+
+
 }
+

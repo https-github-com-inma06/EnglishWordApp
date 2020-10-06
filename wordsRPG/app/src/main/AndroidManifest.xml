@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.uhavecodingproblem.wordsrpg">
 
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -15,6 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
+
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
 
         <activity android:name=".ui.activity.MainActivity">
         </activity>
@@ -30,6 +38,8 @@
 
 <!--        INTRO-->
         <activity android:name=".ui.activity.intro.LoginActivity">
+            <data android:host="oauth"
+                android:scheme="kakao87d68eb5b0677528fa501958b1131ec9" />
         </activity>
         <activity android:name=".ui.activity.intro.RegisterActivity">
         </activity>

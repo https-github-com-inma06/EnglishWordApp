@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class AuthViewModel : ViewModel() {
     private val authRepository = AuthRepository()
 
+
     fun userRegister(
         user: User,
         onSucceed: (JsonElement) -> Unit?, onFailure: () -> Unit?
@@ -52,5 +53,7 @@ class AuthViewModel : ViewModel() {
         }
 
     }
+
+
 
 }

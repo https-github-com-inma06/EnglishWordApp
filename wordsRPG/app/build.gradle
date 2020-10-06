@@ -25,10 +25,13 @@ android {
         }
     }
 
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
@@ -103,4 +106,6 @@ dependencies {
 
     def ted_permission_version='2.2.3'
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
+
+    implementation "com.kakao.sdk:v2-user:2.0.3"
 }
