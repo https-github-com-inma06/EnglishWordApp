@@ -5,6 +5,8 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.uhavecodingproblem.wordsrpg.data.WordData
@@ -26,6 +28,7 @@ object WordBindingAdapter {
             .load(url)
             .error(error)
             .centerCrop()
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
             .into(object : CustomTarget<Drawable>() {
                 override fun onResourceReady(
                     resource: Drawable,

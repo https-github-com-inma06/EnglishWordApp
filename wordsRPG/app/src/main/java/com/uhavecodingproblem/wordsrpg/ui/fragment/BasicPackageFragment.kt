@@ -27,7 +27,8 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-09-18.
  * Description:
  */
-class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package), ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
+class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
+    ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
     private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
@@ -44,7 +45,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         byLevelRecyclerView()
     }
 
-    private fun initBinding(){
+    private fun initBinding() {
         binding.run {
             libraryviewmodel = basicViewModel
             librarywordviewmodel = wordViewModel
@@ -54,7 +55,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         }
     }
 
-    private fun byLevelRecyclerView(){
+    private fun byLevelRecyclerView() {
         basicRecyclerViewAdapter = ByLevelRecyclerViewAdapter(byLevelWord, this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
@@ -62,21 +63,21 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         }
     }
 
-    private fun setWithHeaderGridLayout() : GridLayoutManager{
+    private fun setWithHeaderGridLayout(): GridLayoutManager {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
+                return if ((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
             }
         }
         return gridLayoutManager
     }
 
-    private fun setNoHeaderGridLayout() : GridLayoutManager{
+    private fun setNoHeaderGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
     }
 
-    private fun testRecyclerView(){
+    private fun testRecyclerView() {
         val basicRecyclerViewAdapter = ByTestRecyclerViewAdapter(byTestWord, this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
@@ -98,23 +99,22 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 //        }
 //    }
 
-    private fun setDialog(){
+    private fun setDialog() {
 
         val dialog: AlertDialog? = requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage("현재 준비중입니다.")
             }
-
             builder.create()
         }
         dialog?.show()
 
     }
 
-    private fun observeTabLayoutPosition(){
+    private fun observeTabLayoutPosition() {
         basicViewModel.position.observe(viewLifecycleOwner, Observer {
-            when(it){
+            when (it) {
                 0 -> byLevelRecyclerView()
                 1 -> testRecyclerView()
                 2 -> setDialog()
@@ -123,14 +123,14 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onByLevelItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also{
+        Intent(requireActivity(), LibraryActivity::class.java).also {
             it.putExtra("Words", byLevelWord[position])
             startActivity(it)
         }
     }
 
     override fun onByTestItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also{
+        Intent(requireActivity(), LibraryActivity::class.java).also {
             it.putExtra("Words", byTestWord[position])
             startActivity(it)
         }

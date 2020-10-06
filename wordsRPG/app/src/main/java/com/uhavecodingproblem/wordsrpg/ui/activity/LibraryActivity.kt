@@ -40,14 +40,14 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         libraryItem?.words?.let {
             for (i in it.indices){
                 if (word.size == 40) {
-                    item.add(WordType(type = "수준별", name = "스탭 $count", backgroundImage = "https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg", words = word))
+                    item.add(WordType(type = "수준별", name = "스탭 $count", backgroundImage = libraryItem?.backgroundImage!!, words = word))
                     count++
                     word.clear()
                 }
                 word.add(it[i])
             }
             if (!word.isNullOrEmpty())
-                item.add(WordType(type = "수준별", name = "스탭 $count", backgroundImage = "https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg", words = word))
+                item.add(WordType(type = "수준별", name = "스탭 $count", backgroundImage = libraryItem?.backgroundImage!!, words = word))
         }
         return item
     }
