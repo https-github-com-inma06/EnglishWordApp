@@ -4,22 +4,25 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.DatePicker
-import android.widget.Toast
+import androidx.activity.viewModels
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityRegisterBinding
+import com.uhavecodingproblem.wordsrpg.db.server_db.dataholder.User
 import com.uhavecodingproblem.wordsrpg.ui.activity.MainActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.ui.fragment.MainMyRoomFragment
 import com.uhavecodingproblem.wordsrpg.util.imageUrlReSize
 import com.uhavecodingproblem.wordsrpg.util.tedPermissionCheck
 import com.uhavecodingproblem.wordsrpg.util.toastShow
+import com.uhavecodingproblem.wordsrpg.viewmodel.AuthViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity_register) {
+
+    private val authViewModel by viewModels<AuthViewModel>()
 
     companion object {
         const val REQUEST_IMAGE_CODE = 7852
@@ -31,14 +34,19 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
 
     fun btnRegisterComplete(view: View) {
         with(binding) {
+            val email = etCrateId.text.toString()
+            val password = etCreatePassword.text.toString()
+            val userName:String? = etUserName.text.toString()
+            val userNick:String? = etNickName.text.toString()
+            val createdAt: Int = System.currentTimeMillis().toInt()
+
 
             //하나라도 text 가 비었을 때 return
-            if (etCrateId.text.toString().isEmpty() || etCreatePassword.text.toString().isEmpty() ||
-                etNickName.text.toString().isEmpty() || etPasswordDoubleCheck.text.toString().isEmpty() ||
-                etPhoneNumber.text.toString().isEmpty()
-            ) {
-                toastShow("모두 작성하셔야 합니다.")
+            if (email.isEmpty() || password.isEmpty() ||
+                etPasswordDoubleCheck.text.toString().isEmpty()) {
+                toastShow("필요한 부분은 꼭 작성 합니다.")
                 return
+
             }
             //새로 생성할 비밀번호가 중복체크와 맞지 않을때 return
             if (etCreatePassword.text.toString() != etPasswordDoubleCheck.text.toString()) {
@@ -46,13 +54,24 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
                 return
             }
 
-            if(tvUserbirthDay.text.isEmpty()){
-                toastShow("생년 월일을 선택해주세요")
-                return
-            }
+            val user = User(
+                userId = email,
+                email = email,
+                userPassword = password,
+                userName =userName,
+                createdAt = createdAt,
+                userNick = userNick,
+                emailVerifiedAt = null,
+                rememberToken = null,
+                updatedAt = null
+            )
 
-
-            startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+            authViewModel.userRegister(user,
+                onSucceed = {
+                    startActivity(Intent(this@RegisterActivity, MainActivity::class.java))
+                }
+            ,onFailure ={ toastShow("정확한 정보로 다시 입력해주세요")}
+            )
 
             /**
              * TODO:임시로 지정,로직 결정 후 변경 예정
@@ -93,7 +112,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
         DatePickerDialog(
             this@RegisterActivity,
             { _: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
-
                 binding.tvUserbirthDay.text = getString(R.string.register_datePickerSetText,
                         year,
                         monthOfYear + 1,

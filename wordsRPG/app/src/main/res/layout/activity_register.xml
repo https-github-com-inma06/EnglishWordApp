@@ -2,13 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_registerRootView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
-
 
 
         <EditText
@@ -22,7 +24,6 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_createId" />
 
 
-
         <EditText
             android:id="@+id/et_createPassword"
             android:layout_width="0dp"
@@ -32,15 +33,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/textView10"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+
         <EditText
-            android:id="@+id/et_passwordDoubleCheck"
+            android:id="@+id/et_userName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
-            android:inputType="textPassword"
+            android:ems="10"
+            android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintStart_toStartOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
         <EditText
             android:id="@+id/et_nickName"
             android:layout_width="wrap_content"
@@ -49,15 +53,29 @@
             android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="@+id/ibn_profileImage"
             app:layout_constraintStart_toStartOf="@+id/tv_nickName" />
+
         <EditText
             android:id="@+id/et_phoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:hint="- 없이 적어주세요"
             android:inputType="phone"
             app:layout_constraintEnd_toStartOf="@+id/btn_phoneNumberDoubleCheck"
             app:layout_constraintStart_toStartOf="@+id/tv_phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/tv_phoneNumber" />
+
+
+        <EditText
+            android:id="@+id/et_userNickName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
 
         <TextView
@@ -68,7 +86,15 @@
             android:text="사용할 이메일"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+        <EditText
+            android:id="@+id/et_passwordDoubleCheck"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/textView11" />
         <TextView
             android:id="@+id/textView10"
             android:layout_width="wrap_content"
@@ -77,6 +103,7 @@
             android:text="비밀번호:"
             app:layout_constraintStart_toStartOf="@+id/et_crateId"
             app:layout_constraintTop_toBottomOf="@+id/et_crateId" />
+
         <Button
             android:id="@+id/btn_registerComplete"
             android:layout_width="wrap_content"
@@ -102,10 +129,9 @@
             android:id="@+id/tv_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="닉네임"
+            android:text="닉네임(선택사항)"
             app:layout_constraintBottom_toTopOf="@+id/et_nickName"
-            app:layout_constraintStart_toStartOf="@+id/et_passwordDoubleCheck" />
-
+            app:layout_constraintStart_toStartOf="@+id/et_userNickName" />
 
 
         <TextView
@@ -113,10 +139,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="전화번호"
+            android:text="전화번호 (선택사항)"
             app:layout_constraintStart_toStartOf="@+id/et_nickName"
             app:layout_constraintTop_toBottomOf="@+id/ibn_profileImage" />
-
 
 
         <Button
@@ -134,10 +159,10 @@
             android:layout_height="86dp"
             android:layout_marginTop="8dp"
             android:onClick="ibnClickListener"
+            android:src="@drawable/ic_baseline_add_photo_alternate_86"
             app:layout_constraintEnd_toEndOf="@+id/tv_profileImage"
             app:layout_constraintStart_toStartOf="@+id/tv_profileImage"
-            app:layout_constraintTop_toBottomOf="@+id/tv_profileImage"
-            android:src="@drawable/ic_baseline_add_photo_alternate_86" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_profileImage" />
 
         <TextView
             android:id="@+id/tv_profileImage"
@@ -147,14 +172,14 @@
             android:text="프로필 사진 설정"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/et_nickName"
-            app:layout_constraintTop_toBottomOf="@+id/et_passwordDoubleCheck" />
+            app:layout_constraintTop_toBottomOf="@+id/et_userNickName" />
 
         <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="생년월일"
+            android:text="생년월일 (선택사항)"
             app:layout_constraintStart_toStartOf="@+id/et_phoneNumber"
             app:layout_constraintTop_toBottomOf="@+id/et_phoneNumber" />
 
@@ -180,5 +205,26 @@
             app:layout_constraintStart_toEndOf="@+id/btn_birthDaySearch"
             app:layout_constraintTop_toTopOf="@+id/btn_birthDaySearch" />
 
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="실명(선택 사항)"
+            app:layout_constraintStart_toStartOf="@+id/et_passwordDoubleCheck"
+            app:layout_constraintTop_toBottomOf="@+id/et_passwordDoubleCheck" />
+
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="닉네임(선택 사항)"
+            app:layout_constraintStart_toStartOf="@+id/et_userName"
+            app:layout_constraintTop_toBottomOf="@+id/et_userName" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 </layout>

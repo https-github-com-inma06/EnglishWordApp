@@ -39,7 +39,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(R.layout.activity_spl
                 ivSplashLogo.startAnimation(it)
                 tvSplashLogo.animate().setStartDelay(1500L).alpha(1f).setDuration(1000L).start()
             }
-
     }
 
     override fun onDestroy() {

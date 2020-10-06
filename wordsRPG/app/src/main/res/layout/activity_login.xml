@@ -15,6 +15,7 @@
         android:maxLength="16"
         android:maxLines="1"
         android:inputType="textEmailAddress"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,10 +31,29 @@
         android:inputType="textPassword"
         android:maxLength="16"
         android:maxLines="1"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/et_idLogin"
         app:layout_constraintStart_toStartOf="@+id/et_idLogin"
         app:layout_constraintTop_toBottomOf="@+id/et_idLogin" />
+    <TextView
+        android:id="@+id/tv_idLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_idLogin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_idLogin"
+        app:layout_constraintEnd_toStartOf="@+id/et_idLogin"
+        app:layout_constraintTop_toTopOf="@+id/et_idLogin" />
 
+    <TextView
+        android:id="@+id/tv_passwordLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_passwordLogin"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/et_passwordLogin"
+        app:layout_constraintEnd_toStartOf="@+id/et_passwordLogin"
+        app:layout_constraintTop_toTopOf="@+id/et_passwordLogin" />
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="186dp"
@@ -45,23 +65,7 @@
         app:layout_constraintVertical_bias="0.25"
         app:srcCompat="@drawable/myroom_game_character_sample" />
 
-    <TextView
-        android:id="@+id/tv_idLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_idLogin"
-        app:layout_constraintBottom_toBottomOf="@+id/et_idLogin"
-        app:layout_constraintEnd_toStartOf="@+id/et_idLogin"
-        app:layout_constraintTop_toTopOf="@+id/et_idLogin" />
 
-    <TextView
-        android:id="@+id/tv_passwordLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_passwordLogin"
-        app:layout_constraintBottom_toBottomOf="@+id/et_passwordLogin"
-        app:layout_constraintEnd_toStartOf="@+id/et_passwordLogin"
-        app:layout_constraintTop_toTopOf="@+id/et_passwordLogin" />
 
     <Button
         android:id="@+id/btn_login"
@@ -70,6 +74,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:text="@string/login_login"
+        android:visibility="gone"
         android:onClick="btnLoginClickEvent"
         app:layout_constraintBottom_toTopOf="@+id/btn_goToTheRegister"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,6 +89,7 @@
         android:layout_marginEnd="32dp"
         android:onClick="btnGoToTheRegisterClickEvent"
         android:text="@string/login_register"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_findPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +100,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/login_passwordFind"
+        android:visibility="gone"
         android:onClick="btnFindPasswordClickEvent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/btn_goToTheRegister"
@@ -110,6 +117,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_wordRpgLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="영단어 회원으로 로그인"
+        app:layout_constraintBottom_toTopOf="@+id/btn_kaKaoTalkLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/btn_kaKaoTalkLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="카카오톡 로그인"
+        app:layout_constraintBottom_toTopOf="@+id/btn_googleTalkLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_wordRpgLogin" />
+
+    <Button
+        android:id="@+id/btn_googleTalkLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="구글 로그인"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_kaKaoTalkLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

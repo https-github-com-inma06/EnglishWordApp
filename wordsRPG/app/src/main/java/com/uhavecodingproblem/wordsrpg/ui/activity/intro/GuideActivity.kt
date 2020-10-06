@@ -61,8 +61,7 @@ class GuideActivity : BaseActivity<ActivityGuideBinding>(R.layout.activity_guide
                 prevPosition = position
             }
 
-            override fun onPageScrollStateChanged(state: Int) {
-            }
+            override fun onPageScrollStateChanged(state: Int) {}
 
         })
     }

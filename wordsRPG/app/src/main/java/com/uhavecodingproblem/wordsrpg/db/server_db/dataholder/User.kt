@@ -1,26 +1,26 @@
 package com.uhavecodingproblem.wordsrpg.db.server_db.dataholder
 
-import androidx.room.PrimaryKey
-import org.jetbrains.annotations.NotNull
+import com.google.gson.annotations.SerializedName
 
-//이메일-->
-//프로필 이미지 -->
-//유저 전화번호-->
-//유저 닉네임 -->
-//유저 생일-->
 data class User(
-
-  @PrimaryKey
-val idx : Int,
-val user_id:String,
-val user_name: String?,
-val user_nick: String?,
-val user_password: String,
-val email: String,
-val email_verified_at: String?,
-val remember_token: String?,
-val created_at: Int,
-val updated_at: String?
+    @SerializedName("user_id")
+    val userId:String,
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("user_password")
+    val userPassword: String,
+    @SerializedName("user_name")
+    val userName: String?,
+    @SerializedName("user_nick")
+    val userNick: String?,
+    @SerializedName("email_verified_at")
+    val emailVerifiedAt: String?,
+    @SerializedName("remember_token")
+    var rememberToken: String?,
+    @SerializedName("created_at")
+    val createdAt: Int,
+    @SerializedName("updated_at")
+    val updatedAt: String?
 
 //    @PrimaryKey
 //    val idx: String,

@@ -14,9 +14,14 @@
     <string name="login_passwordLogin">비밀번호:</string>
     <string name="guide_appStart">시작 하기</string>
 
-<!--    회원가입-->
+    <!--    회원가입-->
     <string name="register_datePickerSetText">"%d년 %d월 %d일"</string>
     <string name="login_passwordFind">비밀번호 찾기</string>
     <string name="login_greeting">어서오세요 영단어 RPG 입니다</string>
+
+
+<!--   카카오톡 sdk 키-->
+    <string name="kakao_app_key">87d68eb5b0677528fa501958b1131ec9</string>
+
 
 </resources>
