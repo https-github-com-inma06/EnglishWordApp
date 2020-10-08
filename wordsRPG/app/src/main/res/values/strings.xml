@@ -34,6 +34,7 @@
     <string name="str_complete">완료</string>
     <string name="str_add">추가</string>
     <string name="str_tag_size_max">태그는 최대 3개 입니다. </string>
+    <string name="str_tag_no_duplicate">똑같은 태그는 사용불가!</string>
     <string name="str_tag_detect_space">태그는 단어 한개로 구성해주세요</string>
     <string name="str_tag_no_content">적은 태그 내용이 없습니다.</string>
     <string name="str_add_new_tag_title">패키지를 표현할 태그를 최대 3개 추가해주세요</string>
