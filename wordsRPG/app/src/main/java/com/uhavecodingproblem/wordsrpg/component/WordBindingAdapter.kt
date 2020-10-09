@@ -30,7 +30,7 @@ object WordBindingAdapter {
             .load(url)
             .error(error)
             .centerCrop()
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(100)))
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(25)))
             .into(object : CustomTarget<Drawable>() {
                 override fun onResourceReady(
                     resource: Drawable,
