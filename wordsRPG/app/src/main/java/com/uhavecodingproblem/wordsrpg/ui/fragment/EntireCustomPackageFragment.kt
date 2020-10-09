@@ -9,7 +9,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomPackageListMockData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.MemorizationActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.ORIGINAL_PACKAGE_TYPE
@@ -56,7 +56,7 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
 
 
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-                val i= Intent(requireActivity(), MemorizationActivity::class.java)
+                val i= Intent(requireActivity(), StudyActivity::class.java)
                 i.putExtra("packagename",packageName)
                 startActivity(i)
             }

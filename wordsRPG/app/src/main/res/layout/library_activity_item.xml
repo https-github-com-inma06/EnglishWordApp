@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_library"
         android:layout_width="match_parent"
-        backgroundImage="@{data.backgroundImage}"
+        backgroundImage="@{data.thumbnailImage}"
         error="@{@drawable/ic_launcher_background}"
         android:layout_height="150dp"
         android:layout_margin="8dp">

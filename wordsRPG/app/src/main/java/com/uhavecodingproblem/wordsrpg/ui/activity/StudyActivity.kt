@@ -2,7 +2,6 @@ package com.uhavecodingproblem.wordsrpg.ui.activity
 
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -10,26 +9,25 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.MemorizationViewPagerAdapter
+import com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.databinding.ActivityMemorizationBinding
-import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.util.*
 
-class MemorizationActivity :
-    BaseActivity<ActivityMemorizationBinding>(R.layout.activity_memorization),
-    MemorizationViewPagerAdapter.ItemClickListener {
+class StudyActivity :
+    BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
+    StudyViewPagerAdapter.ItemClickListener {
 
-    private val memorizationViewModel: WordViewModel by viewModels { WordViewModelFactory() }
+    private val studyViewModel: WordViewModel by viewModels { WordViewModelFactory() }
     private var word: MutableList<WordData> = mutableListOf()
     private var textToSpeech: TextToSpeech? = null
-    private lateinit var memorizationRecyclerviewAdapter: MemorizationViewPagerAdapter
+    private lateinit var studyRecyclerviewAdapter: StudyViewPagerAdapter
 
-    override fun ActivityMemorizationBinding.onCreate() {
+    override fun ActivityStudyBinding.onCreate() {
         Logger.v("실행")
 
         initTextToSpeech()
@@ -41,27 +39,27 @@ class MemorizationActivity :
 
     private fun initBinding() {
         binding.run {
-            memorizationviewmodel = memorizationViewModel
-            lifecycleOwner = this@MemorizationActivity
+            studyviewmodel = studyViewModel
+            lifecycleOwner = this@StudyActivity
         }
     }
 
     private fun setWord() {
         intent?.let {
-            word = it.getParcelableArrayListExtra<WordData>("Memorization")?.toMutableList()!!
+            word = it.getParcelableArrayListExtra<WordData>("StudyWord")?.toMutableList()!!
         }
     }
 
     private fun setViewPager() {
-        binding.memorization.apply {
-            memorizationRecyclerviewAdapter = MemorizationViewPagerAdapter(word, this@MemorizationActivity)
-            adapter = memorizationRecyclerviewAdapter
+        binding.viewpager2Study.apply {
+            studyRecyclerviewAdapter = StudyViewPagerAdapter(word, this@StudyActivity)
+            adapter = studyRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
     }
 
     private fun setToolbarTitle() {
-        setSupportActionBar(binding.memorizationToolbar)
+        setSupportActionBar(binding.studyToolbar)
 
         val actionbar = supportActionBar
         actionbar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
@@ -70,7 +68,7 @@ class MemorizationActivity :
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.memorization_toolbar_menu_item, menu)
+        menuInflater.inflate(R.menu.study_toolbar_menu_item, menu)
         return true
     }
 
@@ -80,21 +78,21 @@ class MemorizationActivity :
                 finish()
             }
             R.id.hide_word -> {
-                memorizationRecyclerviewAdapter.hideWord()
+                studyRecyclerviewAdapter.hideWord()
             }
             R.id.hide_mean -> {
-                memorizationRecyclerviewAdapter.hideMean()
+                studyRecyclerviewAdapter.hideMean()
             }
             R.id.print_test_paper -> {
                 Toast.makeText(
-                    this@MemorizationActivity,
+                    this@StudyActivity,
                     R.string.toolbar_menu_for_print_test_paper_as_pdf,
                     Toast.LENGTH_SHORT
                 ).show()
             }
             R.id.take_an_exam -> {
                 Toast.makeText(
-                    this@MemorizationActivity,
+                    this@StudyActivity,
                     R.string.toolbar_menu_for_take_an_exam,
                     Toast.LENGTH_SHORT
                 ).show()
@@ -105,7 +103,7 @@ class MemorizationActivity :
 
     private fun initTextToSpeech() {
         textToSpeech = TextToSpeech(
-            this@MemorizationActivity
+            this@StudyActivity
         ) { status ->
             if (status != ERROR) {
                 textToSpeech?.language = Locale.ENGLISH

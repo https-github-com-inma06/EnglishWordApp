@@ -7,16 +7,14 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.uhavecodingproblem.wordsrpg.Dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.MemorizationActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
@@ -138,7 +136,7 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
 
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName",Toast.LENGTH_SHORT).show()
-                val i= Intent(requireActivity(),MemorizationActivity::class.java)
+                val i= Intent(requireActivity(),StudyActivity::class.java)
                 i.putExtra("packagename",packageName)
                 startActivity(i)
             }

@@ -1,12 +1,18 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
+import android.os.Build
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.uhavecodingproblem.wordsrpg.dialog.PackageDialog
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.ByLevelRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.ByTestRecyclerViewAdapter
@@ -123,16 +129,51 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onByLevelItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also {
-            it.putExtra("Words", byLevelWord[position])
-            startActivity(it)
-        }
+        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
+        dialog.show()
+        dialogResize(dialog)
+
+//        Intent(requireActivity(), LibraryActivity::class.java).also {
+//            it.putExtra("Words", byLevelWord[position])
+//            startActivity(it)
+//        }
     }
 
     override fun onByTestItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also {
-            it.putExtra("Words", byTestWord[position])
-            startActivity(it)
+        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
+        dialog.show()
+        dialogResize(dialog)
+//        Intent(requireActivity(), LibraryActivity::class.java).also {
+//            it.putExtra("Words", byTestWord[position])
+//            startActivity(it)
+//        }
+    }
+
+    private fun dialogResize(dialog: Dialog) {
+
+        if (Build.VERSION.SDK_INT < 30) {
+            val display = requireActivity().windowManager.defaultDisplay
+            val size = Point()
+
+            display.getSize(size)
+
+            val window = dialog.window
+
+            val x = (size.x * 0.95f).toInt()
+            val y = (size.y * 0.5f).toInt()
+
+            window?.setLayout(x, y)
+        }else{
+            val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+            val rect = windowManager.currentWindowMetrics.bounds
+
+            val window = dialog.window
+
+            val x = (rect.width() * 0.95f).toInt()
+            val y = (rect.height() * 0.5f).toInt()
+
+            window?.setLayout(x, y)
         }
     }
 }

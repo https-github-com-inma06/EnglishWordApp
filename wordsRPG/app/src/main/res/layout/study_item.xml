@@ -6,7 +6,7 @@
 
         <variable
             name="adapter"
-            type="com.uhavecodingproblem.wordsrpg.component.MemorizationViewPagerAdapter" />
+            type="com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter" />
 
         <variable
             name="data"

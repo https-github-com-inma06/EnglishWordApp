@@ -1,28 +1,26 @@
 package com.uhavecodingproblem.wordsrpg.component
 
-import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.databinding.MemorizationItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.StudyItemBinding
 
 /**
  * wordsrpg
- * Class: MemorizationViewPagerAdapter
+ * Class: StudyViewPagerAdapter
  * Created by pyg10.
  * Created On 2020-09-21.
  * Description:
  *
- * Memorization ViewPager2 Adapter
+ * study ViewPager2 Adapter
  * no fragment swipe
  * image swipe ViewPager2
  *
  */
-class MemorizationViewPagerAdapter(
+class StudyViewPagerAdapter(
     private var word: MutableList<WordData>,
     private val listener: ItemClickListener
 ) :
@@ -45,9 +43,9 @@ class MemorizationViewPagerAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val memorizationItemBinding =
-            MemorizationItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PagerViewHolder(memorizationItemBinding)
+        val studyItemBinding =
+            StudyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PagerViewHolder(studyItemBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -59,11 +57,11 @@ class MemorizationViewPagerAdapter(
         return if (word.isNullOrEmpty()) 0 else word.size
     }
 
-    inner class PagerViewHolder(private val binding: MemorizationItemBinding) :
+    inner class PagerViewHolder(private val binding: StudyItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: WordData) {
-            binding.adapter = this@MemorizationViewPagerAdapter
+            binding.adapter = this@StudyViewPagerAdapter
             binding.data = item
 
             val count = "${adapterPosition + 1} / ${word.size}"

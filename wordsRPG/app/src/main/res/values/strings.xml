@@ -57,4 +57,9 @@
     <string name="battlePlay_completeQuestionCount">지금까지 풀었던 문제 갯수(%d)개</string>
     <string name="battlePlay_opponentUserCompleteQuestionCount">상대가 풀었던 문제 갯수(%d)개</string>
 
+
+    <string name="package_thumbnail">페키지 썸네일</string>
+    <string name="move_study">학습하기</string>
+    <string name="move_test">시험보기</string>
+
 </resources>
