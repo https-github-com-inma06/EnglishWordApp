@@ -20,26 +20,39 @@
             android:id="@+id/tv_package_title"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:gravity="center"
             android:text="@{data.name}"
+            android:gravity="center"
             android:textColor="#000000"
             android:textStyle="bold"
+            android:background="@drawable/package_thumbnail_title"
             app:autoSizeTextType="uniform"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="12sp"
             app:layout_constraintHeight_percent="0.2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/tv_package_count"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/tv_package_count"
+            android:id="@+id/tv_writer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@{data.writer}"
+            android:background="#668c8c8c"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toBottomOf="@id/tv_package_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_package_progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             passCount="@{data.words}"
             android:textColor="#000000"
             android:textStyle="bold"
+            android:background="@drawable/package_thumbnail_progress"
             app:autoSizeTextType="uniform"
             app:autoSizeMaxTextSize="20sp"
             app:autoSizeMinTextSize="12sp"
