@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.component
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
@@ -10,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.uhavecodingproblem.wordsrpg.data.WordData
+import java.util.logging.Logger
 
 /**
  * wordsrpg
@@ -51,6 +53,18 @@ object WordBindingAdapter {
                 count++
         }
         val value = "$count / ${item.size}"
+        textView.text = value
+    }
+
+    @JvmStatic
+    @BindingAdapter("progress")
+    fun progress(textView: TextView, item: MutableList<WordData>){
+        var count = 0
+        for (i in item.indices) {
+            if (item[i].isPassed)
+                count++
+        }
+        val value = "${((count.toDouble()/item.size) * 100).toInt()}%"
         textView.text = value
     }
 

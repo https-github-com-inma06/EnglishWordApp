@@ -38,7 +38,7 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         libraryItem?.words?.let {
             for (i in it.indices){
                 if (word.size == 10) {
-                    item.add(WordType(type = "수준별", name = "스탭 $count", thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
+                    item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
                     count++
                     word = mutableListOf()
                 }
@@ -46,7 +46,7 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
             }
 
             if (!word.isNullOrEmpty())
-                item.add(WordType(type = "수준별", name = "스탭 $count", thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
+                item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
 
         }
         return item
