@@ -2,6 +2,8 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Intent
 import android.view.View
+import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.model.AccessTokenInfo
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainMyRoomBinding
@@ -25,18 +27,42 @@ class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.frag
     /**
      * TODO: 로그인 방법 구체화 시키면 아래 구문은 삭제할 예정임.
      */
-    companion object {
-        var loginCheck = false
-    }
+
+
 
     override fun FragmentMainMyRoomBinding.onCreateView() {
         Logger.v("실행")
 
         //true 라면 유저모드, false 라면 비 로그인 모드 UI설정
-        setLoginCheckUIControl(loginCheck)
+        setTokenCheck()
         setAdapter()
         setButtonClickListeners()
 
+    }
+
+    private fun setLoginCheckUIControl(anonymousUserMode: Boolean) = with(binding) {
+        if (!anonymousUserMode) {
+            layoutAnonymousUser.visibility = View.VISIBLE
+            rootViewGroupMyRoom.getChildAt(1).visibility = View.VISIBLE
+            for (i in 2 until rootViewGroupMyRoom.childCount) {
+                rootViewGroupMyRoom.getChildAt(i).visibility = View.GONE
+            }
+            return
+        }
+
+        layoutAnonymousUser.visibility = View.GONE
+        rootViewGroupMyRoom.getChildAt(1).visibility = View.GONE
+        for (i in 2 until rootViewGroupMyRoom.childCount) {
+            rootViewGroupMyRoom.getChildAt(i).visibility = View.VISIBLE
+        }
+    }
+
+    private fun setTokenCheck() {
+        var check:Boolean
+        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
+            check = tokenInfo != null && error == null
+            setLoginCheckUIControl(check)
+        }
     }
 
     private fun FragmentMainMyRoomBinding.setButtonClickListeners() {
@@ -59,23 +85,6 @@ class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.frag
         }
 
         rvMyRoom.adapter = MyRoomRecyclerViewAdapter(imageList)
-    }
-
-    private fun FragmentMainMyRoomBinding.setLoginCheckUIControl(anonymousUserMode: Boolean) {
-        if (!anonymousUserMode) {
-            layoutAnonymousUser.visibility = View.VISIBLE
-            rootViewGroupMyRoom.getChildAt(1).visibility = View.VISIBLE
-            for (i in 2 until rootViewGroupMyRoom.childCount) {
-                rootViewGroupMyRoom.getChildAt(i).visibility = View.GONE
-            }
-            return
-        }
-
-        layoutAnonymousUser.visibility = View.GONE
-        rootViewGroupMyRoom.getChildAt(1).visibility = View.GONE
-        for (i in 2 until rootViewGroupMyRoom.childCount) {
-            rootViewGroupMyRoom.getChildAt(i).visibility = View.VISIBLE
-        }
     }
 
 

@@ -26,7 +26,6 @@ android {
     }
 
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -37,7 +36,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 }
@@ -72,7 +71,7 @@ dependencies {
     // glide 추가
     def glide_version = '4.11.0'
     implementation "com.github.bumptech.glide:glide:$glide_version"
-    kapt  "com.github.bumptech.glide:compiler:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 
 
     //retrofit  추가
@@ -97,15 +96,18 @@ dependencies {
     //room 추가
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt  "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     //kotlin 용 확장 및  코루틴 적용  room
     implementation "androidx.room:room-ktx:$room_version"
 
+    //서클 이미지 뷰
     def circularImageView_version = '4.2.0'
     implementation "com.mikhaellopez:circularimageview:$circularImageView_version"
 
-    def ted_permission_version='2.2.3'
+    //테드 퍼미션
+    def ted_permission_version = '2.2.3'
     implementation "gun0912.ted:tedpermission:$ted_permission_version"
 
+    //카카오톡 로그인
     implementation "com.kakao.sdk:v2-user:2.0.3"
 }

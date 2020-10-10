@@ -76,7 +76,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity
             /**
              * TODO:임시로 지정,로직 결정 후 변경 예정
              */
-            MainMyRoomFragment.loginCheck = true
         }
     }
 
