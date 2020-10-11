@@ -44,6 +44,8 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             }
 
             setContentView(binding.root)
+
+            binding.layoutImage.clipToOutline = true
         }else{
             val binding: CustomPackageDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.custom_package_dialog, null, false)
 
@@ -53,6 +55,8 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             }
 
             setContentView(binding.root)
+
+            binding.layoutImage.clipToOutline = true
         }
     }
 

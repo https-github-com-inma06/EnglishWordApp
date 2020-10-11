@@ -32,13 +32,20 @@
             android:id="@+id/layout_image"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            backgroundImage="@{information.profileImageUrl}"
-            error="@{@drawable/ic_launcher_background}"
+            android:background="@drawable/package_thumbnail_image_round"
             app:layout_constraintHeight_percent="0.6"
             app:layout_constraintWidth_percent="0.4"
             app:layout_constraintLeft_toRightOf="@id/space"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/img_basic_package_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                image="@{information.profileImageUrl}"
+                error="@{@drawable/ic_launcher_background}"
+                android:contentDescription="@string/package_thumbnail"/>
 
             <TextView
                 android:id="@+id/tv_title"
