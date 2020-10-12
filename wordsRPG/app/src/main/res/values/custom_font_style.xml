@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="customTextViewFontStyle" parent="Widget.AppCompat.TextView" >
+        <item name="android:fontFamily">@font/binggreae_melona_font_family</item>
+    </style>
+    <style name="customEditTextViewFontStyle" parent="Widget.AppCompat.EditText" >
+        <item name="android:fontFamily">@font/binggreae_melona_font_family</item>
+    </style>
+    <style name="customButtonFontStyle" parent="Widget.AppCompat.Button" >
+        <item name="android:fontFamily">@font/binggreae_melona_font_family</item>
+    </style>
+    <style name="customRadioButtonFontStyle" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:fontFamily">@font/binggreae_melona_font_family</item>
+    </style>
+    <style name="customCheckBoxFontStyle" parent="Widget.AppCompat.CompoundButton.CheckBox" >
+        <item name="android:fontFamily">@font/binggreae_melona_font_family</item>
+    </style>
+
+</resources>
