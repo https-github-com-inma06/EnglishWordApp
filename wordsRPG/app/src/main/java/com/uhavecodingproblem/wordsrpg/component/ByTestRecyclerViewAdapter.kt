@@ -36,7 +36,7 @@ class ByTestRecyclerViewAdapter(val item: MutableList<WordType>,val listener: By
         fun bind(data: WordType){
             binding.data = data
 
-            binding.root.clipToOutline = true
+            binding.basicPackageLayout.clipToOutline = true
             binding.root.setOnClickListener {
                 listener.onByTestItemClick(it, adapterPosition)
             }

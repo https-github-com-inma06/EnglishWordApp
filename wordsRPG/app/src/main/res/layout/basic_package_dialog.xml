@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="information"
             type="com.uhavecodingproblem.wordsrpg.data.WordType" />
@@ -16,98 +16,144 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_dialog"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Space
-            android:id="@+id/space"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintWidth_percent="0.1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/package_dialog_round">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_image"
+            android:id="@+id/layout_profile_const"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/package_thumbnail_image_round"
-            app:layout_constraintHeight_percent="0.6"
-            app:layout_constraintWidth_percent="0.4"
-            app:layout_constraintLeft_toRightOf="@id/space"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_height="match_parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintWidth_percent="0.3">
 
-            <ImageView
-                android:id="@+id/img_dialog_package_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                image="@{information.thumbnailImage}"
-                error="@{@drawable/ic_launcher_background}"
-                android:contentDescription="@string/package_thumbnail"/>
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:text="@{information.name}"
-                android:textColor="#CD1039"
-                android:textStyle="bold"
-                android:background="@drawable/package_thumbnail_title"
-                android:gravity="center"
+            <Space
+                android:id="@+id/profile_space"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tv_copywriter"
+            <FrameLayout
+                android:id="@+id/layout_profile_frame"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="@{@string/package_writer(information.writer)}"
-                android:textColor="#CD1039"
-                android:textStyle="bold"
-                android:background="#668c8c8c"
-                android:gravity="end|center_vertical"
                 app:layout_constraintHeight_percent="0.2"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"/>
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profile_space">
 
-            <TextView
-                android:id="@+id/tv_progress"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:textColor="#CD1039"
-                progress="@{information.words}"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:background="@drawable/package_thumbnail_progress"
-                app:layout_constraintHeight_percent="0.1"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/on_home"
+                    app:civ_border_width="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/profile_space" />
+
+                <TextView
+                    android:id="@+id/tv_profile_user_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/package_dialog_profile_user_id"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:text="@{information.writer}"
+                    android:textColor="#FFFFFF" />
+
+            </FrameLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-        <TextView
-            android:id="@+id/tv_description"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_content"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@{information.description}"
-            app:layout_constraintHeight_percent="0.4"
-            app:layout_constraintWidth_percent="0.4"
-            app:layout_constraintLeft_toRightOf="@id/layout_image"
+            android:layout_height="match_parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_image"/>
+            app:layout_constraintWidth_percent="0.7">
 
-        <Button
-            android:id="@+id/btn_move_study"
-            android:onClick="@{customdialog::moveStudy}"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:textStyle="bold"
-            android:text="@string/move_study"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintLeft_toLeftOf="@id/tv_description"
-            app:layout_constraintRight_toRightOf="@id/tv_description"
-            app:layout_constraintBottom_toBottomOf="@id/layout_image"/>
+            <ImageView
+                android:id="@+id/iv_package_image"
+                error="@{@drawable/ic_launcher_background}"
+                image="@{information.thumbnailImage}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/package_thumbnail" />
+
+            <Space
+                android:id="@+id/content_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_package_title_description"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#4D000000"
+                app:layout_constraintHeight_percent="0.5"
+                app:layout_constraintTop_toBottomOf="@id/content_space">
+
+                <TextView
+                    android:id="@+id/tv_package_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="@{information.name}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintHeight_percent="0.35"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_package_description"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/package_dialog_description_round"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="@{information.description}"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintHeight_percent="0.55"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_package_title"
+                    app:layout_constraintWidth_percent="0.85" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Space
+                android:id="@+id/button_space"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintHeight_percent="0.1"
+                app:layout_constraintTop_toBottomOf="@id/layout_package_title_description" />
+
+            <Button
+                android:id="@+id/btn_move_study"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/package_dialog_button_round"
+                android:gravity="center"
+                android:onClick="@{customdialog::moveStudy}"
+                android:text="@string/move_study"
+                android:textScaleX="1.2"
+                android:textColor="@color/colorWhite"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                app:layout_constraintHeight_percent="0.15"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_space"
+                app:layout_constraintWidth_percent="0.6" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

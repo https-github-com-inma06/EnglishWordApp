@@ -3,10 +3,15 @@ package com.uhavecodingproblem.wordsrpg.dialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
@@ -32,7 +37,11 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             dimAmount = 0.8f
         }
         //setCancelable(false)
-        window?.attributes = layoutParam
+        window?.let {
+            it.attributes = layoutParam
+            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            it.requestFeature(Window.FEATURE_NO_TITLE)
+        }
 
         //기본패키지인가?
         if (isBasic) {
@@ -44,8 +53,7 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             }
 
             setContentView(binding.root)
-
-            binding.layoutImage.clipToOutline = true
+            binding.layoutDialog.clipToOutline = true
         }else{
             val binding: CustomPackageDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.custom_package_dialog, null, false)
 

@@ -140,7 +140,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onByTestItemClick(view: View, position: Int) {
-        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
+        val dialog = PackageDialog(requireContext(), byTestWord[position], true)
         dialog.show()
         dialogResize(dialog)
 //        Intent(requireActivity(), LibraryActivity::class.java).also {
@@ -160,7 +160,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val window = dialog.window
 
             val x = (size.x * 0.95f).toInt()
-            val y = (size.y * 0.5f).toInt()
+            val y = (size.y * 0.6f).toInt()
 
             window?.setLayout(x, y)
         }else{
@@ -171,7 +171,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val window = dialog.window
 
             val x = (rect.width() * 0.95f).toInt()
-            val y = (rect.height() * 0.5f).toInt()
+            val y = (rect.height() * 0.6f).toInt()
 
             window?.setLayout(x, y)
         }

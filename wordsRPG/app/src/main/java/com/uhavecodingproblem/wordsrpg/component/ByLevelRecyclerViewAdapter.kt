@@ -70,7 +70,7 @@ class ByLevelRecyclerViewAdapter(val item: MutableList<WordType>, val listener: 
         fun bind(){
             binding.data = item[adapterPosition-getHeaderCount()]
 
-            binding.root.clipToOutline = true
+            binding.basicPackageLayout.clipToOutline = true
             binding.root.setOnClickListener{
                 listener.onByLevelItemClick(it,adapterPosition-getHeaderCount())
             }

@@ -59,8 +59,8 @@
 
 
     <string name="package_thumbnail">페키지 썸네일</string>
-    <string name="package_writer">By %s</string>
-    <string name="move_study">학습하기</string>
+    <string name="package_writer">\[ %s \]</string>
+    <string name="move_study">START</string>
     <string name="move_test">시험보기</string>
 
 </resources>

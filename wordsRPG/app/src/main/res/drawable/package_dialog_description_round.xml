@@ -3,10 +3,10 @@
     android:shape="rectangle">
 
     <solid
-        android:color="#CCFFFFFF"/>
+        android:color="#B3000000"/>
 
     <corners
         android:bottomLeftRadius="10dp"
-        android:bottomRightRadius="10dp"/>
+        android:topLeftRadius="10dp"/>
 
 </shape>

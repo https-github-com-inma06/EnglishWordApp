@@ -13,4 +13,6 @@
     <color name="tab_background_selected">#969696</color>
     <color name="tab_background_unselected">#FFFFFF</color>
 
+    <color name="package_button_color">#5AD18F</color>
+
 </resources>
