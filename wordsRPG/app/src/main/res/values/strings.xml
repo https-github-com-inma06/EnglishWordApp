@@ -63,4 +63,6 @@
     <string name="move_study">START</string>
     <string name="move_test">시험보기</string>
 
+    <string name="study_mic">TTS</string>
+
 </resources>

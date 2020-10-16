@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
+import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import android.view.Menu
@@ -35,6 +36,18 @@ class StudyActivity :
         setWord()
         initBinding()
         setViewPager()
+    }
+
+    /**
+     *
+     * TTS Sound = 시스템사운드가아닌 미디어 사운드에 영향을 받기 때문에 해당액티비티에서 사운드조절할 때 미디어 사운드 조절가능하게 설정.
+     * https://developer.android.com/guide/topics/media-apps/mediabuttons?hl=ko
+     *
+     */
+
+    override fun onResume() {
+        super.onResume()
+        volumeControlStream = AudioManager.STREAM_MUSIC
     }
 
     private fun initBinding() {
