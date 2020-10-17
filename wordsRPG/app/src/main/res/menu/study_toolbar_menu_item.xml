@@ -17,4 +17,10 @@
         app:showAsAction="never"
         android:title="@string/toolbar_menu_for_print_test_paper_as_pdf"/>
 
+    <item
+        android:id="@+id/take_an_exam"
+        app:showAsAction="never"
+        android:title="@string/toolbar_menu_for_take_an_exam"
+        />
+
 </menu>

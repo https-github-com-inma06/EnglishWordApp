@@ -12,10 +12,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_library"
         android:layout_width="match_parent"
-        backgroundImage="@{data.backgroundImage}"
-        error="@{@drawable/ic_launcher_background}"
+        android:background="@drawable/package_thumbnail_image_round"
         android:layout_height="150dp"
         android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/img_library_package_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            image="@{data.thumbnailImage}"
+            error="@{@drawable/ic_launcher_background}"
+            android:contentDescription="@string/package_thumbnail"/>
 
         <TextView
             android:id="@+id/tv_title"
@@ -39,7 +46,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:textStyle="bold"
-            count="@{data.words}"
+            passCount="@{data.words}"
             app:autoSizeMinTextSize="12dp"
             app:autoSizeMaxTextSize="20dp"
             app:autoSizeTextType="uniform"

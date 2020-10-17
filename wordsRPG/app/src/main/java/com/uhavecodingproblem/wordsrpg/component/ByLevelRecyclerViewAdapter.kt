@@ -42,7 +42,7 @@ class ByLevelRecyclerViewAdapter(val item: MutableList<WordType>, val listener: 
         if (getItemViewType(position) == ITEM_HEADER_TYPE )
             (holder as HeaderViewHolder).bind()
         else
-            (holder as ItemViewHolder).bind(item[position])
+            (holder as ItemViewHolder).bind()
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -67,9 +67,10 @@ class ByLevelRecyclerViewAdapter(val item: MutableList<WordType>, val listener: 
 
     inner class ItemViewHolder(private val binding: BasicPackageByLevelItemBinding): RecyclerView.ViewHolder(binding.root){
 
-        fun bind(data: WordType){
-            binding.data = data
+        fun bind(){
+            binding.data = item[adapterPosition-getHeaderCount()]
 
+            binding.basicPackageLayout.clipToOutline = true
             binding.root.setOnClickListener{
                 listener.onByLevelItemClick(it,adapterPosition-getHeaderCount())
             }

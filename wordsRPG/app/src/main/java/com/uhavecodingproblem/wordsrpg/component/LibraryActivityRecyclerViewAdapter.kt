@@ -38,6 +38,7 @@ class LibraryActivityRecyclerViewAdapter(val item: MutableList<WordType>, privat
 
             binding.data = data
 
+            binding.root.clipToOutline = true
             binding.root.setOnClickListener {
                 listener.onItemClick(it, item[adapterPosition].words, adapterPosition)
             }

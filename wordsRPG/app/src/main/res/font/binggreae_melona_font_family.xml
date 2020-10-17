@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <font
+        android:font="@font/binggraemelona"
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        app:font="@font/binggraemelona"
+        app:fontStyle="normal"
+        app:fontWeight="500"/>
+
+    <font
+        android:font="@font/binggraemelonabold"
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        app:font="@font/binggraemelonabold"
+        app:fontStyle="normal"
+        app:fontWeight="1000"/>
+
+</font-family>

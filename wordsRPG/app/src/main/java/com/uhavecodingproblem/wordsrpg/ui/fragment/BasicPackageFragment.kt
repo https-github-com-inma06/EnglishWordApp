@@ -1,12 +1,18 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
+import android.os.Build
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.uhavecodingproblem.wordsrpg.dialog.PackageDialog
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.ByLevelRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.ByTestRecyclerViewAdapter
@@ -27,7 +33,8 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-09-18.
  * Description:
  */
-class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package), ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
+class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
+    ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
     private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
@@ -41,10 +48,10 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
         initBinding()
         observeTabLayoutPosition()
-        basicRecyclerView()
+        byLevelRecyclerView()
     }
 
-    private fun initBinding(){
+    private fun initBinding() {
         binding.run {
             libraryviewmodel = basicViewModel
             librarywordviewmodel = wordViewModel
@@ -54,7 +61,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         }
     }
 
-    private fun basicRecyclerView(){
+    private fun byLevelRecyclerView() {
         basicRecyclerViewAdapter = ByLevelRecyclerViewAdapter(byLevelWord, this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
@@ -62,21 +69,21 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         }
     }
 
-    private fun setWithHeaderGridLayout() : GridLayoutManager{
+    private fun setWithHeaderGridLayout(): GridLayoutManager {
         val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                return if((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
+                return if ((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
             }
         }
         return gridLayoutManager
     }
 
-    private fun setNoHeaderGridLayout() : GridLayoutManager{
+    private fun setNoHeaderGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
     }
 
-    private fun testRecyclerView(){
+    private fun testRecyclerView() {
         val basicRecyclerViewAdapter = ByTestRecyclerViewAdapter(byTestWord, this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
@@ -98,24 +105,23 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 //        }
 //    }
 
-    private fun setDialog(){
+    private fun setDialog() {
 
         val dialog: AlertDialog? = requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage("현재 준비중입니다.")
             }
-
             builder.create()
         }
         dialog?.show()
 
     }
 
-    private fun observeTabLayoutPosition(){
+    private fun observeTabLayoutPosition() {
         basicViewModel.position.observe(viewLifecycleOwner, Observer {
-            when(it){
-                0 -> basicRecyclerView()
+            when (it) {
+                0 -> byLevelRecyclerView()
                 1 -> testRecyclerView()
                 2 -> setDialog()
             }
@@ -123,16 +129,51 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onByLevelItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also{
-            it.putExtra("Words", byLevelWord[position])
-            startActivity(it)
-        }
+        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
+        dialog.show()
+        dialogResize(dialog)
+
+//        Intent(requireActivity(), LibraryActivity::class.java).also {
+//            it.putExtra("Words", byLevelWord[position])
+//            startActivity(it)
+//        }
     }
 
     override fun onByTestItemClick(view: View, position: Int) {
-        Intent(requireActivity(), LibraryActivity::class.java).also{
-            it.putExtra("Words", byTestWord[position])
-            startActivity(it)
+        val dialog = PackageDialog(requireContext(), byTestWord[position], true)
+        dialog.show()
+        dialogResize(dialog)
+//        Intent(requireActivity(), LibraryActivity::class.java).also {
+//            it.putExtra("Words", byTestWord[position])
+//            startActivity(it)
+//        }
+    }
+
+    private fun dialogResize(dialog: Dialog) {
+
+        if (Build.VERSION.SDK_INT < 30) {
+            val display = requireActivity().windowManager.defaultDisplay
+            val size = Point()
+
+            display.getSize(size)
+
+            val window = dialog.window
+
+            val x = (size.x * 0.95f).toInt()
+            val y = (size.y * 0.6f).toInt()
+
+            window?.setLayout(x, y)
+        }else{
+            val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+            val rect = windowManager.currentWindowMetrics.bounds
+
+            val window = dialog.window
+
+            val x = (rect.width() * 0.95f).toInt()
+            val y = (rect.height() * 0.6f).toInt()
+
+            window?.setLayout(x, y)
         }
     }
 }

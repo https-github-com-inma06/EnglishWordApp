@@ -1,12 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.component
 
-import android.graphics.drawable.Drawable
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.uhavecodingproblem.wordsrpg.data.WordData
 
 /**
@@ -18,29 +13,8 @@ import com.uhavecodingproblem.wordsrpg.data.WordData
  */
 object WordBindingAdapter {
 
-
     @JvmStatic
-    @BindingAdapter("backgroundImage", "error")
-    fun loadBackgroundImage(constraintLayout: ConstraintLayout, url: String, error: Drawable) {
-        Glide.with(constraintLayout.context)
-            .load(url)
-            .error(error)
-            .centerCrop()
-            .into(object : CustomTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    constraintLayout.background = resource
-                }
-
-                override fun onLoadCleared(placeholder: Drawable?) {
-                }
-            })
-    }
-
-    @JvmStatic
-    @BindingAdapter("count")
+    @BindingAdapter("passCount")
     fun setCount(textView: TextView, item: MutableList<WordData>) {
         var count = 0
         for (i in item.indices) {
@@ -48,6 +22,18 @@ object WordBindingAdapter {
                 count++
         }
         val value = "$count / ${item.size}"
+        textView.text = value
+    }
+
+    @JvmStatic
+    @BindingAdapter("progress")
+    fun progress(textView: TextView, item: MutableList<WordData>) {
+        var count = 0
+        for (i in item.indices) {
+            if (item[i].isPassed)
+                count++
+        }
+        val value = "${((count.toDouble() / item.size) * 100).toInt()}%"
         textView.text = value
     }
 
