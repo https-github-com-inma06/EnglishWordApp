@@ -136,9 +136,9 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
 
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName",Toast.LENGTH_SHORT).show()
-                val i= Intent(requireActivity(),StudyActivity::class.java)
-                i.putExtra("packagename",packageName)
-                startActivity(i)
+//                val i= Intent(requireActivity(),StudyActivity::class.java)
+//                i.putExtra("packagename",packageName)
+//                startActivity(i)
             }
         })
 

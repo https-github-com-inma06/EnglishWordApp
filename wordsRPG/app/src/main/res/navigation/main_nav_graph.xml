@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/home">
+    app:startDestination="@id/library">
 
-    <fragment
-        android:id="@+id/home"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainHomeFragment"
-        android:label="MainHomeFragment"
-        tools:layout="@layout/fragment_main_home">
+<!--    <fragment-->
+<!--        android:id="@+id/home"-->
+<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainHomeFragment"-->
+<!--        android:label="MainHomeFragment"-->
+<!--        tools:layout="@layout/fragment_main_home">-->
 
 
-    </fragment>
+<!--    </fragment>-->
     <fragment
         android:id="@+id/library"
         android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainLibraryFragment"
@@ -23,13 +23,14 @@
             android:id="@+id/action_library_to_search_fragment"
             app:destination="@id/search_fragment" />
     </fragment>
-    <fragment
-        android:id="@+id/board"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBoardFragment"
-        android:label="MainBoardFragment"
-        tools:layout="@layout/fragment_main_board">
 
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/board"-->
+<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBoardFragment"-->
+<!--        android:label="MainBoardFragment"-->
+<!--        tools:layout="@layout/fragment_main_board">-->
+
+<!--    </fragment>-->
     <fragment
         android:id="@+id/battle"
         android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.battle.MainBattleFragment"

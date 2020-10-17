@@ -130,8 +130,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
             //현재 fragment가  검색 프래그먼트 일때  액션바  숨겨줌.
             "SearchCustomPackageFragment" -> { supportActionBar!!.hide() }
 
-
-
+            
             //검색프래그먼트 이외에는 액션바 보여준다.
             else ->{ supportActionBar!!.show()}
 
