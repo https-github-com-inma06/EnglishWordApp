@@ -23,6 +23,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
+import kotlinx.android.synthetic.main.activity_add_new_custom_package.*
 import org.json.JSONArray
 
 /**
@@ -36,7 +37,7 @@ import org.json.JSONArray
  */
 class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBinding>(R.layout.activity_add_new_custom_package){
 
-    val tagArray=ArrayList<String>()
+    private val tagArray = ArrayList<String>()
 
 
     override fun ActivityAddNewCustomPackageBinding.onCreate() {
@@ -60,6 +61,10 @@ class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBind
                 Toast.makeText(this,R.string.str_tag_size_max, Toast.LENGTH_SHORT).show()
             }
 
+            //같은 패키지에서  중복 태그 사용 불가 
+            tagArray.contains(tagString) ->{
+                Toast.makeText(this,R.string.str_tag_no_duplicate,Toast.LENGTH_SHORT).show()
+            }
 
             //tag 내용중 공백이 있을때
             tagString.contains(" ") -> {

@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.component
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,16 +81,19 @@ class CustomPackageRecyclerViewAdapter(
             override fun performFiltering(getFilterValue: CharSequence?): FilterResults {
 
             //필터를 통해 들어온  charsequence 값 -> 검색에서 사용됨
-            val filterValue = getFilterValue?.toString()
+            val searchValue = getFilterValue?.toString()
 
             //검색어가 없는 경우 필터 타입에 따라 리스트를 filterlist에 적용한다.
-            filterList = if(filterValue.isNullOrEmpty()){
+            //그리고 맨앞이 ' ' 공백일 경우도 일단  빈 array가 나오도록  적용.
+            filterList = if(searchValue.isNullOrEmpty() || searchValue[0] == ' ') {
+
                   when(filterType){
                       SEARCH_PACKAGE_TITLE, SEARCH_PACKAGE_TAG-> ArrayList() //검색, 태그 필터의 경우는 검색어가 없으면  빈 array를 뿌려준다.
                       else ->customPackageList// 그 외에는  필터 적용시  각각의 맞는  리스트를  뿌려줌.
+
                   }
 
-            }else {//필터에  검색어가 적용될때
+            } else {//필터에  검색어가 적용될때
 
                     //검색된 필터  리스트
                     val searchedFilterList = ArrayList<CustomPackageData>()
@@ -98,43 +102,45 @@ class CustomPackageRecyclerViewAdapter(
 
                         //받아온 리스트에서  해당 검색어 포함  리스트 필터링
                         for (i in 0 until customPackageList.size) {
-                            if (customPackageList[i].packageName.contains(filterValue)) {
+                            if (customPackageList[i].packageName.contains(searchValue)) {
                                 searchedFilterList.add(customPackageList[i])
                                 Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
                             }
+
                         }//for문 끝
+
                     }else if(filterType == SEARCH_PACKAGE_TAG){//태그 필터 적용되었을때
 
                         for (i in 0 until customPackageList.size) {
 
-                            //해시 태그 리스트에서   검색어 포함시  리스트 필터링
-                            customPackageList[i].hashList.filter {
-                                if(it.contains(filterValue)){
+                            //태그리스트 filter 해서  가장 마지막에  필터된  태그값  가진 패키지 넣어줌. (중복 검색 방지)
+                            customPackageList[i].hashList.findLast {
+                                if(it.contains(searchValue)){
                                     searchedFilterList.add(customPackageList[i])
-                                    true
                                 }else{
                                     false
                                 }
                             }
+                            Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
 
                         }//for문 끝
 
                     }//태그 필터 끝
 
-
-                    searchedFilterList//검색으로 필터링된  리스트 filterlist에 적용
-                }
-
+                searchedFilterList//검색으로 필터링된  리스트 filterlist에 적용
+            }
                 val filterResults = FilterResults()
                 filterResults.values = filterList//필터 결과에  필터 리스트 넣어서 넘김
                 return filterResults
             }
+
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {//filter 결과  발행
                 filterList  = p1?.values as MutableList<CustomPackageData>
                 Logger.v("필터 결과 ->  $filterList")
                 notifyDataSetChanged()//필터된 내용으로 데이터 업데이트.
             }
+
         }
 
 

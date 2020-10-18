@@ -2,6 +2,7 @@ package com.uhavecodingproblem.wordsrpg.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -23,21 +24,17 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
  * Created by leedonghun.
  * Created On 2020-09-16.
  * Description:
- *훑어보겠습니다.  넵!
- * dnjsrur
+ *
  * 메인 엑티비티 입니다.
  */
 
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
 
     override fun ActivityMainBinding.onCreate() {
         Logger.v("실행")
 
         configureToolbar()//1-1
         setUpNavigation()//1-2
-
-        drawerNavigationView.setNavigationItemSelectedListener(this@MainActivity)
-        mainDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)//드로워  swipe 기능  lock
 
     }
 
@@ -46,15 +43,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
         //action bar로 연결
         setSupportActionBar(binding.mainToolbar)
 
-        val actionbar=supportActionBar
-        actionbar?.setHomeAsUpIndicator(R.drawable.drawer)//햄버거 아이콘 넣어줌.
-        actionbar?.setDisplayHomeAsUpEnabled(true)
+        val actionbar = supportActionBar
+
+        actionbar?.setDisplayHomeAsUpEnabled(false)
         actionbar?.setDisplayShowTitleEnabled(false)//toolbar  title 안보이게
 
     }
 
 
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu_item,menu)
+        return true
+    }
 
     //툴바에서  option item  select 리스너
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -62,58 +62,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
         when(item.itemId){
 
             //왼쪽 상단 햄버거 키 클릭
-            android.R.id.home ->{
-                binding.mainDrawerLayout.openDrawer(GravityCompat.START)//드로워  오픈
+            R.id.menu_setting ->{
+                //binding.mainDrawerLayout.openDrawer(GravityCompat.START)//드로워  오픈
+                Toast.makeText(this,"세팅눌림",Toast.LENGTH_SHORT).show()
             }
         }
         return true
-    }
-
-
-
-    //drawer 네비 아이템 select 리스너
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-
-            //오답노트
-            R.id.wrong_answer->{
-                val intent=Intent(this, WrongAnswerActivity::class.java)
-                startActivity(intent)
-            }
-
-            //세팅창
-            R.id.setting->{
-                val intent=Intent(this, SettingActivity::class.java)
-                startActivity(intent)
-            }
-
-            //알림창
-            R.id.notification-> {
-                val intent=Intent(this, NotificationActivity::class.java)
-                startActivity(intent)
-            }
-
-            R.id.logout->{
-                Toast.makeText(this,"로그아웃 눌림",Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.mainDrawerLayout.closeDrawers() // 기능을 수행하고 네비게이션을 닫아줌.
-        return false
-    }
-
-
-
-
-    //back 키 눌렀을때
-    override fun onBackPressed() {
-
-        //drawer 나와있는 경우  먼저 닫아줌.
-        //그외는  원래 back 이벤트 진행
-        if(binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START)){
-            binding.mainDrawerLayout.closeDrawers()
-        }else{
-            super.onBackPressed()
-        }
     }
 
 
@@ -126,14 +80,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) ,
         //바뀐 fragment가 무엇인지 감지한다.
         when(destination.label){
 
-
             //현재 fragment가  검색 프래그먼트 일때  액션바  숨겨줌.
-            "SearchCustomPackageFragment" -> { supportActionBar!!.hide() }
+            "MainLibraryFragment" -> { Logger.v("현재 프래그먼트 -> 라이브러리")
+                binding.tvPresentMenu.setText(R.string.menu_for_library_en)
+            }
 
+            "MainBattleFragment" -> { Logger.v("현재 프래그먼트 -> 배틀 ")
+                 binding.tvPresentMenu.setText(R.string.menu_for_battle_en)
+            }
 
-
-            //검색프래그먼트 이외에는 액션바 보여준다.
-            else ->{ supportActionBar!!.show()}
+            "MainMyRoomFragment" -> { Logger.v("현재 프래그먼트 -> 마이룸")
+                binding.tvPresentMenu.setText(R.string.menu_for_my_room_en)
+            }
 
         }
     }

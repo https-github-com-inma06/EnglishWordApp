@@ -17,16 +17,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tv_span_for_library"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:background="@color/colorLightBlue"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_package_name"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            style="@style/library_main_tab_style"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_span_for_library"
             app:setTabContent="@{libraryviewmodel.tabItem}"
             app:setViewModel="@{libraryviewmodel}"
             app:setViewPosition="@{libraryviewmodel.position}"/>
+
+        <TextView
+            android:id="@+id/tv_span"
+            android:layout_width="0dp"
+            android:layout_height="7dp"
+            android:background="@color/colorLightBlue2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tab_package_name"
+            />
+
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager2_library"
@@ -35,7 +59,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_package_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_span"
             app:setFragmentActivity="@{activityfragment}"
             app:setViewModel="@{libraryviewmodel}"
             app:setViewPosition="@{libraryviewmodel.position}" />

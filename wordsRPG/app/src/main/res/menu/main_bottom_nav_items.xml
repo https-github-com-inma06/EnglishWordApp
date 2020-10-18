@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/home"
-        android:title="@string/menu_for_home"
-        android:icon="@drawable/selector_home_menu" />
+<!--    <item android:id="@+id/home"-->
+<!--        android:title="@string/menu_for_home"-->
+<!--        android:icon="@drawable/selector_home_menu" />-->
     <item android:id="@+id/library"
         android:title="@string/menu_for_library"
         android:icon="@drawable/selector_libarary_menu" />
-    <item android:id="@+id/board"
-        android:title="@string/menu_for_board"
-        android:icon="@drawable/selector_board_menu" />
+<!--    <item android:id="@+id/board"-->
+<!--        android:title="@string/menu_for_board"-->
+<!--        android:icon="@drawable/selector_board_menu" />-->
     <item android:id="@+id/battle"
         android:title="@string/menu_for_battle"
         android:icon="@drawable/selector_battle_menu" />

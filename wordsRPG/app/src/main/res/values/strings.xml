@@ -7,8 +7,16 @@
     <string name="menu_for_board">게시판</string>
     <string name="menu_for_battle">배틀</string>
     <string name="menu_for_my_room">마이룸</string>
-    
-    
+
+    <!--메인 toolbar menu -->
+    <string name="toolbar_menu_for_setting">setting</string>
+
+    <!-- 메인 메뉴  english -->
+    <string name="menu_for_library_en">Library</string>
+    <string name="menu_for_battle_en">Battle</string>
+    <string name="menu_for_my_room_en">My Room</string>
+
+
     <!-- 암기Activity 툴바 메뉴 -->
     <!-- Basic(기본) 패키지 -->
     <string name="toolbar_menu_for_hide_all_word">단어만 모두 가리기</string>
@@ -35,6 +43,7 @@
     <string name="str_complete">완료</string>
     <string name="str_add">추가</string>
     <string name="str_tag_size_max">태그는 최대 3개 입니다. </string>
+    <string name="str_tag_no_duplicate">똑같은 태그는 사용불가!</string>
     <string name="str_tag_detect_space">태그는 단어 한개로 구성해주세요</string>
     <string name="str_tag_no_content">적은 태그 내용이 없습니다.</string>
     <string name="str_add_new_tag_title">패키지를 표현할 태그를 최대 3개 추가해주세요</string>
