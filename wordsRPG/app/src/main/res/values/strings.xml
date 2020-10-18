@@ -7,8 +7,16 @@
     <string name="menu_for_board">게시판</string>
     <string name="menu_for_battle">배틀</string>
     <string name="menu_for_my_room">마이룸</string>
-    
-    
+
+    <!--메인 toolbar menu -->
+    <string name="toolbar_menu_for_setting">setting</string>
+
+    <!-- 메인 메뉴  english -->
+    <string name="menu_for_library_en">Library</string>
+    <string name="menu_for_battle_en">Battle</string>
+    <string name="menu_for_my_room_en">My Room</string>
+
+
     <!-- 암기Activity 툴바 메뉴 -->
     <!-- Basic(기본) 패키지 -->
     <string name="toolbar_menu_for_hide_all_word">단어만 모두 가리기</string>

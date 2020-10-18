@@ -77,7 +77,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             }
         }
         return gridLayoutManager
-    }
+    }   
 
     private fun setNoHeaderGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
@@ -161,8 +161,8 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
             val x = (size.x * 0.95f).toInt()
             val y = (size.y * 0.6f).toInt()
-
             window?.setLayout(x, y)
+
         }else{
             val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
 

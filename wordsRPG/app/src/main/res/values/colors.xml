@@ -8,8 +8,18 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#A8A8A8</color>
     <color name="colorDarkGray">#616161</color>
-    
-    
+
+
+    <!-- 앱 배경 컬러 파랑색   -->
+    <color name="colorLightBlue">#F0F9FC</color>
+    <color name="colorLightBlue2">#E4F4F9</color>
+
+    <!-- 앱 메인 컬러   -->
+    <color name="colorBrownForAppMain">#7E5244</color>
+
+    <!-- 배틀,  라이브러리, 마이룸  이름용 color  -->
+    <color name="colorMainMenuName">#4C403B</color>
+
     <color name="tab_background_selected">#969696</color>
     <color name="tab_background_unselected">#FFFFFF</color>
 
