@@ -17,7 +17,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.LibraryActivityItemBinding
  */
 class LibraryActivityRecyclerViewAdapter(val item: MutableList<WordType>, private val listener: GridItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface GridItemClickListener{
-        fun onItemClick(v: View, clickItem: MutableList<WordData>, position: Int)
+        fun onItemClick(v: View, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -40,7 +40,7 @@ class LibraryActivityRecyclerViewAdapter(val item: MutableList<WordType>, privat
 
             binding.root.clipToOutline = true
             binding.root.setOnClickListener {
-                listener.onItemClick(it, item[adapterPosition].words, adapterPosition)
+                listener.onItemClick(it, adapterPosition)
             }
         }
 

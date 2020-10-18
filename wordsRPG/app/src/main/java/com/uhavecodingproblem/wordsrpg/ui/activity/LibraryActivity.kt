@@ -12,9 +12,14 @@ import com.uhavecodingproblem.wordsrpg.databinding.ActivityLibraryBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
+/**
+ *  서버에서 데이터 가져오는 작업 필요해보임!
+ **/
+
 class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_library), LibraryActivityRecyclerViewAdapter.GridItemClickListener {
 
     private var libraryItem: WordType? = null
+    private var item = mutableListOf<WordType>()
 
     override fun ActivityLibraryBinding.onCreate() {
         Logger.v("실행")
@@ -27,12 +32,11 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
 
     private fun getLibraryItem(){
         intent?.let {
-            libraryItem = it.getParcelableExtra("Words")
+            libraryItem = it.getParcelableExtra("wordData")
         }
     }
 
     private fun setLibraryList(): MutableList<WordType>{
-        val item = mutableListOf<WordType>()
         var word = mutableListOf<WordData>()
         var count = 1
         libraryItem?.words?.let {
@@ -77,9 +81,9 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         }
     }
 
-    override fun onItemClick(v: View, clickItem: MutableList<WordData>, position: Int) {
+    override fun onItemClick(v: View, position: Int) {
         Intent(this@LibraryActivity, StudyActivity::class.java).also {
-            it.putExtra("StudyWord", ArrayList(clickItem))
+            it.putExtra("StudyWord", item[position])
             startActivity(it)
         }
     }

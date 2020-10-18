@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
+import android.content.Intent
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
@@ -8,12 +9,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.WordData
+import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
@@ -24,7 +26,7 @@ class StudyActivity :
     StudyViewPagerAdapter.ItemClickListener {
 
     private val studyViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var word: MutableList<WordData> = mutableListOf()
+    private var word: WordType? = null
     private var textToSpeech: TextToSpeech? = null
     private lateinit var studyRecyclerviewAdapter: StudyViewPagerAdapter
 
@@ -59,13 +61,13 @@ class StudyActivity :
 
     private fun setWord() {
         intent?.let {
-            word = it.getParcelableArrayListExtra<WordData>("StudyWord")?.toMutableList()!!
+            word = it.getParcelableExtra("StudyWord")
         }
     }
 
     private fun setViewPager() {
         binding.viewpager2Study.apply {
-            studyRecyclerviewAdapter = StudyViewPagerAdapter(word, this@StudyActivity)
+            studyRecyclerviewAdapter = StudyViewPagerAdapter(word?.words!!, this@StudyActivity)
             adapter = studyRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
@@ -88,7 +90,7 @@ class StudyActivity :
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                finish()
+                exitStudyDialog()
             }
             R.id.hide_word -> {
                 studyRecyclerviewAdapter.hideWord()
@@ -128,7 +130,7 @@ class StudyActivity :
         textToSpeech?.let {
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
-            it.speak(word[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+            it.speak(word?.words!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
@@ -141,7 +143,26 @@ class StudyActivity :
         }
     }
 
+    private fun exitStudyDialog() {
+        val exitDialog: AlertDialog? = this@StudyActivity.let {
+            val exitBuilder = AlertDialog.Builder(it)
+            exitBuilder.apply {
+                setMessage("학습을 종료하시겠습니까?")
+                setPositiveButton("종료") { dialogInterface, _ ->
+                    dialogInterface.dismiss()
+                    finish()
+//                    Intent(this@StudyActivity, LibraryActivity::class.java).also { intent ->
+//                        startActivity(intent)
+//                        finish()
+//                    }
+                }
+            }
+            exitBuilder.create()
+        }
+        exitDialog?.show()
+    }
+
     override fun onBackPressed() {
-        super.onBackPressed()
+        exitStudyDialog()
     }
 }

@@ -70,7 +70,7 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
 
     fun moveStudy(v: View){
         Intent(context, LibraryActivity::class.java).also {
-            it.putExtra("Words", type as WordType)
+            it.putExtra("wordData", type as WordType)
             context.startActivity(it)
         }
     }
