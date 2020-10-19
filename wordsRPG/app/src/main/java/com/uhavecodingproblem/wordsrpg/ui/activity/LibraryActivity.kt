@@ -13,7 +13,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
- *  서버에서 데이터 가져오는 작업 필요해보임!
+ *  서버에서 데이터 가져오는 작업 필요해보임! check by Atanasio.
  **/
 
 class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_library), LibraryActivityRecyclerViewAdapter.GridItemClickListener {
