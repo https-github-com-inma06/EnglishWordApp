@@ -25,7 +25,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("프로그래밈")
+                hashTagList = mutableListOf("프로그래밈")
             ),
             CustomPackageData(
                 uid = 2,
@@ -34,7 +34,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/b6yryB.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("영어", "언어")
+                hashTagList = mutableListOf("영어", "언어")
             ),
             CustomPackageData(
                 uid = 3,
@@ -43,7 +43,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/PeB4iS.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("1")
+                hashTagList = mutableListOf("1")
             ),
             CustomPackageData(
                 uid = 4,
@@ -52,7 +52,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/5QbCWC.png",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㄴㅇㄹ")
+                hashTagList = mutableListOf("ㄴㅇㄹ")
             ),
             CustomPackageData(
                 uid = 5,
@@ -61,7 +61,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/1kQm6l.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅇㅇ")
+                hashTagList = mutableListOf("ㅇㅇ")
             ),
             CustomPackageData(
                 uid = 6,
@@ -70,7 +70,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㄴㅇ")
+                hashTagList = mutableListOf("ㄴㅇ")
             ),
             CustomPackageData(
                 uid = 7,
@@ -79,7 +79,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㄹㄹㄹ")
+                hashTagList = mutableListOf("ㄹㄹㄹ")
             ),
             CustomPackageData(
                 uid = 8,
@@ -88,7 +88,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅍㅊㅍ")
+                hashTagList = mutableListOf("ㅍㅊㅍ")
             ),
             CustomPackageData(
                 uid = 9,
@@ -97,7 +97,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅁㄱㄷㄱ")
+                hashTagList = mutableListOf("ㅁㄱㄷㄱ")
             ),
             CustomPackageData(
                 uid = 10,
@@ -106,7 +106,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/KfsEuu.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅍㅊㅍㅊ")
+                hashTagList = mutableListOf("ㅍㅊㅍㅊ")
             ),
             CustomPackageData(
                 uid = 11,
@@ -115,7 +115,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/Wa5o7R.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅋㅊㅌㅊ")
+                hashTagList = mutableListOf("ㅋㅊㅌㅊ")
             ),
             CustomPackageData(
                 uid = 12,
@@ -124,7 +124,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅂㄷ123")
+                hashTagList = mutableListOf("ㅂㄷ123")
             ),
             CustomPackageData(
                 uid = 13,
@@ -133,7 +133,7 @@ object CustomPackageListMockData {
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("ㅁㄴㅇㅁㄴㅇ")
+                hashTagList = mutableListOf("ㅁㄴㅇㅁㄴㅇ")
             )
         )
 }

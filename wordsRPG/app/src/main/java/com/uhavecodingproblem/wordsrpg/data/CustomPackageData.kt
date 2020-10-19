@@ -16,5 +16,5 @@ data class CustomPackageData(
    val profileImageUrl:String?,
    val likeCount:Int,
    val subscribeCount:Int,
-   val hashList: MutableList<String>
+   val hashTagList: MutableList<String> //Variable Name Change :: hashList -> hashTagList. fixed by atanasio.
 )

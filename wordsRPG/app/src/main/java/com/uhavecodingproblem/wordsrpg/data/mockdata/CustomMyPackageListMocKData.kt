@@ -25,7 +25,7 @@ object CustomMyPackageListMocKData {
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("프로그래밈")
+                hashTagList = mutableListOf("프로그래밈")
             ),
             CustomPackageData(
                 uid = 2,
@@ -34,7 +34,7 @@ object CustomMyPackageListMocKData {
                 profileImageUrl = "https://ifh.cc/g/b6yryB.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("영어", "언어")
+                hashTagList = mutableListOf("영어", "언어")
             ),
             CustomPackageData(
                 uid = 3,
@@ -43,7 +43,7 @@ object CustomMyPackageListMocKData {
                 profileImageUrl = "https://ifh.cc/g/PeB4iS.jpg",
                 likeCount = 3,
                 subscribeCount = 12,
-                hashList = mutableListOf("1")
+                hashTagList = mutableListOf("1")
             )
 
         )
