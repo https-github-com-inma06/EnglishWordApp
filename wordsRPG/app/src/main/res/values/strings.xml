@@ -74,4 +74,9 @@
 
     <string name="study_mic">TTS</string>
 
+
+    <!-- viewgroup_library_search  str   -->
+    <string name="str_search_filter">태그</string>
+
+
 </resources>

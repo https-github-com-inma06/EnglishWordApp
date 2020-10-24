@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <!-- 전역상수       -->
+        <variable
+            name="constant"
+            type="com.uhavecodingproblem.wordsrpg.util.ConstatntKt"/>
+
+
+        <!-- 전체 커스텀 Fragment  -->
+        <variable
+            name="entireCustomFragment"
+            type="com.uhavecodingproblem.wordsrpg.ui.fragment.EntireCustomPackageFragment" />
+
+
+        <!-- 내 커스텀 Fragment   -->
+        <variable
+            name="myCustomFragment"
+            type="com.uhavecodingproblem.wordsrpg.ui.fragment.MyCustomPackageFragment" />
+
+        <!-- 전체 패키지와 커스텀 패키지에 따라  특정 뷰 visible과
+              패키지 데이터 가져오는 방식(local, remote) 다르므로 구별해서 체크한다.-->
+        <variable
+            name="checkPackage"
+            type="int" />
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorLightBlue">
+
+
+    <EditText
+        android:id="@+id/edit_tv_search_package"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="9dp"
+        android:paddingStart="40dp"
+        android:background="@drawable/search_package_edit_round"
+        android:ems="10"
+        android:fontFamily="@font/binggraemelona"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlSymmetry" />
+
+    <LinearLayout
+        android:id="@+id/container_search_tag_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.5"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/search_package_toggle_btn_round"
+        app:layout_constraintStart_toStartOf="@id/edit_tv_search_package"
+        app:layout_constraintTop_toTopOf="@id/edit_tv_search_package"
+        app:layout_constraintBottom_toBottomOf="@id/edit_tv_search_package">
+
+        <TextView
+            android:id="@+id/tv_search_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/binggraemelonabold"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:paddingStart="8dp"
+            android:textSize="13sp"
+            android:text="@string/str_search_filter"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/icon_search_filter"
+            android:layout_gravity="center"
+            android:layout_width="18dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_height="18dp"
+            app:srcCompat="@drawable/toggle_icon" />
+    </LinearLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/frame_layout_my_heart_package"
+        android:layout_width="25dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/guideline5"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="@{checkPackage == constant.MY_CUSTOM_PACKAGE ? View.INVISIBLE : View.VISIBLE}"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.1">
+
+        <ImageView
+            android:id="@+id/img_selected_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/selected_heart" />
+
+        <ImageView
+            android:id="@+id/img_un_selected_heart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:srcCompat="@drawable/un_selected_heart" />
+    </FrameLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.78"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

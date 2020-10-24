@@ -48,8 +48,7 @@
             android:background="@color/colorLightBlue2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_package_name"
-            />
+            app:layout_constraintTop_toBottomOf="@id/tab_package_name" />
 
 
         <androidx.viewpager2.widget.ViewPager2

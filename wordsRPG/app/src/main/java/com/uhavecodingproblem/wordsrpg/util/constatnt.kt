@@ -26,3 +26,8 @@ const val MY_HEART_FILTER_TYPE = 1004//내가 하트 표시한 유저의 패키�
 //기본 패키지 수준별
 const val ITEM_HEADER_TYPE = 0
 const val ITEM_GIRD_TYPE = 1
+
+
+//내패키지랑  전체 패키지 구별 용 상수
+const val MY_CUSTOM_PACKAGE = 2001
+const val ENTIRE_CUSTOM_PACKAGE = 2002

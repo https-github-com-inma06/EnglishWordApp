@@ -76,6 +76,21 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
 
 
+//    //현재
+//    val changeTagFilterButton= fun  (check:Int){
+//        if(check==0){
+//            Toast.makeText(requireActivity(),"터치됨 -> $check",Toast.LENGTH_SHORT).show()
+//
+//
+//        }else if(check==1){
+//            Toast.makeText(requireActivity(),"터치됨 -> $check",Toast.LENGTH_SHORT).show()
+//
+//        }
+//
+//    }
+
+
+
 
     //내 패키지 검색 tv 클릭 event
     fun searchMyCustomPackage(view: View){

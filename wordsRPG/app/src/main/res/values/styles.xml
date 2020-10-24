@@ -38,7 +38,7 @@
             <item name="android:paddingBottom">10dp</item>
             <item name="android:background">@color/colorLightBlue</item>
             <item name="tabIndicator">@drawable/tab_selector</item>
-            <item name="tabTextAppearance">@style/tab_text</item>
+            <item name="tabTextAppearance">@style/library_main_tab_text_style</item>
             <item name="tabGravity">fill</item>
             <item name="tabPaddingBottom">-15dp</item>
             <item name="tabRippleColor">@android:color/transparent</item>
@@ -49,7 +49,7 @@
 
     </style>
 
-    <style name="tab_text" parent="TextAppearance.Design.Tab">
+    <style name="library_main_tab_text_style" parent="TextAppearance.Design.Tab">
         <item name="android:fontFamily">@font/binggraemelonabold</item>
     </style>
 
