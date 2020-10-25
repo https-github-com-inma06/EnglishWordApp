@@ -1,6 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
-import android.content.Intent
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
@@ -15,7 +14,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.data.Stage
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
@@ -26,7 +25,7 @@ class StudyActivity :
     StudyViewPagerAdapter.ItemClickListener {
 
     private val studyViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var word: WordType? = null
+    private var word: Stage? = null
     private var textToSpeech: TextToSpeech? = null
     private lateinit var studyRecyclerviewAdapter: StudyViewPagerAdapter
 

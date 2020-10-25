@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="packagename"
+            type="String" />
+
+        <variable
+            name="thumbnailimage"
+            type="String" />
+
+        <variable
+            name="stageinformation"
+            type="com.uhavecodingproblem.wordsrpg.data.Stage" />
+
+        <variable
+            name="selectiondialog"
+            type="com.uhavecodingproblem.wordsrpg.dialog.BasicPackageSelectionDialog" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_selection_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/package_dialog_round">
+
+        <ImageView
+            error="@{@drawable/ic_launcher_foreground}"
+            image="@{thumbnailimage}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/package_thumbnail" />
+
+        <ImageButton
+            android:id="@+id/img_btn_exit"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@null"
+            android:contentDescription="@string/exit"
+            android:onClick="@{selectiondialog::exit}"
+            android:scaleType="center"
+            android:src="@drawable/img_vector_brown_close"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_package_info"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:background="#66282828"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintTop_toBottomOf="@id/img_btn_exit">
+
+            <TextView
+                android:id="@+id/tv_package_name"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="@{packagename}"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintHeight_percent="0.6"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.8" />
+
+            <TextView
+                android:id="@+id/tv_stage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center_horizontal"
+                android:text="@{@string/stage(stageinformation.stageNum)}"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintRight_toRightOf="@id/tv_package_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_package_name"
+                app:layout_constraintWidth_percent="0.4" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_move_study"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/basic_package_dialog_stage_selection_button_round"
+            android:gravity="center"
+            android:onClick="@{selectiondialog::moveStudy}"
+            android:text="@string/move_study"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textScaleX="1.2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_package_info"
+            app:layout_constraintWidth_percent="0.7" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

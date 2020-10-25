@@ -5,7 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.LibraryActivityRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.StageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.WordData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityLibraryBinding
@@ -16,7 +16,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  *  서버에서 데이터 가져오는 작업 필요해보임! check by Atanasio.
  **/
 
-class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_library), LibraryActivityRecyclerViewAdapter.GridItemClickListener {
+class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_library) {
 
     private var libraryItem: WordType? = null
     private var item = mutableListOf<WordType>()
@@ -26,7 +26,6 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
 
         getLibraryItem()
         setToolbarTitle()
-        setRecyclerView()
 
     }
 
@@ -36,25 +35,25 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         }
     }
 
-    private fun setLibraryList(): MutableList<WordType>{
-        var word = mutableListOf<WordData>()
-        var count = 1
-        libraryItem?.words?.let {
-            for (i in it.indices){
-                if (word.size == 10) {
-                    item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
-                    count++
-                    word = mutableListOf()
-                }
-                word.add(it[i])
-            }
-
-            if (!word.isNullOrEmpty())
-                item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
-
-        }
-        return item
-    }
+//    private fun setLibraryList(): MutableList<WordType>{
+//        var word = mutableListOf<WordData>()
+//        var count = 1
+//        libraryItem?.words?.let {
+//            for (i in it.indices){
+//                if (word.size == 10) {
+//                    item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
+//                    count++
+//                    word = mutableListOf()
+//                }
+//                word.add(it[i])
+//            }
+//
+//            if (!word.isNullOrEmpty())
+//                item.add(WordType(type = libraryItem?.type!!, name = "스탭 $count", writer = libraryItem?.writer!!, description = libraryItem?.description!!, thumbnailImage = libraryItem?.thumbnailImage!!, words = word))
+//
+//        }
+//        return item
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -74,17 +73,11 @@ class LibraryActivity : BaseActivity<ActivityLibraryBinding>(R.layout.activity_l
         actionbar?.title = libraryItem?.name
     }
 
-    private fun setRecyclerView(){
-        binding.libraryRecyclerview.run {
-            adapter = LibraryActivityRecyclerViewAdapter(setLibraryList(), this@LibraryActivity)
-            layoutManager = GridLayoutManager(this@LibraryActivity, 3)
-        }
-    }
+//    private fun setRecyclerView(){
+//        binding.libraryRecyclerview.run {
+//            adapter = StageRecyclerViewAdapter(setLibraryList(), this@LibraryActivity)
+//            layoutManager = GridLayoutManager(this@LibraryActivity, 3)
+//        }
+//    }
 
-    override fun onItemClick(v: View, position: Int) {
-        Intent(this@LibraryActivity, StudyActivity::class.java).also {
-            it.putExtra("StudyWord", item[position])
-            startActivity(it)
-        }
-    }
 }
