@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.Stage
@@ -30,6 +32,7 @@ class StageRecyclerViewAdapter(
     private var preSelectPosition: Int
     private var showStageData = mutableListOf<Stage>()
     private var showMoreStage: String? = null // 마지막부분 출력해줄 내용
+    private val studyStage = "학습 할 차례입니다."
 
     init {
         setShowItem()
@@ -50,7 +53,7 @@ class StageRecyclerViewAdapter(
     private fun setShowItem() { // 스테이지 보여질 갯수 + 1 (마지막부분을 출력해주어야하기때문)
         var count = 0
         for (i in item.indices) {
-            if (item[i].stageStatus == 0)
+            if (item[i].stageStatus != 3)
                 count++
 
             showStageData.add(item[i])
@@ -76,7 +79,6 @@ class StageRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         (holder as BasicPackageStageItemViewHolder).bind(item[position])
     }
 
@@ -93,8 +95,12 @@ class StageRecyclerViewAdapter(
         }
     }
 
-    inner class BasicPackageStageItemViewHolder(val binding: BasicPackageStageDialogItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class BasicPackageStageItemViewHolder(val binding: BasicPackageStageDialogItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        private var collapseView: View? = binding.layoutStageCollapse
+        private var expandView: View? = binding.layoutStageExpand
+        private var ratingBar: RatingBar? = binding.ratingBarResult
+        private var textResult: TextView? = binding.tvStageExpandDescription
 
         fun bind(data: Stage) {
 
@@ -102,6 +108,7 @@ class StageRecyclerViewAdapter(
             binding.position = adapterPosition
             binding.endposition = itemCount - 1
             binding.morestage = showMoreStage
+            binding.study = studyStage
             binding.layoutDialogItem.clipToOutline = true
 
             if (adapterPosition == itemCount - 1) {
@@ -114,57 +121,71 @@ class StageRecyclerViewAdapter(
                 }
             }
 
-            setLayout(adapterPosition)
+            binding.imgBtnStageCollapse.setOnClickListener {
+                changeSparseBooleanArray(adapterPosition)
 
-            binding.layoutStageCollapse.setOnClickListener {
-                if (!selectedItem.get(adapterPosition)){
-                    selectedItem.delete(preSelectPosition)
-                    selectedItem.put(adapterPosition, true)
-                }else{
-                    selectedItem.delete(adapterPosition)
-                }
-
-                notifyItemChanged(preSelectPosition)
-                notifyItemChanged(adapterPosition)
-                preSelectPosition = adapterPosition
+                //openCloseStage(binding.layoutStageExpand)
+            }
+            binding.imgBtnStageExpand.setOnClickListener {
+                //openCloseStage(binding.layoutStageCollapse)
+                changeSparseBooleanArray(adapterPosition)
             }
 
             binding.btnMoveSelectionWindowDialog.setOnClickListener {
                 listener.onMoveSelectionWindow(it, adapterPosition)
             }
 
+            openCloseStage(adapterPosition)
         }
 
-        private fun setLayout(position: Int){
-            if (position != setFirstFocus()){
-                if (selectedItem.get(position)){
-                    binding.layoutStageExpand.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_expand_color, null))
-                    binding.layoutStageCollapse.visibility = View.GONE
-                    binding.layoutStageExpand.visibility = View.VISIBLE
-                }else{
-                    binding.layoutStageCollapse.visibility = View.VISIBLE
-                    binding.layoutStageExpand.visibility = View.GONE
+        private fun changeSparseBooleanArray(position: Int){
+            if (!selectedItem.get(position)){
+                selectedItem.delete(preSelectPosition)
+                selectedItem.put(position, true)
+            }else{
+                selectedItem.delete(position)
+            }
+
+            notifyItemChanged(preSelectPosition)
+            notifyItemChanged(position)
+            preSelectPosition = position
+        }
+
+        private fun openCloseStage(position: Int) {
+            if (selectedItem.get(position)){
+                collapseView?.visibility = View.GONE
+                expandView?.visibility = View.VISIBLE
+                if (position == setFirstFocus()) {
+                    expandView?.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color, null))
+                    ratingBar?.visibility = View.GONE
+                    textResult?.visibility = View.VISIBLE
                 }
             }else{
-                if (selectedItem.get(position)){
-                    binding.layoutStageExpand.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color, null))
-                    binding.layoutStageCollapse.visibility = View.GONE
-                    binding.layoutStageExpand.visibility = View.VISIBLE
-                    binding.imgBtnStageExpand.apply {
-                        setImageResource(R.drawable.img_vector_white_arrow_drop_up)
-                        scaleType = ImageView.ScaleType.FIT_CENTER
-                    }
-                    binding.ratingBarResult.visibility = View.GONE
-                    binding.tvStageExpandName.setTextColor(Color.WHITE)
-                    binding.tvStageExpandDescription.visibility = View.VISIBLE
-                    binding.tvStageExpandDescription.text = "학습할 차례입니다."
-                }else{
-                    binding.layoutStageCollapse.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color, null))
-                    binding.layoutStageCollapse.visibility = View.VISIBLE
-                    binding.layoutStageExpand.visibility = View.GONE
+                expandView?.visibility = View.GONE
+                collapseView?.visibility = View.VISIBLE
+                if (position == setFirstFocus()){
+                    collapseView?.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color,null))
                 }
             }
         }
+
+        //재이님이 주신방법 접었다 폈다 가능하지만, 이전에 펼쳐진 것을 접을 수 가없음.
+
+//        private var openedStage: View? = binding.layoutStageCollapse
+//        private fun openCloseStage(currStage: View) {
+//            var currStage: View? = currStage
+//            if (openedStage === currStage) {
+//                currStage = null
+//            }
+//            if (openedStage != null) {
+//                openedStage!!.visibility = View.GONE
+//                openedStage = null
+//            }
+//            if (currStage != null) {
+//                currStage.visibility = View.VISIBLE
+//                openedStage = currStage
+//            }
+//        }
 
     }
 }
