@@ -2,7 +2,6 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.view.View
@@ -12,17 +11,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.dialog.PackageDialog
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.ByLevelRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.ByTestRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.BasicPackageRecyclerView
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
+import com.uhavecodingproblem.wordsrpg.dialog.BasicPackageDialog
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -34,14 +31,13 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Description:
  */
 class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
-    ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
+    BasicPackageRecyclerView.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
     private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
     private val wordViewModel: WordViewModel by viewModels { WordViewModelFactory() }
     private var basicRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    private var byLevelWord = mutableListOf<WordType>()
-    private var byTestWord = mutableListOf<WordType>()
+    private var wordList = mutableListOf<WordType>()
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
@@ -56,41 +52,46 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             libraryviewmodel = basicViewModel
             librarywordviewmodel = wordViewModel
             lifecycleOwner = this@BasicPackageFragment
-            byLevelWord = wordViewModel.getByLevelWord()
-            byTestWord = wordViewModel.getByTestWord()
         }
     }
 
     private fun byLevelRecyclerView() {
-        basicRecyclerViewAdapter = ByLevelRecyclerViewAdapter(byLevelWord, this)
-        binding.recyclerview.apply {
-            adapter = basicRecyclerViewAdapter
-            layoutManager = setWithHeaderGridLayout()
-        }
-    }
-
-    private fun setWithHeaderGridLayout(): GridLayoutManager {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if ((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
+        if (basicRecyclerViewAdapter == null) {
+            basicRecyclerViewAdapter = BasicPackageRecyclerView(wordList, this)
+            binding.recyclerview.apply {
+                adapter = basicRecyclerViewAdapter
+                layoutManager = setGridLayout()
             }
         }
-        return gridLayoutManager
-    }   
+        setListData(basicRecyclerViewAdapter, wordViewModel.getByLevelWord())
+    }
 
-    private fun setNoHeaderGridLayout(): GridLayoutManager {
+    private fun setGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
     }
 
     private fun testRecyclerView() {
-        val basicRecyclerViewAdapter = ByTestRecyclerViewAdapter(byTestWord, this)
-        binding.recyclerview.apply {
-            adapter = basicRecyclerViewAdapter
-            layoutManager = setNoHeaderGridLayout()
+        if (basicRecyclerViewAdapter == null) {
+            basicRecyclerViewAdapter = BasicPackageRecyclerView(wordList, this)
+            binding.recyclerview.apply {
+                adapter = basicRecyclerViewAdapter
+                layoutManager = setGridLayout()
+            }
+        }
+        setListData(basicRecyclerViewAdapter, wordViewModel.getByTestWord())
+    }
+
+    private fun setListData(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?, data: MutableList<WordType>){
+        if (wordList.isNullOrEmpty()) {
+            wordList.addAll(data)
+            adapter?.notifyDataSetChanged()
+        }else{
+            wordList.clear()
+            wordList.addAll(data)
+            adapter?.notifyDataSetChanged()
         }
     }
-//
+
 //    private fun categoryRecyclerView(){
 //        val basicRecyclerViewAdapter = ByCategoryRecyclerViewAdapter(word, this)
 //        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
@@ -128,25 +129,13 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         })
     }
 
-    override fun onByLevelItemClick(view: View, position: Int) {
-        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
+    override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
+        val dialog = if (isByLevel)
+            BasicPackageDialog(requireContext(), wordList[position])
+        else
+            BasicPackageDialog(requireContext(), wordList[position])
         dialog.show()
         dialogResize(dialog)
-
-//        Intent(requireActivity(), LibraryActivity::class.java).also {
-//            it.putExtra("Words", byLevelWord[position])
-//            startActivity(it)
-//        }
-    }
-
-    override fun onByTestItemClick(view: View, position: Int) {
-        val dialog = PackageDialog(requireContext(), byTestWord[position], true)
-        dialog.show()
-        dialogResize(dialog)
-//        Intent(requireActivity(), LibraryActivity::class.java).also {
-//            it.putExtra("Words", byTestWord[position])
-//            startActivity(it)
-//        }
     }
 
     private fun dialogResize(dialog: Dialog) {
@@ -160,7 +149,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val window = dialog.window
 
             val x = (size.x * 0.95f).toInt()
-            val y = (size.y * 0.6f).toInt()
+            val y = (size.y * 0.9f).toInt()
             window?.setLayout(x, y)
 
         }else{
@@ -171,7 +160,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val window = dialog.window
 
             val x = (rect.width() * 0.95f).toInt()
-            val y = (rect.height() * 0.6f).toInt()
+            val y = (rect.height() * 0.9f).toInt()
 
             window?.setLayout(x, y)
         }

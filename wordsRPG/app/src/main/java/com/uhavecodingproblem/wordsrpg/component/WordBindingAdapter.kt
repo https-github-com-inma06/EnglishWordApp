@@ -1,7 +1,10 @@
 package com.uhavecodingproblem.wordsrpg.component
 
+import android.util.Log
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.uhavecodingproblem.wordsrpg.data.Stage
 import com.uhavecodingproblem.wordsrpg.data.WordData
 
 /**
@@ -27,14 +30,14 @@ object WordBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("progress")
-    fun progress(textView: TextView, item: MutableList<WordData>) {
+    fun progress(progressBar: ProgressBar, item: MutableList<Stage>) {
         var count = 0
         for (i in item.indices) {
-            if (item[i].isPassed)
+            if (item[i].stageStatus == 3)
                 count++
         }
-        val value = "${((count.toDouble() / item.size) * 100).toInt()}%"
-        textView.text = value
+        progressBar.max = item.size
+        progressBar.progress = count
     }
 
 }

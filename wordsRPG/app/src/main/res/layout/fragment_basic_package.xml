@@ -23,8 +23,8 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/basic_tab_layout"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
             app:tabIndicatorHeight="0dp"
             app:tabBackground="@drawable/basic_package_change_click"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -33,8 +33,12 @@
             app:setTabContent="@{libraryviewmodel.tabItem}"
             app:setViewModel="@{libraryviewmodel}"
             app:setViewPosition="@{libraryviewmodel.position}"
-            app:tabGravity="center"
-            app:tabMode="auto" />
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="#795548"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/tab_layout_font"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"

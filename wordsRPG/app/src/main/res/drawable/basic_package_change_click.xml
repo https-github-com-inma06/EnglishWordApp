@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@color/tab_background_selected" android:state_selected="true"/>
-    <item android:drawable="@color/tab_background_unselected"/>
+    <item android:drawable="@drawable/basic_package_tab_layout_selected" android:state_selected="true"/>
+    <item android:drawable="@drawable/basic_package_tab_layout_unselected"
+        android:state_selected="false"
+        android:state_focused="false"
+        android:state_pressed="false"/>
 
 </selector>

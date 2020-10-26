@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.WordType
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageByTestItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageItemBinding
 
 /**
  * wordsrpg
@@ -14,14 +14,15 @@ import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageByTestItemBinding
  * Created On 2020-09-27.
  * Description:
  */
-class ByTestRecyclerViewAdapter(val item: MutableList<WordType>,val listener: ByTestGridItemClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BasicPackageRecyclerView(val item: MutableList<WordType>, val listener: BasicPackageGridItemClickListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface ByTestGridItemClickListener{
-        fun onByTestItemClick(view: View, position: Int)
+    interface BasicPackageGridItemClickListener {
+        fun onItemClick(view: View, position: Int, isByLevel: Boolean)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ItemViewHolder(BasicPackageByTestItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ItemViewHolder(BasicPackageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -32,13 +33,16 @@ class ByTestRecyclerViewAdapter(val item: MutableList<WordType>,val listener: By
         return if (item.isNullOrEmpty()) 0 else item.size
     }
 
-    inner class ItemViewHolder(val binding: BasicPackageByTestItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(data: WordType){
+    inner class ItemViewHolder(val binding: BasicPackageItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(data: WordType) {
             binding.data = data
 
             binding.basicPackageLayout.clipToOutline = true
             binding.root.setOnClickListener {
-                listener.onByTestItemClick(it, adapterPosition)
+                if (data.type == "수준별")
+                    listener.onItemClick(it, adapterPosition, true)
+                else
+                    listener.onItemClick(it, adapterPosition, false)
             }
         }
     }

@@ -15,17 +15,13 @@ data class WordType(
     val type: String, // 수준별, 시험별, 카테고리별..
     val name: String, // 초등학교 1학년, 중학교 1학년, 고등학교 1학년, 토익 등등
     val thumbnailImage: String, // 배경이미지
-    val writer: String, // 저작자
-    val description: String, // 패키지에 대한 기본적인 설명
-    val words: MutableList<WordData> // 단어들
+    val stage: MutableList<Stage> // 단어들
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString()?: "",
-        parcel.readString()?: "",
-        parcel.readString()?: "",
-        parcel.createTypedArrayList(WordData.CREATOR) as MutableList<WordData>
+        parcel.createTypedArrayList(Stage.CREATOR) as MutableList<Stage>
     )
 
     override fun describeContents(): Int {
@@ -37,9 +33,7 @@ data class WordType(
             writeString(type)
             writeString(name)
             writeString(thumbnailImage)
-            writeString(writer)
-            writeString(description)
-            writeTypedList(words)
+            writeTypedList(stage)
         }
     }
 

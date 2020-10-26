@@ -23,11 +23,14 @@ const val MY_SUBSCRIBE_FILTER_TYPE = 1003//내가 구독한 유저의 패키지�
 const val MY_HEART_FILTER_TYPE = 1004//내가 하트 표시한 유저의 패키지로 필터링
 
 
-//기본 패키지 수준별
-const val ITEM_HEADER_TYPE = 0
-const val ITEM_GIRD_TYPE = 1
-
 
 //내패키지랑  전체 패키지 구별 용 상수
 const val MY_CUSTOM_PACKAGE = 2001
 const val ENTIRE_CUSTOM_PACKAGE = 2002
+
+
+//스테이지 상태구분
+const val STAGE_NONE = 0 // 학습하지도, 테스트통과하지도 않은 상태
+const val STAGE_STUDYING = 1 // 학습중인상태( 학습만 한상태, 학습하다가 중간에 나간상태 )
+const val STAGE_TEST_FAIL = 2 // 테스트 실패
+const val STAGE_TEST_CLEAR = 3 // 테스트 통과

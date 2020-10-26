@@ -69,10 +69,14 @@
 
     <string name="package_thumbnail">페키지 썸네일</string>
     <string name="package_writer">\[ %s \]</string>
-    <string name="move_study">START</string>
-    <string name="move_test">시험보기</string>
+    <string name="move_study">STUDY</string>
+    <string name="move_test">TEST</string>
 
     <string name="study_mic">TTS</string>
+    <string name="exit">종료</string>
+    <string name="stage">STAGE %s</string>
+    <string name="expand_and_collapse">접고 펼치기</string>
+    <string name="move_study_dialog">GO</string>
 
 
     <!-- viewgroup_library_search  str   -->

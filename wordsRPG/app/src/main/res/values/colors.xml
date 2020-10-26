@@ -25,4 +25,8 @@
 
     <color name="package_button_color">#5AD18F</color>
 
+    <color name="basic_dialog_text_color">#00D7FF</color>
+    <color name="basic_dialog_expand_color">#96FFFF</color>
+    <color name="basic_dialog_color">#C8FFFF</color>
+
 </resources>
