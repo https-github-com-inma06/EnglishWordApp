@@ -82,6 +82,7 @@
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
+            android:onClick="@{checkPackage == constant.MY_CUSTOM_PACKAGE ? myCustomFragment::filterChange : entireCustomFragment::filterChange}"
             app:layout_constraintBottom_toBottomOf="@id/textView3"
             app:layout_constraintHeight_default="percent"
             app:layout_constraintHeight_percent="0.45"
@@ -96,7 +97,7 @@
                 android:fontFamily="@font/binggraemelonabold"
                 android:gravity="center"
                 android:paddingStart="5dp"
-                android:text="@string/str_search_filter"
+                android:text="@string/str_filter_title"
                 android:textColor="@color/white"
                 android:textSize="13sp"
                 tools:ignore="RtlSymmetry" />

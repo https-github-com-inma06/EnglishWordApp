@@ -2,6 +2,8 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Intent
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,8 @@ import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.ORIGINAL_PACKAGE_TYPE
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
+import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
 
 /**
  * wordsrpg
@@ -27,7 +31,7 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
 
     private val mockMyPackageDataList = CustomPackageListMockData.list
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
-
+    var presentSearchTag = SEARCH_PACKAGE_TITLE
     override fun FragmentEntireCustomPackageBinding.onCreateView() {
         Logger.v("실행")
 
@@ -66,19 +70,30 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
     }//initRecyclerView()끝
 
 
+    //필터 바뀜 처리
+    fun filterChange(filter: Int){
+
+        changeFilterAnimation(binding.viewgroupLibrarySearch.iconSearchFilter).start()
+
+        when(filter){
+            SEARCH_PACKAGE_TITLE ->{
+                binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_title)
+            }
+
+            SEARCH_PACKAGE_TAG ->{
+                binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_tag)
+
+            }
+        }
+    }//filterChange 끝
 
 
 
-    //내 패키지 검색 tv 클릭 event
-    fun searchMyCustomPackage(view: View){
-        Logger.v("내 패키지 검색 엑티비티 실행")
+    //필터 바뀜  애니메이션
+    private fun changeFilterAnimation(view: View) :Animation{
+        view.animation = AnimationUtils.loadAnimation(requireActivity(),R.anim.search_filter_rotation)
+        return view.animation
+    }
 
-        //네비게이션 내패키지 검색 fragment로 이동
-        findNavController().navigate(
-            R.id.action_library_to_search_fragment,
-            arguments
-        )
 
-    }//searchMyCustomPackage() 끝
-
-}
+}//class 끝
