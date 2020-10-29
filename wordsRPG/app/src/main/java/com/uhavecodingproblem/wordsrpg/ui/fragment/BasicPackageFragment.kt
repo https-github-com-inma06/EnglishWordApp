@@ -22,6 +22,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.dialog.BasicPackageDialog
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.util.hideKeyboard
 
 /**
  * wordsrpg
@@ -165,4 +166,10 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             window?.setLayout(x, y)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
+    }
+
 }

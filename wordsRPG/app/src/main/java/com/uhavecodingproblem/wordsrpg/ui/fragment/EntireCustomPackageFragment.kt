@@ -13,10 +13,7 @@ import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomPackageListMockData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
-import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.ORIGINAL_PACKAGE_TYPE
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
+import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
  * wordsrpg
@@ -95,5 +92,11 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
         return view.animation
     }
 
+
+    // TODO: 2020-10-29 viewpager selection에서  keyboardhide 처리를 할때  문제가 있어 이렇게 처리 
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
+    }
 
 }//class 끝

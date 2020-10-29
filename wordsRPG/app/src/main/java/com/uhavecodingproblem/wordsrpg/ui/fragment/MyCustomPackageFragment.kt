@@ -141,6 +141,9 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        hideKeyboard()
+    }
 
 }//class 끝
