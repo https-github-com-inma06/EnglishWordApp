@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_custom_package"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="140dp"
         android:layout_margin="5dp"
         android:background="@drawable/recyclerview_item_round">
 

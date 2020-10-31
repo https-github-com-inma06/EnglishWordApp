@@ -52,7 +52,7 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
         recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+            MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
          binding.recyclerviewMyCustomList.apply {
              layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌

@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerViewBinding
-import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
-import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
+import com.uhavecodingproblem.wordsrpg.databinding.ItemMyCustomPackageAddBinding
+import com.uhavecodingproblem.wordsrpg.util.*
 
 
 /**
@@ -27,126 +27,90 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
  *
  */
 class CustomPackageRecyclerViewAdapter(
-    private val customPackageList:MutableList<CustomPackageData>, private var filterType:Int
-) : RecyclerView.Adapter<CustomPackageRecyclerViewAdapter.CustomPackageViewHolder>(),Filterable {
+    private val customPackageList: MutableList<CustomPackageData>, private var customPackageType: Int
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private var onItemClickListener: OnItemClickListener? =null
 
-    //필터링이 된 list -> 최종적으로  해당 list의 값들이 recyclerview에 뿌려짐.
-    private  var filterList: MutableList<CustomPackageData>//1-1
-
     init {
 
-        //1-1
-        filterList =
-
-        if(filterType == SEARCH_PACKAGE_TITLE || filterType == SEARCH_PACKAGE_TAG){//검색용 리스트는  처음에  빈 list를 보여준다
-            ArrayList()
-
-        }else{//그외 리스트들은 우선  받아온  리스트를 그대로 뿌려준다.
-            customPackageList
-
+        // TODO: 2020-10-31 추가아이템  자리 만들고 확인 위해서 일단 이렇게 해놓음. -> 추후 리팩토링
+        //내 커스텀의 경우는  index 0쪽에 mock 값  넣어줌.
+        if(customPackageType == MY_CUSTOM_PACKAGE) {
+            customPackageList.add(0, customPackageList[0])
         }
 
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomPackageViewHolder {
-       val binding =ItemCustomPackageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val binding =ItemCustomPackageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding1 =ItemMyCustomPackageAddBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
-        return CustomPackageViewHolder(binding)
+        return when(viewType){
+
+            0 ->{
+                CustomPackageViewHolder(binding)
+            }
+
+            1->{
+                AddNewMyCustomPackage(binding1)
+
+            }
+            else ->{
+
+                CustomPackageViewHolder(binding)
+            }
+        }
     }
 
 
-    override fun onBindViewHolder(holder: CustomPackageViewHolder, position: Int) {
 
-        holder.onBind(filterList[position])
-    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+        if(customPackageType == MY_CUSTOM_PACKAGE){
 
-    override fun getItemCount(): Int = filterList.size
-
-
-    //필터 타입을 외부에서  변경할때  사용한다.
-    fun changeType(newFilterType: Int){  this.filterType = newFilterType }
-
-
-
-    // TODO: 2020-09-27 여기서 검색어에 대한 search  필터,  검색 search 필터
-    //여러 필터 적용 진행시 동작
-    override fun getFilter(): Filter {
-        return object :Filter(){
-
-            //필터링 진행
-            override fun performFiltering(getFilterValue: CharSequence?): FilterResults {
-
-            //필터를 통해 들어온  charsequence 값 -> 검색에서 사용됨
-            val searchValue = getFilterValue?.toString()
-
-            //검색어가 없는 경우 필터 타입에 따라 리스트를 filterlist에 적용한다.
-            //그리고 맨앞이 ' ' 공백일 경우도 일단  빈 array가 나오도록  적용.
-            filterList = if(searchValue.isNullOrEmpty() || searchValue[0] == ' ') {
-
-                  when(filterType){
-                      SEARCH_PACKAGE_TITLE, SEARCH_PACKAGE_TAG-> ArrayList() //검색, 태그 필터의 경우는 검색어가 없으면  빈 array를 뿌려준다.
-                      else ->customPackageList// 그 외에는  필터 적용시  각각의 맞는  리스트를  뿌려줌.
-
-                  }
-
-            } else {//필터에  검색어가 적용될때
-
-                    //검색된 필터  리스트
-                    val searchedFilterList = ArrayList<CustomPackageData>()
-
-                    if(filterType == SEARCH_PACKAGE_TITLE) {//제목 필터가 적용될때
-
-                        //받아온 리스트에서  해당 검색어 포함  리스트 필터링
-                        for (i in 0 until customPackageList.size) {
-                            if (customPackageList[i].packageName.contains(searchValue)) {
-                                searchedFilterList.add(customPackageList[i])
-                                Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
-                            }
-
-                        }//for문 끝
-
-                    }else if(filterType == SEARCH_PACKAGE_TAG){//태그 필터 적용되었을때
-
-                        for (i in 0 until customPackageList.size) {
-
-                            //태그리스트 filter 해서  가장 마지막에  필터된  태그값  가진 패키지 넣어줌. (중복 검색 방지)
-                            customPackageList[i].hashList.findLast {
-                                if(it.contains(searchValue)){
-                                    searchedFilterList.add(customPackageList[i])
-                                }else{
-                                    false
-                                }
-                            }
-                            Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
-
-                        }//for문 끝
-
-                    }//태그 필터 끝
-
-                searchedFilterList//검색으로 필터링된  리스트 filterlist에 적용
-            }
-                val filterResults = FilterResults()
-                filterResults.values = filterList//필터 결과에  필터 리스트 넣어서 넘김
-                return filterResults
+            if(position == 0){
+                (holder as AddNewMyCustomPackage).onBind()
+            }else{
+                (holder as CustomPackageViewHolder).onBind(customPackageList[position])
             }
 
-
-            override fun publishResults(p0: CharSequence?, p1: FilterResults?) {//filter 결과  발행
-                filterList  = p1?.values as MutableList<CustomPackageData>
-                Logger.v("필터 결과 ->  $filterList")
-                notifyDataSetChanged()//필터된 내용으로 데이터 업데이트.
-            }
+        }else{
+            (holder as CustomPackageViewHolder).onBind(customPackageList[position])
 
         }
+    }
 
 
-    }//getFilter() 끝
+    // TODO: 2020-10-31 일단 이렇게 적용하고 나중에 명확하게  코드 다시  작성
+    override fun getItemViewType(position: Int): Int {
+        return when(customPackageType){
 
+            ENTIRE_CUSTOM_PACKAGE -> {
+
+                return 0
+            }
+
+            MY_CUSTOM_PACKAGE -> {
+
+                return if(position == 0){
+                    1
+                }else{
+                    0
+                }
+            }
+
+            else -> {
+
+                return 0
+            }
+        }
+
+    }
+
+    override fun getItemCount(): Int = customPackageList.size
 
 
 
@@ -154,6 +118,7 @@ class CustomPackageRecyclerViewAdapter(
     interface  OnItemClickListener {
         fun onItemClick(view:View,packageName:String)
         // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
+
     }
 
 
@@ -162,38 +127,51 @@ class CustomPackageRecyclerViewAdapter(
         this.onItemClickListener = onItemClickListener
     }
 
+    //추가 아이템 뷰홀더
+    inner class AddNewMyCustomPackage(val binding:ItemMyCustomPackageAddBinding):RecyclerView.ViewHolder(binding.root){
 
-  //뷰홀더
-  inner class CustomPackageViewHolder(val binding:ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root){
+        fun onBind(){
+            //아이템 클릭 리스너
+            binding.layoutCustomPackageAdd.setOnClickListener {
+                // TODO: 2020-10-31 추후 리팩토링 필요.  외부로  빼서 패키지 추가  액션 진행해야됨
 
+                Logger.v("아이템 추가 ")
 
+            }//아이템 클릭리스너 끝
+        }
 
-
-      //item 뷰에  데이터 바인딩 적용
-      fun onBind(data : CustomPackageData){
-
-          val pos = adapterPosition//클릭된 아이템 포지션
-
-          //리사이클러뷰에 아이템 databinding 연결
-          binding.data = data
-
-          //아이템 라운드 적용
-          binding.layoutCustomPackage.clipToOutline = true
-
-          binding.layoutCustomPackage.setOnClickListener {
-
-              filterList[pos].packageName
-
-              if (pos != RecyclerView.NO_POSITION) {
-
-                  // 리스너 객체의 메서드 호출.
-                  onItemClickListener?.onItemClick(view = it,packageName =  filterList[pos].packageName)
-
-              }
-
-          }
+    }
 
 
-      }
-  }
+    //뷰홀더
+    inner class CustomPackageViewHolder(val binding:ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root){
+
+        //item 뷰에  데이터 바인딩 적용
+        fun onBind(data : CustomPackageData){
+
+            val pos = adapterPosition//아이템 포지션
+
+            //리사이클러뷰 item xml 에 data 연
+            binding.data = data
+
+            //아이템 라운드 적용
+            binding.layoutCustomPackage.clipToOutline = true
+
+
+            //아이템 클릭 리스너
+            binding.layoutCustomPackage.setOnClickListener {
+                customPackageList[pos].packageName
+
+                if (pos != RecyclerView.NO_POSITION) {
+
+                    // 리스너 객체의 메서드 호출.
+                    onItemClickListener?.onItemClick(view = it,packageName =  customPackageList[pos].packageName)
+
+                }
+
+            }//아이템 클릭리스너 끝
+
+
+        }
+    }
 }

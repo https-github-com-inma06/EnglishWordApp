@@ -41,26 +41,6 @@
             app:layout_constraintTop_toBottomOf="@+id/viewgroup_library_search" />
 
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_make_custom_package"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{thisFragment::moveToAddNewCustomPackageActivity}"
-            app:backgroundTint="@color/colorBlack"
-            app:borderWidth="1dp"
-            app:fabSize="normal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@android:drawable/ic_menu_add" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

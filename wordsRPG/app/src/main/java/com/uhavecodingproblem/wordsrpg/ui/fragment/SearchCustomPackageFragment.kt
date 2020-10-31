@@ -62,21 +62,21 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
 
 
 
-
-    //필터 change
-    fun setFilterChange(view: View){
-
-        if(view == binding.tvTagFilter){//태그 필터 클릭시
-            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TAG)
-            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TAG)
-        }else{
-            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TITLE)
-            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
-        }
-
-        //필터가 바뀌면  우선, filter에 null값을 줘서  list 를   reset 시킨다.
-        recyclerViewAdapter.filter.filter(null)
-    }
+//
+//    //필터 change
+//    fun setFilterChange(view: View){
+//
+//        if(view == binding.tvTagFilter){//태그 필터 클릭시
+//            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TAG)
+//            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TAG)
+//        }else{
+//            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TITLE)
+//            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
+//        }
+//
+//        //필터가 바뀌면  우선, filter에 null값을 줘서  list 를   reset 시킨다.
+//        recyclerViewAdapter.filter.filter(null)
+//    }
 
 
 
@@ -93,23 +93,23 @@ class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBindin
     }
 
 
-    //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
-    val searchAction = TextView.OnEditorActionListener { _, actionId, _ ->
-
-        when(actionId){
-            EditorInfo.IME_ACTION_SEARCH ->{
-
-                Logger.v("검색버튼 눌림")
-
-                //editext에 적힌 내용으로  검색 필터 적용
-                recyclerViewAdapter.filter.filter(binding.editTvSearchPackage.text.toString())
-                
-                true
-            }
-            else -> false
-        }
-
-    }//searchAction 끝
+//    //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
+//    val searchAction = TextView.OnEditorActionListener { _, actionId, _ ->
+//
+//        when(actionId){
+//            EditorInfo.IME_ACTION_SEARCH ->{
+//
+//                Logger.v("검색버튼 눌림")
+//
+//                //editext에 적힌 내용으로  검색 필터 적용
+//                recyclerViewAdapter.filter.filter(binding.editTvSearchPackage.text.toString())
+//
+//                true
+//            }
+//            else -> false
+//        }
+//
+//    }//searchAction 끝
 
 
 
