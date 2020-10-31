@@ -13,8 +13,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.Stage
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageStageSelectionDialogNoneBinding
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageStageSelectionDialogOtherBinding
+import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
+import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
+import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
  * wordsrpg
@@ -23,13 +24,15 @@ import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageStageSelectionDia
  * Created On 2020-10-25.
  * Description:
  */
-class BasicPackageSelectionDialog(context: Context,private val stage: Stage, private val packageName: String, private val thumbnailImageUri: String): Dialog(context) {
+class StageSelectionDialog(context: Context, private val stage: Stage, private val packageName: String, private val thumbnailImageUri: String): Dialog(context) {
 
-    private lateinit var basicPackageStageSelectionDialogNoneBinding: BasicPackageStageSelectionDialogNoneBinding
-    private lateinit var basicPackageStageSelectionDialogOtherBinding: BasicPackageStageSelectionDialogOtherBinding
+    private lateinit var stageSelectionNone: DialogStageSelectionNoneBinding
+    private lateinit var stageSelectionOther: DialogStageSelectionOtherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Logger.v("StageSelectionDialog onCreate")
 
         val layoutParam = WindowManager.LayoutParams().apply {
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
@@ -43,25 +46,25 @@ class BasicPackageSelectionDialog(context: Context,private val stage: Stage, pri
         }
 
         if (stage.stageStatus == 0){
-            basicPackageStageSelectionDialogNoneBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.basic_package_stage_selection_dialog_none, null, false)
-            basicPackageStageSelectionDialogNoneBinding.run {
+            stageSelectionNone = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_none, null, false)
+            stageSelectionNone.run {
                 packagename = packageName
                 thumbnailimage = thumbnailImageUri
                 stageinformation = stage
-                selectiondialog = this@BasicPackageSelectionDialog
+                selectiondialog = this@StageSelectionDialog
             }
-            basicPackageStageSelectionDialogNoneBinding.layoutSelectionDialog.clipToOutline = true
-            setContentView(basicPackageStageSelectionDialogNoneBinding.root)
+            stageSelectionNone.layoutSelectionDialog.clipToOutline = true
+            setContentView(stageSelectionNone.root)
         }else{
-            basicPackageStageSelectionDialogOtherBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.basic_package_stage_selection_dialog_other, null, false)
-            basicPackageStageSelectionDialogOtherBinding.run {
+            stageSelectionOther = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_other, null, false)
+            stageSelectionOther.run {
                 packagename = packageName
                 thumbnailimage = thumbnailImageUri
                 stageinformation = stage
-                selectiondialog = this@BasicPackageSelectionDialog
+                selectiondialog = this@StageSelectionDialog
             }
-            basicPackageStageSelectionDialogOtherBinding.layoutSelectionDialog.clipToOutline = true
-            setContentView(basicPackageStageSelectionDialogOtherBinding.root)
+            stageSelectionOther.layoutSelectionDialog.clipToOutline = true
+            setContentView(stageSelectionOther.root)
         }
     }
 

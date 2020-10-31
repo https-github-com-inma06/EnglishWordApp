@@ -18,7 +18,7 @@
 
         <ImageView
             android:id="@+id/img_by_level_package_thumbnail"
-            error="@{@drawable/ic_launcher_background}"
+            error="@{@drawable/loading}"
             image="@{data.thumbnailImage}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

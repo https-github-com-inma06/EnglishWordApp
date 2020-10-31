@@ -1,15 +1,13 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
-import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomPackageListMockData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.ORIGINAL_PACKAGE_TYPE

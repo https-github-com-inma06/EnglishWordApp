@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.viewpageradapter
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.databinding.StudyItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
 
 /**
  * wordsrpg
@@ -20,7 +20,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.StudyItemBinding
  * image swipe ViewPager2
  *
  */
-class StudyViewPagerAdapter(
+class StudyActivityViewPagerAdapter(
     private var word: MutableList<WordData>,
     private val listener: ItemClickListener
 ) :
@@ -38,7 +38,7 @@ class StudyViewPagerAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val studyItemBinding =
-            StudyItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemStudyAcitivyViewpagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PagerViewHolder(studyItemBinding)
     }
 
@@ -51,7 +51,7 @@ class StudyViewPagerAdapter(
         return if (word.isNullOrEmpty()) 0 else word.size
     }
 
-    inner class PagerViewHolder(private val binding: StudyItemBinding) :
+    inner class PagerViewHolder(private val binding: ItemStudyAcitivyViewpagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: WordData) {

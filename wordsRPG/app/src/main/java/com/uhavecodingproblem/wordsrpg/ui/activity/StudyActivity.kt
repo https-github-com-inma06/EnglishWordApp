@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter
+import com.uhavecodingproblem.wordsrpg.component.viewpageradapter.StudyActivityViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.Stage
@@ -22,12 +22,12 @@ import java.util.*
 
 class StudyActivity :
     BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
-    StudyViewPagerAdapter.ItemClickListener {
+    StudyActivityViewPagerAdapter.ItemClickListener {
 
     private val studyViewModel: WordViewModel by viewModels { WordViewModelFactory() }
     private var word: Stage? = null
     private var textToSpeech: TextToSpeech? = null
-    private lateinit var studyRecyclerviewAdapter: StudyViewPagerAdapter
+    private lateinit var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter
 
     override fun ActivityStudyBinding.onCreate() {
         Logger.v("실행")
@@ -66,8 +66,8 @@ class StudyActivity :
 
     private fun setViewPager() {
         binding.viewpager2Study.apply {
-            studyRecyclerviewAdapter = StudyViewPagerAdapter(word?.words!!, this@StudyActivity)
-            adapter = studyRecyclerviewAdapter
+            studyActivityRecyclerviewAdapter = StudyActivityViewPagerAdapter(word?.words!!, this@StudyActivity)
+            adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
         }
     }
@@ -92,10 +92,10 @@ class StudyActivity :
                 exitStudyDialog()
             }
             R.id.hide_word -> {
-                studyRecyclerviewAdapter.hideWord()
+                studyActivityRecyclerviewAdapter.hideWord()
             }
             R.id.hide_mean -> {
-                studyRecyclerviewAdapter.hideMean()
+                studyActivityRecyclerviewAdapter.hideMean()
             }
             R.id.print_test_paper -> {
                 Toast.makeText(

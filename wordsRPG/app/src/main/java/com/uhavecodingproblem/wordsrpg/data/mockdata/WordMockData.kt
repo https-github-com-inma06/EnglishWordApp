@@ -65,8 +65,17 @@ object WordMockData {
 
         stage.add(Stage(stageNum = 1, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
         stage.add(Stage(stageNum = 2, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
-        stage.add(Stage(stageNum = 3, stageStatus = 1, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 4, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 3, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 4, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 5, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 6, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 7, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 8, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 9, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 10, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 11, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 12, stageStatus = 1, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 13, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
 
         return stage
     }
@@ -76,12 +85,22 @@ object WordMockData {
 
         stage.add(Stage(stageNum = 1, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
         stage.add(Stage(stageNum = 2, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
-        stage.add(Stage(stageNum = 3, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 4, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 5, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 6, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 7, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
-        stage.add(Stage(stageNum = 8, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 3, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 4, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 5, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 6, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 7, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 8, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 9, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 10, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 11, stageStatus = 3, stageBadgeCount = 2, words = initClearWordMockData()))
+        stage.add(Stage(stageNum = 12, stageStatus = 2, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 13, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 14, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 15, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 16, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 17, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
+        stage.add(Stage(stageNum = 18, stageStatus = 0, stageBadgeCount = 0, words = initWordMockData()))
 
         return stage
     }

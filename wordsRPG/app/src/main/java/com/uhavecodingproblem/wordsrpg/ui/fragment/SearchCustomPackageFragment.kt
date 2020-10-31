@@ -1,7 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -11,10 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG

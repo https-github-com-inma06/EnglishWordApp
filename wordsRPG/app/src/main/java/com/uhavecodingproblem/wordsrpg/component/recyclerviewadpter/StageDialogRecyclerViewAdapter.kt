@@ -1,18 +1,13 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter
 
 import android.content.Context
-import android.graphics.Color
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.Stage
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageStageDialogItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.ItemDialogBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
@@ -22,7 +17,7 @@ import com.uhavecodingproblem.wordsrpg.util.*
  * Created On 2020-10-03.
  * Description:
  */
-class StageRecyclerViewAdapter(
+class StageDialogRecyclerViewAdapter(
     val item: MutableList<Stage>,
     private val listener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -70,7 +65,7 @@ class StageRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         return BasicPackageStageItemViewHolder(
-            BasicPackageStageDialogItemBinding.inflate(
+            ItemDialogBasicPackageRecyclerviewBinding.inflate(
                 LayoutInflater.from(context),
                 parent,
                 false
@@ -95,30 +90,22 @@ class StageRecyclerViewAdapter(
         }
     }
 
-    inner class BasicPackageStageItemViewHolder(val binding: BasicPackageStageDialogItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class BasicPackageStageItemViewHolder(val binding: ItemDialogBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
 
         private var collapseView: View? = binding.layoutStageCollapse
         private var expandView: View? = binding.layoutStageExpand
-        private var ratingBar: RatingBar? = binding.ratingBarResult
-        private var textResult: TextView? = binding.tvStageExpandDescription
 
         fun bind(data: Stage) {
 
             binding.stageinformation = data
-            binding.position = adapterPosition
-            binding.endposition = itemCount - 1
+            binding.adapterposition = adapterPosition
+            binding.lockeditemposition = itemCount - 1
             binding.morestage = showMoreStage
             binding.study = studyStage
             binding.layoutDialogItem.clipToOutline = true
 
             if (adapterPosition == itemCount - 1) {
-                binding.layoutStageCollapse.setBackgroundColor(Color.GRAY)
                 binding.layoutStageCollapse.isEnabled = false
-                binding.tvStageCollapseName.setTextColor(Color.WHITE)
-                binding.imgBtnStageCollapse.apply {
-                    setImageResource(R.drawable.img_vector_white_lock)
-                    scaleType = ImageView.ScaleType.CENTER
-                }
             }
 
             binding.imgBtnStageCollapse.setOnClickListener {
@@ -155,17 +142,9 @@ class StageRecyclerViewAdapter(
             if (selectedItem.get(position)){
                 collapseView?.visibility = View.GONE
                 expandView?.visibility = View.VISIBLE
-                if (position == setFirstFocus()) {
-                    expandView?.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color, null))
-                    ratingBar?.visibility = View.GONE
-                    textResult?.visibility = View.VISIBLE
-                }
             }else{
                 expandView?.visibility = View.GONE
                 collapseView?.visibility = View.VISIBLE
-                if (position == setFirstFocus()){
-                    collapseView?.setBackgroundColor(context!!.resources!!.getColor(R.color.basic_dialog_text_color,null))
-                }
             }
         }
 

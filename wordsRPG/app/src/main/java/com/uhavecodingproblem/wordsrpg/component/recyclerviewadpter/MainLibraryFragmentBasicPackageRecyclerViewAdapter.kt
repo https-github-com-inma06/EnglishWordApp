@@ -1,11 +1,11 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.WordType
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageItemBinding
+import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
 
 /**
  * wordsrpg
@@ -14,7 +14,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageItemBinding
  * Created On 2020-09-27.
  * Description:
  */
-class BasicPackageRecyclerView(val item: MutableList<WordType>, val listener: BasicPackageGridItemClickListener) :
+class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<WordType>, val listener: BasicPackageGridItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface BasicPackageGridItemClickListener {
@@ -22,7 +22,7 @@ class BasicPackageRecyclerView(val item: MutableList<WordType>, val listener: Ba
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ItemViewHolder(BasicPackageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ItemViewHolder(ItemMainlibrayFragmentBasicPackageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -33,7 +33,7 @@ class BasicPackageRecyclerView(val item: MutableList<WordType>, val listener: Ba
         return if (item.isNullOrEmpty()) 0 else item.size
     }
 
-    inner class ItemViewHolder(val binding: BasicPackageItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(val binding: ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(data: WordType) {
             binding.data = data
 

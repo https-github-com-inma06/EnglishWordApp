@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.bindingadpater
 
 import android.graphics.drawable.Drawable
 import android.widget.EditText

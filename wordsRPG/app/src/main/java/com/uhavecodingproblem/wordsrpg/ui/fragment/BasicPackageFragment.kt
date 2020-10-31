@@ -12,14 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.BasicPackageRecyclerView
+import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
-import com.uhavecodingproblem.wordsrpg.dialog.BasicPackageDialog
+import com.uhavecodingproblem.wordsrpg.dialog.StageDialog
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -31,7 +31,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Description:
  */
 class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
-    BasicPackageRecyclerView.BasicPackageGridItemClickListener {
+    MainLibraryFragmentBasicPackageRecyclerViewAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
     private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
@@ -57,7 +57,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     private fun byLevelRecyclerView() {
         if (basicRecyclerViewAdapter == null) {
-            basicRecyclerViewAdapter = BasicPackageRecyclerView(wordList, this)
+            basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(wordList, this)
             binding.recyclerview.apply {
                 adapter = basicRecyclerViewAdapter
                 layoutManager = setGridLayout()
@@ -72,7 +72,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     private fun testRecyclerView() {
         if (basicRecyclerViewAdapter == null) {
-            basicRecyclerViewAdapter = BasicPackageRecyclerView(wordList, this)
+            basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(wordList, this)
             binding.recyclerview.apply {
                 adapter = basicRecyclerViewAdapter
                 layoutManager = setGridLayout()
@@ -131,9 +131,9 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
         val dialog = if (isByLevel)
-            BasicPackageDialog(requireContext(), wordList[position])
+            StageDialog(requireContext(), wordList[position])
         else
-            BasicPackageDialog(requireContext(), wordList[position])
+            StageDialog(requireContext(), wordList[position])
         dialog.show()
         dialogResize(dialog)
     }

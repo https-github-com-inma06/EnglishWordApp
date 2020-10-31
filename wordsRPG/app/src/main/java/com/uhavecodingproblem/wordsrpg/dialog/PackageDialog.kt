@@ -15,7 +15,6 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.CustomPackageDialogBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
 
 /**
  * wordsrpg
@@ -55,10 +54,7 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
     }
 
     fun moveStudy(v: View) {
-        Intent(context, LibraryActivity::class.java).also {
-            it.putExtra("wordData", type as WordType)
-            context.startActivity(it)
-        }
+
     }
 
     fun moveTest(v: View) {

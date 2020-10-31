@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.viewpageradapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -16,7 +16,7 @@ import com.uhavecodingproblem.wordsrpg.ui.fragment.MySubScribePackageFragment
  * Description:
  * MainLibrary ViewPager2 Adapter
  */
-class MainLibraryViewPagerAdapter(fragment: FragmentActivity): FragmentStateAdapter(fragment) {
+class MainLibraryFragmentViewPagerAdapter(fragment: FragmentActivity): FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
         return 4

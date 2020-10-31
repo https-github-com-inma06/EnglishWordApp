@@ -23,22 +23,16 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/basic_tab_layout"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:tabIndicatorHeight="0dp"
-            app:tabBackground="@drawable/basic_package_change_click"
+            style="@style/library_basic_package_tab_style"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setTabContent="@{libraryviewmodel.tabItem}"
             app:setViewModel="@{libraryviewmodel}"
             app:setViewPosition="@{libraryviewmodel.position}"
-            app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/colorWhite"
-            app:tabTextColor="#795548"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextAppearance="@style/tab_layout_font"/>
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"

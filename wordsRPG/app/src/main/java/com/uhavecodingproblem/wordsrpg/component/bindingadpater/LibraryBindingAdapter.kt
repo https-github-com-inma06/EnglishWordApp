@@ -1,10 +1,11 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.bindingadpater
 
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.uhavecodingproblem.wordsrpg.component.viewpageradapter.MainLibraryFragmentViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 
 /**
@@ -70,7 +71,7 @@ object LibraryBindingAdapter {
     ) {
 
         fragmentActivity?.let {
-            viewPager2.adapter = MainLibraryViewPagerAdapter(it)
+            viewPager2.adapter = MainLibraryFragmentViewPagerAdapter(it)
 
             viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
