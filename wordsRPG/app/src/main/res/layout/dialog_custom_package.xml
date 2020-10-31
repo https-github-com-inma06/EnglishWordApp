@@ -63,7 +63,7 @@
                 android:id="@+id/tv_copywriter"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="@{@string/package_writer(information.ownerUid)}"
+                android:text="@{@string/package_writer(information.ownerName)}"
                 android:textColor="#F2C8"
                 android:textStyle="bold"
                 android:background="#668c8c8c"

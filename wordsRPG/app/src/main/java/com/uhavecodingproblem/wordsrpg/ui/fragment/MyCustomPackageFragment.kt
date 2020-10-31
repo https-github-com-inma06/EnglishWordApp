@@ -3,10 +3,12 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,7 +34,6 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     private val mockMyPackageDataList =CustomMyPackageListMocKData.list
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
 
-     var presentSearchTag = SEARCH_PACKAGE_TAG
 
     override fun FragmentMyCustomPackageBinding.onCreateView() {
         Logger.v("실행")
@@ -62,12 +63,8 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
             override fun onItemClick(view: View, packageName: String) {
-
-
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-//                val i= Intent(requireActivity(), StudyActivity::class.java)
-//                i.putExtra("packagename",packageName)
-//                startActivity(i)
+
             }
         })
 
@@ -128,12 +125,12 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
                 val name=data?.getStringExtra("name").toString()
                 val uri=data?.getParcelableExtra<Uri>("uri").toString()
                 val uid = mockMyPackageDataList.size+1
-                val ownerUid= 3
+                val ownerName = "초보"
                 val tagList=data?.getStringArrayListExtra("tagList")
                 Logger.v("실행됨  $name     uri -> $uri  uid -> $uid, 어레이 -> $tagList" )
 
                 //mockdata list 에 넣어줌.
-                mockMyPackageDataList.add(CustomPackageData( uid,ownerUid,name,uri,0,0, tagList!!))
+                mockMyPackageDataList.add(CustomPackageData( uid,ownerName,name,uri,0,0, tagList!!))
                 recyclerViewAdapter.notifyDataSetChanged()//리사이클러뷰 data update
             }
 

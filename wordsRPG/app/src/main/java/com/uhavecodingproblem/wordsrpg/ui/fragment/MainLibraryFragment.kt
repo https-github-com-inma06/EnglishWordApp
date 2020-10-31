@@ -41,7 +41,7 @@ class MainLibraryFragment : BaseFragment<FragmentMainLibraryBinding>(R.layout.fr
     }
 
     private fun setDisableSwipe(){
-        binding.viewpager2Library.isUserInputEnabled = false
+        binding.viewpager2Library.isUserInputEnabled = true
     }
 
 }

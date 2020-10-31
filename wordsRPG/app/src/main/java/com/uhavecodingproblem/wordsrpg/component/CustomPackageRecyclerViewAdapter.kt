@@ -8,6 +8,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerViewBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
@@ -52,7 +53,7 @@ class CustomPackageRecyclerViewAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomPackageViewHolder {
-       val binding =ItemCustomPackageRecyclerViewBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+       val binding =ItemCustomPackageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
 
         return CustomPackageViewHolder(binding)
     }
@@ -163,15 +164,24 @@ class CustomPackageRecyclerViewAdapter(
 
 
   //뷰홀더
-  inner class CustomPackageViewHolder(val binding:ItemCustomPackageRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root){
+  inner class CustomPackageViewHolder(val binding:ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root){
+
+
+
 
       //item 뷰에  데이터 바인딩 적용
       fun onBind(data : CustomPackageData){
+
+          val pos = adapterPosition//클릭된 아이템 포지션
+
+          //리사이클러뷰에 아이템 databinding 연결
           binding.data = data
 
-          binding.containerItem.setOnClickListener {
+          //아이템 라운드 적용
+          binding.layoutCustomPackage.clipToOutline = true
 
-              val pos = adapterPosition//클릭된 아이템 포지션
+          binding.layoutCustomPackage.setOnClickListener {
+
               filterList[pos].packageName
 
               if (pos != RecyclerView.NO_POSITION) {

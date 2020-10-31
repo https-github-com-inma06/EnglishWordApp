@@ -1,9 +1,12 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.content.Intent
+import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -28,12 +31,12 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
 
     private val mockMyPackageDataList = CustomPackageListMockData.list
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
-    var presentSearchTag = SEARCH_PACKAGE_TITLE
+
     override fun FragmentEntireCustomPackageBinding.onCreateView() {
         Logger.v("실행")
 
-
         thisFragment = this@EntireCustomPackageFragment
+
         setCustomPackageRecyclerView()
     }
 
@@ -54,17 +57,13 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
             override fun onItemClick(view: View, packageName: String) {
-
-
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-//                val i= Intent(requireActivity(), StudyActivity::class.java)
-//                i.putExtra("packagename",packageName)
-//                startActivity(i)
             }
         })
 
 
     }//initRecyclerView()끝
+
 
 
     //필터 바뀜 처리
@@ -93,7 +92,10 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
     }
 
 
-    // TODO: 2020-10-29 viewpager selection에서  keyboardhide 처리를 할때  문제가 있어 이렇게 처리 
+
+
+    // TODO: 2020-10-29 viewpager selection 에서  keyboard hide 처리를 할때 editText focus 시에
+    // TODO: 다시  keyboard  hide 되는  문제가 있어 각 라이브러리 fragment 의 onResume 에서 처리
     override fun onResume() {
         super.onResume()
         hideKeyboard()

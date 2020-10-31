@@ -14,7 +14,7 @@ import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.WordType
-import com.uhavecodingproblem.wordsrpg.databinding.CustomPackageDialogBinding
+import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
 
 /**
@@ -40,8 +40,8 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             it.requestFeature(Window.FEATURE_NO_TITLE)
         }
 
-        val binding: CustomPackageDialogBinding =
-            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.custom_package_dialog, null, false)
+        val binding: DialogCustomPackageBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_custom_package, null, false)
 
         binding.run {
             information = type as CustomPackageData

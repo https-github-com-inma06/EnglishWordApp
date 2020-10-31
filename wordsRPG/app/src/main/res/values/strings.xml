@@ -56,7 +56,8 @@
     <string name="str_filter_tag">태그</string>
     <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
 
-
+    <!-- viewgroup_custom_package_search  -->
+    <string name="hint_search_custom_package">패키지를 검색해보세요</string>
 
      <!-- item_custom_package_recycler_view  str -->
     <string name="str_liked_count">%1$d 개</string>

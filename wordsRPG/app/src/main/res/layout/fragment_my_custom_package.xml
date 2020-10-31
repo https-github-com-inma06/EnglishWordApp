@@ -21,7 +21,7 @@
 
         <include
             android:id="@+id/viewgroup_library_search"
-            layout="@layout/viewgroup_library_search"
+            layout="@layout/viewgroup_custom_pacakge_search"
             app:myCustomFragment="@{thisFragment}"
             app:checkPackage="@{constant.MY_CUSTOM_PACKAGE}"
             android:layout_width="0dp"
