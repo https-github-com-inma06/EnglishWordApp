@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter
 
 import android.content.Context
+import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
@@ -33,11 +34,11 @@ class StageDialogRecyclerViewAdapter(
         setShowItem()
         if (showStageData.size == item.size) showMoreStage =  "STAGE ${showStageData.size}"
         else if (showStageData.size < item.size) showMoreStage =  "STAGE ${showStageData.size} ~ STAGE ${item.size - 1}"
-        preSelectPosition = setFirstFocus()
+        preSelectPosition = setInitPosition()
         selectedItem.put(preSelectPosition, true)
     }
 
-    private fun setFirstFocus(): Int { // 최초 포커스를 가지고있는 포지션
+    private fun setInitPosition(): Int { // 최초 포커스를 가지고있는 포지션
         //TODO : 아마 스테이지는 항상 2개이상이여서 조건문 필요없을듯?
         return if (itemCount > 2)
             itemCount - 2
@@ -60,6 +61,7 @@ class StageDialogRecyclerViewAdapter(
 
     interface ItemClickListener {
         fun onMoveSelectionWindow(v: View, position: Int)
+        fun onFoldButtonSelect(v: View, isExpand: Boolean)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -110,12 +112,13 @@ class StageDialogRecyclerViewAdapter(
 
             binding.imgBtnStageCollapse.setOnClickListener {
                 changeSparseBooleanArray(adapterPosition)
-
+                listener.onFoldButtonSelect(it, selectedItem.get(adapterPosition))
                 //openCloseStage(binding.layoutStageExpand)
             }
             binding.imgBtnStageExpand.setOnClickListener {
                 //openCloseStage(binding.layoutStageCollapse)
                 changeSparseBooleanArray(adapterPosition)
+                listener.onFoldButtonSelect(it, selectedItem.get(adapterPosition))
             }
 
             binding.btnMoveSelectionWindowDialog.setOnClickListener {
@@ -142,6 +145,13 @@ class StageDialogRecyclerViewAdapter(
             if (selectedItem.get(position)){
                 collapseView?.visibility = View.GONE
                 expandView?.visibility = View.VISIBLE
+                if (position != setInitPosition()){
+                    binding.tvResult.visibility = View.VISIBLE
+                    binding.tvStageExpandDescription.visibility = View.GONE
+                }else{
+                    binding.tvResult.visibility = View.GONE
+                    binding.tvStageExpandDescription.visibility = View.VISIBLE
+                }
             }else{
                 expandView?.visibility = View.GONE
                 collapseView?.visibility = View.VISIBLE

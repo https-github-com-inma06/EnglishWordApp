@@ -1,7 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.component.bindingadpater
 
-import android.view.View
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.uhavecodingproblem.wordsrpg.data.Stage
 
 /**
  * wordsrpg
@@ -13,20 +14,19 @@ import androidx.databinding.BindingAdapter
 object StageBindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("adapterPosition", "currentStagePosition", "isReverse")
-    fun isVisible(view: View, adapterPosition: Int, currentStagePosition: Int, isReverse: Boolean){
-        if(adapterPosition == currentStagePosition) {
-            if (!isReverse)
-                view.visibility = View.GONE
-            else
-                view.visibility = View.VISIBLE
+    @BindingAdapter("score")
+    fun getScore(textView: TextView, stageData: Stage) {
+        var score = 0
+        for (i in stageData.words.indices) {
+            if (stageData.words[i].isPassed)
+                score++
         }
-        else {
-            if (!isReverse)
-                view.visibility = View.VISIBLE
-            else
-                view.visibility = View.GONE
-        }
+        val result: String?
+        result = if (score == 0)
+            "에러발생"
+        else
+            "획득점수 : ${score * 10} / 100"
+        textView.text = result
     }
 
 }

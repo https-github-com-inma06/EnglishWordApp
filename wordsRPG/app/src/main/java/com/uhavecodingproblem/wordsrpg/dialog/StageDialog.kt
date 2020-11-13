@@ -23,6 +23,7 @@ import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import kotlin.math.ceil
 
 /**
  * wordsrpg
@@ -120,6 +121,10 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
             snackBar.dismiss()
         }
 
+        customSnackBarViewBinding.tvSnackBarContent.setOnClickListener {
+            Toast.makeText(context, "테스트 보기", Toast.LENGTH_SHORT).show()
+        }
+
         val parentLayout = snackBar.view as Snackbar.SnackbarLayout
         val params = parentLayout.layoutParams as CoordinatorLayout.LayoutParams
         parentLayout.setPadding(0,0,0,0)
@@ -140,6 +145,11 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
         val dialog = StageSelectionDialog(context, wordType.stage[position], wordType.name, wordType.thumbnailImage)
         dialog.show()
         dialogResize(dialog)
+        snackBar?.dismiss()
+    }
+
+    override fun onFoldButtonSelect(v: View, isExpand: Boolean) {
+        snackBar?.dismiss()
     }
 
     private val scrolledListener: RecyclerView.OnScrollListener = object : RecyclerView.OnScrollListener() {
@@ -149,20 +159,21 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            //리사이클러뷰 아이템 2/3 정도
-            val invisibleSnackBarSize = (recyclerView.adapter?.itemCount!! -1 )* 2 / 3
+            val recyclerViewItemSizeToDouble = (recyclerView.adapter?.itemCount!! -1).toDouble()
+            val dismissSnackBar = ceil(recyclerViewItemSizeToDouble * 2 / 3).toInt()
             val lastVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
 
-            if (invisibleSnackBarSize >= lastVisiblePosition && isScrolling) {
+            if (dismissSnackBar >= lastVisiblePosition && isScrolling) { // RecyclerView 최초 위치에서 Scroll 1/3
                 snackBar?.dismiss()
             }
         }
     }
 
     private fun dialogResize(dialog: Dialog) {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         if (Build.VERSION.SDK_INT < 30) {
-            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
             val display = windowManager.defaultDisplay
             val size = Point()
 
@@ -175,7 +186,6 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
             window?.setLayout(x, y)
 
         } else {
-            val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
             val rect = windowManager.currentWindowMetrics.bounds
 

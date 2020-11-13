@@ -38,6 +38,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     private val wordViewModel: WordViewModel by viewModels { WordViewModelFactory() }
     private var basicRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
     private var wordList = mutableListOf<WordType>()
+    private var stageDialog: StageDialog? = null
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
@@ -45,6 +46,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         initBinding()
         observeTabLayoutPosition()
         byLevelRecyclerView()
+
     }
 
     private fun initBinding() {
@@ -130,15 +132,15 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
-        val dialog = if (isByLevel)
+        stageDialog = if (isByLevel)
             StageDialog(requireContext(), wordList[position])
         else
             StageDialog(requireContext(), wordList[position])
-        dialog.show()
-        dialogResize(dialog)
+        stageDialog?.show()
+        dialogResize(stageDialog)
     }
 
-    private fun dialogResize(dialog: Dialog) {
+    private fun dialogResize(dialog: Dialog?) {
 
         if (Build.VERSION.SDK_INT < 30) {
             val display = requireActivity().windowManager.defaultDisplay
@@ -146,23 +148,29 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
             display.getSize(size)
 
-            val window = dialog.window
+            val window = dialog?.window
 
             val x = (size.x * 0.95f).toInt()
             val y = (size.y * 0.9f).toInt()
             window?.setLayout(x, y)
 
         }else{
-            val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            val windowManager = requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
             val rect = windowManager.currentWindowMetrics.bounds
 
-            val window = dialog.window
+            val window = dialog?.window
 
             val x = (rect.width() * 0.95f).toInt()
             val y = (rect.height() * 0.9f).toInt()
 
             window?.setLayout(x, y)
         }
+    }
+
+    override fun onDestroyView() {
+        if (stageDialog?.isShowing!!)
+            stageDialog?.dismiss()
+        super.onDestroyView()
     }
 }
