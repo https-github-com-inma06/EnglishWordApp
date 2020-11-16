@@ -2,6 +2,7 @@ package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.Stage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
@@ -73,7 +75,10 @@ class StageSelectionDialog(context: Context, private val stage: Stage, private v
     }
 
     fun moveStudy(v: View){
-        Toast.makeText(context, "학습하러가기", Toast.LENGTH_SHORT).show()
+        Intent(context, StudyActivity::class.java).also {
+            it.putExtra("StudyWord", stage)
+            context.startActivity(it)
+        }
     }
 
     fun moveTest(v: View){

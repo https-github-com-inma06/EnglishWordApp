@@ -24,10 +24,9 @@ class StudyActivity :
     BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
     StudyActivityViewPagerAdapter.ItemClickListener {
 
-    private val studyViewModel: WordViewModel by viewModels { WordViewModelFactory() }
     private var word: Stage? = null
     private var textToSpeech: TextToSpeech? = null
-    private lateinit var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter
+    private var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter? = null
 
     override fun ActivityStudyBinding.onCreate() {
         Logger.v("실행")
@@ -53,7 +52,6 @@ class StudyActivity :
 
     private fun initBinding() {
         binding.run {
-            studyviewmodel = studyViewModel
             lifecycleOwner = this@StudyActivity
         }
     }
@@ -66,9 +64,20 @@ class StudyActivity :
 
     private fun setViewPager() {
         binding.viewpager2Study.apply {
-            studyActivityRecyclerviewAdapter = StudyActivityViewPagerAdapter(word?.words!!, this@StudyActivity)
+            studyActivityRecyclerviewAdapter = StudyActivityViewPagerAdapter(word?.words!!, this@StudyActivity.lifecycle, this@StudyActivity)
             adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            isUserInputEnabled = false
+            registerOnPageChangeCallback(pageChangeCallback)
+        }
+    }
+
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback(){
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            Logger.v("Position :: $position")
+            studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
+            studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
         }
     }
 
@@ -92,10 +101,10 @@ class StudyActivity :
                 exitStudyDialog()
             }
             R.id.hide_word -> {
-                studyActivityRecyclerviewAdapter.hideWord()
+                studyActivityRecyclerviewAdapter?.hideWord()
             }
             R.id.hide_mean -> {
-                studyActivityRecyclerviewAdapter.hideMean()
+                studyActivityRecyclerviewAdapter?.hideMean()
             }
             R.id.print_test_paper -> {
                 Toast.makeText(
@@ -125,12 +134,20 @@ class StudyActivity :
         }
     }
 
-    override fun micClick(v: View, position: Int) {
+    override fun onMicClick(v: View, position: Int) {
         textToSpeech?.let {
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
             it.speak(word?.words!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
+    }
+
+    override fun onNextBtnClick(v: View, position: Int) {
+        binding.viewpager2Study.currentItem += 1
+    }
+
+    override fun onPreviousBtnClick(v: View, position: Int) {
+        binding.viewpager2Study.currentItem -= 1
     }
 
     override fun onDestroy() {
@@ -140,6 +157,7 @@ class StudyActivity :
             textToSpeech!!.shutdown()
             textToSpeech = null
         }
+        binding.viewpager2Study.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 
     private fun exitStudyDialog() {

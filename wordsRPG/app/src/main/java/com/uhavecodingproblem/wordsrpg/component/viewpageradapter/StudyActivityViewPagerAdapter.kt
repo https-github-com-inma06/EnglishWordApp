@@ -4,9 +4,14 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import com.uhavecodingproblem.wordsrpg.data.WordData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
+import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
  * wordsrpg
@@ -22,29 +27,34 @@ import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBind
  */
 class StudyActivityViewPagerAdapter(
     private var word: MutableList<WordData>,
+    private val lifecycle: Lifecycle,
     private val listener: ItemClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val wordSparseBooleanArray = SparseBooleanArray()
     private val meanSparseBooleanArray = SparseBooleanArray()
+    private var currentPosition: Int = 0
 
     private var hideWordCheck = false
     private var hideMeanCheck = false
 
     interface ItemClickListener {
-        fun micClick(v: View, position: Int)
+        fun onMicClick(v: View, position: Int)
+        fun onNextBtnClick(v: View, position: Int)
+        fun onPreviousBtnClick(v: View, position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val studyItemBinding =
             ItemStudyAcitivyViewpagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        lifecycle.addObserver(studyItemBinding.wordYoutube)
         return PagerViewHolder(studyItemBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pagerHolder = holder as PagerViewHolder
-        pagerHolder.bind(word[position])
+        pagerHolder.loadVideo("7LPJrzZaoZg")
     }
 
     override fun getItemCount(): Int {
@@ -54,16 +64,46 @@ class StudyActivityViewPagerAdapter(
     inner class PagerViewHolder(private val binding: ItemStudyAcitivyViewpagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: WordData) {
-            binding.data = item
+        private var currentVideoId: String? = null
+        private var youtubePlayerView: YouTubePlayerView? = null
+        private var player: YouTubePlayer? = null
+
+        init {
+            youtubePlayerView = binding.wordYoutube
+            youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    player = youTubePlayer
+                    currentVideoId = "7LPJrzZaoZg"
+                    loadVideo(currentVideoId!!)
+                }
+            })
+
+        }
+
+        fun loadVideo(videoID: String) {
+            bind()
+
+            Logger.v("bind :: $currentPosition $adapterPosition")
+            if (currentPosition == adapterPosition) {
+                currentVideoId = videoID
+                if (player == null)
+                    return
+
+                player?.loadVideo(currentVideoId!!, 0f)
+            }
+        }
+
+        private fun bind() {
+            binding.data = word[adapterPosition]
             binding.wordarray = wordSparseBooleanArray
             binding.meanarray = meanSparseBooleanArray
             binding.position = adapterPosition
+            binding.maxsize = itemCount - 1
 
             val count = "${adapterPosition + 1} / ${word.size}"
             binding.wordCount.text = count
 
-            binding.word.setOnClickListener{
+            binding.word.setOnClickListener {
                 if (!wordSparseBooleanArray.get(adapterPosition))
                     wordSparseBooleanArray.put(adapterPosition, true)
                 else
@@ -81,7 +121,15 @@ class StudyActivityViewPagerAdapter(
             }
 
             binding.wordMic.setOnClickListener {
-                listener.micClick(it, adapterPosition)
+                listener.onMicClick(it, adapterPosition)
+            }
+
+            binding.btnPrevious.setOnClickListener {
+                listener.onPreviousBtnClick(it, adapterPosition)
+            }
+
+            binding.btnNext.setOnClickListener {
+                listener.onNextBtnClick(it, adapterPosition)
             }
         }
 
@@ -90,7 +138,7 @@ class StudyActivityViewPagerAdapter(
     fun hideWord() {
         hideWordCheck = !hideWordCheck
 
-        for (i in word.indices){
+        for (i in word.indices) {
             if (hideWordCheck)
                 wordSparseBooleanArray.put(i, true)
             else
@@ -102,12 +150,16 @@ class StudyActivityViewPagerAdapter(
     fun hideMean() {
         hideMeanCheck = !hideMeanCheck
 
-        for (i in word.indices){
+        for (i in word.indices) {
             if (hideMeanCheck)
                 meanSparseBooleanArray.put(i, true)
             else
                 meanSparseBooleanArray.put(i, false)
         }
         notifyDataSetChanged()
+    }
+
+    fun setCurrentPosition(position: Int) {
+        currentPosition = position
     }
 }
