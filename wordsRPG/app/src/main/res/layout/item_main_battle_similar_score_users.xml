@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="image"
+            type="String" />
+        <variable
+            name="name"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+
+        <ImageView
+            android:id="@+id/iv_userImage"
+            setCircleImage="@{image}"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            tools:text="더보기"
+            android:text="@{name}"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_userImage"
+            app:layout_constraintStart_toStartOf="@+id/iv_userImage"
+            app:layout_constraintTop_toBottomOf="@+id/iv_userImage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

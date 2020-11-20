@@ -22,6 +22,7 @@ open class BaseActivity<VDB:ViewDataBinding>(@LayoutRes val layoutRes:Int):AppCo
         binding = DataBindingUtil.setContentView(this,layoutRes)
         binding.onCreate()
     }
+
     open fun VDB.onCreate() = Unit
 
 }
