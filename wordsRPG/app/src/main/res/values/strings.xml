@@ -74,11 +74,5 @@
 
     <string name="study_mic">TTS</string>
 
-    <string name="friendListCount">%d명</string>
-
-    <string name="dialog_battle_result_currentScore">(%d점)</string>
-    <string name="dialog_battle_result_plusScore">+%d점</string>
-    <string name="dialog_battle_result_newScore">%d점</string>
-
-    <string name="imagePath">android.resource://com.uhavecodingproblem.wordsrpg/drawable/%s</string>
+    <string name="SENDER_ID_EMAIL">417506123329\@gcm.googleapis.com</string>
 </resources>

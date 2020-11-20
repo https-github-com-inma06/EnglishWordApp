@@ -1,7 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.battle
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleNotificationListAdapter
@@ -29,9 +28,6 @@ class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.frag
 
     override fun FragmentMainBattleBinding.onCreateView() {
         setRecyclerView()
-        binding.tvRandom.setOnClickListener {
-            Toast.makeText(context, "곧 준비중인 기능입니다.", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun setRecyclerView() {
@@ -45,7 +41,7 @@ class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.frag
         val muckAlarmModeList = mutableListOf<Boolean>()
 
         repeat(5) {
-            muckDateList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date()))
+            muckDateList.add(SimpleDateFormat("yyyy-mm-dd", Locale.KOREAN).format(Date()))
 
             if (it % 2 == 0) {
                 muckImageList.add("https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg")
