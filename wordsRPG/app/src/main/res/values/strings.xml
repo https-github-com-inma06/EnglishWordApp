@@ -74,5 +74,5 @@
 
     <string name="study_mic">TTS</string>
 
-    <string name="SENDER_ID_EMAIL">417506123329\@gcm.googleapis.com</string>
+    <string name="friendListCount">%d명</string>
 </resources>
