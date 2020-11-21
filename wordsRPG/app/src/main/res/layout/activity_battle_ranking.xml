@@ -123,13 +123,14 @@
         <TextView
             android:id="@+id/tv_adView"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:background="#000"
+            android:background="#999999"
             android:text="과아아앙고오"
             android:textColor="#fff"
-            android:textSize="24sp"
+            android:textSize="60sp"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="@+id/rv_rankingList"
             app:layout_constraintEnd_toEndOf="@+id/rv_rankingList"
             app:layout_constraintStart_toStartOf="parent" />
