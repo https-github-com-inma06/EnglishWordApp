@@ -1,10 +1,10 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity.battle
 
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.battle.BattleRankingListAdapter
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityBattleRankingBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
-import java.text.SimpleDateFormat
-import java.util.*
+import org.koin.android.ext.android.bind
 
 
 class BattleRankingActivity : BaseActivity<ActivityBattleRankingBinding>(R.layout.activity_battle_ranking) {
@@ -14,10 +14,13 @@ class BattleRankingActivity : BaseActivity<ActivityBattleRankingBinding>(R.layou
     private val muckImageList = mutableListOf<String>()
     private val muckNameList = mutableListOf<String>()
     private val muckBattleScoreList = mutableListOf<Int>()
-
+    private  var myRank: Int? = null 
     override fun ActivityBattleRankingBinding.onCreate() {
         setMuckData()
+        setAdapter()
     }
+
+
 
     private fun setMuckData() {
         /** todo: 서버 완성후 모데롤 묶어서 심플하게 변경할 에정. */
@@ -47,10 +50,23 @@ class BattleRankingActivity : BaseActivity<ActivityBattleRankingBinding>(R.layou
             myScore = muckMyScore
             muckBattleScoreList.add(muckMyScore)
             muckBattleScoreList.sortBy { it }
-            myRanking = muckBattleScoreList.indexOf(muckMyScore)
+            muckBattleScoreList.reverse()
+            myRank = muckBattleScoreList.indexOf(muckMyScore)+1
             muckBattleScoreList.remove(muckMyScore)
+            myRanking = myRank!!
 
         }
-
     }
+
+    private fun setAdapter() {
+        binding.apply {
+            rvRankingList.adapter = BattleRankingListAdapter(
+                imageList = muckImageList,
+                nameList = muckNameList,
+                battleScoreList = muckBattleScoreList,
+                myRanking = myRank!!
+            )
+        }
+    }
+
 }
