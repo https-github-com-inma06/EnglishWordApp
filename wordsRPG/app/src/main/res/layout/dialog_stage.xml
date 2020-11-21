@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="information"
-            type="com.uhavecodingproblem.wordsrpg.data.WordType" />
+            name="packageinfo"
+            type="com.uhavecodingproblem.wordsrpg.data.PackageInformation" />
 
         <variable
             name="basicdialog"
@@ -54,7 +54,7 @@
                 android:gravity="center"
                 android:maxLines="1"
                 android:padding="10dp"
-                android:text="@{information.name}"
+                android:text="@{packageinfo.name}"
                 android:textColor="#00D7FF"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="1000sp"
@@ -76,7 +76,7 @@
             <ProgressBar
                 android:id="@+id/progress_package_status"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                progress="@{information.stage}"
+                progress="@{packageinfo.stageList}"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:progressDrawable="@drawable/basic_package_dialog_progressbar"

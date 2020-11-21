@@ -13,7 +13,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.Stage
+import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
@@ -26,10 +26,10 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-10-25.
  * Description:
  */
-class StageSelectionDialog(context: Context, private val stage: Stage, private val packageName: String, private val thumbnailImageUri: String): Dialog(context) {
+class StageSelectionDialog(context: Context, private val stageInformation: StageInformation, private val packageName: String, private val thumbnailImageUri: String): Dialog(context) {
 
-    private lateinit var stageSelectionNone: DialogStageSelectionNoneBinding
-    private lateinit var stageSelectionOther: DialogStageSelectionOtherBinding
+    private lateinit var userStatusNone: DialogStageSelectionNoneBinding
+    private lateinit var userStatusOther: DialogStageSelectionOtherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,26 +47,26 @@ class StageSelectionDialog(context: Context, private val stage: Stage, private v
             it.requestFeature(Window.FEATURE_NO_TITLE)
         }
 
-        if (stage.stageStatus == 0){
-            stageSelectionNone = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_none, null, false)
-            stageSelectionNone.run {
-                packagename = packageName
-                thumbnailimage = thumbnailImageUri
-                stageinformation = stage
-                selectiondialog = this@StageSelectionDialog
+        if (stageInformation.stageStatus == 0){
+            userStatusNone = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_none, null, false)
+            userStatusNone.run {
+                name = packageName
+                thumbnailuri = thumbnailImageUri
+                stage = stageInformation
+                dialog = this@StageSelectionDialog
             }
-            stageSelectionNone.layoutSelectionDialog.clipToOutline = true
-            setContentView(stageSelectionNone.root)
+            userStatusNone.layoutSelectionDialog.clipToOutline = true
+            setContentView(userStatusNone.root)
         }else{
-            stageSelectionOther = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_other, null, false)
-            stageSelectionOther.run {
-                packagename = packageName
-                thumbnailimage = thumbnailImageUri
-                stageinformation = stage
-                selectiondialog = this@StageSelectionDialog
+            userStatusOther = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_other, null, false)
+            userStatusOther.run {
+                name = packageName
+                thumbnailuri = thumbnailImageUri
+                stage = stageInformation
+                dialog = this@StageSelectionDialog
             }
-            stageSelectionOther.layoutSelectionDialog.clipToOutline = true
-            setContentView(stageSelectionOther.root)
+            userStatusOther.layoutSelectionDialog.clipToOutline = true
+            setContentView(userStatusOther.root)
         }
     }
 
@@ -75,14 +75,17 @@ class StageSelectionDialog(context: Context, private val stage: Stage, private v
     }
 
     fun moveStudy(v: View){
+        stageInformation.stageStatus = 1
         Intent(context, StudyActivity::class.java).also {
-            it.putExtra("StudyWord", stage)
+            it.putExtra("StudyWord", stageInformation)
             context.startActivity(it)
         }
+        dismiss()
     }
 
     fun moveTest(v: View){
         Toast.makeText(context, "테스트보러가기", Toast.LENGTH_SHORT).show()
+        dismiss()
     }
 
 }

@@ -4,20 +4,20 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.LibraryViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.dialog.StageDialog
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
@@ -34,10 +34,10 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     MainLibraryFragmentBasicPackageRecyclerViewAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
-    private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
+    private val libraryViewModel: LibraryViewModel by viewModels { LibraryViewModelFactory(tabItemName) }
     private val wordViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var basicRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    private var wordList = mutableListOf<WordType>()
+    private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter? = null
+    private var wordList = mutableListOf<PackageInformation>()
     private var stageDialog: StageDialog? = null
 
     override fun FragmentBasicPackageBinding.onCreateView() {
@@ -51,7 +51,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     private fun initBinding() {
         binding.run {
-            libraryviewmodel = basicViewModel
+            libraryviewmodel = libraryViewModel
             librarywordviewmodel = wordViewModel
             lifecycleOwner = this@BasicPackageFragment
         }
@@ -83,15 +83,8 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         setListData(basicRecyclerViewAdapter, wordViewModel.getByTestWord())
     }
 
-    private fun setListData(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>?, data: MutableList<WordType>){
-        if (wordList.isNullOrEmpty()) {
-            wordList.addAll(data)
-            adapter?.notifyDataSetChanged()
-        }else{
-            wordList.clear()
-            wordList.addAll(data)
-            adapter?.notifyDataSetChanged()
-        }
+    private fun setListData(adapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter?, data: MutableList<PackageInformation>) {
+        adapter?.updateData(data)
     }
 
 //    private fun categoryRecyclerView(){
@@ -122,7 +115,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     private fun observeTabLayoutPosition() {
-        basicViewModel.position.observe(viewLifecycleOwner, Observer {
+        libraryViewModel.position.observe(viewLifecycleOwner, Observer {
             when (it) {
                 0 -> byLevelRecyclerView()
                 1 -> testRecyclerView()
@@ -132,10 +125,8 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
-        stageDialog = if (isByLevel)
-            StageDialog(requireContext(), wordList[position])
-        else
-            StageDialog(requireContext(), wordList[position])
+        stageDialog = StageDialog(requireContext(), wordList[position])
+        wordViewModel.setSelectionWord(wordList[position])
         stageDialog?.show()
         dialogResize(stageDialog)
     }
@@ -154,7 +145,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val y = (size.y * 0.9f).toInt()
             window?.setLayout(x, y)
 
-        }else{
+        } else {
             val windowManager = requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
             val rect = windowManager.currentWindowMetrics.bounds

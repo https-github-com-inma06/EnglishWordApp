@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.uhavecodingproblem.wordsrpg.data.WordData
+import com.uhavecodingproblem.wordsrpg.data.WordInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -26,7 +26,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  *
  */
 class StudyActivityViewPagerAdapter(
-    private var word: MutableList<WordData>,
+    private var word: MutableList<WordInformation>,
     private val lifecycle: Lifecycle,
     private val listener: ItemClickListener
 ) :

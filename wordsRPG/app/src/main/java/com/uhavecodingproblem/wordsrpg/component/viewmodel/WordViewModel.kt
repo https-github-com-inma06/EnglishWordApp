@@ -1,8 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.component.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.uhavecodingproblem.wordsrpg.data.WordData
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordMockData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +19,10 @@ class WordViewModel : ViewModel() {
 
    // val allWord: MutableList<WordType> get() = _allWord
 
-    private val allWord: MutableList<WordType> = WordMockData.wordMockData
+    private val allWord: MutableList<PackageInformation> = WordMockData.wordMockData
+    val selectionWord : MutableLiveData<PackageInformation>? get() = _selectionWord
+
+    private val _selectionWord : MutableLiveData<PackageInformation>? = null
 
     init {
         getAllWord()
@@ -31,8 +34,12 @@ class WordViewModel : ViewModel() {
         }
     }
 
-    fun getByLevelWord(): MutableList<WordType> {
-        val byLevelList = mutableListOf<WordType>()
+    fun setSelectionWord(word: PackageInformation){
+        _selectionWord?.value = word
+    }
+
+    fun getByLevelWord(): MutableList<PackageInformation> {
+        val byLevelList = mutableListOf<PackageInformation>()
         for (i in allWord.indices) {
             if (allWord[i].type == "수준별")
                 byLevelList.add(allWord[i])
@@ -40,8 +47,8 @@ class WordViewModel : ViewModel() {
         return byLevelList
     }
 
-    fun getByTestWord(): MutableList<WordType> {
-        val byTestList = mutableListOf<WordType>()
+    fun getByTestWord(): MutableList<PackageInformation> {
+        val byTestList = mutableListOf<PackageInformation>()
         for (i in allWord.indices) {
             if (allWord[i].type == "시험별")
                 byTestList.add(allWord[i])

@@ -13,6 +13,7 @@ import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
  * ViewModel 매개변수 넘기기 위해서 사용
  */
 
-class ViewModelFactory(private val tabName: List<String>): ViewModelProvider.NewInstanceFactory(){
+class LibraryViewModelFactory(private val tabName: List<String>): ViewModelProvider.NewInstanceFactory(){
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = LibraryViewModel(tabName) as T
 }

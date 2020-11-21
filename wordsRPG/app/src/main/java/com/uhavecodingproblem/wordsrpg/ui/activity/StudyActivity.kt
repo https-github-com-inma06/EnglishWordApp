@@ -3,18 +3,18 @@ package com.uhavecodingproblem.wordsrpg.ui.activity
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.viewpageradapter.StudyActivityViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.Stage
+import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
@@ -24,8 +24,8 @@ class StudyActivity :
     BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
     StudyActivityViewPagerAdapter.ItemClickListener {
 
-    private var word: Stage? = null
-    private var textToSpeech: TextToSpeech? = null
+    private var stageInformationInformation: StageInformation? = null
+    private var wordTextToSpeech: TextToSpeech? = null
     private var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter? = null
 
     override fun ActivityStudyBinding.onCreate() {
@@ -58,26 +58,70 @@ class StudyActivity :
 
     private fun setWord() {
         intent?.let {
-            word = it.getParcelableExtra("StudyWord")
+            stageInformationInformation = it.getParcelableExtra("StudyWord")
         }
     }
 
     private fun setViewPager() {
         binding.viewpager2Study.apply {
-            studyActivityRecyclerviewAdapter = StudyActivityViewPagerAdapter(word?.words!!, this@StudyActivity.lifecycle, this@StudyActivity)
+            studyActivityRecyclerviewAdapter =
+                StudyActivityViewPagerAdapter(stageInformationInformation?.wordList!!, this@StudyActivity.lifecycle, this@StudyActivity)
             adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false
+            Log.e("Position ::", "${getRecentPosition()}")
+            setMoveToRecentPosition(getRecentPosition())
             registerOnPageChangeCallback(pageChangeCallback)
         }
     }
 
-    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback(){
+    private fun getRecentPosition(): Int {
+        var recent = 0
+        for (i in stageInformationInformation?.wordList?.indices!!) {
+            if (!stageInformationInformation?.wordList!![i].isStudyPassed)
+                return recent
+            else
+                recent = i
+        }
+        return recent
+    }
+
+    /**
+     *
+     * https://stackoverflow.com/questions/56311862/viewpager2-default-position
+     *
+     */
+
+    private fun setMoveToRecentPosition(position: Int) {
+        val recyclerview = binding.viewpager2Study.getChildAt(0) as RecyclerView
+        recyclerview.apply {
+            val itemCount = adapter?.itemCount ?: 0
+            if (itemCount >= position) {
+                viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        viewTreeObserver.removeOnGlobalLayoutListener(this)
+                        recyclerview.scrollToPosition(position)
+                    }
+                })
+            }
+        }
+    }
+
+    private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             Logger.v("Position :: $position")
-            studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
-            studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
+            /**
+             *
+             * 이전코드는 아래와 같은 경고메세지를 받음
+             * Cannot call this method in a scroll callback. Scroll callbacks mightbe run during a measure & layout pass where you cannot change theRecyclerView data. Any method call that might change the structureof the RecyclerView or the adapter contents should be postponed tothe next frame.
+             * https://stackoverflow.com/questions/42944005/recyclerview-cannot-call-this-method-in-a-scroll-callback 를 보고 해당 부분 수정
+             *
+             */
+            binding.viewpager2Study.post {
+                studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
+                studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
+            }
         }
     }
 
@@ -125,25 +169,26 @@ class StudyActivity :
     }
 
     private fun initTextToSpeech() {
-        textToSpeech = TextToSpeech(
+        wordTextToSpeech = TextToSpeech(
             this@StudyActivity
         ) { status ->
             if (status != ERROR) {
-                textToSpeech?.language = Locale.ENGLISH
+                wordTextToSpeech?.language = Locale.ENGLISH
             }
         }
     }
 
     override fun onMicClick(v: View, position: Int) {
-        textToSpeech?.let {
+        wordTextToSpeech?.let {
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
-            it.speak(word?.words!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+            it.speak(stageInformationInformation?.wordList!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
     override fun onNextBtnClick(v: View, position: Int) {
         binding.viewpager2Study.currentItem += 1
+        stageInformationInformation?.wordList!![position].isStudyPassed = true
     }
 
     override fun onPreviousBtnClick(v: View, position: Int) {
@@ -152,10 +197,10 @@ class StudyActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        if (textToSpeech != null) {
-            textToSpeech!!.stop()
-            textToSpeech!!.shutdown()
-            textToSpeech = null
+        if (wordTextToSpeech != null) {
+            wordTextToSpeech!!.stop()
+            wordTextToSpeech!!.shutdown()
+            wordTextToSpeech = null
         }
         binding.viewpager2Study.unregisterOnPageChangeCallback(pageChangeCallback)
     }

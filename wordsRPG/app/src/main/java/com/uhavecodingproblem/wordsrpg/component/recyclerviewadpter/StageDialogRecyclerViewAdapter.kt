@@ -1,32 +1,31 @@
 package com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter
 
 import android.content.Context
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.Stage
+import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemDialogBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
  * wordsrpg
- * Class: LibraryActivityRecyclerViewAdapter
+ * Class: StageDialogRecyclerViewAdapter
  * Created by pyg10.
  * Created On 2020-10-03.
  * Description:
  */
 class StageDialogRecyclerViewAdapter(
-    val item: MutableList<Stage>,
+    val item: MutableList<StageInformation>,
     private val listener: ItemClickListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var context: Context? = null
     private val selectedItem = SparseBooleanArray()
     private var preSelectPosition: Int
-    private var showStageData = mutableListOf<Stage>()
+    private var showStageData = mutableListOf<StageInformation>()
     private var showMoreStage: String? = null // 마지막부분 출력해줄 내용
     private val studyStage = "학습 할 차례입니다."
 
@@ -97,11 +96,11 @@ class StageDialogRecyclerViewAdapter(
         private var collapseView: View? = binding.layoutStageCollapse
         private var expandView: View? = binding.layoutStageExpand
 
-        fun bind(data: Stage) {
+        fun bind(data: StageInformation) {
 
-            binding.stageinformation = data
+            binding.stage = data
             binding.adapterposition = adapterPosition
-            binding.lockeditemposition = itemCount - 1
+            binding.bottomposition = itemCount - 1
             binding.morestage = showMoreStage
             binding.study = studyStage
             binding.layoutDialogItem.clipToOutline = true

@@ -2,7 +2,7 @@ package com.uhavecodingproblem.wordsrpg.component.bindingadpater
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.uhavecodingproblem.wordsrpg.data.Stage
+import com.uhavecodingproblem.wordsrpg.data.StageInformation
 
 /**
  * wordsrpg
@@ -15,10 +15,10 @@ object StageBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("score")
-    fun getScore(textView: TextView, stageData: Stage) {
+    fun getScore(textView: TextView, stageInformationData: StageInformation) {
         var score = 0
-        for (i in stageData.words.indices) {
-            if (stageData.words[i].isPassed)
+        for (i in stageInformationData.wordList.indices) {
+            if (stageInformationData.wordList[i].isTestPassed)
                 score++
         }
         val result: String?

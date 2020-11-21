@@ -7,11 +7,8 @@ import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.StageDialogRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
-import com.uhavecodingproblem.wordsrpg.util.Logger
 import kotlin.math.ceil
 
 /**
@@ -33,7 +29,7 @@ import kotlin.math.ceil
  * Description:
  * 스테이지를 가진 다이얼로그
  */
-class StageDialog(context: Context, private val wordType: WordType) : Dialog(context),
+class StageDialog(context: Context, private val packageInformation: PackageInformation) : Dialog(context),
     StageDialogRecyclerViewAdapter.ItemClickListener {
 
     private lateinit var binding: DialogStageBinding
@@ -56,7 +52,7 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
 
         binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage, null, false)
         binding.run {
-            information = wordType
+            packageinfo = packageInformation
             basicdialog = this@StageDialog
         }
         setContentView(binding.root)
@@ -67,7 +63,7 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
 
     private fun setRecyclerView() {
         binding.recyclerviewStage.apply {
-            adapter = StageDialogRecyclerViewAdapter(wordType.stage, this@StageDialog)
+            adapter = StageDialogRecyclerViewAdapter(packageInformation.stageList, this@StageDialog)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             setFocus(this)
         }
@@ -87,12 +83,12 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
         var isTestFail = false
         var studying: String? = null
         var testFail: String? = null
-        for (i in wordType.stage.indices) {
-            if (wordType.stage[i].stageStatus == 1) {
+        for (i in packageInformation.stageList.indices) {
+            if (packageInformation.stageList[i].stageStatus == 1) {
                 studying = "STAGE ${i + 1}의 TEST 를 아직보지않으셨네요.\n 지금보러갈까요?"
                 isStudying = true
                 break
-            } else if (wordType.stage[i].stageStatus == 2) {
+            } else if (packageInformation.stageList[i].stageStatus == 2) {
                 testFail = "STAGE ${i + 1}의 TEST 를 통과 하지못하셨네요. \n 다시보러갈까요?"
                 isTestFail = true
                 break
@@ -142,7 +138,7 @@ class StageDialog(context: Context, private val wordType: WordType) : Dialog(con
     }
 
     override fun onMoveSelectionWindow(v: View, position: Int) {
-        val dialog = StageSelectionDialog(context, wordType.stage[position], wordType.name, wordType.thumbnailImage)
+        val dialog = StageSelectionDialog(context, packageInformation.stageList[position], packageInformation.name, packageInformation.thumbnailImage)
         dialog.show()
         dialogResize(dialog)
         snackBar?.dismiss()

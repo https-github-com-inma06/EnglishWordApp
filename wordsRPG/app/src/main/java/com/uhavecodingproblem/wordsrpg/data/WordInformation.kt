@@ -10,13 +10,16 @@ import android.os.Parcelable
  * Created On 2020-10-05.
  * Description:
  */
-data class WordData(val word: String, // 단어
-                    val mean: String, // 의미
-                    val isPassed: Boolean // 학습통과여부
+data class WordInformation(
+    val word: String, // 단어
+    val mean: String, // 의미
+    var isStudyPassed: Boolean, // 학습통과여부
+    var isTestPassed: Boolean // 테스트 통과여부(추후 오답노트를 위한 체크)
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString()?: "",
         parcel.readString()?: "",
+        parcel.readInt() == 1,
         parcel.readInt() == 1
     )
 
@@ -28,16 +31,17 @@ data class WordData(val word: String, // 단어
         p0?.run {
             writeString(word)
             writeString(mean)
-            writeInt(if (isPassed) 1 else 0)
+            writeInt(if (isStudyPassed) 1 else 0)
+            writeInt(if (isTestPassed) 1 else 0)
         }
     }
 
-    companion object CREATOR : Parcelable.Creator<WordData> {
-        override fun createFromParcel(parcel: Parcel): WordData {
-            return WordData(parcel)
+    companion object CREATOR : Parcelable.Creator<WordInformation> {
+        override fun createFromParcel(parcel: Parcel): WordInformation {
+            return WordInformation(parcel)
         }
 
-        override fun newArray(size: Int): Array<WordData?> {
+        override fun newArray(size: Int): Array<WordInformation?> {
             return arrayOfNulls(size)
         }
     }

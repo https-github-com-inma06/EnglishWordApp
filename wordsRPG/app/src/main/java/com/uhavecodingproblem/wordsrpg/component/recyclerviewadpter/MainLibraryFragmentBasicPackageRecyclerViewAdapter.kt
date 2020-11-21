@@ -3,18 +3,20 @@ package com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
+import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
 
 /**
  * wordsrpg
- * Class: ByTestRecyclerViewAdapter
+ * Class: MainLibraryFragmentBasicPackageRecyclerViewAdapter
  * Created by pyg10.
  * Created On 2020-09-27.
  * Description:
  */
-class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<WordType>, val listener: BasicPackageGridItemClickListener) :
+class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<PackageInformation>, val listener: BasicPackageGridItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface BasicPackageGridItemClickListener {
@@ -34,8 +36,8 @@ class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<W
     }
 
     inner class ItemViewHolder(val binding: ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: WordType) {
-            binding.data = data
+        fun bind(data: PackageInformation) {
+            binding.packageinfo = data
 
             binding.basicPackageLayout.clipToOutline = true
             binding.root.setOnClickListener {
@@ -45,5 +47,14 @@ class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<W
                     listener.onItemClick(it, adapterPosition, false)
             }
         }
+    }
+
+    fun updateData(newData : MutableList<PackageInformation>){
+        val wordDiffUtil = BaseDiffUtil(item, newData)
+        val wordDiffResult = DiffUtil.calculateDiff(wordDiffUtil)
+
+        item.clear()
+        item.addAll(newData)
+        wordDiffResult.dispatchUpdatesTo(this)
     }
 }

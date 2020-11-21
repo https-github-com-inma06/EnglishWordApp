@@ -6,19 +6,19 @@
     <data>
 
         <variable
-            name="packagename"
+            name="name"
             type="String" />
 
         <variable
-            name="thumbnailimage"
+            name="thumbnailuri"
             type="String" />
 
         <variable
-            name="stageinformation"
-            type="com.uhavecodingproblem.wordsrpg.data.Stage" />
+            name="stage"
+            type="com.uhavecodingproblem.wordsrpg.data.StageInformation" />
 
         <variable
-            name="selectiondialog"
+            name="dialog"
             type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialog" />
     </data>
 
@@ -30,7 +30,7 @@
 
         <ImageView
             error="@{@drawable/loading}"
-            image="@{thumbnailimage}"
+            image="@{thumbnailuri}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/package_thumbnail" />
@@ -48,7 +48,7 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:contentDescription="@string/exit"
-                android:onClick="@{selectiondialog::exit}"
+                android:onClick="@{dialog::exit}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_vector_brown_close"
                 android:padding="10dp"
@@ -75,7 +75,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="@{packagename}"
+                android:text="@{name}"
                 android:maxLines="1"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_horizontal"
-                android:text="@{@string/stage(stageinformation.stageNum)}"
+                android:text="@{@string/stage(stage.stageNum)}"
                 android:maxLines="1"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"
@@ -114,7 +114,7 @@
             android:layout_height="0dp"
             android:background="@drawable/basic_package_dialog_stage_selection_button_round"
             android:gravity="center"
-            android:onClick="@{selectiondialog::moveTest}"
+            android:onClick="@{dialog::moveTest}"
             android:text="@string/move_test"
             android:textColor="@color/colorWhite"
             android:textSize="20dp"
@@ -133,7 +133,7 @@
             android:layout_height="0dp"
             android:background="@drawable/basic_package_dialog_stage_selection_button_round"
             android:gravity="center"
-            android:onClick="@{selectiondialog::moveStudy}"
+            android:onClick="@{dialog::moveStudy}"
             android:text="@string/move_study"
             android:textColor="@color/colorWhite"
             android:textSize="20dp"
