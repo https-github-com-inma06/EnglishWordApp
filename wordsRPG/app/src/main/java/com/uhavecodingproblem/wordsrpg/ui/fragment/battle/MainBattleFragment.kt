@@ -1,9 +1,17 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.battle
 
+import android.content.Intent
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleNotificationListAdapter
+import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleSimilarScoreUsersAdapter
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBattleBinding
-import com.uhavecodingproblem.wordsrpg.ext.startActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleRankingActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 /**
  * wordsrpg
@@ -20,22 +28,64 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
 
     override fun FragmentMainBattleBinding.onCreateView() {
+        setRecyclerView()
+        binding.tvRandom.setOnClickListener {
+            Toast.makeText(context, "곧 준비중인 기능입니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
 
-        fabPlayBattle.setOnClickListener {
-            context?.startActivity(BattleUserListActivity::class.java)
+    private fun setRecyclerView() {
+        /**
+         * Todo: 묵데이터, 서버 참고해서 모델 정해지는대로 심플하게 모델로만 묶어서 사용 예정
+         */
+        val muckImageList = mutableListOf<String>()
+        val muckNameList = mutableListOf<String>()
+        val muckBattleDescribeList = mutableListOf<String>()
+        val muckDateList = mutableListOf<String>()
+        val muckAlarmModeList = mutableListOf<Boolean>()
+
+        repeat(5) {
+            muckDateList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date()))
+
+            if (it % 2 == 0) {
+                muckImageList.add("https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg")
+                muckNameList.add("로너")
+                muckBattleDescribeList.add("님이 배틀을 신청하셨습니다")
+                muckAlarmModeList.add(true)
+            } else {
+                muckImageList.add("https://img.huffingtonpost.com/asset/5d814d8e3b00002b88d66359.jpeg?ops=scalefit_630_noupscale")
+                muckNameList.add("재이")
+                muckBattleDescribeList.add("님과 배틀 결과를 확인해보세요")
+                muckAlarmModeList.add(false)
+            }
+
+        }
+
+        binding.apply {
+            rvSimilarScoreUsers.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                adapter = MainBattleSimilarScoreUsersAdapter(muckImageList, muckNameList){
+                        startActivity(Intent(requireContext(), BattleRankingActivity::class.java))
+                }
+            }
+
+            rvBattleNotificationList.apply {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = MainBattleNotificationListAdapter(
+                    imageList = muckImageList,
+                    userNameList = muckNameList,
+                    battleAlarmDescribeList = muckBattleDescribeList,
+                    battleDateList = muckDateList,
+                    alarmModeList = muckAlarmModeList
+                )
+
+            }
         }
 
     }
 
-    //BattlePlayActivity에서 배틀이 끝나고 온후
-    //배틀이 진행중일때와 끝났을때를 분기하여 ui 처리 - 탭을 만들거나, 솔로런처럼 한 화면에 나누거나
-
-   companion object {
-
-       //기본은 진행중, 상대방의 결과가 나오면 서버에서 결과 보내줌
-        const val WAITING = true
-        const val FINISHED = true
-    }
 }
 
 
