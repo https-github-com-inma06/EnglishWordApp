@@ -1,16 +1,23 @@
 package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.app.Dialog
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -59,6 +66,16 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
         binding.layoutDialog.clipToOutline = true
         checkStageStatus()
         setRecyclerView()
+        LocalBroadcastManager.getInstance(context).registerReceiver(localBroadcast, IntentFilter("refresh_dialog"))
+    }
+
+    private val localBroadcast: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(receiveContext: Context?, receiveIntent: Intent?) {
+            if ("refresh_dialog" == receiveIntent?.action){
+                (binding.recyclerviewStage.adapter as StageDialogRecyclerViewAdapter).updateData(packageInformation.stageList)
+                checkStageStatus()
+            }
+        }
     }
 
     private fun setRecyclerView() {
@@ -123,11 +140,11 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
 
         val parentLayout = snackBar.view as Snackbar.SnackbarLayout
         val params = parentLayout.layoutParams as CoordinatorLayout.LayoutParams
-        parentLayout.setPadding(0,0,0,0)
+        parentLayout.setPadding(0, 0, 0, 0)
         snackBar.view.background = null
 
         params.width = CoordinatorLayout.LayoutParams.MATCH_PARENT
-        params.setMargins(0,0,0,0)
+        params.setMargins(0, 0, 0, 0)
 
         parentLayout.addView(customSnackBarViewBinding.root)
         return snackBar
@@ -138,7 +155,12 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
     }
 
     override fun onMoveSelectionWindow(v: View, position: Int) {
-        val dialog = StageSelectionDialog(context, packageInformation.stageList[position], packageInformation.name, packageInformation.thumbnailImage)
+        val dialog = StageSelectionDialog(
+            context,
+            packageInformation.stageList[position],
+            packageInformation.name,
+            packageInformation.thumbnailImage
+        )
         dialog.show()
         dialogResize(dialog)
         snackBar?.dismiss()
@@ -155,7 +177,7 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
         }
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val recyclerViewItemSizeToDouble = (recyclerView.adapter?.itemCount!! -1).toDouble()
+            val recyclerViewItemSizeToDouble = (recyclerView.adapter?.itemCount!! - 1).toDouble()
             val dismissSnackBar = ceil(recyclerViewItemSizeToDouble * 2 / 3).toInt()
             val lastVisiblePosition = (recyclerView.layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
 
@@ -197,10 +219,12 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
     override fun cancel() {
         super.cancel()
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(localBroadcast)
     }
 
     override fun dismiss() {
         super.dismiss()
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(localBroadcast)
     }
 }

@@ -5,6 +5,7 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemDialogBasicPackageRecyclerviewBinding
@@ -89,6 +90,13 @@ class StageDialogRecyclerViewAdapter(
             2 -> STAGE_TEST_FAIL
             else -> STAGE_TEST_CLEAR
         }
+    }
+
+    fun updateData(newData: MutableList<StageInformation>){
+        val baseDiffUtil = BaseDiffUtil(item, newData)
+        val baseDiffResult = DiffUtil.calculateDiff(baseDiffUtil)
+
+        baseDiffResult.dispatchUpdatesTo(this)
     }
 
     inner class BasicPackageStageItemViewHolder(val binding: ItemDialogBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {

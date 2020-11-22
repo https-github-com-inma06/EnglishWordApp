@@ -26,7 +26,12 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-10-25.
  * Description:
  */
-class StageSelectionDialog(context: Context, private val stageInformation: StageInformation, private val packageName: String, private val thumbnailImageUri: String): Dialog(context) {
+class StageSelectionDialog(
+    context: Context,
+    private val stageInformation: StageInformation,
+    private val packageName: String,
+    private val thumbnailImageUri: String
+) : Dialog(context) {
 
     private lateinit var userStatusNone: DialogStageSelectionNoneBinding
     private lateinit var userStatusOther: DialogStageSelectionOtherBinding
@@ -47,8 +52,9 @@ class StageSelectionDialog(context: Context, private val stageInformation: Stage
             it.requestFeature(Window.FEATURE_NO_TITLE)
         }
 
-        if (stageInformation.stageStatus == 0){
-            userStatusNone = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_none, null, false)
+        if (stageInformation.stageStatus == 0) {
+            userStatusNone =
+                DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_none, null, false)
             userStatusNone.run {
                 name = packageName
                 thumbnailuri = thumbnailImageUri
@@ -57,8 +63,9 @@ class StageSelectionDialog(context: Context, private val stageInformation: Stage
             }
             userStatusNone.layoutSelectionDialog.clipToOutline = true
             setContentView(userStatusNone.root)
-        }else{
-            userStatusOther = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_other, null, false)
+        } else {
+            userStatusOther =
+                DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage_selection_other, null, false)
             userStatusOther.run {
                 name = packageName
                 thumbnailuri = thumbnailImageUri
@@ -70,11 +77,11 @@ class StageSelectionDialog(context: Context, private val stageInformation: Stage
         }
     }
 
-    fun exit(v: View){
+    fun exit(v: View) {
         cancel()
     }
 
-    fun moveStudy(v: View){
+    fun moveStudy(v: View) {
         stageInformation.stageStatus = 1
         Intent(context, StudyActivity::class.java).also {
             it.putExtra("StudyWord", stageInformation)
@@ -83,7 +90,7 @@ class StageSelectionDialog(context: Context, private val stageInformation: Stage
         dismiss()
     }
 
-    fun moveTest(v: View){
+    fun moveTest(v: View) {
         Toast.makeText(context, "테스트보러가기", Toast.LENGTH_SHORT).show()
         dismiss()
     }

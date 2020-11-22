@@ -1,6 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.component.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordMockData
@@ -17,12 +16,12 @@ import kotlinx.coroutines.launch
  */
 class WordViewModel : ViewModel() {
 
-   // val allWord: MutableList<WordType> get() = _allWord
+    // val allWord: MutableList<WordType> get() = _allWord
 
     private val allWord: MutableList<PackageInformation> = WordMockData.wordMockData
-    val selectionWord : MutableLiveData<PackageInformation>? get() = _selectionWord
-
-    private val _selectionWord : MutableLiveData<PackageInformation>? = null
+//    val selectionWord : MutableLiveData<PackageInformation>? get() = _selectionWord
+//
+//    private val _selectionWord : MutableLiveData<PackageInformation>? = null
 
     init {
         getAllWord()
@@ -34,9 +33,9 @@ class WordViewModel : ViewModel() {
         }
     }
 
-    fun setSelectionWord(word: PackageInformation){
-        _selectionWord?.value = word
-    }
+//    fun setSelectionWord(word: PackageInformation){
+//        _selectionWord?.value = word
+//    }
 
     fun getByLevelWord(): MutableList<PackageInformation> {
         val byLevelList = mutableListOf<PackageInformation>()

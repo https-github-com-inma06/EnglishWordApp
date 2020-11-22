@@ -2,6 +2,7 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageRecyclerViewAdapter
@@ -126,7 +128,6 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
         stageDialog = StageDialog(requireContext(), wordList[position])
-        wordViewModel.setSelectionWord(wordList[position])
         stageDialog?.show()
         dialogResize(stageDialog)
     }
@@ -156,6 +157,17 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             val y = (rect.height() * 0.9f).toInt()
 
             window?.setLayout(x, y)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        stageDialog?.let {
+            if (it.isShowing){
+                Intent("refresh_dialog").also { intent->
+                    LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
+                }
+            }
         }
     }
 
