@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.library
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

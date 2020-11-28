@@ -1,8 +1,7 @@
-package com.uhavecodingproblem.wordsrpg.ui.fragment
+package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Point
 import android.os.Build
 import android.view.View
@@ -12,17 +11,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.dialog.PackageDialog
+import com.uhavecodingproblem.wordsrpg.ui.dialog.PackageDialog
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.ByLevelRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.ByTestRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.ByLevelRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.ByTestRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 

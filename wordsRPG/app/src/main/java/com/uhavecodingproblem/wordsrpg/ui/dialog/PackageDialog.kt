@@ -1,9 +1,8 @@
-package com.uhavecodingproblem.wordsrpg.dialog
+package com.uhavecodingproblem.wordsrpg.ui.dialog
 
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,14 +10,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageDialogBinding
 import com.uhavecodingproblem.wordsrpg.databinding.CustomPackageDialogBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.LibraryActivity
 
 /**
  * wordsrpg

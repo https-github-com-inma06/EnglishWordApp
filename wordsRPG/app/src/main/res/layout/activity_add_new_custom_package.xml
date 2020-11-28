@@ -5,7 +5,7 @@
     <data>
        <variable
            name="thisActivity"
-           type="com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity" />
+           type="com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

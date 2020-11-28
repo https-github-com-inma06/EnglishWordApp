@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.dialog
+package com.uhavecodingproblem.wordsrpg.ui.dialog
 
 import android.app.Dialog
 import android.content.Context

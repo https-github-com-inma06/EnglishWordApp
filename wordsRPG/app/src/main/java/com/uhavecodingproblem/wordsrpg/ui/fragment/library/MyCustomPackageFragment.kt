@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.ui.fragment
+package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import android.app.Activity
 import android.content.Intent
@@ -9,12 +9,12 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.AddNewCustomPackageActivity
-import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
+
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.MAKE_CUSTOM_PACKAGE_REQUEST_CODE
@@ -49,7 +49,7 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
     private fun setCustomPackageRecyclerView(){
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
-        recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
+        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
             ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
          binding.recyclerviewMyCustomList.apply {

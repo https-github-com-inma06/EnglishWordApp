@@ -10,6 +10,7 @@ package com.uhavecodingproblem.wordsrpg.data
  */
 
 data class CustomPackageData(
+
    val uid:Int,
    val ownerUid:Int,
    val packageName:String,

@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.ui.activity
+package com.uhavecodingproblem.wordsrpg.ui.activity.library
 
 import android.content.Intent
 import android.view.MenuItem
@@ -9,6 +9,7 @@ import com.uhavecodingproblem.wordsrpg.component.LibraryActivityRecyclerViewAdap
 import com.uhavecodingproblem.wordsrpg.data.WordData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityLibraryBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 

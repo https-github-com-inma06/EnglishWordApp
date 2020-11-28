@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.StudyActivity" />
-        <activity android:name=".ui.activity.LibraryActivity" />
+        <activity android:name=".ui.activity.library.LibraryActivity" />
 
         <activity android:name=".ui.activity.battle.BattleRankingActivity" />
         <activity android:name=".ui.activity.battle.BattleGameActivity" />
@@ -31,7 +31,7 @@
         <activity android:name=".ui.activity.NotificationActivity" />
         <activity android:name=".ui.activity.WrongAnswerActivity" />
         <activity android:name=".ui.activity.SettingActivity" />
-        <activity android:name=".ui.activity.AddNewCustomPackageActivity" />
+        <activity android:name=".ui.activity.library.AddNewCustomPackageActivity" />
     </application>
 
 </manifest>
