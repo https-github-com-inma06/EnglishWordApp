@@ -1,30 +1,22 @@
-package com.uhavecodingproblem.wordsrpg.ui.activity
+package com.uhavecodingproblem.wordsrpg.ui.activity.library
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.view.size
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.CustomPackageBindingAdapter
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityAddNewCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
-import kotlinx.android.synthetic.main.activity_add_new_custom_package.*
-import org.json.JSONArray
 
 /**
  * wordsrpg

@@ -17,5 +17,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_goToTheRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="회원가입으로 이동"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_goToTheLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="로그인으로 이동"
+        app:layout_constraintStart_toStartOf="@+id/btn_goToTheRegister"
+        app:layout_constraintTop_toBottomOf="@+id/btn_goToTheRegister" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

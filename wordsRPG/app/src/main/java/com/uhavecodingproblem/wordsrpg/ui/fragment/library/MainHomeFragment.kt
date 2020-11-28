@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.ui.fragment
+package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger

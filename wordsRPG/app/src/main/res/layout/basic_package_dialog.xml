@@ -11,7 +11,7 @@
 
         <variable
             name="customdialog"
-            type="com.uhavecodingproblem.wordsrpg.dialog.PackageDialog" />
+            type="com.uhavecodingproblem.wordsrpg.ui.dialog.PackageDialog" />
     </data>
 
 

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="thisFragment"
-            type="com.uhavecodingproblem.wordsrpg.ui.fragment.MyCustomPackageFragment" />
+            type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MyCustomPackageFragment" />
 
     </data>
 

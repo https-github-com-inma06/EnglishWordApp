@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleNotificationListAdapter
 import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleSimilarScoreUsersAdapter
+import com.uhavecodingproblem.wordsrpg.data.model.User
+import com.uhavecodingproblem.wordsrpg.data.model.UserBattleData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBattleBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleRankingActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
@@ -38,6 +40,15 @@ class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.frag
         /**
          * Todo: 묵데이터, 서버 참고해서 모델 정해지는대로 심플하게 모델로만 묶어서 사용 예정
          */
+
+        val muckUserData = User(
+            0,
+            "asdad@gmail.com",
+            "123123",
+            "로너",
+            "https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg",
+            UserBattleData(0,"브론즈",235),null
+        )
         val muckImageList = mutableListOf<String>()
         val muckNameList = mutableListOf<String>()
         val muckBattleDescribeList = mutableListOf<String>()

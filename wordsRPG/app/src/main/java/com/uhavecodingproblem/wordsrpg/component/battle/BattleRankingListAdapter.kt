@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.DialogBattleChallengeBinding
-import com.uhavecodingproblem.wordsrpg.databinding.DialogBattleResultBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemBattleRankingBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleGameActivity
 import com.uhavecodingproblem.wordsrpg.ui.dialog.BattleDialog

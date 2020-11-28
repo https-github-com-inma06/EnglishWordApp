@@ -1,15 +1,13 @@
-package com.uhavecodingproblem.wordsrpg.component
+package com.uhavecodingproblem.wordsrpg.component.library
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.*
 import com.uhavecodingproblem.wordsrpg.util.ITEM_GIRD_TYPE
 import com.uhavecodingproblem.wordsrpg.util.ITEM_HEADER_TYPE
-import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
  * wordsrpg

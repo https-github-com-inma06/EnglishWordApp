@@ -81,4 +81,10 @@
     <string name="dialog_battle_result_newScore">%d점</string>
 
     <string name="imagePath">android.resource://com.uhavecodingproblem.wordsrpg/drawable/%s</string>
+
+    <string name="googleClientID">599473159954-e4c0ra3s0ujdc07gcbiqcj2l25mll5id.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">687653535291177</string>
+    <string name="fb_login_protocol_scheme">fb687653535291177</string>
+
 </resources>

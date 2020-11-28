@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.ui.fragment
+package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R

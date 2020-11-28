@@ -21,7 +21,6 @@ class BattleRankingActivity : BaseActivity<ActivityBattleRankingBinding>(R.layou
     }
 
 
-
     private fun setMuckData() {
         /** todo: 서버 완성후 모데롤 묶어서 심플하게 변경할 에정. */
         var score = 0
