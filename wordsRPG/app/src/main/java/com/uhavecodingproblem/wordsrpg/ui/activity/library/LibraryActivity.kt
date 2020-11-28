@@ -5,7 +5,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.LibraryActivityRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.LibraryActivityRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.WordData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityLibraryBinding

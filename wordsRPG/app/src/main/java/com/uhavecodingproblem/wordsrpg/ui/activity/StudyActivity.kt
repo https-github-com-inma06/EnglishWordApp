@@ -12,7 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.StudyViewPagerAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.StudyViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.WordType

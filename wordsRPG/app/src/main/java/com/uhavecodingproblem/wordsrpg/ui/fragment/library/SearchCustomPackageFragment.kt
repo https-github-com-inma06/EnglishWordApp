@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
+import android.content.Context
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -29,7 +30,8 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
  * 커스텀 패키지를 검색하는  화면이다.
  *
  */
-class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBinding>(R.layout.fragment_search_custom_package) {
+class SearchCustomPackageFragment:
+    BaseFragment<FragmentSearchCustomPackageBinding>(R.layout.fragment_search_custom_package) {
 
     //키보드 input 매니저
     lateinit var inputMethodManager:InputMethodManager//1-1
