@@ -48,7 +48,6 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         initBinding()
         observeTabLayoutPosition()
         byLevelRecyclerView()
-
     }
 
     private fun initBinding() {

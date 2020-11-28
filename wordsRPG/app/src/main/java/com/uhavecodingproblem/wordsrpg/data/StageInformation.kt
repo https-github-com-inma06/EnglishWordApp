@@ -15,7 +15,7 @@ import android.os.Parcelable
 data class StageInformation(
     val stageNum: Int, // 스테이지 구분자(단계)
     var stageStatus: Int, // 스테이지 상태( 0 : 학습도 테스트도보지않은 상태 1 : 학습중인상태 2 : 테스트 실패상태 3 : 테스트 통과)
-    val wordList: MutableList<WordInformation>
+    var wordList: MutableList<WordInformation>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),

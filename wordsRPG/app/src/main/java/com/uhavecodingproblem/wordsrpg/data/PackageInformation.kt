@@ -12,13 +12,12 @@ import androidx.room.Entity
  * Description:
  */
 
-@Entity
 data class PackageInformation(
     val userId: String, // 유저 아이디
     val type: String, // 수준별, 시험별, 카테고리별..
     val name: String, // 초등학교 1학년, 중학교 1학년, 고등학교 1학년, 토익 등등
     val thumbnailImage: String, // 배경이미지
-    val stageList: MutableList<StageInformation> // 스테이지
+    var stageList: MutableList<StageInformation> // 스테이지
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString() ?: "",

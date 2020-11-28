@@ -26,6 +26,7 @@ import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.StageDialogR
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import kotlin.math.ceil
 
 /**
@@ -135,7 +136,7 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
         }
 
         customSnackBarViewBinding.tvSnackBarContent.setOnClickListener {
-            Toast.makeText(context, "테스트 보기", Toast.LENGTH_SHORT).show()
+            findTestStage()
         }
 
         val parentLayout = snackBar.view as Snackbar.SnackbarLayout
@@ -148,6 +149,18 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
 
         parentLayout.addView(customSnackBarViewBinding.root)
         return snackBar
+    }
+
+    private fun findTestStage(){
+        var position = 0
+        for (i in packageInformation.stageList.indices){
+            if (packageInformation.stageList[i].stageStatus != 0 && packageInformation.stageList[i].stageStatus != 3){
+                position = i
+                break
+            }
+        }
+
+        Toast.makeText(context, "${packageInformation.stageList[position].stageNum}", Toast.LENGTH_SHORT).show()
     }
 
     fun exit(v: View) {

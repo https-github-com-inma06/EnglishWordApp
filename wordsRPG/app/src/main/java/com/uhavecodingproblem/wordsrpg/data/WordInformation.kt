@@ -13,10 +13,12 @@ import android.os.Parcelable
 data class WordInformation(
     val word: String, // 단어
     val mean: String, // 의미
+    val example: String, // 예문
     var isStudyPassed: Boolean, // 학습통과여부
     var isTestPassed: Boolean // 테스트 통과여부(추후 오답노트를 위한 체크)
 ) : Parcelable{
     constructor(parcel: Parcel) : this(
+        parcel.readString()?: "",
         parcel.readString()?: "",
         parcel.readString()?: "",
         parcel.readInt() == 1,
@@ -31,6 +33,7 @@ data class WordInformation(
         p0?.run {
             writeString(word)
             writeString(mean)
+            writeString(example)
             writeInt(if (isStudyPassed) 1 else 0)
             writeInt(if (isTestPassed) 1 else 0)
         }

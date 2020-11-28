@@ -59,6 +59,9 @@ class StudyActivity :
     private fun setWord() {
         intent?.let {
             stageInformationInformation = it.getParcelableExtra("StudyWord")
+            stageInformationInformation?.let {stage ->
+                stage.wordList[0].isStudyPassed = true
+            }
         }
     }
 
@@ -69,7 +72,6 @@ class StudyActivity :
             adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false
-            Log.e("Position ::", "${getRecentPosition()}")
             setMoveToRecentPosition(getRecentPosition())
             registerOnPageChangeCallback(pageChangeCallback)
         }
@@ -188,11 +190,19 @@ class StudyActivity :
 
     override fun onNextBtnClick(v: View, position: Int) {
         binding.viewpager2Study.currentItem += 1
-        stageInformationInformation?.wordList!![position].isStudyPassed = true
+        stageInformationInformation?.let {
+            it.wordList[position].isStudyPassed = true
+            Logger.v("$position = ${it.wordList[position].isStudyPassed}")
+        }
+
     }
 
     override fun onPreviousBtnClick(v: View, position: Int) {
         binding.viewpager2Study.currentItem -= 1
+    }
+
+    override fun onVideoClick(v: View, position: Int) {
+        Toast.makeText(this, "Move To YoutubePlayer word = ${stageInformationInformation?.wordList!![position].word}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroy() {

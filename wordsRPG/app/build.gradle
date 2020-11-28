@@ -108,6 +108,9 @@ dependencies {
     def circle_image_view = "3.1.0"
     implementation "de.hdodenhof:circleimageview:$circle_image_view"
 
+    def card_view = "1.0.0"
+    implementation "androidx.cardview:cardview:$card_view"
+
     //firebase
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
 

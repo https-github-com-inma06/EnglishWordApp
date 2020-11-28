@@ -18,16 +18,16 @@ object WordMockData {
     private fun initClearWordMockData(): MutableList<WordInformation>{
         val wordClearData = mutableListOf<WordInformation>()
 
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
-        wordClearData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과","Apple is red fruit",  isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과","Apple is red fruit",  isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과","Apple is red fruit",  isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과","Apple is red fruit",  isStudyPassed = true, isTestPassed = true))
+        wordClearData.add(WordInformation("Apple", "사과","Apple is red fruit",  isStudyPassed = true, isTestPassed = true))
 
         return wordClearData
     }
@@ -35,16 +35,16 @@ object WordMockData {
     private fun initWordMockData(): MutableList<WordInformation>{
         val wordData = mutableListOf<WordInformation>()
 
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = true, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = false, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = false, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = false, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = false, isTestPassed = false))
-        wordData.add(WordInformation("Apple", "사과", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Banana", "바나나", "Banana is yellow fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
+        wordData.add(WordInformation("Apple", "사과", "Apple is red fruit", isStudyPassed = false, isTestPassed = false))
 
         return wordData
     }

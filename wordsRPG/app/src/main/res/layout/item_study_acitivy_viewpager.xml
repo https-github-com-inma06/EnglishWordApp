@@ -44,94 +44,131 @@
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/word_youtube"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_word"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.3"
+            app:cardCornerRadius="20dp"
             app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_percent="0.7"
             app:layout_constraintTop_toBottomOf="@id/word_count"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/word"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/basic_dialog_text_color"
+                    android:gravity="center"
+                    android:text="@{wordarray.get(position)? null : data.word}"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHeight_percent="0.5"/>
+
+                <TextView
+                    android:id="@+id/mean"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="@{meanarray.get(position)? null : data.mean}"
+                    android:textStyle="bold"
+                    android:background="@color/colorLightBlue2"
+                    android:textColor="@color/black"
+                    app:layout_constraintHeight_percent="0.3"
+                    app:layout_constraintTop_toBottomOf="@id/word" />
+
+                <ImageView
+                    android:id="@+id/word_mic"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:src="@drawable/ic_baseline_mic_24"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintHeight_percent="0.1"
+                    app:layout_constraintWidth_percent="0.1"
+                    app:layout_constraintRight_toRightOf="@id/word"
+                    app:layout_constraintBottom_toBottomOf="@id/word"
+                    android:contentDescription="@string/study_mic"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/basic_dialog_text_color"
+                    app:layout_constraintTop_toBottomOf="@id/mean"
+                    app:layout_constraintHeight_percent="0.2">
+
+                    <TextView
+                        android:id="@+id/tv_example"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:paddingStart="15dp"
+                        android:gravity="center_vertical"
+                        android:text="@{data.example}"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorWhite"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/imv_video_play"/>
+
+                    <ImageView
+                        android:id="@+id/imv_video_play"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_margin="15dp"
+                        android:src="@drawable/img_vector_block_video_play"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintHeight_percent="0.5"
+                        app:layout_constraintWidth_percent="0.1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <TextView
-            android:id="@+id/word"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="@{wordarray.get(position)? null : data.word}"
-            android:textColor="@color/colorWhite"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            app:layout_constraintHeight_percent="0.2"
-            app:layout_constraintTop_toBottomOf="@+id/word_youtube" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/mean"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:gravity="center"
-            android:text="@{meanarray.get(position)? null : data.mean}"
-            android:textStyle="bold"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintTop_toBottomOf="@id/word" />
-        
-        <ImageView
-            android:id="@+id/word_mic"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/ic_baseline_mic_24"
-            android:scaleType="fitCenter"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintTop_toBottomOf="@id/mean"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="@string/study_mic"/>
 
-        <View
-            android:id="@+id/btn_center_space"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.2"
-            app:layout_constraintTop_toBottomOf="@id/word_mic"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.cardview.widget.CardView>
 
         <Button
             android:id="@+id/btn_previous"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/basic_package_dialog_item_button_round"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:text="이전"
             android:gravity="center"
             android:visibility="@{position == 0 ? button.INVISIBLE : button.VISIBLE}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/btn_center_space"
-            app:layout_constraintTop_toBottomOf="@id/word_mic"
+            app:layout_constraintLeft_toLeftOf="@id/card_view_word"
+            app:layout_constraintTop_toBottomOf="@id/card_view_word"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.2"/>
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintHeight_percent="0.1"/>
 
         <Button
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/basic_package_dialog_item_button_round"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
             android:text="다음"
             android:gravity="center"
             android:visibility="@{position >= maxsize ? button.INVISIBLE : button.VISIBLE}"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/word_mic"
-            app:layout_constraintLeft_toRightOf="@id/btn_center_space"
+            app:layout_constraintRight_toRightOf="@id/card_view_word"
+            app:layout_constraintTop_toBottomOf="@id/card_view_word"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.2"/>
+            app:layout_constraintWidth_percent="0.3"
+            app:layout_constraintHeight_percent="0.1"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

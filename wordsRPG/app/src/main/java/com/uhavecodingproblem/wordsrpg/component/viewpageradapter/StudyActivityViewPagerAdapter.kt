@@ -41,6 +41,7 @@ class StudyActivityViewPagerAdapter(
 
     interface ItemClickListener {
         fun onMicClick(v: View, position: Int)
+        fun onVideoClick(v: View, position: Int)
         fun onNextBtnClick(v: View, position: Int)
         fun onPreviousBtnClick(v: View, position: Int)
     }
@@ -48,13 +49,13 @@ class StudyActivityViewPagerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val studyItemBinding =
             ItemStudyAcitivyViewpagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        lifecycle.addObserver(studyItemBinding.wordYoutube)
+//        lifecycle.addObserver(studyItemBinding.wordYoutube)
         return PagerViewHolder(studyItemBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val pagerHolder = holder as PagerViewHolder
-        pagerHolder.loadVideo("7LPJrzZaoZg")
+        pagerHolder.bind()
     }
 
     override fun getItemCount(): Int {
@@ -64,36 +65,36 @@ class StudyActivityViewPagerAdapter(
     inner class PagerViewHolder(private val binding: ItemStudyAcitivyViewpagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private var currentVideoId: String? = null
-        private var youtubePlayerView: YouTubePlayerView? = null
-        private var player: YouTubePlayer? = null
+//        private var currentVideoId: String? = null
+//        private var youtubePlayerView: YouTubePlayerView? = null
+//        private var player: YouTubePlayer? = null
 
-        init {
-            youtubePlayerView = binding.wordYoutube
-            youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    player = youTubePlayer
-                    currentVideoId = "7LPJrzZaoZg"
-                    loadVideo(currentVideoId!!)
-                }
-            })
+//        init {
+//            youtubePlayerView = binding.wordYoutube
+//            youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+//                override fun onReady(youTubePlayer: YouTubePlayer) {
+//                    player = youTubePlayer
+//                    currentVideoId = "7LPJrzZaoZg"
+//                    loadVideo(currentVideoId!!)
+//                }
+//            })
+//
+//        }
 
-        }
+//        fun loadVideo(videoID: String) {
+//            bind()
+//
+//            Logger.v("bind :: $currentPosition $adapterPosition")
+//            if (currentPosition == adapterPosition) {
+//                currentVideoId = videoID
+//                if (player == null)
+//                    return
+//
+//                player?.loadVideo(currentVideoId!!, 0f)
+//            }
+//        }
 
-        fun loadVideo(videoID: String) {
-            bind()
-
-            Logger.v("bind :: $currentPosition $adapterPosition")
-            if (currentPosition == adapterPosition) {
-                currentVideoId = videoID
-                if (player == null)
-                    return
-
-                player?.loadVideo(currentVideoId!!, 0f)
-            }
-        }
-
-        private fun bind() {
+        fun bind() {
             binding.data = word[adapterPosition]
             binding.wordarray = wordSparseBooleanArray
             binding.meanarray = meanSparseBooleanArray
@@ -130,6 +131,10 @@ class StudyActivityViewPagerAdapter(
 
             binding.btnNext.setOnClickListener {
                 listener.onNextBtnClick(it, adapterPosition)
+            }
+
+            binding.imvVideoPlay.setOnClickListener {
+                listener.onVideoClick(it, adapterPosition)
             }
         }
 
