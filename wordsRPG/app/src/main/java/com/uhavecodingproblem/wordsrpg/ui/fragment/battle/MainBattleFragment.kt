@@ -1,19 +1,19 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.battle
 
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleNotificationListAdapter
 import com.uhavecodingproblem.wordsrpg.component.battle.MainBattleSimilarScoreUsersAdapter
+import com.uhavecodingproblem.wordsrpg.data.model.Notification
 import com.uhavecodingproblem.wordsrpg.data.model.User
-import com.uhavecodingproblem.wordsrpg.data.model.UserBattleData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBattleBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleRankingActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 /**
  * wordsrpg
@@ -29,6 +29,13 @@ import java.util.*
 
 class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
 
+    companion object {
+        const val BATTLE_RESULT_WIN = 2001
+        const val BATTLE_RESULT_LOSE = 2002
+        const val BATTLE_RESULT_TIE = 2003
+        const val BATTLE_RESULT_REQUEST = 2004
+    }
+
     override fun FragmentMainBattleBinding.onCreateView() {
         setRecyclerView()
         binding.tvRandom.setOnClickListener {
@@ -40,68 +47,78 @@ class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.frag
         /**
          * Todo: 묵데이터, 서버 참고해서 모델 정해지는대로 심플하게 모델로만 묶어서 사용 예정
          */
+        val userFriendList: MutableList<User> = mutableListOf()
+        val notificationList: MutableList<Notification> = mutableListOf()
 
-        val muckUserData = User(
-            0,
-            "asdad@gmail.com",
+        for(i in 0..4) {
+            val muckFriendUserData = User(
+                0,
+                "asdad@gmail.com",
+                "123123",
+                "재이",
+                "https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg",
+                null, "브론즈", 0, null, null
+            )
+            val muckBattleScore = 100 * (i + 1)
+            val notification = Notification(i.toLong(), null, null)
+
+            if (i % 2 == 0) {
+                muckFriendUserData.userId = i.toLong()
+                muckFriendUserData.score = muckBattleScore.toLong()
+
+                Log.d("asdasda", i.toString())
+
+                notification.notificationType = BATTLE_RESULT_WIN
+                notification.date = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+            } else {
+
+                muckFriendUserData.userId = i.toLong()
+                muckFriendUserData.profileImage =
+                    "https://img.huffingtonpost.com/asset/5d814d8e3b00002b88d66359.jpeg?ops=scalefit_630_noupscale"
+                muckFriendUserData.userName = "아타"
+                muckFriendUserData.score = muckBattleScore.toLong()
+
+
+                Log.d("asdasda", i.toString())
+                notification.notificationType = BATTLE_RESULT_REQUEST
+                notification.date = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date())
+            }
+
+            notificationList.add(notification)
+            userFriendList.add(muckFriendUserData)
+        }
+
+        val muckCurrentUserData = User(
+            99,
+            "loner@gmail.com",
             "123123",
             "로너",
             "https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg",
-            UserBattleData(0,"브론즈",235),null
+            userFriendList, "브론즈", 235, null,
+            notificationList
         )
-        val muckImageList = mutableListOf<String>()
-        val muckNameList = mutableListOf<String>()
-        val muckBattleDescribeList = mutableListOf<String>()
-        val muckDateList = mutableListOf<String>()
-        val muckAlarmModeList = mutableListOf<Boolean>()
-
-        repeat(5) {
-            muckDateList.add(SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN).format(Date()))
-
-            if (it % 2 == 0) {
-                muckImageList.add("https://img.etoday.co.kr/pto_db/2020/09/20200915135347_1511046_1000_644.jpg")
-                muckNameList.add("로너")
-                muckBattleDescribeList.add("님이 배틀을 신청하셨습니다")
-                muckAlarmModeList.add(true)
-            } else {
-                muckImageList.add("https://img.huffingtonpost.com/asset/5d814d8e3b00002b88d66359.jpeg?ops=scalefit_630_noupscale")
-                muckNameList.add("재이")
-                muckBattleDescribeList.add("님과 배틀 결과를 확인해보세요")
-                muckAlarmModeList.add(false)
-            }
-
+        userFriendList.also{
+         muckCurrentUserData.friendList = it
         }
 
-        binding.apply {
-            rvSimilarScoreUsers.apply {
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-                adapter = MainBattleSimilarScoreUsersAdapter(muckImageList, muckNameList){
-                        startActivity(Intent(requireContext(), BattleRankingActivity::class.java))
+
+        binding.rvSimilarScoreUsers.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = MainBattleSimilarScoreUsersAdapter(muckCurrentUserData) {
+                Intent(requireContext(), BattleRankingActivity::class.java).also {
+                    it.putExtra("currentUser", muckCurrentUserData)
+                    startActivity(it)
                 }
             }
-
-            rvBattleNotificationList.apply {
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = MainBattleNotificationListAdapter(
-                    imageList = muckImageList,
-                    userNameList = muckNameList,
-                    battleAlarmDescribeList = muckBattleDescribeList,
-                    battleDateList = muckDateList,
-                    alarmModeList = muckAlarmModeList
-                )
-
-            }
         }
 
+        binding.rvBattleNotificationList.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = MainBattleNotificationListAdapter(muckCurrentUserData)
+        }
+
+
     }
-
 }
-
-
-
-
-
-
-

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -37,6 +38,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         loginActivity = this@LoginActivity
     }
 
+    fun setBtnRegisterClickListener(v:View){
+        startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+    }
     fun setBtnFaceBookLoginClickListener(v: View) {
 
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -62,7 +66,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 if (!isValidEmail(etEmailNumberSend.text.toString())) {
                     Toast.makeText(
                         this@LoginActivity,
-                        "올바른 이메일 형식으로 적어주세요", Toast.LENGTH_SHORT
+                        "올바른 이메일 형식으로 적어주세요 \n" +
+                                "띄어쓰기도 없어야 합니다", Toast.LENGTH_LONG
                     ).show()
                     return@setOnClickListener
                 }
@@ -70,7 +75,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 Toast.makeText(
                     this@LoginActivity,
                     "${etEmailNumberSend.text}으로 인증번호를 보냈습니다.\n인증 번호${456456}를 입력해주세요",
-                    Toast.LENGTH_SHORT
+                    Toast.LENGTH_LONG
                 ).show()
 
                 etCertificationNumber.visibility = View.VISIBLE
@@ -78,7 +83,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             }
 
             btnCertificationNumberCheck.setOnClickListener {
-                if (etEmailNumberSend.text.toString() == 456456.toString()) {
+                if (etCertificationNumber.text.toString() == 456456.toString()) {
                     dialog.cancel()
                     dialog.dismiss()
                     val newPasswordDialog = NewPasswordCreateDialog(this@LoginActivity)
@@ -90,7 +95,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                 return@setOnClickListener
                             }
                             if(etNewPasswordWrite.text.length <8) {
-                                Toast.makeText(this@LoginActivity, "비밀번호는 8자리 이상으로 설정해주세요", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@LoginActivity, "비밀번호는 8자리 이상으로 설정해주세요", Toast.LENGTH_LONG).show()
                                 return@setOnClickListener
                             }
                             Toast.makeText(this@LoginActivity, "조건문 모두 true 일시 여기서 api 출동해갔구 비밀번호가 변경할거임", Toast.LENGTH_SHORT).show()

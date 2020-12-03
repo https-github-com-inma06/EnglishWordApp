@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.data.model.User
 import com.uhavecodingproblem.wordsrpg.databinding.DialogBattleChallengeBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainBattleSimilarScoreUsersBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleGameActivity
 import com.uhavecodingproblem.wordsrpg.ui.dialog.BattleDialog
 
 class MainBattleSimilarScoreUsersAdapter(
-    private val imageList: List<String> = listOf(),
-    private val nameList: List<String> = listOf(),
+    private val user: User,
     private val setClickEvent: () -> Unit
 ) :
     RecyclerView.Adapter<MainBattleSimilarScoreUsersAdapter.ViewHolder>() {
@@ -32,8 +32,10 @@ class MainBattleSimilarScoreUsersAdapter(
                             binding.root.context,
                             R.layout.dialog_battle_challenge
                         ).apply {
-                            this.binding.image = imageList[adapterPosition]
-                            this.binding.userName = nameList[adapterPosition]
+                            user.friendList?.sortedBy { it.score }
+
+                            this.binding.image = user.friendList!![adapterPosition].profileImage
+                            this.binding.userName = user.friendList!![adapterPosition].userName
                             this.binding.currentCase = "님에게 배틀 신청"
                             this.binding.btnGameStart.setOnClickListener {
                                 Intent(binding.root.context, BattleGameActivity::class.java).also {
@@ -57,7 +59,7 @@ class MainBattleSimilarScoreUsersAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.item_main_battle_similar_score_users, parent, false)
         )
 
-    override fun getItemCount() = imageList.size
+    override fun getItemCount() = user.friendList!!.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
@@ -67,8 +69,10 @@ class MainBattleSimilarScoreUsersAdapter(
                 name = "더보기"
                 return@apply
             }
-            image = imageList[position]
-            name = nameList[position]
+
+            user.friendList?.sortedBy { it.score }
+            image = user.friendList?.get(position)!!.profileImage
+            name = user.friendList?.get(position)!!.userName
         }
     }
 }

@@ -23,7 +23,6 @@ class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.frag
 
         btnGoToTheLogin.setOnClickListener { startActivity(Intent(requireContext(),
         LoginActivity::class.java)) }
-        btnGoToTheRegister.setOnClickListener { startActivity(Intent(requireContext(),
-            RegisterActivity::class.java)) }
+
     }
 }

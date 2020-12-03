@@ -5,17 +5,9 @@
 
     <data>
         <variable
-            name="friendCount"
-            type="int" />
-        <variable
-            name="image"
-            type="String"/>
-        <variable
-            name="userName"
-            type="String"/>
-        <variable
-            name="myScore"
-            type="int"/>
+            name="thisUser"
+            type="com.uhavecodingproblem.wordsrpg.data.model.User" />
+
         <variable
             name="myRanking"
             type="int" />
@@ -41,7 +33,7 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                setCircleImage="@{image}"
+                setCircleImage="@{thisUser.profileImage}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
                 android:layout_marginStart="32dp"
@@ -57,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@{userName}"
+                android:text="@{thisUser.userName}"
                 app:layout_constraintStart_toEndOf="@+id/imageView2"
                 app:layout_constraintTop_toTopOf="@+id/imageView2"
                 tools:text="Loner" />
@@ -66,7 +58,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(myScore)}"
+                android:text="@{String.valueOf(thisUser.score)}"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"
@@ -141,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="@{@string/friendListCount(friendCount)}"
+            android:text="@{@string/friendListCount(thisUser.friendList.size())}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
             tools:text="친구수" />
