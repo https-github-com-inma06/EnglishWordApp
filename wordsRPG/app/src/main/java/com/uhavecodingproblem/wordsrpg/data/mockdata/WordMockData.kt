@@ -13,7 +13,7 @@ import com.uhavecodingproblem.wordsrpg.data.PackageInformation
  */
 object WordMockData {
 
-    val wordMockData = initMockData()
+    var wordMockData = initMockData()
 
     private fun initClearWordMockData(): MutableList<WordInformation>{
         val wordClearData = mutableListOf<WordInformation>()

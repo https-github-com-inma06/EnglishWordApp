@@ -32,7 +32,6 @@ class StudyActivity :
         Logger.v("실행")
 
         initTextToSpeech()
-        setToolbarTitle()
         setWord()
         initBinding()
         setViewPager()
@@ -59,7 +58,8 @@ class StudyActivity :
     private fun setWord() {
         intent?.let {
             stageInformationInformation = it.getParcelableExtra("StudyWord")
-            stageInformationInformation?.let {stage ->
+            stageInformationInformation?.let { stage ->
+                setToolbarTitle("${it.getStringExtra("PackageName")} LV ${stage.stageNum}")
                 stage.wordList[0].isStudyPassed = true
             }
         }
@@ -68,7 +68,11 @@ class StudyActivity :
     private fun setViewPager() {
         binding.viewpager2Study.apply {
             studyActivityRecyclerviewAdapter =
-                StudyActivityViewPagerAdapter(stageInformationInformation?.wordList!!, this@StudyActivity.lifecycle, this@StudyActivity)
+                StudyActivityViewPagerAdapter(
+                    stageInformationInformation?.wordList!!,
+                    this@StudyActivity.lifecycle,
+                    this@StudyActivity
+                )
             adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false
@@ -127,13 +131,13 @@ class StudyActivity :
         }
     }
 
-    private fun setToolbarTitle() {
+    private fun setToolbarTitle(toolbarTitle: String) {
         setSupportActionBar(binding.studyToolbar)
 
         val actionbar = supportActionBar
         actionbar?.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_24)
         actionbar?.setDisplayHomeAsUpEnabled(true)
-        actionbar?.title = "테스트"
+        actionbar?.title = toolbarTitle
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -182,6 +186,8 @@ class StudyActivity :
 
     override fun onMicClick(v: View, position: Int) {
         wordTextToSpeech?.let {
+            Log.e("Test", "Mic")
+
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
             it.speak(stageInformationInformation?.wordList!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
@@ -189,10 +195,14 @@ class StudyActivity :
     }
 
     override fun onNextBtnClick(v: View, position: Int) {
-        binding.viewpager2Study.currentItem += 1
+        if (position == stageInformationInformation?.wordList?.size!! - 1)
+            Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
+        else
+            binding.viewpager2Study.currentItem += 1
+
+
         stageInformationInformation?.let {
             it.wordList[position].isStudyPassed = true
-            Logger.v("$position = ${it.wordList[position].isStudyPassed}")
         }
 
     }
@@ -202,7 +212,11 @@ class StudyActivity :
     }
 
     override fun onVideoClick(v: View, position: Int) {
-        Toast.makeText(this, "Move To YoutubePlayer word = ${stageInformationInformation?.wordList!![position].word}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            this,
+            "Move To YoutubePlayer word = ${stageInformationInformation?.wordList!![position].word}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroy() {
@@ -223,10 +237,6 @@ class StudyActivity :
                 setPositiveButton("종료") { dialogInterface, _ ->
                     dialogInterface.dismiss()
                     finish()
-//                    Intent(this@StudyActivity, LibraryActivity::class.java).also { intent ->
-//                        startActivity(intent)
-//                        finish()
-//                    }
                 }
             }
             exitBuilder.create()

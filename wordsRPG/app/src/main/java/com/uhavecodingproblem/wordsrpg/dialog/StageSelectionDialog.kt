@@ -84,6 +84,7 @@ class StageSelectionDialog(
     fun moveStudy(v: View) {
         stageInformation.stageStatus = 1
         Intent(context, StudyActivity::class.java).also {
+            it.putExtra("PackageName", packageName)
             it.putExtra("StudyWord", stageInformation)
             context.startActivity(it)
         }

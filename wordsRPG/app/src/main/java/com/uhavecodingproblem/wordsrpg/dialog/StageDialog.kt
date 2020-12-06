@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
-import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +24,7 @@ import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.StageDialogR
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
-import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.util.dialogResize
 import kotlin.math.ceil
 
 /**
@@ -72,7 +70,7 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
 
     private val localBroadcast: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(receiveContext: Context?, receiveIntent: Intent?) {
-            if ("refresh_dialog" == receiveIntent?.action){
+            if ("refresh_dialog" == receiveIntent?.action) {
                 (binding.recyclerviewStage.adapter as StageDialogRecyclerViewAdapter).updateData(packageInformation.stageList)
                 checkStageStatus()
             }
@@ -137,6 +135,7 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
 
         customSnackBarViewBinding.tvSnackBarContent.setOnClickListener {
             findTestStage()
+            snackBar.dismiss()
         }
 
         val parentLayout = snackBar.view as Snackbar.SnackbarLayout
@@ -151,10 +150,10 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
         return snackBar
     }
 
-    private fun findTestStage(){
+    private fun findTestStage() {
         var position = 0
-        for (i in packageInformation.stageList.indices){
-            if (packageInformation.stageList[i].stageStatus != 0 && packageInformation.stageList[i].stageStatus != 3){
+        for (i in packageInformation.stageList.indices) {
+            if (packageInformation.stageList[i].stageStatus != 0 && packageInformation.stageList[i].stageStatus != 3) {
                 position = i
                 break
             }
@@ -175,7 +174,7 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
             packageInformation.thumbnailImage
         )
         dialog.show()
-        dialogResize(dialog)
+        context.dialogResize(dialog, 0.95f, 0.5f)
         snackBar?.dismiss()
     }
 
@@ -197,35 +196,6 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
             if (dismissSnackBar >= lastVisiblePosition && isScrolling) { // RecyclerView 최초 위치에서 Scroll 1/3
                 snackBar?.dismiss()
             }
-        }
-    }
-
-    private fun dialogResize(dialog: Dialog) {
-        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        if (Build.VERSION.SDK_INT < 30) {
-
-            val display = windowManager.defaultDisplay
-            val size = Point()
-
-            display.getSize(size)
-
-            val window = dialog.window
-
-            val x = (size.x * 0.95f).toInt()
-            val y = (size.y * 0.5f).toInt()
-            window?.setLayout(x, y)
-
-        } else {
-
-            val rect = windowManager.currentWindowMetrics.bounds
-
-            val window = dialog.window
-
-            val x = (rect.width() * 0.95f).toInt()
-            val y = (rect.height() * 0.5f).toInt()
-
-            window?.setLayout(x, y)
         }
     }
 

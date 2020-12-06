@@ -1,13 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Point
-import android.os.Build
-import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -24,6 +18,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.dialog.StageDialog
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.util.dialogResize
 
 /**
  * wordsrpg
@@ -127,43 +122,17 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
         stageDialog = StageDialog(requireContext(), wordList[position])
-        stageDialog?.show()
-        dialogResize(stageDialog)
-    }
-
-    private fun dialogResize(dialog: Dialog?) {
-
-        if (Build.VERSION.SDK_INT < 30) {
-            val display = requireActivity().windowManager.defaultDisplay
-            val size = Point()
-
-            display.getSize(size)
-
-            val window = dialog?.window
-
-            val x = (size.x * 0.95f).toInt()
-            val y = (size.y * 0.9f).toInt()
-            window?.setLayout(x, y)
-
-        } else {
-            val windowManager = requireContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-            val rect = windowManager.currentWindowMetrics.bounds
-
-            val window = dialog?.window
-
-            val x = (rect.width() * 0.95f).toInt()
-            val y = (rect.height() * 0.9f).toInt()
-
-            window?.setLayout(x, y)
+        stageDialog?.let {
+            it.show()
+            requireContext().dialogResize(it, 0.95f, 0.9f)
         }
     }
 
     override fun onResume() {
         super.onResume()
         stageDialog?.let {
-            if (it.isShowing){
-                Intent("refresh_dialog").also { intent->
+            if (it.isShowing) {
+                Intent("refresh_dialog").also { intent ->
                     LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
                 }
             }

@@ -78,4 +78,8 @@
     <string name="expand_and_collapse">접고 펼치기</string>
     <string name="move_study_dialog">GO</string>
 
+    <string name="next">다음</string>
+    <string name="previous">이전</string>
+    <string name="test">테스트 보러가기</string>
+
 </resources>
