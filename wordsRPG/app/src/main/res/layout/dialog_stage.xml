@@ -10,8 +10,8 @@
             type="com.uhavecodingproblem.wordsrpg.data.PackageInformation" />
 
         <variable
-            name="basicdialog"
-            type="com.uhavecodingproblem.wordsrpg.dialog.StageDialog" />
+            name="stage"
+            type="com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,7 +38,7 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:contentDescription="@string/exit"
-                android:onClick="@{basicdialog::exit}"
+                android:onClick="@{stage::exit}"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_vector_brown_close"
                 app:layout_constraintHeight_percent="0.05"

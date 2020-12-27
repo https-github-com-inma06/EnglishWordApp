@@ -28,3 +28,7 @@ const val STAGE_NONE = 0 // 학습하지도, 테스트통과하지도 않은 상
 const val STAGE_STUDYING = 1 // 학습중인상태( 학습만 한상태, 학습하다가 중간에 나간상태 )
 const val STAGE_TEST_FAIL = 2 // 테스트 실패
 const val STAGE_TEST_CLEAR = 3 // 테스트 통과
+
+
+//기본 영단어 주소
+const val BASIC_WORD = "http://www.naver.com"

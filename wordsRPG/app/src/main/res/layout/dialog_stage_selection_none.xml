@@ -19,7 +19,7 @@
 
         <variable
             name="dialog"
-            type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialog" />
+            type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialogFragment" />
 
     </data>
 
@@ -49,7 +49,7 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:contentDescription="@string/exit"
-                android:onClick="@{dialog::exit}"
+                android:onClick="@{() -> dialog.exit()}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_vector_brown_close"
                 android:padding="10dp"
@@ -114,7 +114,7 @@
             android:layout_height="0dp"
             android:background="@drawable/basic_package_dialog_stage_selection_button_round"
             android:gravity="center"
-            android:onClick="@{dialog::moveStudy}"
+            android:onClick="@{() -> dialog.moveStudy()}"
             android:text="@string/move_study"
             android:textColor="@color/colorWhite"
             android:padding="10dp"

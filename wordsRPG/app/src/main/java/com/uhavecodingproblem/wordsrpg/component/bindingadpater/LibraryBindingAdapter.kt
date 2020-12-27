@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.uhavecodingproblem.wordsrpg.component.viewpageradapter.MainLibraryFragmentViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.BasicPackageTabObserveViewModel
 
 /**
  * wordsrpg
@@ -28,7 +28,7 @@ object LibraryBindingAdapter {
     fun setTabContent(
         tabLayout: TabLayout,
         item: List<String>?,
-        libraryViewModel: LibraryViewModel?
+        basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel?
     ) {
 
         item?.forEach {
@@ -40,7 +40,7 @@ object LibraryBindingAdapter {
                 addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                     override fun onTabSelected(tab: TabLayout.Tab?) {
                         tab?.position?.let { position ->
-                            libraryViewModel?.selectPosition(position)
+                            basicPackageTabObserveViewModel?.selectPosition(position)
                         }
                     }
 
@@ -67,7 +67,7 @@ object LibraryBindingAdapter {
     fun setFragmentActivity(
         viewPager2: ViewPager2,
         fragmentActivity: FragmentActivity?,
-        libraryViewModel: LibraryViewModel?
+        basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel?
     ) {
 
         fragmentActivity?.let {
@@ -75,7 +75,7 @@ object LibraryBindingAdapter {
 
             viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    libraryViewModel?.selectPosition(position)
+                    basicPackageTabObserveViewModel?.selectPosition(position)
                 }
             })
 

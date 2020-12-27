@@ -1,20 +1,15 @@
 package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.app.Dialog
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +19,7 @@ import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.StageDialogR
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 import kotlin.math.ceil
 
@@ -35,43 +31,71 @@ import kotlin.math.ceil
  * Description:
  * 스테이지를 가진 다이얼로그
  */
-class StageDialog(context: Context, private val packageInformation: PackageInformation) : Dialog(context),
+class StageDialog : DialogFragment(),
     StageDialogRecyclerViewAdapter.ItemClickListener {
 
+    private lateinit var packageInformation: PackageInformation
     private lateinit var binding: DialogStageBinding
     private var snackBar: Snackbar? = null
     private var isScrolling: Boolean = false
 
+    companion object{
+        fun newInstance(packageInfo: PackageInformation): StageDialog{
+            val stageDialog = StageDialog()
+            val bundle = Bundle()
+            bundle.putParcelable("packageInformation", packageInfo)
+            stageDialog.arguments = bundle
+            return stageDialog
+        }
+    }
+
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?{
+        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_stage, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        packageInformation = arguments?.getParcelable("packageInformation")!!
+        Logger.v("onViewCreated")
+        setDialog()
+        checkStageStatus()
+        setRecyclerView()
+    }
+
+    private fun setDialog(){
+
+//        binding.run {
+//            packageinfo = packageInformation
+//            basicdialog = this@StageDialog
+//        }
+
+//        val layoutParam = WindowManager.LayoutParams().apply {
+//            flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
+//            dimAmount = 0.8f
+//        }
+//
+//        dialog?.window?.let {
+//            it.attributes = layoutParam
+//            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//            it.requestFeature(Window.FEATURE_NO_TITLE)
+//        }
+
+        binding.layoutDialog.clipToOutline = true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val layoutParam = WindowManager.LayoutParams().apply {
-            flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-            dimAmount = 0.8f
-        }
-        //setCancelable(false)
-        window?.let {
-            it.attributes = layoutParam
-            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            it.requestFeature(Window.FEATURE_NO_TITLE)
-        }
-
-        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_stage, null, false)
-        binding.run {
-            packageinfo = packageInformation
-            basicdialog = this@StageDialog
-        }
-        setContentView(binding.root)
-        binding.layoutDialog.clipToOutline = true
-        checkStageStatus()
-        setRecyclerView()
-        LocalBroadcastManager.getInstance(context).registerReceiver(localBroadcast, IntentFilter("refresh_dialog"))
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(localBroadcast, IntentFilter("refresh_dialog"))
     }
 
     private val localBroadcast: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(receiveContext: Context?, receiveIntent: Intent?) {
             if ("refresh_dialog" == receiveIntent?.action) {
-                (binding.recyclerviewStage.adapter as StageDialogRecyclerViewAdapter).updateData(packageInformation.stageList)
+               // (binding.recyclerviewStage.adapter as StageDialogRecyclerViewAdapter).updateData(packageInformation?.stageList!!)
                 checkStageStatus()
             }
         }
@@ -163,19 +187,21 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
     }
 
     fun exit(v: View) {
-        cancel()
+        val fragment = activity?.supportFragmentManager?.findFragmentByTag("StageDialog")
+        if (fragment != null)
+            dismiss()
     }
 
     override fun onMoveSelectionWindow(v: View, position: Int) {
-        val dialog = StageSelectionDialog(
-            context,
-            packageInformation.stageList[position],
-            packageInformation.name,
-            packageInformation.thumbnailImage
-        )
-        dialog.show()
-        context.dialogResize(dialog, 0.95f, 0.5f)
-        snackBar?.dismiss()
+//        val dialog = StageSelectionDialog(
+//            requireContext(),
+//            packageInformation.stageList[position],
+//            packageInformation.name,
+//            packageInformation.thumbnailImage
+//        )
+//        dialog.show()
+//        //context?.dialogResize(dialog, 0.95f, 0.5f)
+//        snackBar?.dismiss()
     }
 
     override fun onFoldButtonSelect(v: View, isExpand: Boolean) {
@@ -199,15 +225,16 @@ class StageDialog(context: Context, private val packageInformation: PackageInfor
         }
     }
 
-    override fun cancel() {
-        super.cancel()
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
-        LocalBroadcastManager.getInstance(context).unregisterReceiver(localBroadcast)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(localBroadcast)
     }
 
-    override fun dismiss() {
-        super.dismiss()
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
-        LocalBroadcastManager.getInstance(context).unregisterReceiver(localBroadcast)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(localBroadcast)
     }
+
 }

@@ -17,5 +17,5 @@ class BaseDiffUtil<T>(private val oldData: MutableList<T>, private val newData: 
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldData[oldItemPosition] == newData[newItemPosition]
 
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldData[oldItemPosition] == newData[newItemPosition]
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldData[oldItemPosition].hashCode() == newData[newItemPosition].hashCode()
 }

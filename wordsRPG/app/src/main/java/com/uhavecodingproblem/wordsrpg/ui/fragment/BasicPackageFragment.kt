@@ -1,24 +1,25 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
-import android.content.Intent
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.LibraryViewModelFactory
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.BasicPackageTabObserveViewModel
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.PackageObserveViewModel
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.BasicPackageTabObserveViewModelFactory
+import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.PackageObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
-import com.uhavecodingproblem.wordsrpg.dialog.StageDialog
+import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.dialogResize
+import java.lang.IllegalStateException
 
 /**
  * wordsrpg
@@ -31,117 +32,128 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     MainLibraryFragmentBasicPackageRecyclerViewAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
-    private val libraryViewModel: LibraryViewModel by viewModels { LibraryViewModelFactory(tabItemName) }
-    private val wordViewModel: WordViewModel by viewModels { WordViewModelFactory() }
+    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels { BasicPackageTabObserveViewModelFactory(tabItemName) }
+    private val packageObserveViewModel by activityViewModels<PackageObserveViewModel> { PackageObserveViewModelFactory("A") }
     private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter? = null
-    private var wordList = mutableListOf<PackageInformation>()
-    private var stageDialog: StageDialog? = null
+    private var packageList = mutableListOf<PackageInformation>()
+    private var progressDialog: SearchLoadingDialog? = null
+    private var dialogFragment: DialogFragment? = null
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
 
+        progressDialog = SearchLoadingDialog((requireContext()))
+
         initBinding()
         observeTabLayoutPosition()
-        byLevelRecyclerView()
+        observeLoading()
     }
 
     private fun initBinding() {
         binding.run {
-            libraryviewmodel = libraryViewModel
-            librarywordviewmodel = wordViewModel
+            libraryviewmodel = basicPackageTabObserveViewModel
+            librarywordviewmodel = packageObserveViewModel
             lifecycleOwner = this@BasicPackageFragment
+
+            //최초실행시 보여지는화면이 수준별이기때문에()
+            packageList = packageObserveViewModel.byLevelPackage()
+
+            initRecyclerView()
         }
     }
 
-    private fun byLevelRecyclerView() {
-        if (basicRecyclerViewAdapter == null) {
-            basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(wordList, this)
-            binding.recyclerview.apply {
-                adapter = basicRecyclerViewAdapter
-                layoutManager = setGridLayout()
-            }
+    private fun initRecyclerView(){
+        basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(packageList, this)
+        binding.recyclerview.apply{
+            adapter = basicRecyclerViewAdapter
+            layoutManager = setGridLayout()
         }
-        setListData(basicRecyclerViewAdapter, wordViewModel.getByLevelWord())
     }
+
 
     private fun setGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
     }
 
-    private fun testRecyclerView() {
-        if (basicRecyclerViewAdapter == null) {
-            basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(wordList, this)
-            binding.recyclerview.apply {
-                adapter = basicRecyclerViewAdapter
-                layoutManager = setGridLayout()
-            }
-        }
-        setListData(basicRecyclerViewAdapter, wordViewModel.getByTestWord())
-    }
-
-    private fun setListData(adapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter?, data: MutableList<PackageInformation>) {
+    private fun updateData(adapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter?, data: MutableList<PackageInformation>) {
         adapter?.updateData(data)
     }
 
-//    private fun categoryRecyclerView(){
-//        val basicRecyclerViewAdapter = ByCategoryRecyclerViewAdapter(word, this)
-//        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-//            override fun getSpanSize(position: Int): Int {
-//                return if(basicRecyclerViewAdapter.isHeader(position)) gridLayoutManager.spanCount else 1
-//            }
-//        }
-//        binding.recyclerview.apply {
-//            adapter = basicRecyclerViewAdapter
-//            layoutManager = gridLayoutManager
-//        }
-//    }
-
     private fun setDialog() {
 
-        val dialog: AlertDialog? = requireActivity().let {
+        val dialog: AlertDialog = requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage("현재 준비중입니다.")
             }
             builder.create()
         }
-        dialog?.show()
+        dialog.show()
 
     }
 
     private fun observeTabLayoutPosition() {
-        libraryViewModel.position.observe(viewLifecycleOwner, Observer {
+        basicPackageTabObserveViewModel.position.observe(viewLifecycleOwner, Observer {
             when (it) {
-                0 -> byLevelRecyclerView()
-                1 -> testRecyclerView()
-                2 -> setDialog()
+                0 -> {
+                    packageList = packageObserveViewModel.byLevelPackage()
+                }
+                1 -> {
+                    packageList = packageObserveViewModel.byTestPackage()
+                }
+                2 -> {
+                    packageList.clear()
+                    setDialog()
+                }
+                else -> throw IllegalStateException("unKnown Tab Position")
             }
+            Logger.v("$it")
+            updateData(basicRecyclerViewAdapter, packageList)
+        })
+    }
+
+    private fun observeLoading() {
+        packageObserveViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            if (it)
+                progressDialog?.showLoading()
+            else
+                progressDialog?.dismissLoading()
+
+            Logger.v("로딩중 :: $it")
         })
     }
 
     override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
-        stageDialog = StageDialog(requireContext(), wordList[position])
-        stageDialog?.let {
-            it.show()
-            requireContext().dialogResize(it, 0.95f, 0.9f)
-        }
+        dialogFragment = StageDialogFragment.newInstance(packageList[position].name)
+        dialogFragment?.show(childFragmentManager, "StageDialog")
     }
 
     override fun onResume() {
         super.onResume()
-        stageDialog?.let {
-            if (it.isShowing) {
-                Intent("refresh_dialog").also { intent ->
-                    LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(intent)
-                }
-            }
+        Logger.v("BasicPackageFragment onResume")
+
+        if (dialogFragment != null) {
+            packageObserveViewModel.requestUpdatePackage()
+//            when(basicPackageTabObserveViewModel.position.value){
+//                0 -> {
+//                    packageList = packageObserveViewModel.byLevelPackage()
+//                }
+//                1 -> {
+//                    packageList = packageObserveViewModel.byTestPackage()
+//                }
+//                2 -> {
+//                    packageList.clear()
+//                }
+//                else -> throw IllegalStateException("unKnown Tab Position")
+//            }
+//            updateData(basicRecyclerViewAdapter, packageList)
         }
+
     }
 
-    override fun onDestroyView() {
-        if (stageDialog?.isShowing!!)
-            stageDialog?.dismiss()
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
+        Logger.v("BasicPackageFragment onPause")
     }
+
 }

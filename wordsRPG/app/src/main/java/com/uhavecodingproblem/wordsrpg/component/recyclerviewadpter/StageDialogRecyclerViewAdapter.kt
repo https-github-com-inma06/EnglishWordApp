@@ -92,12 +92,12 @@ class StageDialogRecyclerViewAdapter(
         }
     }
 
-    fun updateData(newData: MutableList<StageInformation>){
-        val baseDiffUtil = BaseDiffUtil(item, newData)
-        val baseDiffResult = DiffUtil.calculateDiff(baseDiffUtil)
-
-        baseDiffResult.dispatchUpdatesTo(this)
-    }
+//    fun updateData(newData: MutableList<StageInformation>){
+//        val baseDiffUtil = PackageDiffUtil(item, newData)
+//        val baseDiffResult = DiffUtil.calculateDiff(baseDiffUtil)
+//
+//        baseDiffResult.dispatchUpdatesTo(this)
+//    }
 
     inner class BasicPackageStageItemViewHolder(val binding: ItemDialogBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
 

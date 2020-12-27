@@ -230,7 +230,7 @@ class StudyActivity :
     }
 
     private fun exitStudyDialog() {
-        val exitDialog: AlertDialog? = this@StudyActivity.let {
+        val exitDialog: AlertDialog = this@StudyActivity.let {
             val exitBuilder = AlertDialog.Builder(it)
             exitBuilder.apply {
                 setMessage("학습을 종료하시겠습니까?")
@@ -241,7 +241,7 @@ class StudyActivity :
             }
             exitBuilder.create()
         }
-        exitDialog?.show()
+        exitDialog.show()
     }
 
     override fun onBackPressed() {

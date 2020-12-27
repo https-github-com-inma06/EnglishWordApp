@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
+import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
  * wordsrpg
@@ -16,7 +17,10 @@ import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
  * Created On 2020-09-27.
  * Description:
  */
-class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<PackageInformation>, val listener: BasicPackageGridItemClickListener) :
+class MainLibraryFragmentBasicPackageRecyclerViewAdapter(
+    val item: MutableList<PackageInformation>,
+    val listener: BasicPackageGridItemClickListener
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface BasicPackageGridItemClickListener {
@@ -24,7 +28,13 @@ class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<P
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ItemViewHolder(ItemMainlibrayFragmentBasicPackageRecyclerviewBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ItemViewHolder(
+            ItemMainlibrayFragmentBasicPackageRecyclerviewBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -35,7 +45,8 @@ class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<P
         return if (item.isNullOrEmpty()) 0 else item.size
     }
 
-    inner class ItemViewHolder(val binding: ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(val binding: ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(data: PackageInformation) {
             binding.packageinfo = data
 
@@ -49,7 +60,7 @@ class MainLibraryFragmentBasicPackageRecyclerViewAdapter(val item: MutableList<P
         }
     }
 
-    fun updateData(newData : MutableList<PackageInformation>){
+    fun updateData(newData: MutableList<PackageInformation>) {
         val wordDiffUtil = BaseDiffUtil(item, newData)
         val wordDiffResult = DiffUtil.calculateDiff(wordDiffUtil)
 

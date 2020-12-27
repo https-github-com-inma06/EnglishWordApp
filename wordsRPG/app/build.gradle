@@ -72,7 +72,8 @@ dependencies {
     def retrofit_version = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-
+    implementation 'com.squareup.okhttp3:okhttp:4.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     //stetho 추가 <로컬 db 디버깅>
     def stetho_version = '1.5.1'

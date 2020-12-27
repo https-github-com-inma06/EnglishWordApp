@@ -18,7 +18,7 @@ import com.google.android.material.tabs.TabItem
  *
  */
 
-class LibraryViewModel(tabName: List<String>) : ViewModel(){
+class BasicPackageTabObserveViewModel(tabName: List<String>) : ViewModel(){
 
     val tabItem: LiveData<List<String>> get() = _tabItem
     val position: LiveData<Int> get() = _position

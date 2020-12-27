@@ -19,7 +19,7 @@
 
         <variable
             name="dialog"
-            type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialog" />
+            type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialogFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:contentDescription="@string/exit"
-                android:onClick="@{dialog::exit}"
+                android:onClick="@{() -> dialog.exit()}"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_vector_brown_close"
                 android:padding="10dp"
@@ -114,7 +114,7 @@
             android:layout_height="0dp"
             android:background="@drawable/basic_package_dialog_stage_selection_button_round"
             android:gravity="center"
-            android:onClick="@{dialog::moveTest}"
+            android:onClick="@{() -> dialog.moveTest()}"
             android:text="@string/move_test"
             android:textColor="@color/colorWhite"
             android:textSize="20dp"
@@ -133,7 +133,7 @@
             android:layout_height="0dp"
             android:background="@drawable/basic_package_dialog_stage_selection_button_round"
             android:gravity="center"
-            android:onClick="@{dialog::moveStudy}"
+            android:onClick="@{() -> dialog.moveStudy()}"
             android:text="@string/move_study"
             android:textColor="@color/colorWhite"
             android:textSize="20dp"
