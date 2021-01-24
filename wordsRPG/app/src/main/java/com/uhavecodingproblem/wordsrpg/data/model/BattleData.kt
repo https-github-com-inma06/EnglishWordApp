@@ -4,10 +4,10 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class BattleData (
-    val idx: Long = 0L,
-    val currentPage:Int,
-    val lastPage:Int,
-    val currentScore:Int
+    val idx: Long = 0L, //배틀 고유 id
+    val currentPage:Int, // 현재 게임 페이지
+    val lastPage:Int, //총 문제 페이지
+    val currentScore:Int //현재 점수
 
 ):Parcelable {
     constructor(parcel: Parcel) : this(

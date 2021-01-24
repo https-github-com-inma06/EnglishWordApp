@@ -5,9 +5,9 @@ import android.os.Parcelable
 
 
 data class Notification(
-    val userIdx: Long,
-    var notificationType: Int? = null,
-    var date: String? = null
+    val userIdx: Long,   //알림 고유아이디
+    var notificationType: Int? = null, //알림 타입 승리,패배,무승부, 배틀신청
+    var date: String? = null // 알람 날짜
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readLong(),
