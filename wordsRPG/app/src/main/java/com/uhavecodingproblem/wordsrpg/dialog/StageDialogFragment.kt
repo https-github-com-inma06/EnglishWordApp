@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadpter.StageDialogRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.StageDialogRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.data.StageInformation

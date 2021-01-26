@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.library.StudyActivity" />
-        <activity android:name=".ui.fragment.battle.BattleUserListActivity" />
-        <activity android:name=".ui.fragment.battle.BattlePlayActivity" />
-        <activity android:name=".ui.fragment.battle.BattleReadyActivity" />
         <activity
             android:name=".ui.activity.library.MainActivity"
             android:windowSoftInputMode="adjustPan">

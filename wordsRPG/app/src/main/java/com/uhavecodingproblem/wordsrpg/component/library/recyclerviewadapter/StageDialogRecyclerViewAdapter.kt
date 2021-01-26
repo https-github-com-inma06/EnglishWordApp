@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadpter
+package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter
 
 import android.content.Context
 import android.util.SparseBooleanArray

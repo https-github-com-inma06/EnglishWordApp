@@ -8,7 +8,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.application.Application
-import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadpter.MainLibraryFragmentBasicPackageListAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.BasicPackageTabObserveViewModelFactory
@@ -19,7 +19,6 @@ import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import java.util.*
 
 /**
  * wordsrpg
@@ -43,6 +42,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     private var dialogFragment: DialogFragment? = null
 
 
+
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
 
@@ -63,7 +63,7 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     private fun setRecyclerItem() {
-        packageObserveViewModel.typePackage.observe(viewLifecycleOwner) {
+        packageObserveViewModel.typePackage.observe(viewLifecycleOwner){
             basicRecyclerViewAdapter?.submitList(it.toMutableList())
         }
     }
@@ -84,14 +84,14 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
 
     private fun setDialog() {
 
-        val dialog: AlertDialog = requireActivity().let {
+        val dialog: AlertDialog? = requireActivity().let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
                 setMessage("현재 준비중입니다.")
             }
             builder.create()
         }
-        dialog.show()
+        dialog?.show()
 
     }
 

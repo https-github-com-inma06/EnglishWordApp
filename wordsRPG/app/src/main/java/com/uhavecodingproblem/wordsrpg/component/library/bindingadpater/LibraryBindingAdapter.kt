@@ -1,5 +1,5 @@
-package com.uhavecodingproblem.wordsrpg.component.library.bindingadpater
 
+package com.uhavecodingproblem.wordsrpg.component.library.bindingadpater
 import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentActivity
@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.MainLibraryFragmentViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
+
 
 /**
  * wordsrpg
