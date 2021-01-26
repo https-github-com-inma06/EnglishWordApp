@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,21 +9,23 @@ import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.StageDialogRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.PackageObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
+import java.util.*
 import kotlin.math.ceil
 
 /**
@@ -36,7 +39,7 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
 
     private lateinit var binding: DialogStageBinding
     private lateinit var stageDialogRecyclerViewAdapter: StageDialogRecyclerViewAdapter
-    private val packageObserveViewModel by activityViewModels<PackageObserveViewModel>()
+    private val packageObserveViewModel by viewModels<PackageObserveViewModel>({requireParentFragment()})
     private lateinit var packageInformation: PackageInformation
     private var snackbar: Snackbar? = null
     private var isScrolling = false
@@ -57,7 +60,7 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_stage, container, false)
 
         return binding.root
@@ -65,7 +68,6 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val layoutParams = WindowManager.LayoutParams().apply {
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
             dimAmount = 0.8f
@@ -80,7 +82,7 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         setInit()
     }
 
-    private fun setInit(){
+    private fun setInit() {
         binding.apply {
             stage = this@StageDialogFragment
             packageinfo = packageInformation
@@ -92,11 +94,24 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         }
     }
 
-    private fun setRecyclerView(){
+    private fun setRecyclerView() {
         binding.recyclerviewStage.apply {
-            stageDialogRecyclerViewAdapter = StageDialogRecyclerViewAdapter(packageInformation.stageList, this@StageDialogFragment)
+            stageDialogRecyclerViewAdapter =
+                StageDialogRecyclerViewAdapter(packageInformation.stageList, this@StageDialogFragment)
             adapter = stageDialogRecyclerViewAdapter
             layoutManager = LinearLayoutManager(requireContext())
+        }
+        setFocus()
+    }
+
+    private fun setFocus(){
+        binding.recyclerviewStage.apply {
+            adapter?.let {
+                if (it.itemCount > 2)
+                    this.scrollToPosition(it.itemCount - 2)
+                else
+                    this.scrollToPosition(0)
+            }
         }
     }
 
@@ -117,13 +132,13 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         }
     }
 
-    private fun stageStatus(){
-        for (i in packageInformation.stageList.indices){
-            if (packageInformation.stageList[i].stageStatus == 1){
+    private fun stageStatus() {
+        for (i in packageInformation.stageList.indices) {
+            if (packageInformation.stageList[i].stageStatus == 1) {
                 snackbar = customSnackBar(binding.layoutParent, "STAGE ${i + 1}의 테스트를 아직 보지않으셨네요. \n지금보러갈까요?")
                 snackbar?.show()
                 break
-            }else if (packageInformation.stageList[i].stageStatus == 2){
+            } else if (packageInformation.stageList[i].stageStatus == 2) {
                 snackbar = customSnackBar(binding.layoutParent, "STAGE ${i + 1}의 테스트를 통과하지 못하셨네요. \n다시보러갈까요?")
                 snackbar?.show()
                 break
@@ -143,7 +158,7 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         }
 
         customSnackBarViewBinding.tvSnackBarContent.setOnClickListener {
-            //findTestStage()
+            findOtherStatus()
             snackBar.dismiss()
         }
 
@@ -159,16 +174,46 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         return snackBar
     }
 
-    fun exit(v: View){
+    private fun findOtherStatus() {
+        for (i in packageInformation.stageList.indices) {
+            if (packageInformation.stageList[i].stageStatus != 0) {
+                moveStudyOrTest(packageInformation.stageList[i])
+                return
+            }
+        }
+    }
+
+    private fun moveStudyOrTest(stageInformation: StageInformation) {
+        when (stageInformation.stageNum) {
+            1 -> {
+                Intent(requireContext(), StudyActivity::class.java).also {
+                    it.putExtra("PackageName", packageInformation.name)
+                    it.putExtra("StudyWord", stageInformation)
+                    startActivity(it)
+                }
+            }
+            2 -> {
+                Logger.v("Move Test")
+            }
+            3 -> {
+                Logger.v("Move Test")
+            }
+            else -> throw IllegalStateException("StageStatus Strange")
+        }
+
+    }
+
+    fun exit() {
         Logger.v("Exit")
         val stageDialogFragment = parentFragmentManager.findFragmentByTag("StageDialog")
-        if (stageDialogFragment != null){
+        if (stageDialogFragment != null) {
             (stageDialogFragment as StageDialogFragment).dismiss()
         }
     }
 
     override fun onResume() {
         super.onResume()
+        packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
         context?.dialogResize(this@StageDialogFragment, 0.9f, 0.9f)
         binding.recyclerviewStage.addOnScrollListener(scrolledListener)
         Logger.v("StageDialogFragment onResume")
@@ -194,7 +239,11 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
 
     override fun onMoveSelectionWindow(v: View, position: Int) {
         Logger.v("MoveSelectionWindow")
-        val dialogFragment = StageSelectionDialogFragment.newInstance(packageInformation.stageList[position], packageInformation.name, packageInformation.thumbnailImage)
+        val dialogFragment = StageSelectionDialogFragment.newInstance(
+            packageInformation.stageList[position],
+            packageInformation.name,
+            packageInformation.thumbnailImage
+        )
         dialogFragment.show(childFragmentManager, "SelectionDialog")
         snackbar?.dismiss()
     }

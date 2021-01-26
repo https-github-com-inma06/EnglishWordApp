@@ -235,6 +235,7 @@ class StudyActivity :
             exitBuilder.apply {
                 setMessage("학습을 종료하시겠습니까?")
                 setPositiveButton("종료") { dialogInterface, _ ->
+                    //TODO Server update
                     dialogInterface.dismiss()
                     finish()
                 }

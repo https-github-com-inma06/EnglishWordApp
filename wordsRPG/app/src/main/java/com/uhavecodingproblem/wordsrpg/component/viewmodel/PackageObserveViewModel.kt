@@ -2,15 +2,17 @@ package com.uhavecodingproblem.wordsrpg.component.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
+import androidx.lifecycle.viewModelScope
 import com.uhavecodingproblem.wordsrpg.api.ServerApi
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordMockData
+import com.uhavecodingproblem.wordsrpg.util.Logger
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
-import java.lang.IllegalStateException
 
 /**
  * wordsrpg
@@ -21,55 +23,52 @@ import java.lang.IllegalStateException
  */
 class PackageObserveViewModel(private val userId: String) : ViewModel() {
 
-    // val allWord: MutableList<WordType> get() = _allWord
-    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: MutableLiveData<Boolean> get() = _isLoading
+    val typePackage: MutableLiveData<MutableList<PackageInformation>> get() = _typePackage
 
     private val allPackage: MutableList<PackageInformation> = WordMockData.wordMockData
-    private val _isLoading: MutableLiveData<Boolean> get() = isLoading
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
+    private val _typePackage: MutableLiveData<MutableList<PackageInformation>> = MutableLiveData()
+    private val _type: MutableLiveData<String> = MutableLiveData("수준별")
 
     init {
-        _isLoading.postValue(true)
         loadPackage()
+        observeType()
     }
 
     private fun loadPackage() {
-        ServerApi.requestWordData(userId).enqueue(object : Callback<PackageInformation> {
-            override fun onResponse(call: Call<PackageInformation>, response: Response<PackageInformation>) {
-
+        Logger.v("ViewModel loadPackage $userId")
+        ServerApi.requestWordData(userId).enqueue(object : Callback<List<PackageInformation>> {
+            override fun onResponse(call: Call<List<PackageInformation>>, response: Response<List<PackageInformation>>) {
+                _isLoading.postValue(false)
             }
 
-            override fun onFailure(call: Call<PackageInformation>, t: Throwable) {
+            override fun onFailure(call: Call<List<PackageInformation>>, t: Throwable) {
 
             }
         })
     }
 
-    fun requestUpdatePackage(){
+    fun setType(type: String) {
+        _type.postValue(type)
+    }
+
+    private fun observeType() {
+        viewModelScope.launch {
+            _type.asFlow().collect {
+                _typePackage.postValue(allPackage.filter { packageInformation -> packageInformation.type == it }.toMutableList())
+            }
+        }
+    }
+
+    fun requestUpdatePackage() {
         loadPackage()
     }
 
-    fun byLevelPackage(): MutableList<PackageInformation> {
-        val byLevelList = mutableListOf<PackageInformation>()
-        for (i in allPackage.indices) {
-            if (allPackage[i].type == "수준별")
-                byLevelList.add(allPackage[i])
-        }
-        return byLevelList
-    }
 
-    fun byTestPackage(): MutableList<PackageInformation> {
-        val byTestList = mutableListOf<PackageInformation>()
-        for (i in allPackage.indices) {
-            if (allPackage[i].type == "시험별")
-                byTestList.add(allPackage[i])
-        }
-        return byTestList
-    }
-
-    fun getPackage(name: String): PackageInformation{
-        for (i in allPackage.indices){
-            if (allPackage[i].name == name)
-                return allPackage[i]
+    fun getPackage(name: String): PackageInformation {
+        allPackage.find { it.name == name }?.let {
+            return it
         }
         throw IllegalStateException("Not Found PackageName equals name")
     }

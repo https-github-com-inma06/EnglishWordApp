@@ -9,13 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
  * Created On 2020-11-21.
  * Description:
  */
-class BaseDiffUtil<T>(private val oldData: MutableList<T>, private val newData: MutableList<T>): DiffUtil.Callback(){
+class BaseDiffUtil<T>: DiffUtil.ItemCallback<T>(){
 
-    override fun getOldListSize(): Int = if (oldData.isNullOrEmpty()) 0 else oldData.size
+    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean = oldItem == newItem
 
-    override fun getNewListSize(): Int = if (newData.isNullOrEmpty()) 0 else newData.size
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldData[oldItemPosition] == newData[newItemPosition]
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = oldData[oldItemPosition].hashCode() == newData[newItemPosition].hashCode()
+    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean = oldItem.hashCode() == newItem.hashCode()
 }

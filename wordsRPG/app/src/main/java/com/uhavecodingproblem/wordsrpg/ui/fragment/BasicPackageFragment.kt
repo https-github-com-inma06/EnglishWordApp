@@ -1,14 +1,14 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment
 
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.application.Application
+import com.uhavecodingproblem.wordsrpg.component.recyclerviewadpter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.BasicPackageTabObserveViewModelFactory
@@ -19,7 +19,8 @@ import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import java.lang.IllegalStateException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * wordsrpg
@@ -29,15 +30,19 @@ import java.lang.IllegalStateException
  * Description:
  */
 class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
-    MainLibraryFragmentBasicPackageRecyclerViewAdapter.BasicPackageGridItemClickListener {
+    MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
-    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels { BasicPackageTabObserveViewModelFactory(tabItemName) }
-    private val packageObserveViewModel by activityViewModels<PackageObserveViewModel> { PackageObserveViewModelFactory("A") }
-    private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter? = null
-    private var packageList = mutableListOf<PackageInformation>()
+    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels {
+        BasicPackageTabObserveViewModelFactory(
+            tabItemName
+        )
+    }
+    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { PackageObserveViewModelFactory(Application.userId) }
+    private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
     private var progressDialog: SearchLoadingDialog? = null
     private var dialogFragment: DialogFragment? = null
+
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
@@ -54,29 +59,28 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
             libraryviewmodel = basicPackageTabObserveViewModel
             librarywordviewmodel = packageObserveViewModel
             lifecycleOwner = this@BasicPackageFragment
-
-            //최초실행시 보여지는화면이 수준별이기때문에()
-            packageList = packageObserveViewModel.byLevelPackage()
-
             initRecyclerView()
         }
     }
 
-    private fun initRecyclerView(){
-        basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageRecyclerViewAdapter(packageList, this)
-        binding.recyclerview.apply{
+    private fun setRecyclerItem() {
+        packageObserveViewModel.typePackage.observe(viewLifecycleOwner) {
+            basicRecyclerViewAdapter?.submitList(it.toMutableList())
+        }
+    }
+
+    private fun initRecyclerView() {
+        basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageListAdapter(this)
+        binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
             layoutManager = setGridLayout()
         }
+        setRecyclerItem()
     }
 
 
     private fun setGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
-    }
-
-    private fun updateData(adapter: MainLibraryFragmentBasicPackageRecyclerViewAdapter?, data: MutableList<PackageInformation>) {
-        adapter?.updateData(data)
     }
 
     private fun setDialog() {
@@ -96,19 +100,17 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         basicPackageTabObserveViewModel.position.observe(viewLifecycleOwner, Observer {
             when (it) {
                 0 -> {
-                    packageList = packageObserveViewModel.byLevelPackage()
+                    packageObserveViewModel.setType("수준별")
                 }
                 1 -> {
-                    packageList = packageObserveViewModel.byTestPackage()
+                    packageObserveViewModel.setType("시험별")
                 }
                 2 -> {
-                    packageList.clear()
                     setDialog()
                 }
                 else -> throw IllegalStateException("unKnown Tab Position")
             }
             Logger.v("$it")
-            updateData(basicRecyclerViewAdapter, packageList)
         })
     }
 
@@ -123,32 +125,14 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
         })
     }
 
-    override fun onItemClick(view: View, position: Int, isByLevel: Boolean) {
-        dialogFragment = StageDialogFragment.newInstance(packageList[position].name)
+    override fun onItemClick(selectedItem: PackageInformation) {
+        dialogFragment = StageDialogFragment.newInstance(selectedItem.name)
         dialogFragment?.show(childFragmentManager, "StageDialog")
     }
 
     override fun onResume() {
         super.onResume()
         Logger.v("BasicPackageFragment onResume")
-
-        if (dialogFragment != null) {
-            packageObserveViewModel.requestUpdatePackage()
-//            when(basicPackageTabObserveViewModel.position.value){
-//                0 -> {
-//                    packageList = packageObserveViewModel.byLevelPackage()
-//                }
-//                1 -> {
-//                    packageList = packageObserveViewModel.byTestPackage()
-//                }
-//                2 -> {
-//                    packageList.clear()
-//                }
-//                else -> throw IllegalStateException("unKnown Tab Position")
-//            }
-//            updateData(basicRecyclerViewAdapter, packageList)
-        }
-
     }
 
     override fun onPause() {

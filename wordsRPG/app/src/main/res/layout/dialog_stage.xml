@@ -38,7 +38,7 @@
                 android:layout_height="0dp"
                 android:background="@null"
                 android:contentDescription="@string/exit"
-                android:onClick="@{stage::exit}"
+                android:onClick="@{() -> stage.exit()}"
                 android:scaleType="fitCenter"
                 android:src="@drawable/img_vector_brown_close"
                 app:layout_constraintHeight_percent="0.05"

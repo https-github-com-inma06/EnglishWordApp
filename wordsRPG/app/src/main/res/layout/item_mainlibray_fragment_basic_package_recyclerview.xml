@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150sp"
         android:layout_margin="8dp"
-        android:background="@drawable/recyclerview_item_round">
+        android:background="@drawable/basic_package_dialog_item_round">
 
         <ImageView
             android:id="@+id/img_by_level_package_thumbnail"

@@ -11,22 +11,23 @@ interface ServerApi {
 
     //단어 API
     @GET("Test")
-    fun requestWord(@Query("userId") userId: String) : Call<PackageInformation>
+    fun requestWord(@Query("userId") userId: String) : Call<List<PackageInformation>>
 
-    @POST("Test")
+    @PATCH("Test")
     @FormUrlEncoded
     fun uploadWord(@Field("userId") userId: String,
                    @Field("package") packageInformation: PackageInformation) : Call<Boolean>
 
-    companion object{
-        fun requestWordData(userId: String) : Call<PackageInformation>{
-          return ClientServer().create(ServerApi::class.java).requestWord(userId)
+    companion object {
+        fun requestWordData(userId: String): Call<List<PackageInformation>> {
+            return ClientServer().create(ServerApi::class.java).requestWord(userId)
         }
 
-        fun uploadWord(userId: String, packageInformation: PackageInformation) : Call<Boolean>{
+        fun uploadWord(userId: String, packageInformation: PackageInformation): Call<Boolean> {
             return ClientServer().create(ServerApi::class.java).uploadWord(userId, packageInformation)
         }
     }
 
 
-}
+
+}   
