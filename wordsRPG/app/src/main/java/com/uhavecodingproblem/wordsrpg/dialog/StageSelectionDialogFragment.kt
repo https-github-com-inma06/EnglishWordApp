@@ -13,7 +13,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 
