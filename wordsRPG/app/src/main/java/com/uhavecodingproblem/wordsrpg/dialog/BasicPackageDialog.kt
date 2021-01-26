@@ -2,7 +2,6 @@ package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -20,7 +19,6 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.StageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageDialogBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.StudyActivity
 
 /**
  * wordsrpg

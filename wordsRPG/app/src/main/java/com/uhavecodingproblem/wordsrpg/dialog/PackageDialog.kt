@@ -15,7 +15,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.WordType
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LibraryActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.LibraryActivity
 
 /**
  * wordsrpg

@@ -10,7 +10,7 @@
             type="com.uhavecodingproblem.wordsrpg.util.ConstatntKt"/>
         <variable
             name="thisFragment"
-            type="com.uhavecodingproblem.wordsrpg.ui.fragment.EntireCustomPackageFragment" />
+            type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.EntireCustomPackageFragment" />
 
     </data>
 

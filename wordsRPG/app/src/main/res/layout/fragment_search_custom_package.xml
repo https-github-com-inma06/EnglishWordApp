@@ -4,7 +4,7 @@
     <data>
        <variable
            name="thisFragment"
-           type="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment" />
+           type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.SearchCustomPackageFragment" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
