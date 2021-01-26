@@ -5,7 +5,9 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/library">
 
-<!--    <fragment-->
+<!-- 일단 어떻게 될지 아직 몰라서  디자인에 시안에 따라 사라진 화면들은  주석 처리 하였습니다.-->
+
+    <!--    <fragment-->
 <!--        android:id="@+id/home"-->
 <!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MainHomeFragment"-->
 <!--        android:label="MainHomeFragment"-->

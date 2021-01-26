@@ -56,7 +56,8 @@
     <string name="str_filter_tag">태그</string>
     <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
 
-
+    <!-- viewgroup_custom_package_search  -->
+    <string name="hint_search_custom_package">패키지를 검색해보세요</string>
 
      <!-- item_custom_package_recycler_view  str -->
     <string name="str_liked_count">%1$d 개</string>
@@ -69,10 +70,18 @@
 
     <string name="package_thumbnail">페키지 썸네일</string>
     <string name="package_writer">\[ %s \]</string>
-    <string name="move_study">START</string>
-    <string name="move_test">시험보기</string>
+    <string name="move_study">STUDY</string>
+    <string name="move_test">TEST</string>
 
     <string name="study_mic">TTS</string>
+    <string name="exit">종료</string>
+    <string name="stage">STAGE %s</string>
+    <string name="expand_and_collapse">접고 펼치기</string>
+    <string name="move_study_dialog">GO</string>
+
+    <string name="next">다음</string>
+    <string name="previous">이전</string>
+    <string name="test">테스트 보러가기</string>
 
     <string name="friendListCount">%d명</string>
 
