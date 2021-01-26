@@ -1,8 +1,8 @@
+
 package com.uhavecodingproblem.wordsrpg.application
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
-import com.kakao.sdk.common.KakaoSdk
 
 /**
  * wordsrpg
@@ -17,6 +17,8 @@ class Application:Application() {
         //debug 가능 여부 -> default 값은  false
         var DEBUG_AVAILABLE:Boolean=false
 
+        var userId = "A"
+
     }
 
     override fun onCreate() {
@@ -24,8 +26,6 @@ class Application:Application() {
 
         //debug 가능 여부 넣어줌.
         DEBUG_AVAILABLE=isDebuggable(this)
-
-        KakaoSdk.init(this, "{NATIVE_APP_KEY}")
     }
 
     //debug 가능 여부를  체크해준다. (logger 안보이게 할려고)

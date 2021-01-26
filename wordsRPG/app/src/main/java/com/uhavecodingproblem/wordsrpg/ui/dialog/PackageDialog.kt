@@ -1,8 +1,7 @@
-package com.uhavecodingproblem.wordsrpg.ui.dialog
+package com.uhavecodingproblem.wordsrpg.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,10 +12,8 @@ import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
-import com.uhavecodingproblem.wordsrpg.data.WordType
-import com.uhavecodingproblem.wordsrpg.databinding.BasicPackageDialogBinding
-import com.uhavecodingproblem.wordsrpg.databinding.CustomPackageDialogBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.library.LibraryActivity
+import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
+
 
 /**
  * wordsrpg
@@ -41,39 +38,25 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             it.requestFeature(Window.FEATURE_NO_TITLE)
         }
 
-        //기본패키지인가?
-        if (isBasic) {
-            val binding: BasicPackageDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.basic_package_dialog, null, false)
+        val binding: DialogCustomPackageBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_custom_package, null, false)
 
-            binding.run {
-                information = type as WordType
-                customdialog = this@PackageDialog
-            }
-
-            setContentView(binding.root)
-            binding.layoutDialog.clipToOutline = true
-        }else{
-            val binding: CustomPackageDialogBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.custom_package_dialog, null, false)
-
-            binding.run {
-                information = type as CustomPackageData
-                customdialog = this@PackageDialog
-            }
-
-            setContentView(binding.root)
-
-            binding.layoutImage.clipToOutline = true
+        binding.run {
+            information = type as CustomPackageData
+            customdialog = this@PackageDialog
         }
+
+        setContentView(binding.root)
+
+        binding.layoutImage.clipToOutline = true
+
     }
 
-    fun moveStudy(v: View){
-        Intent(context, LibraryActivity::class.java).also {
-            it.putExtra("wordData", type as WordType)
-            context.startActivity(it)
-        }
+    fun moveStudy(v: View) {
+
     }
 
-    fun moveTest(v: View){
+    fun moveTest(v: View) {
 
     }
 

@@ -128,6 +128,12 @@ dependencies {
     //firebase
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
 
+    def card_view = "1.0.0"
+    implementation "androidx.cardview:cardview:$card_view"
+
+
+    //Custom Youtube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
     //test
     testImplementation 'junit:junit:4.12'

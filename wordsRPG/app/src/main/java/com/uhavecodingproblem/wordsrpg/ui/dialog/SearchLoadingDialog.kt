@@ -1,5 +1,3 @@
-package com.uhavecodingproblem.wordsrpg.ui.dialog
-
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -9,16 +7,6 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.uhavecodingproblem.wordsrpg.R
 
-/**
- * wordsrpg
- * Class: SearchLoadingDailog.
- * Created by leedonghun.
- * Created On 2020-09-27.
- * Description:
- *
- * 패키지 검색시 나오는 다이얼로그
- *
- */
 
 class SearchLoadingDialog(context: Context) {
 
@@ -35,7 +23,7 @@ class SearchLoadingDialog(context: Context) {
         loadingDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         //다이얼로그 유저가 취소 못하게 만듬.
-       // loadingDialog.setCancelable(false)
+        // loadingDialog.setCancelable(false)
 
         loadingImageView = loadingDialog.findViewById(R.id.loading_img)
         loadingAnimation = AnimationUtils.loadAnimation(context, R.anim.search_loading)
