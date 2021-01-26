@@ -6,7 +6,7 @@
     <data>
         <variable
             name="studyviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.PackageObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel" />
     </data>
 
 

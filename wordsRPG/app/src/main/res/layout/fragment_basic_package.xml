@@ -7,11 +7,11 @@
 
         <variable
             name="libraryviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.BasicPackageTabObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel" />
 
         <variable
             name="librarywordviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.PackageObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel" />
 
     </data>
 

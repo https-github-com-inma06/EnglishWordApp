@@ -6,7 +6,7 @@
 
         <variable
             name="libraryviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.BasicPackageTabObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel" />
 
         <variable
             name="activityfragment"
