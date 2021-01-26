@@ -6,7 +6,7 @@
 
         <variable
             name="libraryviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel" />
 
         <variable
             name="activityfragment"
@@ -48,7 +48,8 @@
             android:background="@color/colorLightBlue2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_package_name" />
+            app:layout_constraintTop_toBottomOf="@id/tab_package_name"
+            />
 
 
         <androidx.viewpager2.widget.ViewPager2

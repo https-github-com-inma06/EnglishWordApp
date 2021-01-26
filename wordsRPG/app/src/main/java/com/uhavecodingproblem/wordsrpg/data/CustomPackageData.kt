@@ -10,8 +10,9 @@ package com.uhavecodingproblem.wordsrpg.data
  */
 
 data class CustomPackageData(
+
    val uid:Int,
-   val ownerName:String,
+   val ownerUid:Int,
    val packageName:String,
    val profileImageUrl:String?,
    val likeCount:Int,

@@ -17,7 +17,6 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
-import kotlinx.android.synthetic.main.activity_add_new_custom_package.*
 
 /**
  * wordsrpg

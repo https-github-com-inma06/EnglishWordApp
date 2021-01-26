@@ -1,16 +1,16 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomPackageListMockData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
-import com.uhavecodingproblem.wordsrpg.util.*
+import com.uhavecodingproblem.wordsrpg.util.Logger
+import com.uhavecodingproblem.wordsrpg.util.ORIGINAL_PACKAGE_TYPE
 
 /**
  * wordsrpg
@@ -29,8 +29,8 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
     override fun FragmentEntireCustomPackageBinding.onCreateView() {
         Logger.v("실행")
 
-        thisFragment = this@EntireCustomPackageFragment
 
+        thisFragment = this@EntireCustomPackageFragment
         setCustomPackageRecyclerView()
     }
 
@@ -39,7 +39,7 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
         recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            ENTIRE_CUSTOM_PACKAGE
+            ORIGINAL_PACKAGE_TYPE
         )//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
         binding.recyclerviewCustomList.apply {
@@ -51,7 +51,12 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
             override fun onItemClick(view: View, packageName: String) {
+
+
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
+//                val i= Intent(requireActivity(), StudyActivity::class.java)
+//                i.putExtra("packagename",packageName)
+//                startActivity(i)
             }
         })
 
@@ -60,39 +65,18 @@ class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBindi
 
 
 
-    //필터 바뀜 처리
-    fun filterChange(filter: Int){
-
-        changeFilterAnimation(binding.viewgroupLibrarySearch.iconSearchFilter).start()
-
-        when(filter){
-            SEARCH_PACKAGE_TITLE ->{
-                binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_title)
-            }
-
-            SEARCH_PACKAGE_TAG ->{
-                binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_tag)
-
-            }
-        }
-    }//filterChange 끝
 
 
+    //내 패키지 검색 tv 클릭 event
+    fun searchMyCustomPackage(view: View){
+        Logger.v("내 패키지 검색 엑티비티 실행")
 
-    //필터 바뀜  애니메이션
-    private fun changeFilterAnimation(view: View) :Animation{
-        view.animation = AnimationUtils.loadAnimation(requireActivity(),R.anim.search_filter_rotation)
-        return view.animation
-    }
+        //네비게이션 내패키지 검색 fragment로 이동
+        findNavController().navigate(
+            R.id.action_library_to_search_fragment,
+            arguments
+        )
 
+    }//searchMyCustomPackage() 끝
 
-
-
-    // TODO: 2020-10-29 viewpager selection 에서  keyboard hide 처리를 할때 editText focus 시에
-    // TODO: 다시  keyboard  hide 되는  문제가 있어 각 라이브러리 fragment 의 onResume 에서 처리
-    override fun onResume() {
-        super.onResume()
-        hideKeyboard()
-    }
-
-}//class 끝
+}

@@ -7,11 +7,11 @@
 
         <variable
             name="libraryviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel" />
 
         <variable
             name="librarywordviewmodel"
-            type="com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel" />
+            type="com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel" />
 
     </data>
 
@@ -23,16 +23,22 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/basic_tab_layout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            style="@style/library_basic_package_tab_style"
+            app:tabIndicatorHeight="0dp"
+            app:tabBackground="@drawable/basic_package_change_click"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setTabContent="@{libraryviewmodel.tabItem}"
             app:setViewModel="@{libraryviewmodel}"
             app:setViewPosition="@{libraryviewmodel.position}"
-            />
+            app:tabRippleColor="@null"
+            app:tabSelectedTextColor="@color/colorWhite"
+            app:tabTextColor="#795548"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextAppearance="@style/tab_layout_font"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -41,12 +47,6 @@
             app:layout_constraintTop_toBottomOf="@id/basic_tab_layout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <EditText
-            android:id="@+id/edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

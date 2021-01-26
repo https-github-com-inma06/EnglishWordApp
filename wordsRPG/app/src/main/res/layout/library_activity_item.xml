@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="data"
+            type="com.uhavecodingproblem.wordsrpg.data.WordType" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_library"
+        android:layout_width="match_parent"
+        android:background="@drawable/package_thumbnail_image_round"
+        android:layout_height="150dp"
+        android:layout_margin="8dp">
+
+        <ImageView
+            android:id="@+id/img_library_package_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            image="@{data.thumbnailImage}"
+            error="@{@drawable/ic_launcher_background}"
+            android:contentDescription="@string/package_thumbnail"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="@{data.name}"
+            android:textStyle="bold"
+            app:autoSizeMinTextSize="12dp"
+            app:autoSizeMaxTextSize="20dp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintHeight_percent="0.2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            passCount="@{data.words}"
+            app:autoSizeMinTextSize="12dp"
+            app:autoSizeMaxTextSize="20dp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

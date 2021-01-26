@@ -4,7 +4,6 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMySubscribePackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.uhavecodingproblem.wordsrpg.util.hideKeyboard
 
 /**
  * wordsrpg
@@ -23,8 +22,4 @@ class MySubScribePackageFragment:BaseFragment<FragmentMySubscribePackageBinding>
 
     }//onCreate() 끝
 
-    override fun onResume() {
-        super.onResume()
-        hideKeyboard()
-    }
 }
