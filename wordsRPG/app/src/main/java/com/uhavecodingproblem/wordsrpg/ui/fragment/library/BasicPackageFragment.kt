@@ -1,26 +1,22 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
-import android.app.Dialog
-import android.content.Context
-import android.graphics.Point
-import android.os.Build
-import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.ui.dialog.PackageDialog
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.ByLevelRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.library.ByTestRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory
-import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.WordViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.WordType
+import com.uhavecodingproblem.wordsrpg.application.Application
+import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.BasicPackageTabObserveViewModelFactory
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.PackageObserveViewModelFactory
+import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
+import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -32,76 +28,59 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Description:
  */
 class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
-    ByLevelRecyclerViewAdapter.ByLevelGridItemClickListener, ByTestRecyclerViewAdapter.ByTestGridItemClickListener {
+    MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")
-    private val basicViewModel: LibraryViewModel by viewModels { ViewModelFactory(tabItemName) }
-    private val wordViewModel: WordViewModel by viewModels { WordViewModelFactory() }
-    private var basicRecyclerViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
-    private var byLevelWord = mutableListOf<WordType>()
-    private var byTestWord = mutableListOf<WordType>()
+    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels {
+        BasicPackageTabObserveViewModelFactory(
+            tabItemName
+        )
+    }
+    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { PackageObserveViewModelFactory(Application.userId) }
+    private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
+    private var progressDialog: SearchLoadingDialog? = null
+    private var dialogFragment: DialogFragment? = null
+
+
 
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
 
+        progressDialog = SearchLoadingDialog((requireContext()))
+
         initBinding()
         observeTabLayoutPosition()
-        byLevelRecyclerView()
+        observeLoading()
     }
 
     private fun initBinding() {
         binding.run {
-            libraryviewmodel = basicViewModel
-            librarywordviewmodel = wordViewModel
+            libraryviewmodel = basicPackageTabObserveViewModel
+            librarywordviewmodel = packageObserveViewModel
             lifecycleOwner = this@BasicPackageFragment
-            byLevelWord = wordViewModel.getByLevelWord()
-            byTestWord = wordViewModel.getByTestWord()
+            initRecyclerView()
         }
     }
 
-    private fun byLevelRecyclerView() {
-        basicRecyclerViewAdapter = ByLevelRecyclerViewAdapter(byLevelWord, this)
+    private fun setRecyclerItem() {
+        packageObserveViewModel.typePackage.observe(viewLifecycleOwner){
+            basicRecyclerViewAdapter?.submitList(it.toMutableList())
+        }
+    }
+
+    private fun initRecyclerView() {
+        basicRecyclerViewAdapter = MainLibraryFragmentBasicPackageListAdapter(this)
         binding.recyclerview.apply {
             adapter = basicRecyclerViewAdapter
-            layoutManager = setWithHeaderGridLayout()
+            layoutManager = setGridLayout()
         }
+        setRecyclerItem()
     }
 
-    private fun setWithHeaderGridLayout(): GridLayoutManager {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return if ((basicRecyclerViewAdapter!! as ByLevelRecyclerViewAdapter).isHeader(position)) gridLayoutManager.spanCount else 1
-            }
-        }
-        return gridLayoutManager
-    }   
 
-    private fun setNoHeaderGridLayout(): GridLayoutManager {
+    private fun setGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
     }
-
-    private fun testRecyclerView() {
-        val basicRecyclerViewAdapter = ByTestRecyclerViewAdapter(byTestWord, this)
-        binding.recyclerview.apply {
-            adapter = basicRecyclerViewAdapter
-            layoutManager = setNoHeaderGridLayout()
-        }
-    }
-//
-//    private fun categoryRecyclerView(){
-//        val basicRecyclerViewAdapter = ByCategoryRecyclerViewAdapter(word, this)
-//        val gridLayoutManager = GridLayoutManager(requireContext(), 3)
-//        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-//            override fun getSpanSize(position: Int): Int {
-//                return if(basicRecyclerViewAdapter.isHeader(position)) gridLayoutManager.spanCount else 1
-//            }
-//        }
-//        binding.recyclerview.apply {
-//            adapter = basicRecyclerViewAdapter
-//            layoutManager = gridLayoutManager
-//        }
-//    }
 
     private fun setDialog() {
 
@@ -117,61 +96,47 @@ class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.
     }
 
     private fun observeTabLayoutPosition() {
-        basicViewModel.position.observe(viewLifecycleOwner, Observer {
+        basicPackageTabObserveViewModel.position.observe(viewLifecycleOwner, Observer {
             when (it) {
-                0 -> byLevelRecyclerView()
-                1 -> testRecyclerView()
-                2 -> setDialog()
+                0 -> {
+                    packageObserveViewModel.setType("수준별")
+                }
+                1 -> {
+                    packageObserveViewModel.setType("시험별")
+                }
+                2 -> {
+                    setDialog()
+                }
+                else -> throw IllegalStateException("unKnown Tab Position")
             }
+            Logger.v("$it")
         })
     }
 
-    override fun onByLevelItemClick(view: View, position: Int) {
-        val dialog = PackageDialog(requireContext(), byLevelWord[position], true)
-        dialog.show()
-        dialogResize(dialog)
+    private fun observeLoading() {
+        packageObserveViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            if (it)
+                progressDialog?.showLoading()
+            else
+                progressDialog?.dismissLoading()
 
-//        Intent(requireActivity(), LibraryActivity::class.java).also {
-//            it.putExtra("Words", byLevelWord[position])
-//            startActivity(it)
-//        }
+            Logger.v("로딩중 :: $it")
+        })
     }
 
-    override fun onByTestItemClick(view: View, position: Int) {
-        val dialog = PackageDialog(requireContext(), byTestWord[position], true)
-        dialog.show()
-        dialogResize(dialog)
-//        Intent(requireActivity(), LibraryActivity::class.java).also {
-//            it.putExtra("Words", byTestWord[position])
-//            startActivity(it)
-//        }
+    override fun onItemClick(selectedItem: PackageInformation) {
+        dialogFragment = StageDialogFragment.newInstance(selectedItem.name)
+        dialogFragment?.show(childFragmentManager, "StageDialog")
     }
 
-    private fun dialogResize(dialog: Dialog) {
-
-        if (Build.VERSION.SDK_INT < 30) {
-            val display = requireActivity().windowManager.defaultDisplay
-            val size = Point()
-
-            display.getSize(size)
-
-            val window = dialog.window
-
-            val x = (size.x * 0.95f).toInt()
-            val y = (size.y * 0.6f).toInt()
-            window?.setLayout(x, y)
-
-        }else{
-            val windowManager = requireActivity().getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-            val rect = windowManager.currentWindowMetrics.bounds
-
-            val window = dialog.window
-
-            val x = (rect.width() * 0.95f).toInt()
-            val y = (rect.height() * 0.6f).toInt()
-
-            window?.setLayout(x, y)
-        }
+    override fun onResume() {
+        super.onResume()
+        Logger.v("BasicPackageFragment onResume")
     }
+
+    override fun onPause() {
+        super.onPause()
+        Logger.v("BasicPackageFragment onPause")
+    }
+
 }

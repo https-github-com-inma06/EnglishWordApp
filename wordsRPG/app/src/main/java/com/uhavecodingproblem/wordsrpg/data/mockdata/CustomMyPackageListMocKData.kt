@@ -20,7 +20,7 @@ object CustomMyPackageListMocKData {
         mutableListOf(
             CustomPackageData(
                 uid = 1,
-                ownerUid = 3,
+                ownerName = "리안",
                 packageName = "프로그래밍 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
                 likeCount = 3,
@@ -29,7 +29,7 @@ object CustomMyPackageListMocKData {
             ),
             CustomPackageData(
                 uid = 2,
-                ownerUid = 3,
+                ownerName = "아타나시님",
                 packageName = "워킹데드1화 단어장",
                 profileImageUrl = "https://ifh.cc/g/b6yryB.jpg",
                 likeCount = 3,
@@ -38,7 +38,7 @@ object CustomMyPackageListMocKData {
             ),
             CustomPackageData(
                 uid = 3,
-                ownerUid = 3,
+                ownerName = "재이",
                 packageName = "토익준비용 단어장",
                 profileImageUrl = "https://ifh.cc/g/PeB4iS.jpg",
                 likeCount = 3,

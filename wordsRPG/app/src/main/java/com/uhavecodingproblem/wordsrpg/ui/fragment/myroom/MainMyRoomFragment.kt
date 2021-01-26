@@ -1,11 +1,8 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.myroom
 
-import android.content.Intent
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainMyRoomBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.LoginActivity
-import com.uhavecodingproblem.wordsrpg.ui.activity.RegisterActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 
 
@@ -20,9 +17,5 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
 class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
     override fun FragmentMainMyRoomBinding.onCreateView() {
         Logger.v("실행")
-
-        btnGoToTheLogin.setOnClickListener { startActivity(Intent(requireContext(),
-        LoginActivity::class.java)) }
-
     }
 }

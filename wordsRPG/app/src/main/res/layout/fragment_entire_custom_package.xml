@@ -6,6 +6,9 @@
 
     <data>
         <variable
+            name="constant"
+            type="com.uhavecodingproblem.wordsrpg.util.ConstatntKt"/>
+        <variable
             name="thisFragment"
             type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.EntireCustomPackageFragment" />
 
@@ -15,6 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <include
+            android:id="@+id/viewgroup_library_search"
+            layout="@layout/viewgroup_custom_pacakge_search"
+            app:entireCustomFragment="@{thisFragment}"
+            app:checkPackage="@{constant.ENTIRE_CUSTOM_PACKAGE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_custom_list"
             android:layout_width="0dp"
@@ -23,23 +38,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_search_custom_package" />
+            app:layout_constraintTop_toBottomOf="@+id/viewgroup_library_search" />
 
-
-        <TextView
-            android:id="@+id/tv_search_custom_package"
-            android:layout_width="0dp"
-            app:drawableLeftCompat="@android:drawable/ic_menu_search"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/str_package_search"
-            android:padding="5dp"
-            android:clickable="true"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         <item name="android:editTextStyle">@style/customTextViewFontStyle</item>
         <item name="android:radioButtonStyle">@style/customTextViewFontStyle</item>
         <item name="android:checkboxStyle">@style/customTextViewFontStyle</item>
-        
+
     </style>
 
 
@@ -30,33 +30,43 @@
         <item name="android:textColor">@color/colorBlack</item>
     </style>
 
-    <style name="tab_layout_font" parent="@style/TextAppearance.Design.Tab">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">16sp</item>
+    <style name="library_basic_package_tab_style" parent="Widget.Design.TabLayout">
+        <item name="tabMode">fixed</item>
+        <item name="tabMaxWidth">0dp</item>
+        <item name="tabGravity">fill</item>
+        <item name="rippleColor">@null</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabBackground">@drawable/basic_package_change_click</item>
+        <item name="tabSelectedTextColor">@color/colorWhite</item>
+        <item name="tabTextColor">@color/colorBrownForAppMain</item>
+        <item name="tabTextAppearance">@style/library_main_tab_text_style</item>
+        <item name="tabPaddingEnd">-1dp</item>
+        <item name="tabPaddingStart">-1dp</item>
     </style>
 
     <!-- 라이브러리쪽  메인 tab layout  style -->
+    <!-- https://stackoverflow.com/questions/36399013/how-to-make-tablayout-text-size-equal/42145071 1번째 답변 padding start, end -1dp 설정-->
     <style name="library_main_tab_style" parent="Widget.Design.TabLayout">
-            <item name="tabMode">fixed</item>
-            <item name="tabMaxWidth">0dp</item>
-            <item name="android:paddingBottom">10dp</item>
-            <item name="android:background">@color/colorLightBlue</item>
-            <item name="tabIndicator">@drawable/tab_selector</item>
-            <item name="tabTextAppearance">@style/tab_text</item>
-            <item name="tabGravity">fill</item>
-            <item name="tabPaddingBottom">-15dp</item>
-            <item name="tabRippleColor">@android:color/transparent</item>
-            <item name="tabSelectedTextColor">@color/colorBrownForAppMain</item>
-            <item name="tabTextColor">@color/black</item>
-            <item name="tabIndicatorFullWidth">false</item>
-            <item name="tabIndicatorColor">@color/colorBrownForAppMain</item>
-
+        <item name="tabMode">fixed</item>
+        <item name="tabMaxWidth">0dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:background">@color/colorLightBlue</item>
+        <item name="tabIndicator">@drawable/tab_selector</item>
+        <item name="tabTextAppearance">@style/library_main_tab_text_style</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabPaddingBottom">-15dp</item>
+        <item name="tabRippleColor">@android:color/transparent</item>
+        <item name="tabSelectedTextColor">@color/colorBrownForAppMain</item>
+        <item name="tabTextColor">@color/black</item>
+        <item name="tabIndicatorFullWidth">false</item>
+        <item name="tabIndicatorColor">@color/colorBrownForAppMain</item>
+        <item name="tabPaddingStart">-1dp</item>
+        <item name="tabPaddingEnd">-1dp</item>
     </style>
 
-    <style name="tab_text" parent="TextAppearance.Design.Tab">
+    <style name="library_main_tab_text_style" parent="TextAppearance.Design.Tab">
         <item name="android:fontFamily">@font/binggraemelonabold</item>
     </style>
-
 
 </resources>
 

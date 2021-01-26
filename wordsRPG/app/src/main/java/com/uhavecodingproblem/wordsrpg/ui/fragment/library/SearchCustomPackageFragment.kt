@@ -2,15 +2,13 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import android.content.Context
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.CustomPackageRecyclerViewAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
@@ -30,8 +28,7 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
  * 커스텀 패키지를 검색하는  화면이다.
  *
  */
-class SearchCustomPackageFragment:
-    BaseFragment<FragmentSearchCustomPackageBinding>(R.layout.fragment_search_custom_package) {
+class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBinding>(R.layout.fragment_search_custom_package) {
 
     //키보드 input 매니저
     lateinit var inputMethodManager:InputMethodManager//1-1
@@ -61,21 +58,21 @@ class SearchCustomPackageFragment:
 
 
 
-
-    //필터 change
-    fun setFilterChange(view: View){
-
-        if(view == binding.tvTagFilter){//태그 필터 클릭시
-            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TAG)
-            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TAG)
-        }else{
-            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TITLE)
-            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
-        }
-
-        //필터가 바뀌면  우선, filter에 null값을 줘서  list 를   reset 시킨다.
-        recyclerViewAdapter.filter.filter(null)
-    }
+//
+//    //필터 change
+//    fun setFilterChange(view: View){
+//
+//        if(view == binding.tvTagFilter){//태그 필터 클릭시
+//            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TAG)
+//            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TAG)
+//        }else{
+//            recyclerViewAdapter.changeType(newFilterType = SEARCH_PACKAGE_TITLE)
+//            filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)
+//        }
+//
+//        //필터가 바뀌면  우선, filter에 null값을 줘서  list 를   reset 시킨다.
+//        recyclerViewAdapter.filter.filter(null)
+//    }
 
 
 
@@ -92,23 +89,23 @@ class SearchCustomPackageFragment:
     }
 
 
-    //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
-    val searchAction = TextView.OnEditorActionListener { _, actionId, _ ->
-
-        when(actionId){
-            EditorInfo.IME_ACTION_SEARCH ->{
-
-                Logger.v("검색버튼 눌림")
-
-                //editext에 적힌 내용으로  검색 필터 적용
-                recyclerViewAdapter.filter.filter(binding.editTvSearchPackage.text.toString())
-                
-                true
-            }
-            else -> false
-        }
-
-    }//searchAction 끝
+//    //키보드  search action 처리 (feat 필요없는 값들 _ 처리)
+//    val searchAction = TextView.OnEditorActionListener { _, actionId, _ ->
+//
+//        when(actionId){
+//            EditorInfo.IME_ACTION_SEARCH ->{
+//
+//                Logger.v("검색버튼 눌림")
+//
+//                //editext에 적힌 내용으로  검색 필터 적용
+//                recyclerViewAdapter.filter.filter(binding.editTvSearchPackage.text.toString())
+//
+//                true
+//            }
+//            else -> false
+//        }
+//
+//    }//searchAction 끝
 
 
 
