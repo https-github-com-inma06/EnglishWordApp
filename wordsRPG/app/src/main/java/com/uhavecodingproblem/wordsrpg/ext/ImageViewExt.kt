@@ -13,3 +13,10 @@ fun ImageView.loadImage(imageUrl: String) {
         .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.ic_launcher_foreground))
         .into(this)
 }
+
+
+@BindingAdapter("setCircleImage")
+fun setCircleImage(iv: ImageView,uri:String){
+    iv.clipToOutline = true
+    Glide.with(iv.context).load(uri).apply(RequestOptions.circleCropTransform()).into(iv)
+}

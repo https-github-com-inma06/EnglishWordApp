@@ -1,3 +1,5 @@
+package com.uhavecodingproblem.wordsrpg.ui.dialog
+
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -7,6 +9,16 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import com.uhavecodingproblem.wordsrpg.R
 
+/**
+ * wordsrpg
+ * Class: SearchLoadingDailog.
+ * Created by leedonghun.
+ * Created On 2020-09-27.
+ * Description:
+ *
+ * 패키지 검색시 나오는 다이얼로그
+ *
+ */
 
 class SearchLoadingDialog(context: Context) {
 
@@ -31,7 +43,7 @@ class SearchLoadingDialog(context: Context) {
 
 
     //로딩 다이얼로그 보이기
-    fun showLoading(){
+    fun showLoading() {
 
         loadingImageView.startAnimation(loadingAnimation)//로딩 애니  시작
         loadingDialog.show()
@@ -39,12 +51,11 @@ class SearchLoadingDialog(context: Context) {
     }
 
     //로딩 다이얼로그 숨기기
-    fun dismissLoading(){
+    fun dismissLoading() {
 
         loadingImageView.clearAnimation()//로딩 애니 clear
         loadingDialog.dismiss()
     }
 
-
-
 }
+
