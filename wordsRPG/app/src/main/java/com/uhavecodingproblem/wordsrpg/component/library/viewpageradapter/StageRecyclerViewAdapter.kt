@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter
 
 import android.content.Context
 import android.graphics.Color

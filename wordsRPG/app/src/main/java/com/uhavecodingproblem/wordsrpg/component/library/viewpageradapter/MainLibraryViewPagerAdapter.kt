@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

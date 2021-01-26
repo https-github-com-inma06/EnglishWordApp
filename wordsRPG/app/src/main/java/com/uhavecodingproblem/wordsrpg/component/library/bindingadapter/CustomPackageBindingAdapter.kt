@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.bindingadapter
 
 import android.graphics.drawable.Drawable
 import android.view.ViewGroup

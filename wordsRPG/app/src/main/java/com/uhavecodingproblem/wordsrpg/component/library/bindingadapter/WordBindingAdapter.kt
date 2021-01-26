@@ -1,6 +1,5 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.bindingadapter
 
-import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadpater
 
 import android.view.LayoutInflater
 import android.view.View

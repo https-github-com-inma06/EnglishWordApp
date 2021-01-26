@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.BasicPackageRecyclerView
+import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadpater.BasicPackageRecyclerView
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.LibraryViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.WordViewModel
 import com.uhavecodingproblem.wordsrpg.component.viewmodel.factory.ViewModelFactory

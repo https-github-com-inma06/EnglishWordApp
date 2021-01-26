@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.component.library
+package com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter
 
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
