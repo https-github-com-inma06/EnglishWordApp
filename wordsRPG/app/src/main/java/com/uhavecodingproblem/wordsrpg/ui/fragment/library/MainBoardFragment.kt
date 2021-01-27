@@ -3,7 +3,7 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBoardBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 /**
  * wordsrpg
@@ -14,7 +14,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
  * Description:
  * 게시판 프레그먼트입니다.
  */
-class MainBoardFragment : BaseFragment<FragmentMainBoardBinding>(R.layout.fragment_main_board) {
+class MainBoardFragment : BaseUtility.BaseFragment<FragmentMainBoardBinding>(R.layout.fragment_main_board) {
 
     override fun FragmentMainBoardBinding.onCreateView() {
         Logger.v("실행")

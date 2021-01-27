@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.dialog
+package com.uhavecodingproblem.wordsrpg.ui.dialog
 
 import android.content.DialogInterface
 import android.content.Intent
@@ -7,8 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +19,7 @@ import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 import java.util.*
@@ -33,9 +32,8 @@ import kotlin.math.ceil
  * Created On 2020-12-26.
  * Description:
  */
-class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.ItemClickListener {
+class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R.layout.dialog_stage), StageDialogRecyclerViewAdapter.ItemClickListener {
 
-    private lateinit var binding: DialogStageBinding
     private lateinit var stageDialogRecyclerViewAdapter: StageDialogRecyclerViewAdapter
     private val packageObserveViewModel by viewModels<PackageObserveViewModel>({requireParentFragment()})
     private lateinit var packageInformation: PackageInformation
@@ -58,14 +56,11 @@ class StageDialogFragment : DialogFragment(), StageDialogRecyclerViewAdapter.Ite
         packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.dialog_stage, container, false)
-
-        return binding.root
+    override fun DialogStageBinding.onCreateView() {
+        Logger.v("StageDialogFragment onCreateView")
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun DialogStageBinding.onViewCreated() {
         val layoutParams = WindowManager.LayoutParams().apply {
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
             dimAmount = 0.8f

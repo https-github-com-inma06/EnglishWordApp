@@ -15,9 +15,9 @@ import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.Basic
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.PackageObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
-import com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
@@ -28,7 +28,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
  * Created On 2020-09-18.
  * Description:
  */
-class BasicPackageFragment : BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
+class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
     MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
     private val tabItemName = listOf("수준별", "시험별", "카테고리별")

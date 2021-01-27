@@ -4,7 +4,6 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -19,14 +18,13 @@ import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityLoginBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.NewPasswordCreateDialog
 import com.uhavecodingproblem.wordsrpg.ui.dialog.PasswordFindDialog
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
+class LoginActivity : BaseUtility.BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
 
     private val callbackManager: CallbackManager? = CallbackManager.Factory.create();
 

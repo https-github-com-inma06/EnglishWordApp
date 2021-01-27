@@ -19,7 +19,7 @@
 
         <variable
             name="dialog"
-            type="com.uhavecodingproblem.wordsrpg.dialog.StageSelectionDialogFragment" />
+            type="com.uhavecodingproblem.wordsrpg.ui.dialog.StageSelectionDialogFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

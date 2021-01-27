@@ -11,7 +11,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG
@@ -29,7 +29,7 @@ import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TITLE
  * 커스텀 패키지를 검색하는  화면이다.
  *
  */
-class SearchCustomPackageFragment:BaseFragment<FragmentSearchCustomPackageBinding>
+class SearchCustomPackageFragment: BaseUtility.BaseFragment<FragmentSearchCustomPackageBinding>
     (R.layout.fragment_search_custom_package) {
 
     //키보드 input 매니저

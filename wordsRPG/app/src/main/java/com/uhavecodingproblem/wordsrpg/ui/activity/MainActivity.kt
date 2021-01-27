@@ -1,21 +1,15 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
-import android.content.Context
-import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.navigation.NavigationView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMainBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 
 /**
@@ -28,7 +22,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
  * 메인 엑티비티 입니다.
  */
 
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
+class MainActivity : BaseUtility.BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
 
     override fun ActivityMainBinding.onCreate() {
         Logger.v("실행")

@@ -16,12 +16,12 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyActivityViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.util.*
 
 class StudyActivity :
-    BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
+    BaseUtility.BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
     StudyActivityViewPagerAdapter.ItemClickListener {
 
     private var stageInformationInformation: StageInformation? = null

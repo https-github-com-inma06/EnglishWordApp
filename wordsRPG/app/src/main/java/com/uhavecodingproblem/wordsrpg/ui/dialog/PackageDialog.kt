@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 
 /**
@@ -22,11 +23,9 @@ import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
  * Created On 2020-10-09.
  * Description:
  */
-class PackageDialog(context: Context, val type: Any, private val isBasic: Boolean) : Dialog(context) {
+class PackageDialog(context: Context, val type: Any) : BaseUtility.BaseDialog<DialogCustomPackageBinding>(R.layout.dialog_custom_package, context) {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun DialogCustomPackageBinding.onCreate() {
         val layoutParam = WindowManager.LayoutParams().apply {
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
             dimAmount = 0.8f
@@ -38,18 +37,13 @@ class PackageDialog(context: Context, val type: Any, private val isBasic: Boolea
             it.requestFeature(Window.FEATURE_NO_TITLE)
         }
 
-        val binding: DialogCustomPackageBinding =
-            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.dialog_custom_package, null, false)
 
         binding.run {
             information = type as CustomPackageData
             customdialog = this@PackageDialog
         }
 
-        setContentView(binding.root)
-
         binding.layoutImage.clipToOutline = true
-
     }
 
     fun moveStudy(v: View) {
