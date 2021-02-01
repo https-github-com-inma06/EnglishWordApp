@@ -61,7 +61,11 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, packageName: String) {
+            override fun onItemClick(view: View, packageName: String,position:Int) {
+
+                if(position == 0)
+                    moveToAddNewCustomPackageActivity()
+                else
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
 
             }
@@ -101,7 +105,7 @@ class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.la
 
 
     //fab 버튼 클릭 -> 새 커스텀 패키지 추가 엑티비티로 이동
-    fun moveToAddNewCustomPackageActivity(view: View){
+    fun moveToAddNewCustomPackageActivity(){
         Logger.v("AddNewCustomPackageActivity 로 이동")
 
         startActivityForResult(

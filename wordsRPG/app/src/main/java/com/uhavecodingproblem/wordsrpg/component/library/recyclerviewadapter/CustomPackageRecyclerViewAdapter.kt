@@ -26,13 +26,13 @@ class CustomPackageRecyclerViewAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
-    private var onItemClickListener: OnItemClickListener? =null
+    private var onItemClickListener: OnItemClickListener? = null
 
     init {
 
         // TODO: 2020-10-31 추가아이템  자리 만들고 확인 위해서 일단 이렇게 해놓음. -> 추후 리팩토링
         //내 커스텀의 경우는  index 0쪽에 mock 값  넣어줌.
-        if(customPackageType == MY_CUSTOM_PACKAGE) {
+        if (customPackageType == MY_CUSTOM_PACKAGE) {
             customPackageList.add(0, customPackageList[0])
         }
 
@@ -40,20 +40,20 @@ class CustomPackageRecyclerViewAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val binding =ItemCustomPackageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        val binding1 =ItemMyCustomPackageAddBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemCustomPackageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding1 = ItemMyCustomPackageAddBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return when(viewType){
+        return when (viewType) {
 
-            0 ->{
+            0 -> {
                 CustomPackageViewHolder(binding)
             }
 
-            1->{
+            1 -> {
                 AddNewMyCustomPackage(binding1)
 
             }
-            else ->{
+            else -> {
 
                 CustomPackageViewHolder(binding)
             }
@@ -61,18 +61,17 @@ class CustomPackageRecyclerViewAdapter(
     }
 
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        if(customPackageType == MY_CUSTOM_PACKAGE){
+        if (customPackageType == MY_CUSTOM_PACKAGE) {
 
-            if(position == 0){
+            if (position == 0) {
                 (holder as AddNewMyCustomPackage).onBind()
-            }else{
+            } else {
                 (holder as CustomPackageViewHolder).onBind(customPackageList[position])
             }
 
-        }else{
+        } else {
             (holder as CustomPackageViewHolder).onBind(customPackageList[position])
 
         }
@@ -81,7 +80,7 @@ class CustomPackageRecyclerViewAdapter(
 
     // TODO: 2020-10-31 일단 이렇게 적용하고 나중에 명확하게  코드 다시  작성
     override fun getItemViewType(position: Int): Int {
-        return when(customPackageType){
+        return when (customPackageType) {
 
             ENTIRE_CUSTOM_PACKAGE -> {
 
@@ -90,9 +89,9 @@ class CustomPackageRecyclerViewAdapter(
 
             MY_CUSTOM_PACKAGE -> {
 
-                return if(position == 0){
+                return if (position == 0) {
                     1
-                }else{
+                } else {
                     0
                 }
             }
@@ -108,24 +107,23 @@ class CustomPackageRecyclerViewAdapter(
     override fun getItemCount(): Int = customPackageList.size
 
 
-
     //아이템 클릭 이벤트 받을  리스너 인터페이스
-    interface  OnItemClickListener {
-        fun onItemClick(view:View,packageName:String)
+    interface OnItemClickListener {
+        fun onItemClick(view: View, packageName: String, position: Int)
         // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
 
     }
 
 
     //외부에서  아이템 클릭 처리할 리스너
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
     //추가 아이템 뷰홀더
-    inner class AddNewMyCustomPackage(val binding:ItemMyCustomPackageAddBinding):RecyclerView.ViewHolder(binding.root){
+    inner class AddNewMyCustomPackage(val binding: ItemMyCustomPackageAddBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(){
+        fun onBind() {
             //아이템 클릭 리스너
             binding.layoutCustomPackageAdd.setOnClickListener {
                 // TODO: 2020-10-31 추후 리팩토링 필요.  외부로  빼서 패키지 추가  액션 진행해야됨
@@ -139,10 +137,10 @@ class CustomPackageRecyclerViewAdapter(
 
 
     //뷰홀더
-    inner class CustomPackageViewHolder(val binding:ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root) {
 
         //item 뷰에  데이터 바인딩 적용
-        fun onBind(data : CustomPackageData){
+        fun onBind(data: CustomPackageData) {
 
             val pos = adapterPosition//아이템 포지션
 
@@ -160,7 +158,11 @@ class CustomPackageRecyclerViewAdapter(
                 if (pos != RecyclerView.NO_POSITION) {
 
                     // 리스너 객체의 메서드 호출.
-                    onItemClickListener?.onItemClick(view = it,packageName =  customPackageList[pos].packageName)
+                    onItemClickListener?.onItemClick(
+                        view = it,
+                        packageName = customPackageList[pos].packageName,
+                        position = adapterPosition
+                    )
 
                 }
 
