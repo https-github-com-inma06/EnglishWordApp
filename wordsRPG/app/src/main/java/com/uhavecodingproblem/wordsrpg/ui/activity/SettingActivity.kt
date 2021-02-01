@@ -3,7 +3,7 @@ package com.uhavecodingproblem.wordsrpg.ui.activity
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.ActivitySettingBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 /**
  * wordsrpg
@@ -14,7 +14,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
  *
  * 설정 엑티비티 입니다.
  */
-class SettingActivity:BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
+class SettingActivity: BaseUtility.BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
 
     override fun ActivitySettingBinding.onCreate() {
         Logger.v("실행")

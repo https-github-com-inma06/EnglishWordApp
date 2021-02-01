@@ -11,7 +11,7 @@ import com.uhavecodingproblem.wordsrpg.data.model.Notification
 import com.uhavecodingproblem.wordsrpg.data.model.User
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainBattleBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.battle.BattleRankingActivity
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +27,7 @@ import java.util.*
  *  Created On 2020-09-17.
  */
 
-class MainBattleFragment : BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
+class MainBattleFragment : BaseUtility.BaseFragment<FragmentMainBattleBinding>(R.layout.fragment_main_battle) {
 
     companion object {
         const val BATTLE_RESULT_WIN = 2001

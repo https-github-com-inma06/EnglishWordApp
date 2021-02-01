@@ -9,7 +9,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomPackageListMockData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
@@ -21,7 +21,7 @@ import com.uhavecodingproblem.wordsrpg.util.*
  *
  *
  */
-class EntireCustomPackageFragment: BaseFragment<FragmentEntireCustomPackageBinding>(R.layout.fragment_entire_custom_package) {
+class EntireCustomPackageFragment: BaseUtility.BaseFragment<FragmentEntireCustomPackageBinding>(R.layout.fragment_entire_custom_package) {
 
     private val mockMyPackageDataList = CustomPackageListMockData.list
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter

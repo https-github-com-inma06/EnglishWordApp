@@ -12,7 +12,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityAddNewCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_add_new_custom_package.*
  *
  * 커스텀 패키지  새로 추가하는 엑티비티
  */
-class AddNewCustomPackageActivity : BaseActivity<ActivityAddNewCustomPackageBinding>(R.layout.activity_add_new_custom_package){
+class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCustomPackageBinding>(R.layout.activity_add_new_custom_package){
 
     private val tagArray = ArrayList<String>()
 

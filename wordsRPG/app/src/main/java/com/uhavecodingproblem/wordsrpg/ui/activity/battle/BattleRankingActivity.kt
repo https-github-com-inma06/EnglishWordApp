@@ -4,11 +4,10 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.battle.BattleRankingListAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.User
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityBattleRankingBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
-import org.koin.android.ext.android.bind
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 
-class BattleRankingActivity : BaseActivity<ActivityBattleRankingBinding>(R.layout.activity_battle_ranking) {
+class BattleRankingActivity : BaseUtility.BaseActivity<ActivityBattleRankingBinding>(R.layout.activity_battle_ranking) {
 
     /** todo: 서버 완성후 모데롤 묶어서 심플하게 변경할 에정. */
 

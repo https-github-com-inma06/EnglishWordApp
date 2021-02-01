@@ -7,11 +7,11 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityRegisterBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class RegisterActivity : BaseActivity<ActivityRegisterBinding>(R.layout.activity_register) {
+class RegisterActivity : BaseUtility.BaseActivity<ActivityRegisterBinding>(R.layout.activity_register) {
 
     companion object {
         const val REQUEST_IMAGE_CODE = 1058

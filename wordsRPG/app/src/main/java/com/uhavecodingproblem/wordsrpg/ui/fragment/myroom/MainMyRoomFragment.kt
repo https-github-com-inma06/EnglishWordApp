@@ -5,8 +5,7 @@ import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainMyRoomBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.LoginActivity
-import com.uhavecodingproblem.wordsrpg.ui.activity.RegisterActivity
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 
 /**
@@ -17,7 +16,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
  * Description:
  * 마이룸 프레그먼트입니다.
  */
-class MainMyRoomFragment : BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
+class MainMyRoomFragment : BaseUtility.BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
     override fun FragmentMainMyRoomBinding.onCreateView() {
         Logger.v("실행")
 

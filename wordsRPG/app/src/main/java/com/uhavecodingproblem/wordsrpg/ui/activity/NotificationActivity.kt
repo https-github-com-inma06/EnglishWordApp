@@ -3,7 +3,7 @@ package com.uhavecodingproblem.wordsrpg.ui.activity
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityNotificationBinding
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 /**
  * wordsrpg
@@ -15,7 +15,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseActivity
  * 알림창 엑티비티 입니다.
  */
 
-class NotificationActivity:BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
+class NotificationActivity: BaseUtility.BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
 
     override fun ActivityNotificationBinding.onCreate() {
         Logger.v("실행")

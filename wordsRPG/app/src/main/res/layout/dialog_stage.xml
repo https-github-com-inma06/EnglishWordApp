@@ -11,7 +11,7 @@
 
         <variable
             name="stage"
-            type="com.uhavecodingproblem.wordsrpg.dialog.StageDialogFragment" />
+            type="com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

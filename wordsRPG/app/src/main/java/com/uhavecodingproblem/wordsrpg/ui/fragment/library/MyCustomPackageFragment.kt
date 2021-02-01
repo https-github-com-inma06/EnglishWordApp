@@ -15,7 +15,7 @@ import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity
-import com.uhavecodingproblem.wordsrpg.ui.base.BaseFragment
+import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
@@ -25,7 +25,7 @@ import com.uhavecodingproblem.wordsrpg.util.*
  * Created On 2020-09-18.
  * Description:
  */
-class MyCustomPackageFragment: BaseFragment<FragmentMyCustomPackageBinding>(R.layout.fragment_my_custom_package) {
+class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageBinding>(R.layout.fragment_my_custom_package) {
 
     private val mockMyPackageDataList =CustomMyPackageListMocKData.list
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
