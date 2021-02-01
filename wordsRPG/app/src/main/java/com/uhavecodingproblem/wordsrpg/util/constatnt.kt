@@ -36,5 +36,5 @@ const val STAGE_TEST_FAIL = 2 // 테스트 실패
 const val STAGE_TEST_CLEAR = 3 // 테스트 통과
 
 
-//기본 영단어 주소
-const val BASIC_WORD = "http://www.naver.com"
+//기본 패키지 주소
+const val BASIC_PACKAGE = "http://52.78.122.62/API/"

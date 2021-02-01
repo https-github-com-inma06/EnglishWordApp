@@ -1,7 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.api
 
 import com.uhavecodingproblem.wordsrpg.BuildConfig
-import com.uhavecodingproblem.wordsrpg.util.BASIC_WORD
+import com.uhavecodingproblem.wordsrpg.util.BASIC_PACKAGE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -31,7 +31,7 @@ class ClientServer {
 
         fun getWordRetrofit(): Retrofit {
             return Retrofit.Builder()
-                .baseUrl(BASIC_WORD).addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(BASIC_PACKAGE).addConverterFactory(GsonConverterFactory.create())
                 .client(ClientServer().createOkHttpClient()).build()
         }
 

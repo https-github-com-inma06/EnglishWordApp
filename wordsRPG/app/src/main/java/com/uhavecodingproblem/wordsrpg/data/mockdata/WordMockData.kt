@@ -12,7 +12,7 @@ import com.uhavecodingproblem.wordsrpg.data.PackageInformation
  * Description:
  */
 object WordMockData {
-
+               
     var wordMockData = initMockData()
 
     private fun initClearWordMockData(): MutableList<WordInformation>{
