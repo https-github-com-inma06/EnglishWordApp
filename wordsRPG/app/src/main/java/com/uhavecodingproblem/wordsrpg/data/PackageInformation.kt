@@ -2,7 +2,7 @@ package com.uhavecodingproblem.wordsrpg.data
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Entity
+import com.google.gson.annotations.SerializedName
 
 /**
  * wordsrpg
@@ -20,11 +20,11 @@ data class PackageInformation(
     var stageList: MutableList<StageInformation> // 스테이지
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString() ?: "",
-            parcel.readString() ?: "",
-            parcel.readString() ?: "",
-            parcel.readString()?: "",
-            parcel.createTypedArrayList(StageInformation.CREATOR) as MutableList<StageInformation>
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.createTypedArrayList(StageInformation.CREATOR) as MutableList<StageInformation>
 
     )
 

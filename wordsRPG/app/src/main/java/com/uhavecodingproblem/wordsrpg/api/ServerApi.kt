@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.api
 
 import com.uhavecodingproblem.wordsrpg.data.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.PackageRead
 import com.uhavecodingproblem.wordsrpg.data.StageInformation
 import retrofit2.Call
 import retrofit2.http.*
@@ -10,22 +11,22 @@ interface ServerApi {
 
 
     //단어 API
-    @GET("Test")
-    fun requestWord(@Query("userId") userId: String) : Call<List<PackageInformation>>
+    @GET("package_read.php")
+    fun requestWord(@Query("package_name") package_name: String) : Call<List<PackageInformation>>
 
-    @PATCH("Test")
-    @FormUrlEncoded
-    fun uploadWord(@Field("userId") userId: String,
-                   @Field("package") packageInformation: PackageInformation) : Call<Boolean>
+    // 패키지조회 1회차
+    @GET("package_read.php")
+    fun requestBasicPackage(@Query("package_name") package_name: String) : Call<PackageRead>
 
     companion object {
-        fun requestWordData(userId: String): Call<List<PackageInformation>> {
-            return ClientServer().create(ServerApi::class.java).requestWord(userId)
+        fun requestWordData(package_name: String): Call<List<PackageInformation>> {
+            return ClientServer().create(ServerApi::class.java).requestWord(package_name)
         }
 
-        fun uploadWord(userId: String, packageInformation: PackageInformation): Call<Boolean> {
-            return ClientServer().create(ServerApi::class.java).uploadWord(userId, packageInformation)
+        fun requestBasicPackage(package_name: String) : Call<PackageRead>{
+            return ClientServer().create(ServerApi::class.java).requestBasicPackage(package_name)
         }
+
     }
 
 
