@@ -37,4 +37,4 @@ const val STAGE_TEST_CLEAR = 3 // 테스트 통과
 
 
 //기본 패키지 주소
-const val BASIC_PACKAGE = "http://52.78.122.62/API/"
+const val BASIC_PACKAGE = "http://3.34.162.73/api/"
