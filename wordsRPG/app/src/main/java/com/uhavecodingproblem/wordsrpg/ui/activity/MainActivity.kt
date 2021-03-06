@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -55,9 +56,11 @@ class MainActivity : BaseUtility.BaseActivity<ActivityMainBinding>(R.layout.acti
 
         when(item.itemId){
 
-            //왼쪽 상단 햄버거 키 클릭
+            //오른쪽 상단 햄버거 키 클릭
             R.id.menu_setting ->{
                 //binding.mainDrawerLayout.openDrawer(GravityCompat.START)//드로워  오픈
+                /* 액티비티 */
+                startActivity(Intent(this@MainActivity, SettingActivity::class.java))
                 Toast.makeText(this,"세팅눌림",Toast.LENGTH_SHORT).show()
             }
         }

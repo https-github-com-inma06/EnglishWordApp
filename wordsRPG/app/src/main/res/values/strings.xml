@@ -11,10 +11,20 @@
     <!--메인 toolbar menu -->
     <string name="toolbar_menu_for_setting">setting</string>
 
+    <!-- setting(셋팅) 액티비티 -->
+    <string name="setting_btn_logout">로그아웃</string>
+    <string name="setting_btn_license">라이센스</string>
+    <string name="setting_btn_version">버전</string>
+
     <!-- 메인 메뉴  english -->
     <string name="menu_for_library_en">Library</string>
     <string name="menu_for_battle_en">Battle</string>
     <string name="menu_for_my_room_en">My Room</string>
+
+    <!-- 메인 메뉴  korean -->
+    <string name="menu_for_library_kr">라이브러리</string>
+    <string name="menu_for_battle_kr">배틀</string>
+    <string name="menu_for_my_room_kr">마이룸</string>
 
 
     <!-- 암기Activity 툴바 메뉴 -->

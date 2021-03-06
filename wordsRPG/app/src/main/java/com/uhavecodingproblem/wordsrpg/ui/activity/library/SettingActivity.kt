@@ -14,6 +14,8 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
  *
  * 설정 엑티비티 입니다.
  */
+
+/* TODO : 삭제해도 될듯함 중복됨. 매니페스트 .ui.activity.SettingActivity 패키지로 수정했음. */
 class SettingActivity: BaseUtility.BaseActivity<ActivitySettingBinding>(R.layout.activity_setting) {
 
     override fun ActivitySettingBinding.onCreate() {

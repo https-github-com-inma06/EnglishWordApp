@@ -29,5 +29,11 @@
     <color name="basic_dialog_expand_color">#96FFFF</color>
     <color name="basic_dialog_color">#C8FFFF</color>
 
+    <color name="basic_button_color">#5AD18F</color>
+    <color name="basic_button_text_color">#FFFFFF</color>
+    <color name="basic_button_enable_color">#5AD18F</color>
+    <color name="basic_button_disable_color">#26A69A</color>
+
+
 
 </resources>

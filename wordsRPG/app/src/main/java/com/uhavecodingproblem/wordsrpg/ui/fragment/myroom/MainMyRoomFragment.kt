@@ -11,8 +11,8 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 /**
  * wordsrpg
  * Class: MainMyRoomFragment.
- * Created by leedonghun.
- * Created On 2020-09-16.
+ * Created by Atanasio.
+ * Created On 2021-03-06.
  * Description:
  * 마이룸 프레그먼트입니다.
  */
