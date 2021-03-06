@@ -6,14 +6,29 @@
 
     <data>
         <variable
+            name="constant"
+            type="com.uhavecodingproblem.wordsrpg.util.ConstatntKt"/>
+        <variable
             name="thisFragment"
-            type="com.uhavecodingproblem.wordsrpg.ui.fragment.MyCustomPackageFragment" />
+            type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MyCustomPackageFragment" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/viewgroup_library_search"
+            layout="@layout/viewgroup_custom_pacakge_search"
+            app:myCustomFragment="@{thisFragment}"
+            app:checkPackage="@{constant.MY_CUSTOM_PACKAGE}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_my_custom_list"
@@ -23,43 +38,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_search_custom_package" />
+            app:layout_constraintTop_toBottomOf="@+id/viewgroup_library_search" />
 
 
-        <TextView
-            android:id="@+id/tv_search_custom_package"
-            android:layout_width="0dp"
-            app:drawableLeftCompat="@android:drawable/ic_menu_search"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/str_package_search"
-            android:padding="5dp"
-            android:clickable="true"
-            android:onClick="@{thisFragment::searchMyCustomPackage}"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_make_custom_package"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            app:backgroundTint="@color/colorBlack"
-            app:borderWidth="1dp"
-            app:fabSize="normal"
-            android:onClick="@{thisFragment::moveToAddNewCustomPackageActivity}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9"
-            app:srcCompat="@android:drawable/ic_menu_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

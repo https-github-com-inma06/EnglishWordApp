@@ -56,7 +56,8 @@
     <string name="str_filter_tag">태그</string>
     <string name="str_search_edit_tv_hint">패키지를 검색해보세요</string>
 
-
+    <!-- viewgroup_custom_package_search  -->
+    <string name="hint_search_custom_package">패키지를 검색해보세요</string>
 
      <!-- item_custom_package_recycler_view  str -->
     <string name="str_liked_count">%1$d 개</string>
@@ -77,5 +78,22 @@
     <string name="stage">STAGE %s</string>
     <string name="expand_and_collapse">접고 펼치기</string>
     <string name="move_study_dialog">GO</string>
+
+    <string name="next">다음</string>
+    <string name="previous">이전</string>
+    <string name="test">테스트 보러가기</string>
+
+    <string name="friendListCount">%d명</string>
+
+    <string name="dialog_battle_result_currentScore">(%d점)</string>
+    <string name="dialog_battle_result_plusScore">+%d점</string>
+    <string name="dialog_battle_result_newScore">%d점</string>
+
+    <string name="imagePath">android.resource://com.uhavecodingproblem.wordsrpg/drawable/%s</string>
+
+    <string name="googleClientID">599473159954-e4c0ra3s0ujdc07gcbiqcj2l25mll5id.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">687653535291177</string>
+    <string name="fb_login_protocol_scheme">fb687653535291177</string>
 
 </resources>

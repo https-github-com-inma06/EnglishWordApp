@@ -1,5 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.component
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -113,7 +114,7 @@ class CustomPackageRecyclerViewAdapter(
                         for (i in 0 until customPackageList.size) {
 
                             //태그리스트 filter 해서  가장 마지막에  필터된  태그값  가진 패키지 넣어줌. (중복 검색 방지)
-                            customPackageList[i].hashTagList.findLast {
+                            customPackageList[i].hashList.findLast {
                                 if(it.contains(searchValue)){
                                     searchedFilterList.add(customPackageList[i])
                                 }else{

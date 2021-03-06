@@ -4,7 +4,7 @@
     <data>
        <variable
            name="thisFragment"
-           type="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment" />
+           type="com.uhavecodingproblem.wordsrpg.ui.fragment.library.SearchCustomPackageFragment" />
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
@@ -17,7 +17,6 @@
         android:textSize="17sp"
         android:padding="15dp"
         android:gravity="center"
-        android:onClick="@{thisFragment::setFilterChange}"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/img_back_btn"
         app:layout_constraintBottom_toTopOf="@id/recyclerview_searched_package_list"
@@ -30,7 +29,7 @@
         android:textSize="17sp"
         android:padding="15dp"
         android:gravity="center"
-        android:onClick="@{thisFragment::setFilterChange}"
+
         app:layout_constraintStart_toEndOf="@+id/tv_title_filter"
         app:layout_constraintTop_toBottomOf="@id/img_back_btn"
         app:layout_constraintBottom_toTopOf="@id/recyclerview_searched_package_list"
@@ -58,7 +57,6 @@
         android:focusable="true"
         android:imeOptions="actionSearch"
         android:focusableInTouchMode="true"
-        app:searchAction="@{thisFragment.searchAction}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/img_back_btn"

@@ -5,9 +5,11 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/library">
 
-<!--    <fragment-->
+<!-- 일단 어떻게 될지 아직 몰라서  디자인에 시안에 따라 사라진 화면들은  주석 처리 하였습니다.-->
+
+    <!--    <fragment-->
 <!--        android:id="@+id/home"-->
-<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainHomeFragment"-->
+<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MainHomeFragment"-->
 <!--        android:label="MainHomeFragment"-->
 <!--        tools:layout="@layout/fragment_main_home">-->
 
@@ -15,7 +17,7 @@
 <!--    </fragment>-->
     <fragment
         android:id="@+id/library"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainLibraryFragment"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MainLibraryFragment"
         android:label="MainLibraryFragment"
         tools:layout="@layout/fragment_main_library">
 
@@ -26,7 +28,7 @@
 
 <!--    <fragment-->
 <!--        android:id="@+id/board"-->
-<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainBoardFragment"-->
+<!--        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.library.MainBoardFragment"-->
 <!--        android:label="MainBoardFragment"-->
 <!--        tools:layout="@layout/fragment_main_board">-->
 
@@ -40,14 +42,14 @@
     </fragment>
     <fragment
         android:id="@+id/my_room"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.MainMyRoomFragment"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.myroom.MainMyRoomFragment"
         android:label="MainMyRoomFragment"
         tools:layout="@layout/fragment_main_my_room">
 
     </fragment>
     <fragment
         android:id="@+id/search_fragment"
-        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.SearchCustomPackageFragment"
+        android:name="com.uhavecodingproblem.wordsrpg.ui.fragment.library.SearchCustomPackageFragment"
         android:label="SearchCustomPackageFragment"
         tools:layout="@layout/fragment_search_custom_package"/>
 

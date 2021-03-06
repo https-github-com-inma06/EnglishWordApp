@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="packageinfo"
+            type="com.uhavecodingproblem.wordsrpg.data.PackageInformation" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/basic_package_layout"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:layout_margin="8dp"
+        android:background="@drawable/basic_package_dialog_item_round">
+
+        <ImageView
+            android:id="@+id/img_by_level_package_thumbnail"
+            error="@{@drawable/loading}"
+            image="@{packageinfo.thumbnailImage}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/package_thumbnail" />
+
+
+        <TextView
+            android:id="@+id/tv_package_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/package_thumbnail_title"
+            android:gravity="center"
+            android:text="@{packageinfo.name}"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/tv_package_progress"
+            progress="@{packageinfo.stageList}"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:progressDrawable="@drawable/basic_package_progressbar"
+            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintTop_toBottomOf="@id/tv_package_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.05" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

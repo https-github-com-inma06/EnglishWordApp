@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+<data>
+    <variable
+        name="registerActivity"
+        type="com.uhavecodingproblem.wordsrpg.ui.activity.RegisterActivity" />
+</data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="패스워드\n 재확인"
+            app:layout_constraintBottom_toBottomOf="@+id/et_passwordCheck"
+            app:layout_constraintStart_toStartOf="@+id/textView28"
+            app:layout_constraintTop_toTopOf="@+id/et_passwordCheck" />
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/et_resgisterPassword"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/et_passwordCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName7"
+            app:layout_constraintStart_toStartOf="@+id/et_resgisterPassword"
+            app:layout_constraintTop_toBottomOf="@+id/et_resgisterPassword" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/iv_profileImageSelect"
+            app:layout_constraintStart_toStartOf="@+id/et_passwordCheck"
+            app:layout_constraintTop_toBottomOf="@+id/et_passwordCheck" />
+
+        <TextView
+            android:id="@+id/textView27"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="이메일"
+            app:layout_constraintBottom_toBottomOf="@+id/et_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_email" />
+
+        <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="패스워드"
+            app:layout_constraintBottom_toTopOf="@+id/et_passwordCheck"
+            app:layout_constraintStart_toStartOf="@+id/textView27"
+            app:layout_constraintTop_toTopOf="@+id/et_resgisterPassword" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임\n(선택 사항)"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName7"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName7" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="프로필 사진 \n(선택사항)"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profileImageSelect"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_profileImageSelect" />
+
+        <ImageView
+            android:id="@+id/iv_profileImageSelect"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
+            android:layout_marginStart="32dp"
+            android:onClick="@{registerActivity::setIvProfileImageSelectClickListener}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_registerComplete"
+            app:layout_constraintStart_toEndOf="@+id/textView31"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName7"
+            app:srcCompat="@drawable/on_my_room" />
+
+        <Button
+            android:id="@+id/btn_registerComplete"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="#000"
+            android:onClick="@{registerActivity::setBtnRegisterCompleteClickListener}"
+            android:paddingTop="12dp"
+            android:text="가입하기"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/et_resgisterPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/et_passwordCheck"
+            app:layout_constraintStart_toStartOf="@+id/et_email"
+            app:layout_constraintTop_toBottomOf="@+id/et_email" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
