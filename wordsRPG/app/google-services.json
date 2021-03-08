@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "417506123329-rros6ojjqquj3db98fseel3sakor3elo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.uhavecodingproblem.wordsrpg",
+            "certificate_hash": "493d0543a187645dc74027e6f770d1d5924596fe"
+          }
+        },
+        {
           "client_id": "417506123329-1lqsekdcrjeeg7iavcg4iton90mfah91.apps.googleusercontent.com",
           "client_type": 3
         }

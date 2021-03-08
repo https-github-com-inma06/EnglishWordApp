@@ -36,7 +36,7 @@ class EntireCustomPackageFragment: BaseUtility.BaseFragment<FragmentEntireCustom
 
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
     private fun setCustomPackageRecyclerView(){
-
+//이부분에서 파베 데이터 get 해서 list = 리스트 <get데이타>
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
         recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
             ENTIRE_CUSTOM_PACKAGE
@@ -50,10 +50,11 @@ class EntireCustomPackageFragment: BaseUtility.BaseFragment<FragmentEntireCustom
 
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, packageName: String,position:Int) {
+            override fun onItemClick(view: View, packageName: String) {
                 Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
             }
         })
+
 
 
     }//initRecyclerView()끝

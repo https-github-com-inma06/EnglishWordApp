@@ -60,16 +60,19 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
 
 
         //각 패키지 아이템 클릭시  넘어감 처리  구현
-        recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, packageName: String,position:Int) {
+        recyclerViewAdapter.apply {
+            setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
+                override fun onItemClick(view: View, packageName: String) {
+                    Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
 
-                if(position == 0)
+                }
+            })
+            setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
+                override fun onItemClick() {
                     moveToAddNewCustomPackageActivity()
-                else
-                Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-
-            }
-        })
+                }
+            })
+        }
 
 
     }//initRecyclerView()끝

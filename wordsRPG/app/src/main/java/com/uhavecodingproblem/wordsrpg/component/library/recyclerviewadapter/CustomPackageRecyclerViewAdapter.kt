@@ -3,6 +3,7 @@ package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
@@ -27,6 +28,25 @@ class CustomPackageRecyclerViewAdapter(
 
 
     private var onItemClickListener: OnItemClickListener? = null
+private var onAddItemClickListener: OnAddItemClickListener?=null
+//아이템 클릭 이벤트 받을  리스너 인터페이스
+    interface OnItemClickListener {
+        fun onItemClick(view: View, packageName: String)
+        // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
+    }
+    interface OnAddItemClickListener {
+        fun onItemClick()
+    }
+    //외부에서  아이템 클릭 처리할 리스너
+    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
+        this.onItemClickListener = onItemClickListener
+    }
+
+    //외부에서 추가버튼 클릭 처리할 리스너
+    fun setOnAddItemClickListener(addItemClickListener:OnAddItemClickListener) {
+        this.onAddItemClickListener = addItemClickListener
+    }
+
 
     init {
 
@@ -80,7 +100,7 @@ class CustomPackageRecyclerViewAdapter(
 
     // TODO: 2020-10-31 일단 이렇게 적용하고 나중에 명확하게  코드 다시  작성
     override fun getItemViewType(position: Int): Int {
-        return when (customPackageType) {
+         when (customPackageType) {
 
             ENTIRE_CUSTOM_PACKAGE -> {
 
@@ -107,18 +127,9 @@ class CustomPackageRecyclerViewAdapter(
     override fun getItemCount(): Int = customPackageList.size
 
 
-    //아이템 클릭 이벤트 받을  리스너 인터페이스
-    interface OnItemClickListener {
-        fun onItemClick(view: View, packageName: String, position: Int)
-        // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
-
-    }
 
 
-    //외부에서  아이템 클릭 처리할 리스너
-    fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
-        this.onItemClickListener = onItemClickListener
-    }
+
 
     //추가 아이템 뷰홀더
     inner class AddNewMyCustomPackage(val binding: ItemMyCustomPackageAddBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -127,7 +138,7 @@ class CustomPackageRecyclerViewAdapter(
             //아이템 클릭 리스너
             binding.layoutCustomPackageAdd.setOnClickListener {
                 // TODO: 2020-10-31 추후 리팩토링 필요.  외부로  빼서 패키지 추가  액션 진행해야됨
-
+                onAddItemClickListener?.onItemClick()
                 Logger.v("아이템 추가 ")
 
             }//아이템 클릭리스너 끝
@@ -160,8 +171,7 @@ class CustomPackageRecyclerViewAdapter(
                     // 리스너 객체의 메서드 호출.
                     onItemClickListener?.onItemClick(
                         view = it,
-                        packageName = customPackageList[pos].packageName,
-                        position = adapterPosition
+                        packageName = customPackageList[pos].packageName
                     )
 
                 }

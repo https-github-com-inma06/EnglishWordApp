@@ -10,9 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 
-class BattleDialog<VDB : ViewDataBinding>(context: Context, @LayoutRes val layoutId: Int) : Dialog(context) {
+class BattleDialog<VDB : ViewDataBinding>(
+        context: Context,
+        @LayoutRes val layoutId: Int
 
-    var binding:VDB = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, null, false)
+        ) : Dialog(context) {
+
+    var binding: VDB = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, null, false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,6 @@ class BattleDialog<VDB : ViewDataBinding>(context: Context, @LayoutRes val layou
                 window?.attributes = it
 
             }
-
         }
 
     }

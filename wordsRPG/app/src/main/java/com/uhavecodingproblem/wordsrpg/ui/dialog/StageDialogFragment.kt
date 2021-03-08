@@ -90,7 +90,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private fun setRecyclerView() {
         binding.recyclerviewStage.apply {
             stageDialogRecyclerViewAdapter =
-                StageDialogRecyclerViewAdapter(packageInformation.stageList, this@StageDialogFragment)
+            StageDialogRecyclerViewAdapter(packageInformation.stageList, this@StageDialogFragment)
             adapter = stageDialogRecyclerViewAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
