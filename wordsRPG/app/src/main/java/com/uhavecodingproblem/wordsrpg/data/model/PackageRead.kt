@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName
  * Created On 2021-01-29.
  * Description:
  */
+//패키지 테이블
 data class PackageRead(@SerializedName("success") val success: Boolean,
                        @SerializedName("p_id") val pId: String,
                        @SerializedName("package_name") val packageName: String,

@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.model
 
 /**
  * wordsrpg
@@ -10,7 +10,7 @@ package com.uhavecodingproblem.wordsrpg.data
  */
 
 data class CustomPackageData(
-   val uid:Int,
+   val c_id:String,
    val ownerName:String,
    val packageName:String,
    val profileImageUrl:String?,

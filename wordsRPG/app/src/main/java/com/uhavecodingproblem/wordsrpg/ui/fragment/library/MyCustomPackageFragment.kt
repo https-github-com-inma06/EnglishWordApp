@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity
@@ -136,7 +136,7 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
                 Logger.v("실행됨  $name     uri -> $uri  uid -> $uid, 어레이 -> $tagList" )
 
                 //mockdata list 에 넣어줌.
-                mockMyPackageDataList.add(CustomPackageData( uid,ownerName,name,uri,0,0, tagList!!))
+                mockMyPackageDataList.add(CustomPackageData( uid.toString(),ownerName,name,uri,0,0, tagList!!))
                 recyclerViewAdapter.notifyDataSetChanged()//리사이클러뷰 data update
             }
 

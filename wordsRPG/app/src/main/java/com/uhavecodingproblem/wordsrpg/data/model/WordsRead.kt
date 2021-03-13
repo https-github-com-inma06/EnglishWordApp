@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,8 +9,8 @@ import com.google.gson.annotations.SerializedName
  * Created On 2021-01-29.
  * Description:
  */
-data class WordsRead(@SerializedName("pw_id") val pwID: String,
-                     @SerializedName("p_id") val pId: String,
+
+data class WordsRead(
                      @SerializedName("w_id") val wId: String,
                      @SerializedName("word") val word: String,
                      @SerializedName("mean") val mean: String,

@@ -131,6 +131,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     //파이어베이스 리얼타임 베이스
     implementation 'com.google.firebase:firebase-database'
+    //파이어베이스 스토리지
+    implementation 'com.google.firebase:firebase-storage'
 
     def card_view = "1.0.0"
     implementation "androidx.cardview:cardview:$card_view"

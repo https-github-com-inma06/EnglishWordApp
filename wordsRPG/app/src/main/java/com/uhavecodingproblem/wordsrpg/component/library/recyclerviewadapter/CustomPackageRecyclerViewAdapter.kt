@@ -3,9 +3,8 @@ package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMyCustomPackageAddBinding
 import com.uhavecodingproblem.wordsrpg.util.*

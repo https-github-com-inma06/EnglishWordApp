@@ -1,62 +1,22 @@
 package com.uhavecodingproblem.wordsrpg.data.model
 
-import android.os.Parcel
-import android.os.Parcelable
+import java.io.Serializable
 
 
 data class User(
 
-    var userId: Long,  //유저 아이디
-    val userEmail: String,     //유저 이메일
-    val userPassword: String,   //유저 패스워드
-    var userName: String? = null,   //유저 네임
-    var profileImage: String? = null,  //이미지
-    var friendList: List<User>? = null,     //친구 목록
-    val ratingBadge: String? = null, //랭킹 등급
-    var score: Long? = null, // 배틀 점수
+    val u:String,
+    var user_id: Long,  //유저 아이디
+    val user_password: String,   //유저 패스워드
+    val user_email: String,     //유저 이메일
+    var user_nickName: String? = null,   //유저 네임
+    var user_profileImg: String? = null,  //이미지
+    var user_rank:String? = null, //나의 랭크
+    val user_ratingBadge: String? = null, //랭킹 등급
+    var user_score: Long? = null, // 배틀 점수
+    val user_friendList:List<Int>? = null, //친구 리스트
 
-    var processBattleList: List<BattleData>? = null, //진행중인 배틀 관련 데이타
-    var notificationList: List<Notification>? = null // 알림 관련 데이타
+    var user_battleList: List<Int>? = null, //배틀 데이타 리스트
+    var user_battleNotiList: List<Int>? = null // 알림(배틀) 관련 데이타 리스트
 
-):Parcelable {
-    constructor(parcel: Parcel) : this(
-        parcel.readLong(),
-        parcel.readString()!!,
-        parcel.readString()!!,
-        parcel.readString(),
-        parcel.readString(),
-        parcel.createTypedArrayList(CREATOR),
-        parcel.readString(),
-        parcel.readValue(Long::class.java.classLoader) as? Long,
-        parcel.createTypedArrayList(BattleData),
-        parcel.createTypedArrayList(Notification)
-    ) {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeLong(userId)
-        parcel.writeString(userEmail)
-        parcel.writeString(userPassword)
-        parcel.writeString(userName)
-        parcel.writeString(profileImage)
-        parcel.writeTypedList(friendList)
-        parcel.writeString(ratingBadge)
-        parcel.writeValue(score)
-        parcel.writeTypedList(processBattleList)
-        parcel.writeTypedList(notificationList)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<User> {
-        override fun createFromParcel(parcel: Parcel): User {
-            return User(parcel)
-        }
-
-        override fun newArray(size: Int): Array<User?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+):Serializable

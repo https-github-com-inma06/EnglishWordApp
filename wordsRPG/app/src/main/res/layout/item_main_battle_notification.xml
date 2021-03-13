@@ -39,9 +39,9 @@
             app:layout_constraintVertical_bias="0.75">
 
 
+<!--            setCircleImage="@{user.profileImage}"-->
             <ImageView
                 android:id="@+id/iv_userCurrentImage"
-                setCircleImage="@{user.profileImage}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="16dp"
@@ -51,22 +51,22 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:srcCompat="@tools:sample/avatars" />
 
+<!--            android:text="@{user.userName}"-->
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@{user.userName}"
                 app:layout_constraintStart_toEndOf="@+id/iv_userCurrentImage"
                 app:layout_constraintTop_toTopOf="@+id/iv_userCurrentImage"
                 tools:text="Loner" />
 
+<!--            android:text="@{battleAlarmDescribe}"-->
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{battleAlarmDescribe}"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_userCurrentImage"
                 app:layout_constraintStart_toStartOf="@+id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/textView5"

@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemDialogBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.*
 

@@ -1,6 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.data.mockdata
 
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 
 /**
  * wordsrpg
@@ -19,7 +19,7 @@ object CustomPackageListMockData {
     private fun mockCustomPackageList() =
         mutableListOf(
             CustomPackageData(
-                uid = 1,
+                c_id = 1.toString(),
                 ownerName = "로너",
                 packageName = "프로그래밍 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
@@ -28,7 +28,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("프로그래밈")
             ),
             CustomPackageData(
-                uid = 2,
+                c_id = 2.toString(),
                 ownerName = "아타나시오",
                 packageName = "워킹데드1화 단어장",
                 profileImageUrl = "https://ifh.cc/g/b6yryB.jpg",
@@ -37,7 +37,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("영어", "언어")
             ),
             CustomPackageData(
-                uid = 3,
+                c_id = 3.toString(),
                 ownerName = "리안",
                 packageName = "토익준비용 단어장",
                 profileImageUrl = "https://ifh.cc/g/PeB4iS.jpg",
@@ -46,7 +46,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("1")
             ),
             CustomPackageData(
-                uid = 4,
+                c_id = 4.toString(),
                 ownerName = "초보",
                 packageName = "오픽 단어장",
                 profileImageUrl = "https://ifh.cc/g/5QbCWC.png",
@@ -55,7 +55,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㄴㅇㄹ")
             ),
             CustomPackageData(
-                uid = 5,
+                c_id = 5.toString(),
                 ownerName = "로너",
                 packageName = "마케팅 단어장",
                 profileImageUrl = "https://ifh.cc/g/1kQm6l.jpg",
@@ -64,7 +64,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅇㅇ")
             ),
             CustomPackageData(
-                uid = 6,
+                c_id = 6.toString(),
                 ownerName = "재이",
                 packageName = "여행준비 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
@@ -73,7 +73,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㄴㅇ")
             ),
             CustomPackageData(
-                uid = 7,
+                c_id = 7.toString(),
                 ownerName = "초보",
                 packageName = "자동차 용어 단어장",
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
@@ -82,7 +82,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㄹㄹㄹ")
             ),
             CustomPackageData(
-                uid = 8,
+                c_id = 8.toString(),
                 ownerName = "홍님",
                 packageName = "이솝우화 단어장",
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
@@ -91,7 +91,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅍㅊㅍ")
             ),
             CustomPackageData(
-                uid = 9,
+                c_id = 9.toString(),
                 ownerName = "초보",
                 packageName = "영어유치원 단어장",
                 profileImageUrl = "https://ifh.cc/g/0q4a2h.jpg",
@@ -100,7 +100,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅁㄱㄷㄱ")
             ),
             CustomPackageData(
-                uid = 10,
+                c_id = 10.toString(),
                 ownerName = "아타나시오",
                 packageName = "컴퓨터용품 단어장",
                 profileImageUrl = "https://ifh.cc/g/KfsEuu.jpg",
@@ -109,7 +109,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅍㅊㅍㅊ")
             ),
             CustomPackageData(
-                uid = 11,
+                c_id = 11.toString(),
                 ownerName = "리안",
                 packageName = "우리 신체 단어장",
                 profileImageUrl = "https://ifh.cc/g/Wa5o7R.jpg",
@@ -118,7 +118,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅋㅊㅌㅊ")
             ),
             CustomPackageData(
-                uid = 12,
+                c_id = 12.toString(),
                 ownerName = "초보",
                 packageName = "프로그래밍2 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
@@ -127,7 +127,7 @@ object CustomPackageListMockData {
                 hashTagList = mutableListOf("ㅂㄷ123")
             ),
             CustomPackageData(
-                uid = 13,
+                c_id = 13.toString(),
                 ownerName = "재이",
                 packageName = "프로그래밍3 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",

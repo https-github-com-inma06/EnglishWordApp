@@ -14,8 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.StageDialogRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
-import com.uhavecodingproblem.wordsrpg.data.PackageInformation
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity

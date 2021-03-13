@@ -15,7 +15,7 @@
 
         <variable
             name="stage"
-            type="com.uhavecodingproblem.wordsrpg.data.StageInformation" />
+            type="com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation" />
 
         <variable
             name="dialog"

@@ -6,7 +6,7 @@
 
         <variable
             name="packageinfo"
-            type="com.uhavecodingproblem.wordsrpg.data.PackageInformation" />
+            type="com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity

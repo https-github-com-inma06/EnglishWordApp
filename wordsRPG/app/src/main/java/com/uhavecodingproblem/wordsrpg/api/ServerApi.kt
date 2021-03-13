@@ -1,8 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.api
 
-import com.uhavecodingproblem.wordsrpg.data.PackageInformation
-import com.uhavecodingproblem.wordsrpg.data.PackageRead
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.PackageRead
 import retrofit2.Call
 import retrofit2.http.*
 

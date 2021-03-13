@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
 

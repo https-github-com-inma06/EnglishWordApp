@@ -7,7 +7,7 @@
     <data>
         <variable
             name="information"
-            type="com.uhavecodingproblem.wordsrpg.data.CustomPackageData" />
+            type="com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData" />
 
         <variable
             name="customdialog"

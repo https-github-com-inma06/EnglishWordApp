@@ -1,8 +1,7 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.mockdata
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
 
 /**
  * wordsrpg
@@ -24,7 +23,7 @@ data class PackageInformation(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.createTypedArrayList(StageInformation.CREATOR) as MutableList<StageInformation>
+        parcel.createTypedArrayList(StageInformation) as MutableList<StageInformation>
 
     )
 

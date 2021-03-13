@@ -1,13 +1,12 @@
 package com.uhavecodingproblem.wordsrpg.component
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageRecyclerViewBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SEARCH_PACKAGE_TAG

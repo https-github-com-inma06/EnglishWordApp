@@ -1,17 +1,13 @@
 package com.uhavecodingproblem.wordsrpg.dialog
 
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
-import androidx.databinding.DataBindingUtil
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 

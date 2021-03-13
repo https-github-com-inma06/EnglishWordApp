@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.uhavecodingproblem.wordsrpg.api.ServerApi
-import com.uhavecodingproblem.wordsrpg.data.PackageInformation
-import com.uhavecodingproblem.wordsrpg.data.PackageRead
+import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.PackageRead
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordMockData
-import com.uhavecodingproblem.wordsrpg.util.Logger
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import retrofit2.Call

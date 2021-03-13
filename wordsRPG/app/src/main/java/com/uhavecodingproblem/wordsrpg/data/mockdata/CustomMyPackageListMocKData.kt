@@ -1,6 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.data.mockdata
 
-import com.uhavecodingproblem.wordsrpg.data.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 
 /**
  * wordsrpg
@@ -19,7 +19,7 @@ object CustomMyPackageListMocKData {
     private fun mockCustomPackageList() =
         mutableListOf(
             CustomPackageData(
-                uid = 1,
+                c_id = 1.toString(),
                 ownerName = "리안",
                 packageName = "프로그래밍 단어장",
                 profileImageUrl = "https://ifh.cc/g/Jn9ghK.jpg",
@@ -28,7 +28,7 @@ object CustomMyPackageListMocKData {
                 hashTagList = mutableListOf("프로그래밈")
             ),
             CustomPackageData(
-                uid = 2,
+                c_id = 2.toString(),
                 ownerName = "아타나시님",
                 packageName = "워킹데드1화 단어장",
                 profileImageUrl = "https://ifh.cc/g/b6yryB.jpg",
@@ -37,7 +37,7 @@ object CustomMyPackageListMocKData {
                 hashTagList = mutableListOf("영어", "언어")
             ),
             CustomPackageData(
-                uid = 3,
+                c_id = 3.toString(),
                 ownerName = "재이",
                 packageName = "토익준비용 단어장",
                 profileImageUrl = "https://ifh.cc/g/PeB4iS.jpg",

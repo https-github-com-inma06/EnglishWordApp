@@ -23,7 +23,7 @@
 
         <variable
             name="stage"
-            type="com.uhavecodingproblem.wordsrpg.data.StageInformation" />
+            type="com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

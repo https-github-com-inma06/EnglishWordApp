@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.WordInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.WordInformation
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
 
 /**

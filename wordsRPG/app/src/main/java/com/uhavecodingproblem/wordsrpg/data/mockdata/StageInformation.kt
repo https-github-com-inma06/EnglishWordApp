@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.mockdata
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -20,7 +20,7 @@ data class StageInformation(
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),
-        parcel.createTypedArrayList(WordInformation.CREATOR) as MutableList<WordInformation>
+        parcel.createTypedArrayList(WordInformation) as MutableList<WordInformation>
     )
 
     override fun describeContents(): Int {

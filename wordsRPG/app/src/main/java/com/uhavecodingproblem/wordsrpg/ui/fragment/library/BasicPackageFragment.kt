@@ -13,7 +13,7 @@ import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageT
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.BasicPackageTabObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.PackageObserveViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 

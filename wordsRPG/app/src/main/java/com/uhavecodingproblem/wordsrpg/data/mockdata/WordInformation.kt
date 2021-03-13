@@ -1,4 +1,4 @@
-package com.uhavecodingproblem.wordsrpg.data
+package com.uhavecodingproblem.wordsrpg.data.mockdata
 
 import android.os.Parcel
 import android.os.Parcelable

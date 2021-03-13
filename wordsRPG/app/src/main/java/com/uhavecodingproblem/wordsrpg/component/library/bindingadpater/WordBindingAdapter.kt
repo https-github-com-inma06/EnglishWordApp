@@ -2,7 +2,7 @@ package com.uhavecodingproblem.wordsrpg.component.library.bindingadpater
 
 import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
-import com.uhavecodingproblem.wordsrpg.data.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 
 /**
  * wordsrpg

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.uhavecodingproblem.wordsrpg.data.CustomPackageData" />
+            type="com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
