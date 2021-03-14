@@ -1,6 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
-import androidx.appcompat.app.AlertDialog
+import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -11,7 +11,6 @@ import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.BasicPackageTabObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.PackageObserveViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
@@ -31,12 +30,8 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
     MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
-    private val tabItemName = listOf("수준별", "시험별", "카테고리별")
-    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels {
-        BasicPackageTabObserveViewModelFactory(
-            tabItemName
-        )
-    }
+
+    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels()
     private val packageObserveViewModel by viewModels<PackageObserveViewModel> { PackageObserveViewModelFactory(Application.userId) }
     private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
     private var progressDialog: SearchLoadingDialog? = null
@@ -50,7 +45,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         progressDialog = SearchLoadingDialog((requireContext()))
 
         initBinding()
-        observeTabLayoutPosition()
+        observeLoadPackage()
         observeLoading()
     }
 
@@ -63,10 +58,18 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         }
     }
 
-    private fun setRecyclerItem() {
-        packageObserveViewModel.typePackage.observe(viewLifecycleOwner){
-            basicRecyclerViewAdapter?.submitList(it.toMutableList())
+    private fun observeLoadPackage(){
+
+        packageObserveViewModel.packageData.observe(viewLifecycleOwner) {
+            for (i in it.indices)
+                Log.e("observeLoadPackage", "packageName : ${it[i].package_name} isCustom : ${it[i].is_custom}")
         }
+
+        packageObserveViewModel.stageData.observe(viewLifecycleOwner){
+            for (i in it.indices)
+                Log.e("observeLoadStage", "stage id : ${it[i].s_id} stage status : ${it[i].stage_status}")
+        }
+
     }
 
     private fun initRecyclerView() {
@@ -75,43 +78,11 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
             adapter = basicRecyclerViewAdapter
             layoutManager = setGridLayout()
         }
-        setRecyclerItem()
     }
 
 
     private fun setGridLayout(): GridLayoutManager {
         return GridLayoutManager(requireContext(), 3)
-    }
-
-    private fun setDialog() {
-
-        val dialog: AlertDialog? = requireActivity().let {
-            val builder = AlertDialog.Builder(it)
-            builder.apply {
-                setMessage("현재 준비중입니다.")
-            }
-            builder.create()
-        }
-        dialog?.show()
-
-    }
-
-    private fun observeTabLayoutPosition() {
-        basicPackageTabObserveViewModel.position.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                0 -> {
-                    packageObserveViewModel.setType("수준별")
-                }
-                1 -> {
-                    packageObserveViewModel.setType("시험별")
-                }
-                2 -> {
-                    setDialog()
-                }
-                else -> throw IllegalStateException("unKnown Tab Position")
-            }
-            Logger.v("$it")
-        })
     }
 
     private fun observeLoading() {

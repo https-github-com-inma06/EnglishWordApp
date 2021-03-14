@@ -17,10 +17,12 @@ import androidx.lifecycle.ViewModel
  *
  */
 
-class BasicPackageTabObserveViewModel(tabName: List<String>) : ViewModel(){
+class BasicPackageTabObserveViewModel : ViewModel(){
 
     val tabItem: LiveData<List<String>> get() = _tabItem
     val position: LiveData<Int> get() = _position
+
+    private val tabName = listOf("수준별", "시험별", "카테고리별")
 
     private val _tabItem: MutableLiveData<List<String>> = MutableLiveData()
     private val _position: MutableLiveData<Int> = MutableLiveData()

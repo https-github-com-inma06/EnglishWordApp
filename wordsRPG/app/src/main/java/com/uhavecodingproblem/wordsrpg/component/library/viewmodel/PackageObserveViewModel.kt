@@ -3,17 +3,12 @@ package com.uhavecodingproblem.wordsrpg.component.library.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.uhavecodingproblem.wordsrpg.api.ServerApi
-import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.google.firebase.database.*
+import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageRead
-import com.uhavecodingproblem.wordsrpg.data.mockdata.WordMockData
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * wordsrpg
@@ -27,61 +22,79 @@ class PackageObserveViewModel(private val userId: String) : ViewModel() {
     //Loading 여부 true 로딩중 false 로딩 x
     val isLoading: MutableLiveData<Boolean> get() = _isLoading
 
-    // 타입별로 분류된 패키지들(수준 or 시험)
-    val typePackage: MutableLiveData<MutableList<PackageInformation>> get() = _typePackage
-
     // 전체 기본 패키지들
-    private val allPackage: MutableList<PackageInformation> = WordMockData.wordMockData
+    val packageData get() = _packageData
+    val stageData get() = _stageData
+    val currentStage get() = _currentStage
 
+    private val _packageData = MutableLiveData<MutableList<PackageRead>>()
+    private val _stageData = MutableLiveData<MutableList<Learning>>()
+    private val _currentStage = MutableLiveData<MutableList<Learning>>() // 선택된 패키지의 스테이지
 
     private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
-    private val _typePackage: MutableLiveData<MutableList<PackageInformation>> = MutableLiveData()
-    private val _type: MutableLiveData<String> = MutableLiveData("수준별")
+
+    private val firebaseDatabase = FirebaseDatabase.getInstance()
+    private val databaseReference: DatabaseReference = firebaseDatabase.reference
 
     init {
         loadPackage()
-        observeType()
     }
 
-    private fun loadPackage() {
-        _isLoading.postValue(false)
-        val package_name = "테스트패키지네임"
-        ServerApi.requestBasicPackage(package_name).enqueue(object : Callback<PackageRead> {
-            override fun onResponse(call: Call<PackageRead>, response: Response<PackageRead>) {
-                _isLoading.postValue(false)
-                response.body()?.let {
-                    Log.e("Read ::", it.toString())
+    private fun loadPackage() = viewModelScope.launch(Dispatchers.IO) {
+
+        databaseReference.child("Package").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val allPackageItems = mutableListOf<PackageRead>()
+
+                for (childSnapShot in snapshot.children) {
+                    childSnapShot?.let {
+                        Log.e("snapshot : ", it.toString())
+                        val data = it.getValue(PackageRead::class.java)
+                        data?.let { packageInformation ->
+                            allPackageItems.add(packageInformation)
+                        }
+                    }
                 }
+
+                _packageData.postValue(allPackageItems)
+                loadStage(userId)
             }
 
-            override fun onFailure(call: Call<PackageRead>, t: Throwable) {
-
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Load Package Error", error.message)
+                _isLoading.postValue(false)
             }
         })
     }
 
-    fun setType(type: String) {
-        _type.postValue(type)
-    }
+    private fun loadStage(u_id: String) = viewModelScope.launch(Dispatchers.IO){
+        databaseReference.child("Learning").addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val stageItems = mutableListOf<Learning>()
+                for (childSnapShot in snapshot.children){
+                    childSnapShot?.let {
+                        val data = it.getValue(Learning::class.java)
+                        data?.let { stage->
+                            stageItems.add(stage)
+                        }
+                    }
+                }
 
-    private fun observeType() {
-        viewModelScope.launch {
-            _type.asFlow().collect {
-                _typePackage.postValue(allPackage.filter { packageInformation -> packageInformation.type == it }.toMutableList())
+                _stageData.postValue(stageItems.filter { Learning -> Learning.u_id == u_id}.toMutableList())
+                _isLoading.postValue(false)
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Error:", "Load Stage Error")
+                _isLoading.postValue(false)
+            }
+        })
     }
 
-    fun requestUpdatePackage() {
-        loadPackage()
-    }
-
-
-    fun getPackage(name: String): PackageInformation {
-        allPackage.find { it.name == name }?.let {
-            return it
+    fun selectedPackage(p_id: String){
+        _stageData.value?.let {
+            _currentStage.postValue(it.filter { Learning -> Learning.p_id == p_id }.toMutableList())
         }
-        throw IllegalStateException("Not Found PackageName equals name")
     }
 
 }

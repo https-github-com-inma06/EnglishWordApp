@@ -53,7 +53,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
+        //packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
     }
 
     override fun DialogStageBinding.onCreateView() {
@@ -206,7 +206,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
     override fun onResume() {
         super.onResume()
-        packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
+        //packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
         context?.dialogResize(this@StageDialogFragment, 0.9f, 0.9f)
         binding.recyclerviewStage.addOnScrollListener(scrolledListener)
         Logger.v("StageDialogFragment onResume")
