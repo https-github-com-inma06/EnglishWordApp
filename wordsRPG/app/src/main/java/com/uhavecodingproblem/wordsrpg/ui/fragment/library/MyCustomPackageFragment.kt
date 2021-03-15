@@ -47,32 +47,32 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
     private fun setCustomPackageRecyclerView(){
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
-        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+//        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
+//            ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+//
+//        recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
+//            MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
-        recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
-
-         binding.recyclerviewMyCustomList.apply {
-             layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
-             adapter = recyclerViewAdapter
-         }
+//         binding.recyclerviewMyCustomList.apply {
+//             layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
+//             adapter = recyclerViewAdapter
+//         }
 
 
         //각 패키지 아이템 클릭시  넘어감 처리  구현
-        recyclerViewAdapter.apply {
-            setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-                override fun onItemClick(view: View, packageName: String) {
-                    Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-
-                }
-            })
-            setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
-                override fun onItemClick() {
-                    moveToAddNewCustomPackageActivity()
-                }
-            })
-        }
+//        recyclerViewAdapter.apply {
+//            setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
+//                override fun onItemClick(view: View, packageName: String) {
+//                    Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
+//
+//                }
+//            })
+//            setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
+//                override fun onItemClick() {
+//                    moveToAddNewCustomPackageActivity()
+//                }
+//            })
+//        }
 
 
     }//initRecyclerView()끝

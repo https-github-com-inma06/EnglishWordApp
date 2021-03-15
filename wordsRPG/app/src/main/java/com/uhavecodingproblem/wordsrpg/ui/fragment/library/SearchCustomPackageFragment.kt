@@ -116,8 +116,8 @@ class SearchCustomPackageFragment: BaseUtility.BaseFragment<FragmentSearchCustom
     private fun setSearchedCustomPackageRecyclerView(){
 
         // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
-        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-            SEARCH_PACKAGE_TITLE)//adatper 연결 -> default 검색 타입은 제목
+//        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
+//            SEARCH_PACKAGE_TITLE)//adatper 연결 -> default 검색 타입은 제목
 
         //필터 스타일도 TITLE 적용된걸로 바꿈.
         filterClickedStyleChange(filterCheck = SEARCH_PACKAGE_TITLE)

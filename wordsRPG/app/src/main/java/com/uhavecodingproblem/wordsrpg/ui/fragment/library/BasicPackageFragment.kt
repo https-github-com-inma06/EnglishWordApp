@@ -5,6 +5,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.database.FirebaseDatabase
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
@@ -37,8 +38,8 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
 
 
     override fun FragmentBasicPackageBinding.onCreateView() {
-        Logger.v("실행")
 
+        Logger.v("실행")
         progressDialog = SearchLoadingDialog((requireContext()))
 
         initBinding()

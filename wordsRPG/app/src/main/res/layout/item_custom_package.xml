@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="data"
-            type="com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData" />
+            name="packAge"
+            type="com.uhavecodingproblem.wordsrpg.data.model.Package" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +18,16 @@
 
         <ImageView
             android:id="@+id/img_custom_package_thumbnail"
-            app:image="@{data.profileImageUrl}"
-            app:error="@{@drawable/on_my_room}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:contentDescription="@string/package_thumbnail" />
+            android:contentDescription="@string/package_thumbnail"
+            app:error="@{@drawable/on_my_room}"
+            app:image="@{packAge.package_thumbnail}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_custom_package_name"
@@ -30,13 +35,16 @@
             android:layout_height="0dp"
             android:background="@drawable/package_thumbnail_title"
             android:gravity="center"
+            android:text="@{packAge.package_name}"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:text="@{data.packageName}"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/tv_custom_package_progress"
@@ -44,31 +52,32 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:progressDrawable="@drawable/basic_package_progressbar"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintTop_toBottomOf="@id/tv_custom_package_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.05"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.05" />
+            app:layout_constraintTop_toBottomOf="@id/tv_custom_package_name"
+            app:layout_constraintWidth_percent="0.8"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_custom_package_owner_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_package_item_tv_round"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textSize="8sp"
-            tools:ignore="RtlSymmetry,SmallSp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/binggraemelonabold"
             android:layout_marginBottom="2dp"
-            android:text="@{'['+data.ownerName+']'}"
+            android:background="@drawable/custom_package_item_tv_round"
+            android:fontFamily="@font/binggraemelonabold"
+            android:paddingStart="5dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="2dp"
+            android:text="@{'['+packAge.customer_id+']'}"
+            android:textColor="@color/white"
+            android:textSize="8sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_custom_package_name"
             app:layout_constraintEnd_toEndOf="parent"
-            />
+            tools:ignore="RtlSymmetry,SmallSp"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
