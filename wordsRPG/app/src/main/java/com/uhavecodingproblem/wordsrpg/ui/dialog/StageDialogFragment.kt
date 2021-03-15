@@ -39,6 +39,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private var stage = mutableListOf<Learning>()
     private var snackbar: Snackbar? = null
     private var isScrolling = false
+    private var isFirstCreate = false
 
     companion object {
         fun newInstance(packageWithStage: PackageWithStage): StageDialogFragment {
@@ -79,17 +80,18 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
     private fun setUpRecyclerData() {
         stage = packageObserveViewModel.selectedPackage(currentPackage.p_id)
-
-        var position = 0
-        for (i in stage.indices) {
-            if (stage[i].stage_status != "3") {
-                position = i
-                break
+        if (!isFirstCreate) {
+            var position = 0
+            for (i in stage.indices) {
+                if (stage[i].stage_status != "3") {
+                    position = i
+                    break
+                }
             }
+            stageDialogRecyclerViewAdapter.setUpFirstFocus(position)
         }
-
+        isFirstCreate = true
         stageDialogRecyclerViewAdapter.submitList(stage)
-        stageDialogRecyclerViewAdapter.setUpFirstFocus(position)
     }
 
 
