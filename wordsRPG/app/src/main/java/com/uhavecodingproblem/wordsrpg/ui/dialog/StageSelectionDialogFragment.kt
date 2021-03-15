@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
@@ -45,13 +44,12 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        arguments?.let { bundle->
+        arguments?.let { bundle ->
             bundle.getParcelable<PackageWithStage>("packageWithStage")?.let {
                 currentPackage = it
             }
             bundle.getParcelable<Learning>("stage")?.let {
-                stage= it
+                stage = it
             }
         }
     }
@@ -81,7 +79,7 @@ class StageSelectionDialogFragment : DialogFragment() {
         setInit()
     }
 
-    private fun setInit(){
+    private fun setInit() {
         binding.apply {
             if (stage.stage_status == "0"){
                 val bind = this as DialogStageSelectionNoneBinding
@@ -93,7 +91,7 @@ class StageSelectionDialogFragment : DialogFragment() {
 
                     layoutSelectionDialog.clipToOutline = true
                 }
-            }else{
+            } else {
                 val bind = this as DialogStageSelectionOtherBinding
                 bind.apply {
                     name = currentPackage.package_name
@@ -110,15 +108,13 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     }
 
-    fun exit(){
-        Logger.v("Exit")
+    fun exit() {
         val stageSelectionDialogFragment = parentFragmentManager.findFragmentByTag("SelectionDialog")
         if (stageSelectionDialogFragment != null)
             (stageSelectionDialogFragment as StageSelectionDialogFragment).dismiss()
     }
 
-    fun moveStudy(){
-        Logger.v("Move")
+    fun moveStudy() {
         Intent(requireContext(), StudyActivity::class.java).also {
             it.putExtra("packageWithStage", currentPackage)
             it.putExtra("stage", stage)
@@ -127,7 +123,7 @@ class StageSelectionDialogFragment : DialogFragment() {
         }
     }
 
-    fun moveTest(){
+    fun moveTest() {
         Logger.v("MoveTest")
     }
 
@@ -135,21 +131,17 @@ class StageSelectionDialogFragment : DialogFragment() {
         super.onResume()
 
         requireContext().dialogResize(this@StageSelectionDialogFragment, 0.9f, 0.45f)
-        Logger.v("StageSelectionDialogFragment onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Logger.v("StageSelectionDialogFragment onPause")
     }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        Logger.v("StageSelectionDialogFragment onCancel")
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        Logger.v("StageSelectionDialogFragment onDismiss")
     }
 }

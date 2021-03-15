@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyActivityViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
@@ -41,6 +40,7 @@ class StudyActivity :
     private val viewModel by viewModels<WordObserveViewModel>()
     private var loadingDialog: SearchLoadingDialog? = null
     private val wordList = mutableListOf<WordsRead>()
+    private var isScrolling = false
 
     override fun ActivityStudyBinding.onCreate() {
         Logger.v("실행")
@@ -75,18 +75,18 @@ class StudyActivity :
 
     private fun setWord() {
         intent?.let {
-            it.getParcelableExtra<Learning>("stage")?.let {learning ->
+            it.getParcelableExtra<Learning>("stage")?.let { learning ->
                 stage = learning
                 viewModel.loadWordLink(learning.p_id, learning.s_id)
             }
-            it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo->
+            it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
                 setToolbarTitle(packageInfo.package_name)
             }
         }
     }
 
-    private fun observeLoading(){
-        viewModel.isLoading.observe(this){
+    private fun observeLoading() {
+        viewModel.isLoading.observe(this) {
             if (it)
                 loadingDialog?.showLoading()
             else
@@ -94,8 +94,8 @@ class StudyActivity :
         }
     }
 
-    private fun observeWord(){
-        viewModel.wordList.observe(this){
+    private fun observeWord() {
+        viewModel.wordList.observe(this) {
             wordList.clear()
             wordList.addAll(it)
             studyActivityRecyclerviewAdapter?.notifyDataSetChanged()
@@ -157,6 +157,10 @@ class StudyActivity :
                 studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
                 studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
             }
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            isScrolling = state != ViewPager2.SCROLL_STATE_IDLE
         }
     }
 
@@ -224,30 +228,34 @@ class StudyActivity :
     }
 
     override fun onNextBtnClick(v: View, position: Int) {
-        if (position == wordList.size - 1)
-            Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
-        else
-            binding.viewpager2Study.currentItem += 1
+        if (!isScrolling) {
+            if (position == wordList.size - 1)
+                Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
+            else
+                binding.viewpager2Study.currentItem += 1
 
-        stage?.let {
-            viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem)
+            stage?.let {
+                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
+            }
         }
 
     }
 
     override fun onPreviousBtnClick(v: View, position: Int) {
-        binding.viewpager2Study.currentItem -= 1
-        stage?.let {
-            viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem)
+        if (!isScrolling) {
+            binding.viewpager2Study.currentItem -= 1
+            stage?.let {
+                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
+            }
         }
     }
 
     override fun onVideoClick(v: View, position: Int) {
-//        Toast.makeText(
-//            this,
-//            "Move To YoutubePlayer word = ${stageInformationInformation?.wordList!![position].word}",
-//            Toast.LENGTH_SHORT
-//        ).show()
+        Toast.makeText(
+            this,
+            "Move To YoutubePlayer word = ${wordList[position].word}",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onDestroy() {
@@ -266,7 +274,6 @@ class StudyActivity :
             exitBuilder.apply {
                 setMessage("학습을 종료하시겠습니까?")
                 setPositiveButton("종료") { dialogInterface, _ ->
-                    //TODO Server update
                     dialogInterface.dismiss()
                     finish()
                 }

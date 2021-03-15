@@ -1,6 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,13 +11,11 @@ import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.Mai
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
-
-import com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
@@ -39,7 +36,6 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
     private var dialogFragment: DialogFragment? = null
 
 
-
     override fun FragmentBasicPackageBinding.onCreateView() {
         Logger.v("실행")
 
@@ -58,8 +54,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         }
     }
 
-    private fun observeLoadBasicPackage(){
-
+    private fun observeLoadBasicPackage() {
         packageObserveViewModel.basicPackageInformation.observe(viewLifecycleOwner) {
             basicRecyclerViewAdapter?.submitList(it.toMutableList())
         }

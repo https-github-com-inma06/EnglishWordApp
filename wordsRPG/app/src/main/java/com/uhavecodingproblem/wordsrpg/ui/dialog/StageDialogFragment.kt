@@ -55,12 +55,14 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
         arguments?.getParcelable<PackageWithStage>("packageWithStage")?.let {
             currentPackage = it
+<<<<<<< HEAD
             packageObserveViewModel.selectedPackage(it.p_id)
+=======
+>>>>>>> library/ryan
         }
     }
 
     override fun DialogStageBinding.onCreateView() {
-        Logger.v("StageDialogFragment onCreateView")
     }
 
     override fun DialogStageBinding.onViewCreated() {
@@ -81,7 +83,10 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private fun setUpRecyclerData() {
         stage = packageObserveViewModel.selectedPackage(currentPackage.p_id)
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> library/ryan
         var position = 0
         for (i in stage.indices) {
             if (stage[i].stage_status != "3") {
@@ -223,27 +228,27 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
     override fun onResume() {
         super.onResume()
+<<<<<<< HEAD
         //packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
+=======
+        setUpRecyclerData()
+>>>>>>> library/ryan
         context?.dialogResize(this@StageDialogFragment, 0.9f, 0.9f)
         binding.recyclerviewStage.addOnScrollListener(scrolledListener)
-        Logger.v("StageDialogFragment onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Logger.v("StageDialogFragment onPause")
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
     }
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        Logger.v("StageDialogFragment onCancel")
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        Logger.v("StageDialogFragment onDismiss")
         binding.recyclerviewStage.removeOnScrollListener(scrolledListener)
     }
 
