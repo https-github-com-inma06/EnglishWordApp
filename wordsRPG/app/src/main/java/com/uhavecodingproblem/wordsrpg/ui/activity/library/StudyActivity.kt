@@ -114,6 +114,9 @@ class StudyActivity :
     }
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
+
+
+
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             Logger.v("Position :: $position")
@@ -124,6 +127,7 @@ class StudyActivity :
              * https://stackoverflow.com/questions/42944005/recyclerview-cannot-call-this-method-in-a-scroll-callback 를 보고 해당 부분 수정
              *
              */
+
             binding.viewpager2Study.post {
                 studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
                 studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)

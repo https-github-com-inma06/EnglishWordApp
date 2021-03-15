@@ -68,6 +68,10 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$glide_version"
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
+    // ucrop 추가 ( 프로필사진 불러올때 Crop )
+    implementation 'com.github.yalantis:ucrop:2.2.6'
+
+
 
     //retrofit  추가
     def retrofit_version = '2.9.0'

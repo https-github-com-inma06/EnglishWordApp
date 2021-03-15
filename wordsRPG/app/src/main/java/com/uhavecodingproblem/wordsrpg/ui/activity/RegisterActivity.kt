@@ -19,6 +19,7 @@ class RegisterActivity : BaseUtility.BaseActivity<ActivityRegisterBinding>(R.lay
 
 
     override fun ActivityRegisterBinding.onCreate() {
+        registerActivity = this@RegisterActivity
 
     }
 

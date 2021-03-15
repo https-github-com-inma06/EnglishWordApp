@@ -1,62 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="settingActivity"
+            type="com.uhavecodingproblem.wordsrpg.ui.activity.setting.SettingActivity" />
+    </data>
 
     <!-- TODO:// 하드코딩 됨 -->
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/default_padding">
-
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin">
-        <ImageView
-            android:id="@+id/iv_userProfile"
-            android:layout_width="64dp"
-            android:layout_height="64dp"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorLightBlue2"
+        android:padding="@dimen/default_padding">
+
+
+        <RelativeLayout
+            android:id="@+id/view_profileImageCircle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/profile_image_view_circle"
+            android:padding="3dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_profileImageSelect"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerInParent="true"
+                android:onClick="@{settingActivity::setClickListener}"
+                app:layout_constraintBottom_toTopOf="@+id/btn_registerComplete"
+                app:srcCompat="@drawable/on_my_room" />
+        </RelativeLayout>
+
+
         <TextView
             android:id="@+id/tv_userName"
-            android:text="유저이름"
-            android:textSize="30dp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:text="닉네임"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            app:layout_constraintStart_toEndOf="@+id/view_profileImageCircle"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/basic_button_color"
+            android:onClick="@{settingActivity::setClickListener}"
+            android:text="@string/setting_btn_logout"
+            android:textColor="@color/basic_button_text_color"
+            android:textSize="32dp"
+            android:theme="@style/customButtonFontStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/setting_btn_logout"
-        android:textSize="32dp"
-        android:textColor="@color/basic_button_text_color"
-        android:theme="@style/customButtonFontStyle"
-        android:backgroundTint="@color/basic_button_color"/>
+        <Button
+            android:id="@+id/btn_license"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:backgroundTint="@color/basic_button_color"
+            android:onClick="@{settingActivity::setClickListener}"
+            android:text="@string/setting_btn_license"
+            android:textColor="@color/basic_button_text_color"
+            android:textSize="32dp"
+            android:theme="@style/customButtonFontStyle"
+            app:layout_constraintBottom_toTopOf="@+id/btn_logout"
+            tools:layout_editor_absoluteX="16dp" />
 
-    <Button
-        android:id="@+id/btn_license"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/setting_btn_license"
-        android:textSize="32dp"
-        android:textColor="@color/basic_button_text_color"
-        android:theme="@style/customButtonFontStyle"
-        android:backgroundTint="@color/basic_button_color"/>
+        <Button
+            android:id="@+id/btn_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:backgroundTint="@color/basic_button_color"
+            android:onClick="@{settingActivity::setClickListener}"
+            android:text="@string/setting_btn_version"
+            android:textColor="@color/basic_button_text_color"
+            android:textSize="32dp"
+            android:theme="@style/customButtonFontStyle"
+            app:layout_constraintBottom_toTopOf="@+id/btn_license"
+            tools:layout_editor_absoluteX="16dp" />
 
-    <Button
-        android:id="@+id/btn_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/setting_btn_version"
-        android:textSize="32dp"
-        android:textColor="@color/basic_button_text_color"
-        android:theme="@style/customButtonFontStyle"
-        android:backgroundTint="@color/basic_button_color"/>
-
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
