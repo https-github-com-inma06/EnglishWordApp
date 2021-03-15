@@ -9,32 +9,50 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyActivityViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.Learning
+import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
+import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.util.Logger
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class StudyActivity :
     BaseUtility.BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
     StudyActivityViewPagerAdapter.ItemClickListener {
 
-    private var stageInformationInformation: StageInformation? = null
+    private var stage: Learning? = null
     private var wordTextToSpeech: TextToSpeech? = null
     private var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter? = null
+    private val viewModel by viewModels<WordObserveViewModel>()
+    private var loadingDialog: SearchLoadingDialog? = null
+    private val wordList = mutableListOf<WordsRead>()
+    private var isScrolling = false
 
     override fun ActivityStudyBinding.onCreate() {
         Logger.v("실행")
 
+        loadingDialog = SearchLoadingDialog(this@StudyActivity)
         initTextToSpeech()
         setWord()
         initBinding()
         setViewPager()
+
+        observeLoading()
+        observeWord()
     }
 
     /**
@@ -57,11 +75,32 @@ class StudyActivity :
 
     private fun setWord() {
         intent?.let {
-            stageInformationInformation = it.getParcelableExtra("StudyWord")
-            stageInformationInformation?.let { stage ->
-                setToolbarTitle("${it.getStringExtra("PackageName")} LV ${stage.stageNum}")
-                stage.wordList[0].isStudyPassed = true
+            it.getParcelableExtra<Learning>("stage")?.let { learning ->
+                stage = learning
+                viewModel.loadWordLink(learning.p_id, learning.s_id)
             }
+            it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
+                setToolbarTitle(packageInfo.package_name)
+            }
+        }
+    }
+
+    private fun observeLoading() {
+        viewModel.isLoading.observe(this) {
+            if (it)
+                loadingDialog?.showLoading()
+            else
+                loadingDialog?.dismissLoading()
+        }
+    }
+
+    private fun observeWord() {
+        viewModel.wordList.observe(this) {
+            wordList.clear()
+            wordList.addAll(it)
+            studyActivityRecyclerviewAdapter?.notifyDataSetChanged()
+            setMoveToRecentPosition(stage?.current_page?.toInt())
+            Logger.e("${it.size} ${studyActivityRecyclerviewAdapter?.itemCount}")
         }
     }
 
@@ -69,27 +108,14 @@ class StudyActivity :
         binding.viewpager2Study.apply {
             studyActivityRecyclerviewAdapter =
                 StudyActivityViewPagerAdapter(
-                    stageInformationInformation?.wordList!!,
-                    this@StudyActivity.lifecycle,
+                    wordList,
                     this@StudyActivity
                 )
             adapter = studyActivityRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false
-            setMoveToRecentPosition(getRecentPosition())
             registerOnPageChangeCallback(pageChangeCallback)
         }
-    }
-
-    private fun getRecentPosition(): Int {
-        var recent = 0
-        for (i in stageInformationInformation?.wordList?.indices!!) {
-            if (!stageInformationInformation?.wordList!![i].isStudyPassed)
-                return recent
-            else
-                recent = i
-        }
-        return recent
     }
 
     /**
@@ -98,17 +124,20 @@ class StudyActivity :
      *
      */
 
-    private fun setMoveToRecentPosition(position: Int) {
-        val recyclerview = binding.viewpager2Study.getChildAt(0) as RecyclerView
-        recyclerview.apply {
-            val itemCount = adapter?.itemCount ?: 0
-            if (itemCount >= position) {
-                viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        recyclerview.scrollToPosition(position)
-                    }
-                })
+    private fun setMoveToRecentPosition(position: Int?) {
+        position?.let {
+            val recyclerview = binding.viewpager2Study.getChildAt(0) as RecyclerView
+            recyclerview.apply {
+                val itemCount = adapter?.itemCount ?: 0
+                if (itemCount >= it) {
+                    viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                        override fun onGlobalLayout() {
+                            viewTreeObserver.removeOnGlobalLayoutListener(this)
+                            studyActivityRecyclerviewAdapter?.setCurrentPosition(it - 1)
+                            recyclerview.scrollToPosition(it - 1)
+                        }
+                    })
+                }
             }
         }
     }
@@ -132,6 +161,10 @@ class StudyActivity :
                 studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
                 studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
             }
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            isScrolling = state != ViewPager2.SCROLL_STATE_IDLE
         }
     }
 
@@ -189,36 +222,42 @@ class StudyActivity :
     }
 
     override fun onMicClick(v: View, position: Int) {
-        wordTextToSpeech?.let {
-            Log.e("Test", "Mic")
-
-            it.setPitch(1.0f) // 기본톤
-            it.setSpeechRate(1.0f) // 기본속도
-            it.speak(stageInformationInformation?.wordList!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
-        }
+//        wordTextToSpeech?.let {
+//            Log.e("Test", "Mic")
+//
+//            it.setPitch(1.0f) // 기본톤
+//            it.setSpeechRate(1.0f) // 기본속도
+//            it.speak(stageInformationInformation?.wordList!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+//        }
     }
 
     override fun onNextBtnClick(v: View, position: Int) {
-        if (position == stageInformationInformation?.wordList?.size!! - 1)
-            Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
-        else
-            binding.viewpager2Study.currentItem += 1
+        if (!isScrolling) {
+            if (position == wordList.size - 1)
+                Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
+            else
+                binding.viewpager2Study.currentItem += 1
 
-
-        stageInformationInformation?.let {
-            it.wordList[position].isStudyPassed = true
+            stage?.let {
+                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
+            }
         }
 
     }
 
     override fun onPreviousBtnClick(v: View, position: Int) {
-        binding.viewpager2Study.currentItem -= 1
+        if (!isScrolling) {
+            binding.viewpager2Study.currentItem -= 1
+            stage?.let {
+                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
+            }
+        }
     }
 
     override fun onVideoClick(v: View, position: Int) {
         Toast.makeText(
             this,
-            "Move To YoutubePlayer word = ${stageInformationInformation?.wordList!![position].word}",
+            "Move To YoutubePlayer word = ${wordList[position].word}",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -239,7 +278,6 @@ class StudyActivity :
             exitBuilder.apply {
                 setMessage("학습을 종료하시겠습니까?")
                 setPositiveButton("종료") { dialogInterface, _ ->
-                    //TODO Server update
                     dialogInterface.dismiss()
                     finish()
                 }

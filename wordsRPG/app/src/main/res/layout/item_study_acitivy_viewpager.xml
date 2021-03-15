@@ -6,8 +6,8 @@
         <import type="android.view.View"/>
 
         <variable
-            name="data"
-            type="com.uhavecodingproblem.wordsrpg.data.mockdata.WordInformation" />
+            name="wordRead"
+            type="com.uhavecodingproblem.wordsrpg.data.model.WordsRead" />
 
         <variable
             name="wordarray"
@@ -65,7 +65,7 @@
                     android:layout_height="0dp"
                     android:background="@color/basic_dialog_text_color"
                     android:gravity="center"
-                    android:text="@{wordarray.get(position)? null : data.word}"
+                    android:text="@{wordarray.get(position)? null : wordRead.word}"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     app:layout_constraintTop_toTopOf="parent"
@@ -76,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="center"
-                    android:text="@{meanarray.get(position)? null : data.mean}"
+                    android:text="@{meanarray.get(position)? null : wordRead.mean}"
                     android:textStyle="bold"
                     android:background="@color/colorLightBlue2"
                     android:textColor="@color/black"
@@ -110,7 +110,7 @@
                         android:layout_height="match_parent"
                         android:paddingStart="15dp"
                         android:gravity="center_vertical"
-                        android:text="@{data.example}"
+                        android:text="@{wordRead.example}"
                         android:textStyle="bold"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintLeft_toLeftOf="parent"

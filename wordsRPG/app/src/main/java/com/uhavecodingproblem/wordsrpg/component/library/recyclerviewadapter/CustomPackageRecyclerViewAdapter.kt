@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
+import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMyCustomPackageAddBinding
 import com.uhavecodingproblem.wordsrpg.util.*
@@ -22,7 +22,7 @@ import com.uhavecodingproblem.wordsrpg.util.*
  *
  */
 class CustomPackageRecyclerViewAdapter(
-    private val customPackageList: MutableList<CustomPackageData>, private var customPackageType: Int
+    private val customPackageList: MutableList<Package>, private var customPackageType: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -48,7 +48,6 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
 
     init {
-
         // TODO: 2020-10-31 추가아이템  자리 만들고 확인 위해서 일단 이렇게 해놓음. -> 추후 리팩토링
         //내 커스텀의 경우는  index 0쪽에 mock 값  넣어줌.
         if (customPackageType == MY_CUSTOM_PACKAGE) {
@@ -70,7 +69,6 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
             1 -> {
                 AddNewMyCustomPackage(binding1)
-
             }
             else -> {
 
@@ -150,12 +148,12 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
     inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root) {
 
         //item 뷰에  데이터 바인딩 적용
-        fun onBind(data: CustomPackageData) {
+        fun onBind(packAge: Package) {
 
             val pos = adapterPosition//아이템 포지션
 
             //리사이클러뷰 item xml 에 data 연
-            binding.data = data
+            binding.packAge = packAge
 
             //아이템 라운드 적용
             binding.layoutCustomPackage.clipToOutline = true
@@ -163,14 +161,14 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
             //아이템 클릭 리스너
             binding.layoutCustomPackage.setOnClickListener {
-                customPackageList[pos].packageName
+                customPackageList[pos].package_name
 
                 if (pos != RecyclerView.NO_POSITION) {
 
                     // 리스너 객체의 메서드 호출.
                     onItemClickListener?.onItemClick(
                         view = it,
-                        packageName = customPackageList[pos].packageName
+                        packageName = customPackageList[pos].package_name
                     )
 
                 }

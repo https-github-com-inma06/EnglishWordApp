@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="packageinfo"
-            type="com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation" />
+            name="packageWithStage"
+            type="com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/img_by_level_package_thumbnail"
             error="@{@drawable/loading}"
-            image="@{packageinfo.thumbnailImage}"
+            image="@{packageWithStage.package_thumbnail}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/package_thumbnail" />
@@ -31,7 +31,7 @@
             android:layout_height="0dp"
             android:background="@drawable/package_thumbnail_title"
             android:gravity="center"
-            android:text="@{packageinfo.name}"
+            android:text="@{packageWithStage.package_name}"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"
@@ -41,7 +41,7 @@
 
         <ProgressBar
             android:id="@+id/tv_package_progress"
-            progress="@{packageinfo.stageList}"
+            progress="@{packageWithStage}"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="0dp"
             android:layout_height="0dp"
