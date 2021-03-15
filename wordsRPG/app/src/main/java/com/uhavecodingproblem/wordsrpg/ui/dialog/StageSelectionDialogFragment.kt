@@ -110,7 +110,7 @@ class StageSelectionDialogFragment : DialogFragment() {
     }
 
     fun exit() {
-        val stageSelectionDialogFragment = parentFragmentManager.findFragmentByTag("SelectionDialog")
+        val stageSelectionDialogFragment = parentFragmentManager.findFragmentByTag("OptionDialog")
         if (stageSelectionDialogFragment != null)
             (stageSelectionDialogFragment as StageSelectionDialogFragment).dismiss()
     }
