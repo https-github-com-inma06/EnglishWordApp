@@ -11,6 +11,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.Learning
+import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity
@@ -26,18 +28,16 @@ import com.uhavecodingproblem.wordsrpg.util.dialogResize
  */
 class StageSelectionDialogFragment : DialogFragment() {
 
-    private lateinit var stageInformation: StageInformation
-    private var packageName = ""
-    private var thumbnailUri = ""
+    private lateinit var stage: Learning
+    private lateinit var currentPackage: PackageWithStage
     private lateinit var binding: ViewBinding
 
     companion object {
-        fun newInstance(stageInformation: StageInformation, packageName: String, thumbnailUrl: String): StageSelectionDialogFragment {
+        fun newInstance(packageWithStage: PackageWithStage, stage: Learning): StageSelectionDialogFragment {
             val fragment = StageSelectionDialogFragment()
             val bundle = Bundle()
-            bundle.putParcelable("stage", stageInformation)
-            bundle.putString("packageName", packageName)
-            bundle.putString("thumbnailUrl", thumbnailUrl)
+            bundle.putParcelable("packageWithStage", packageWithStage)
+            bundle.putParcelable("stage", stage)
             fragment.arguments = bundle
             return fragment
         }
@@ -46,13 +46,18 @@ class StageSelectionDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        stageInformation = arguments?.getParcelable("stage")!!
-        packageName = arguments?.getString("packageName", "unKnown Title")!!
-        thumbnailUri = arguments?.getString("thumbnailUrl", "unKnown ThumbNailUri")!!
+        arguments?.let { bundle->
+            bundle.getParcelable<PackageWithStage>("packageWithStage")?.let {
+                currentPackage = it
+            }
+            bundle.getParcelable<Learning>("stage")?.let {
+                stage= it
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = if (stageInformation.stageStatus == 0)
+        binding = if (stage.stage_status == "0")
             DataBindingUtil.inflate(inflater, R.layout.dialog_stage_selection_none, container, false)
         else
             DataBindingUtil.inflate(inflater, R.layout.dialog_stage_selection_other, container, false)
@@ -78,12 +83,12 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     private fun setInit(){
         binding.apply {
-            if (stageInformation.stageStatus == 0){
+            if (stage.stage_status == "0"){
                 val bind = this as DialogStageSelectionNoneBinding
                 bind.apply {
-                    name = packageName
-                    thumbnailuri = thumbnailUri
-                    stage = stageInformation
+                    name = currentPackage.package_name
+                    thumbnailuri = currentPackage.package_thumbnail
+                    learning = stage
                     dialog = this@StageSelectionDialogFragment
 
                     layoutSelectionDialog.clipToOutline = true
@@ -91,9 +96,9 @@ class StageSelectionDialogFragment : DialogFragment() {
             }else{
                 val bind = this as DialogStageSelectionOtherBinding
                 bind.apply {
-                    name = packageName
-                    thumbnailuri = thumbnailUri
-                    stage = stageInformation
+                    name = currentPackage.package_name
+                    thumbnailuri = currentPackage.package_thumbnail
+                    learning = stage
                     dialog = this@StageSelectionDialogFragment
 
                     layoutSelectionDialog.clipToOutline = true
@@ -115,8 +120,8 @@ class StageSelectionDialogFragment : DialogFragment() {
     fun moveStudy(){
         Logger.v("Move")
         Intent(requireContext(), StudyActivity::class.java).also {
-            it.putExtra("PackageName", packageName)
-            it.putExtra("StudyWord", stageInformation)
+            it.putExtra("packageWithStage", currentPackage)
+            it.putExtra("stage", stage)
             requireContext().startActivity(it)
             dismiss()
         }

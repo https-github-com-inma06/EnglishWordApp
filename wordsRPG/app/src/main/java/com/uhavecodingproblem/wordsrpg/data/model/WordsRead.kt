@@ -1,7 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.data.model
 
-import com.google.gson.annotations.SerializedName
-
 /**
  * wordsrpg
  * Class: WordsRead
@@ -11,8 +9,8 @@ import com.google.gson.annotations.SerializedName
  */
 
 data class WordsRead(
-                     @SerializedName("w_id") val wId: String,
-                     @SerializedName("word") val word: String,
-                     @SerializedName("mean") val mean: String,
-                     @SerializedName("example") val example: String?,
-                     @SerializedName("difficulty") val difficulty: String?)
+                     val w_id: String = "",
+                     val word: String = "",
+                     val mean: String = "",
+                     val example: String? = null,
+                     val difficulty: String? = null)

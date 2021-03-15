@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModel
  *
  */
 
-class BasicPackageTabObserveViewModel(tabName: List<String>) : ViewModel(){
+class BasicPackageTabObserveViewModel(private val tabName: List<String>?) : ViewModel(){
 
     val tabItem: LiveData<List<String>> get() = _tabItem
     val position: LiveData<Int> get() = _position

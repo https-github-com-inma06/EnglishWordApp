@@ -17,7 +17,7 @@ class Application:Application() {
         //debug 가능 여부 -> default 값은  false
         var DEBUG_AVAILABLE:Boolean=false
 
-        var userId = "A"
+        var userId = "1"
 
     }
 

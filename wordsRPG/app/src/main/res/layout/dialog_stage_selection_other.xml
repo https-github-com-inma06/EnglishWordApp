@@ -14,8 +14,8 @@
             type="String" />
 
         <variable
-            name="stage"
-            type="com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation" />
+            name="learning"
+            type="com.uhavecodingproblem.wordsrpg.data.model.Learning" />
 
         <variable
             name="dialog"
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_horizontal"
-                android:text="@{@string/stage(stage.stageNum)}"
+                android:text="@{@string/stage(learning.s_id)}"
                 android:maxLines="1"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"

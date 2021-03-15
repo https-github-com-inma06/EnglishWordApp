@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordInformation
+import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
 
 /**
@@ -22,8 +23,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBind
  *
  */
 class StudyActivityViewPagerAdapter(
-    private var word: MutableList<WordInformation>,
-    private val lifecycle: Lifecycle,
+    private var word: MutableList<WordsRead>,
     private val listener: ItemClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,7 +45,6 @@ class StudyActivityViewPagerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val studyItemBinding =
             ItemStudyAcitivyViewpagerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-//        lifecycle.addObserver(studyItemBinding.wordYoutube)
         return PagerViewHolder(studyItemBinding)
     }
 
@@ -61,37 +60,8 @@ class StudyActivityViewPagerAdapter(
     inner class PagerViewHolder(private val binding: ItemStudyAcitivyViewpagerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-//        private var currentVideoId: String? = null
-//        private var youtubePlayerView: YouTubePlayerView? = null
-//        private var player: YouTubePlayer? = null
-
-//        init {
-//            youtubePlayerView = binding.wordYoutube
-//            youtubePlayerView?.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-//                override fun onReady(youTubePlayer: YouTubePlayer) {
-//                    player = youTubePlayer
-//                    currentVideoId = "7LPJrzZaoZg"
-//                    loadVideo(currentVideoId!!)
-//                }
-//            })
-//
-//        }
-
-//        fun loadVideo(videoID: String) {
-//            bind()
-//
-//            Logger.v("bind :: $currentPosition $adapterPosition")
-//            if (currentPosition == adapterPosition) {
-//                currentVideoId = videoID
-//                if (player == null)
-//                    return
-//
-//                player?.loadVideo(currentVideoId!!, 0f)
-//            }
-//        }
-
         fun bind() {
-            binding.data = word[adapterPosition]
+            binding.wordRead = word[adapterPosition]
             binding.wordarray = wordSparseBooleanArray
             binding.meanarray = meanSparseBooleanArray
             binding.position = adapterPosition
