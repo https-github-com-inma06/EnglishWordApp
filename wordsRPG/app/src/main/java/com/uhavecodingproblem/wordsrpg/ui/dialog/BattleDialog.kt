@@ -13,7 +13,6 @@ import androidx.databinding.ViewDataBinding
 class BattleDialog<VDB : ViewDataBinding>(
         context: Context,
         @LayoutRes val layoutId: Int
-
         ) : Dialog(context) {
 
     var binding: VDB = DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, null, false)
