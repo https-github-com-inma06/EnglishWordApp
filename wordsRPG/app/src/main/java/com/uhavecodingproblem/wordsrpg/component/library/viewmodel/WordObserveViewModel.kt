@@ -12,7 +12,8 @@ import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWord
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * wordsrpg
@@ -86,34 +87,37 @@ class WordObserveViewModel : ViewModel() {
     }
 
     fun updateLearning(l_id: String, learning: Learning, currentPage: Int) {
-        databaseReference.child("Learning").orderByChild("l_id").equalTo(l_id).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (childSnapshot in snapshot.children) {
-                    childSnapshot?.key?.let {
-                        Log.e("key", it)
-                        val param = hashMapOf(
-                            "l_id" to learning.l_id,
-                            "s_id" to learning.s_id,
-                            "u_id" to learning.u_id,
-                            "p_id" to learning.p_id,
-                            "total_page" to learning.total_page,
-                            "stage_status" to "1",
-                            "current_page" to currentPage.toString()
-                        )
-                        databaseReference.child("Learning").child(it).setValue(param).addOnSuccessListener {
-                            Logger.e("updateLearning Success")
-                        }.addOnFailureListener { exception ->
-                            Logger.e("updateLearning Failure : $exception")
+        databaseReference.child("Learning").orderByChild("l_id").equalTo(l_id)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (childSnapshot in snapshot.children) {
+                        childSnapshot?.key?.let {
+                            val param = HashMap<String, String>()
+                            param["l_id"] = learning.l_id
+                            param["s_id"] = learning.s_id
+                            param["u_id"] = learning.u_id
+                            param["p_id"] = learning.p_id
+                            param["total_page"] = learning.total_page
+                            param["current_page"] = currentPage.toString()
+                            if (learning.stage_status == "0") {
+                                param["stage_status"] = "1"
+                            } else {
+                                param["stage_status"] = learning.stage_status
+                            }
+                            databaseReference.child("Learning").child(it).setValue(param).addOnSuccessListener {
+                                Logger.e("updateLearning Success")
+                            }.addOnFailureListener { exception ->
+                                Logger.e("updateLearning Failure : $exception")
+                            }
                         }
                     }
+
                 }
 
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Logger.e(error.message)
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    Logger.e(error.message)
+                }
+            })
     }
 
 }

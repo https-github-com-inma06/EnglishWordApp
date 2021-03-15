@@ -70,16 +70,17 @@ class PackageObserveViewModel(private val userId: String?) : ViewModel() {
         })
     }
 
-    private fun loadStage(u_id: String) = viewModelScope.launch(Dispatchers.IO){
-        databaseReference.child("Learning").addValueEventListener(object: ValueEventListener{
+    private fun loadStage(u_id: String) = viewModelScope.launch(Dispatchers.IO) {
+        databaseReference.child("Learning").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 val basicPackageWithStage = mutableListOf<PackageWithStage>()
+                stageData.clear()
 
-                for (childSnapShot in snapshot.children){
+                for (childSnapShot in snapshot.children) {
                     childSnapShot?.let {
                         val data = it.getValue(Learning::class.java)
-                        data?.let { stage->
+                        data?.let { stage ->
                             if (stage.u_id == u_id)
                                 stageData.add(stage)
                         }
@@ -88,8 +89,17 @@ class PackageObserveViewModel(private val userId: String?) : ViewModel() {
 
                 for (i in basicPackageData.indices) {
                     val totalStage = stageData.filter { it.p_id == basicPackageData[i].p_id }.toMutableList().size.toString()
-                    val clearStage = stageData.filter { it.p_id == basicPackageData[i].p_id && it.stage_status == "3" }.toMutableList().size.toString()
-                    basicPackageWithStage.add(PackageWithStage(basicPackageData[i].p_id, basicPackageData[i].package_name, basicPackageData[i].package_thumbnail, totalStage, clearStage))
+                    val clearStage = stageData.filter { it.p_id == basicPackageData[i].p_id && it.stage_status == "3" }
+                        .toMutableList().size.toString()
+                    basicPackageWithStage.add(
+                        PackageWithStage(
+                            basicPackageData[i].p_id,
+                            basicPackageData[i].package_name,
+                            basicPackageData[i].package_thumbnail,
+                            totalStage,
+                            clearStage
+                        )
+                    )
                 }
 
                 _basicPackageInformation.postValue(basicPackageWithStage)
@@ -103,7 +113,7 @@ class PackageObserveViewModel(private val userId: String?) : ViewModel() {
         })
     }
 
-    fun selectedPackage(p_id: String): MutableList<Learning>{
+    fun selectedPackage(p_id: String): MutableList<Learning> {
         currentStage.clear()
         stageData.forEach { if (it.p_id == p_id) currentStage.add(it) }
         return currentStage
