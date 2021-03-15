@@ -21,8 +21,7 @@ object StageBindingAdapter {
             if (stageInformationData.wordList[i].isTestPassed)
                 score++
         }
-        val result: String?
-        result = if (score == 0)
+        val result: String = if (score == 0)
             "에러발생"
         else
             "획득점수 : ${score * 10} / 100"

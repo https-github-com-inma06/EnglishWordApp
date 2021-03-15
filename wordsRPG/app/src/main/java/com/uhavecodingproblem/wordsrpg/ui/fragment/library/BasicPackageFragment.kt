@@ -11,8 +11,9 @@ import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.PackageObserveViewModelFactory
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
@@ -30,9 +31,9 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
     MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
-
-    private val basicPackageTabObserveViewModel: BasicPackageTabObserveViewModel by viewModels()
-    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { PackageObserveViewModelFactory(Application.userId) }
+    private val tabName = listOf("수준별", "시험별", "카테고리별")
+    private val basicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel>{ ViewModelFactory(null, tabName) }
+    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { ViewModelFactory(Application.userId, null) }
     private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
     private var progressDialog: SearchLoadingDialog? = null
     private var dialogFragment: DialogFragment? = null
@@ -45,7 +46,6 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         progressDialog = SearchLoadingDialog((requireContext()))
 
         initBinding()
-        observeLoadPackage()
         observeLoading()
     }
 
@@ -58,16 +58,10 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         }
     }
 
-    private fun observeLoadPackage(){
+    private fun observeLoadBasicPackage(){
 
-        packageObserveViewModel.packageData.observe(viewLifecycleOwner) {
-            for (i in it.indices)
-                Log.e("observeLoadPackage", "packageName : ${it[i].package_name} isCustom : ${it[i].is_custom}")
-        }
-
-        packageObserveViewModel.stageData.observe(viewLifecycleOwner){
-            for (i in it.indices)
-                Log.e("observeLoadStage", "stage id : ${it[i].s_id} stage status : ${it[i].stage_status}")
+        packageObserveViewModel.basicPackageInformation.observe(viewLifecycleOwner) {
+            basicRecyclerViewAdapter?.submitList(it.toMutableList())
         }
 
     }
@@ -78,6 +72,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
             adapter = basicRecyclerViewAdapter
             layoutManager = setGridLayout()
         }
+        observeLoadBasicPackage()
     }
 
 
@@ -96,8 +91,8 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
         })
     }
 
-    override fun onItemClick(selectedItem: PackageInformation) {
-        dialogFragment = StageDialogFragment.newInstance(selectedItem.name)
+    override fun onItemClick(selectedItem: PackageWithStage) {
+        dialogFragment = StageDialogFragment.newInstance(selectedItem)
         dialogFragment?.show(childFragmentManager, "StageDialog")
     }
 

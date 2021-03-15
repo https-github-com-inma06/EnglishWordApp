@@ -3,7 +3,6 @@ package com.uhavecodingproblem.wordsrpg.data.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 
 /**
  * wordsrpg
@@ -13,14 +12,14 @@ import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
  * Description:
  */
 //패키지 테이블
-data class PackageRead(
-    @SerializedName("p_id") val p_id: String? = null,
-    @SerializedName("package_name") val package_name: String? = null,
-    @SerializedName("package_difficulty") val package_difficulty: String? = null,
-    @SerializedName("package_thumbnail") val package_thumbnail: String? = null,
-    @SerializedName("total_word") val total_word: String? = null,
-    @SerializedName("is_custom") val is_custom: String? = null,
-    @SerializedName("customer_id") val customer_id: String? = null
+data class Package(
+    val p_id: String = "",
+    val package_name: String = "",
+    val package_difficulty: String = "",
+    val package_thumbnail: String = "",
+    val total_word: String = "",
+    val customCheck: String = "",
+    val customer_id: String = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this (
         parcel.readString() ?: "",
@@ -41,17 +40,17 @@ data class PackageRead(
             writeString(package_difficulty)
             writeString(package_thumbnail)
             writeString(total_word)
-            writeString(is_custom)
+            writeString(customCheck)
             writeString(customer_id)
         }
     }
 
-    companion object CREATOR : Parcelable.Creator<PackageRead> {
-        override fun createFromParcel(parcel: Parcel): PackageRead {
-            return PackageRead(parcel)
+    companion object CREATOR : Parcelable.Creator<Package> {
+        override fun createFromParcel(parcel: Parcel): Package {
+            return Package(parcel)
         }
 
-        override fun newArray(size: Int): Array<PackageRead?> {
+        override fun newArray(size: Int): Array<Package?> {
             return arrayOfNulls(size)
         }
     }

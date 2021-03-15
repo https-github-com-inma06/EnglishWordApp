@@ -7,7 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
 
@@ -18,34 +18,37 @@ import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
  * Created On 2021-01-17.
  * Description:
  */
-class MainLibraryFragmentBasicPackageListAdapter(private val listener: BasicPackageGridItemClickListener): ListAdapter<PackageInformation, RecyclerView.ViewHolder>(BaseDiffUtil<PackageInformation>()) {
+class MainLibraryFragmentBasicPackageListAdapter(private val listener: BasicPackageGridItemClickListener) :
+    ListAdapter<PackageWithStage, RecyclerView.ViewHolder>(BaseDiffUtil<PackageWithStage>()) {
 
     interface BasicPackageGridItemClickListener {
-        fun onItemClick(selectedItem : PackageInformation)
+        fun onItemClick(selectedItem: PackageWithStage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ItemViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_mainlibray_fragment_basic_package_recyclerview, parent, false))
+        return ItemViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.item_mainlibray_fragment_basic_package_recyclerview,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is ItemViewHolder){
+        if (holder is ItemViewHolder) {
             holder.bind()
         }
     }
 
-    inner class ItemViewHolder(private val binding: ViewDataBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ItemViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(){
-            if (binding is ItemMainlibrayFragmentBasicPackageRecyclerviewBinding){
-                binding.apply {
-                    packageinfo = getItem(adapterPosition)
-                    basicPackageLayout.clipToOutline = true
-                    root.setOnClickListener {
-                        listener.onItemClick(getItem(adapterPosition))
-                    }
-                }
-
+        fun bind() = with(binding as ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) {
+            packageWithStage = getItem(adapterPosition)
+            basicPackageLayout.clipToOutline = true
+            root.setOnClickListener {
+                listener.onItemClick(getItem(adapterPosition))
             }
         }
     }
