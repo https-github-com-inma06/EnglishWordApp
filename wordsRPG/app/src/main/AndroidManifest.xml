@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activity.MainActivity2"></activity>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:windowSoftInputMode="adjustPan">
@@ -22,14 +23,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- uCrop cropping activity -->
+        </activity> <!-- uCrop cropping activity -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".ui.activity.library.StudyActivity" />
         <activity android:name=".ui.activity.library.AddNewCustomPackageActivity" />
         <activity android:name=".ui.activity.MainActivity" />

@@ -10,6 +10,7 @@ import androidx.navigation.ui.NavigationUI
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMainBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.setting.SettingActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 
 
