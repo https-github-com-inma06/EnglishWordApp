@@ -55,10 +55,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
         arguments?.getParcelable<PackageWithStage>("packageWithStage")?.let {
             currentPackage = it
-<<<<<<< HEAD
             packageObserveViewModel.selectedPackage(it.p_id)
-=======
->>>>>>> library/ryan
         }
     }
 
@@ -83,10 +80,6 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private fun setUpRecyclerData() {
         stage = packageObserveViewModel.selectedPackage(currentPackage.p_id)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> library/ryan
         var position = 0
         for (i in stage.indices) {
             if (stage[i].stage_status != "3") {
@@ -228,11 +221,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
     override fun onResume() {
         super.onResume()
-<<<<<<< HEAD
-        //packageInformation = arguments?.getString("name")?.let { packageObserveViewModel.getPackage(it) }!!
-=======
         setUpRecyclerData()
->>>>>>> library/ryan
         context?.dialogResize(this@StageDialogFragment, 0.9f, 0.9f)
         binding.recyclerviewStage.addOnScrollListener(scrolledListener)
     }
