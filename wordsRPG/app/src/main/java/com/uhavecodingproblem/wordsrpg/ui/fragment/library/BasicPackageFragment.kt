@@ -1,24 +1,23 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.database.FirebaseDatabase
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
-import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
+import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentBasicPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
-
-import com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
+import com.uhavecodingproblem.wordsrpg.ui.dialog.StageDialogFragment
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 /**
@@ -41,8 +40,8 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
 
 
     override fun FragmentBasicPackageBinding.onCreateView() {
-        Logger.v("실행")
 
+        Logger.v("실행")
         progressDialog = SearchLoadingDialog((requireContext()))
 
         initBinding()
