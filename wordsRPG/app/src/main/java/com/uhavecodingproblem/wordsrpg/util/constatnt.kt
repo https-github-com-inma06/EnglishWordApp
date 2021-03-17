@@ -38,3 +38,8 @@ const val STAGE_TEST_CLEAR = 3 // 테스트 통과
 
 //기본 패키지 주소
 const val BASIC_PACKAGE = "http://3.34.162.73/api/"
+
+//firebase storage
+const val FIREBASE_STORAGE_REFERENCE_URL = "gs://wordrpg-618f7.appspot.com"
+const val FIREBASE_STORAGE_IMAGE = "images/"
+const val FIREBASE_STORAGE_VIDEO = "videos/"
