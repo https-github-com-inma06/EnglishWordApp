@@ -56,7 +56,6 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
         arguments?.getParcelable<PackageWithStage>("packageWithStage")?.let {
             currentPackage = it
-            packageObserveViewModel.selectedPackage(it.p_id)
         }
     }
 
@@ -79,7 +78,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     private fun setUpRecyclerData() {
-        stage = packageObserveViewModel.selectedPackage(currentPackage.p_id)
+        stage = packageObserveViewModel.filterStage(currentPackage.p_id)
         if (!isFirstCreate) {
             var position = 0
             for (i in stage.indices) {

@@ -14,6 +14,8 @@ import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 /**
  * wordsrpg
@@ -27,39 +29,45 @@ class WordObserveViewModel : ViewModel() {
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val databaseReference = firebaseDatabase.reference
 
-    val isLoading get() = _isLoading
+    val loading get() = _loading
     val wordList get() = _wordList
 
-    private val _isLoading = MutableLiveData<Boolean>(true)
+    private val _loading = MutableLiveData<Boolean>(true)
     private val _wordList = MutableLiveData<MutableList<WordsRead>>()
 
-    private val wordLink = mutableListOf<PackageWord>()
+    fun load(p_id: String, s_id: String) = viewModelScope.launch(Dispatchers.IO){
 
-    fun loadWordLink(p_id: String, s_id: String) = viewModelScope.launch(Dispatchers.IO) {
+        val packageWordItem = loadWordLink(p_id, s_id)
+        loadWords(packageWordItem)
+
+        _loading.postValue(false)
+    }
+
+    private suspend fun loadWordLink(p_id: String, s_id: String): MutableList<PackageWord> = suspendCancellableCoroutine {
+        val packageWordItem = mutableListOf<PackageWord>()
         databaseReference.child("PackageWord").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                wordLink.clear()
                 for (childSnapshot in snapshot.children) {
                     childSnapshot?.let {
                         val data = it.getValue(PackageWord::class.java)
                         data?.let { packageWord ->
                             if (packageWord.p_id == p_id && packageWord.s_id == s_id)
-                                wordLink.add(packageWord)
+                                packageWordItem.add(packageWord)
                         }
                     }
                 }
-
-                loadWords()
+                it.resume(packageWordItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("loadWordLink Error", error.message)
-                _isLoading.postValue(false)
+                _loading.postValue(false)
+                it.cancel()
             }
         })
     }
 
-    private fun loadWords() = viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun loadWords(packageWordItem: MutableList<PackageWord>) = suspendCancellableCoroutine<Unit> {
         databaseReference.child("Word").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val wordItem = mutableListOf<WordsRead>()
@@ -67,21 +75,20 @@ class WordObserveViewModel : ViewModel() {
                     childSnapshot?.let {
                         val data = it.getValue(WordsRead::class.java)
                         data?.let { item ->
-                            wordLink.find { link -> link.w_id == item.w_id }?.let {
+                            packageWordItem.find { link -> link.w_id == item.w_id }?.let {
                                 wordItem.add(item)
                             }
                         }
                     }
                 }
-
                 _wordList.postValue(wordItem)
-
-                _isLoading.postValue(false)
+                it.resume(Unit)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("loadWords Error", error.message)
-                _isLoading.postValue(false)
+                _loading.postValue(false)
+                it.cancel()
             }
         })
     }

@@ -22,7 +22,7 @@ class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>
 
 
     private val tabName = listOf("기본 패키지", "커스텀", "구독", "내 패키지")
-    private val mainBasicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel> { ViewModelFactory(null, tabName)}
+    private val mainBasicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel> { ViewModelFactory(Application.userId, tabName)}
 
 
     override fun FragmentMainLibraryBinding.onCreateView() {
