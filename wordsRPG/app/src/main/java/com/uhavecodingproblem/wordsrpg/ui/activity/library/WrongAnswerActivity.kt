@@ -15,7 +15,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
  */
 class WrongAnswerActivity: BaseUtility.BaseActivity<ActivityWrongAnswerNoteBinding>(R.layout.activity_wrong_answer_note) {
     override fun ActivityWrongAnswerNoteBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
     }
 
 }

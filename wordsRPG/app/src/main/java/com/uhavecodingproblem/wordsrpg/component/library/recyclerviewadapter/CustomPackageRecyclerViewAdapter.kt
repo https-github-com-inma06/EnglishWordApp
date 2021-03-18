@@ -136,7 +136,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
             binding.layoutCustomPackageAdd.setOnClickListener {
                 // TODO: 2020-10-31 추후 리팩토링 필요.  외부로  빼서 패키지 추가  액션 진행해야됨
                 onAddItemClickListener?.onItemClick()
-                Logger.v("아이템 추가 ")
+                Logger.d("아이템 추가 ")
 
             }//아이템 클릭리스너 끝
         }

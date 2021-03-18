@@ -27,7 +27,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 class MainActivity : BaseUtility.BaseActivity<ActivityMainBinding>(R.layout.activity_main)  {
 
     override fun ActivityMainBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         configureToolbar()//1-1
         setUpNavigation()//1-2
@@ -79,15 +79,15 @@ class MainActivity : BaseUtility.BaseActivity<ActivityMainBinding>(R.layout.acti
         when(destination.label){
 
             //현재 fragment가  검색 프래그먼트 일때  액션바  숨겨줌.
-            "MainLibraryFragment" -> { Logger.v("현재 프래그먼트 -> 라이브러리")
+            "MainLibraryFragment" -> { Logger.d("현재 프래그먼트 -> 라이브러리")
                 binding.tvPresentMenu.setText(R.string.menu_for_library_en)
             }
 
-            "MainBattleFragment" -> { Logger.v("현재 프래그먼트 -> 배틀 ")
+            "MainBattleFragment" -> { Logger.d("현재 프래그먼트 -> 배틀 ")
                  binding.tvPresentMenu.setText(R.string.menu_for_battle_en)
             }
 
-            "MainMyRoomFragment" -> { Logger.v("현재 프래그먼트 -> 마이룸")
+            "MainMyRoomFragment" -> { Logger.d("현재 프래그먼트 -> 마이룸")
                 binding.tvPresentMenu.setText(R.string.menu_for_my_room_en)
             }
 

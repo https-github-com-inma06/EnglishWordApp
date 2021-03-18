@@ -2,7 +2,6 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainLibraryBinding
@@ -27,7 +26,7 @@ class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>
 
     override fun FragmentMainLibraryBinding.onCreateView() {
 
-        Logger.v("실행")
+        Logger.d("실행")
 
         initBinding()
         setDisableSwipe()

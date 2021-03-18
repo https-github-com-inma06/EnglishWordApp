@@ -18,7 +18,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
  */
 class MainMyRoomFragment : BaseUtility.BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
     override fun FragmentMainMyRoomBinding.onCreateView() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         btnGoToTheLogin.setOnClickListener { startActivity(Intent(requireContext(),
         LoginActivity::class.java)) }

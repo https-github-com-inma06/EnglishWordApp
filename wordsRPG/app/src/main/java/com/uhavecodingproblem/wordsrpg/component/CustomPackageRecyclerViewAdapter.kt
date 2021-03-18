@@ -103,7 +103,7 @@ class CustomPackageRecyclerViewAdapter(
                         for (i in 0 until customPackageList.size) {
                             if (customPackageList[i].packageName.contains(searchValue)) {
                                 searchedFilterList.add(customPackageList[i])
-                                Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
+                                Logger.d("검색어 포함된 리스트 -> $searchedFilterList")
                             }
 
                         }//for문 끝
@@ -120,7 +120,7 @@ class CustomPackageRecyclerViewAdapter(
                                     false
                                 }
                             }
-                            Logger.v("검색어 포함된 리스트 -> $searchedFilterList")
+                            Logger.d("검색어 포함된 리스트 -> $searchedFilterList")
 
                         }//for문 끝
 
@@ -136,7 +136,7 @@ class CustomPackageRecyclerViewAdapter(
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {//filter 결과  발행
                 filterList  = p1?.values as MutableList<CustomPackageData>
-                Logger.v("필터 결과 ->  $filterList")
+                Logger.d("필터 결과 ->  $filterList")
                 notifyDataSetChanged()//필터된 내용으로 데이터 업데이트.
             }
 

@@ -34,7 +34,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
 
 
     override fun ActivityAddNewCustomPackageBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         thisActivity=this@AddNewCustomPackageActivity
 
@@ -123,7 +123,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
 
     //뒤로 가기 아이콘 클릭
     fun backIconClicked(view: View){
-        Logger.v("뒤로가기 클릭")
+        Logger.d("뒤로가기 클릭")
         finish()
     }//backIconClicked() 끝
 
@@ -132,7 +132,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
 
     //패키지 썸네일 이미지 갤러리에서 가져오기
     fun pickThumbNailImageFromGallery(view: View){
-        Logger.v("썸네일 이미지 가져오기 실행")
+        Logger.d("썸네일 이미지 가져오기 실행")
 
         // TODO: 2020-09-24 이미지 추가  넣기
         AlertDialog.Builder(this)
@@ -148,7 +148,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
                     .scrollIndicatorDateFormat("YYYYMMDD")
                     .buttonGravity(ButtonGravity.BOTTOM)
                     .showCameraTile(false)
-                    .errorListener { message -> Logger.v("ted image_picker error -> $message") }
+                    .errorListener { message -> Logger.d("ted image_picker error -> $message") }
                     .startAnimation(R.anim.to_left_slide,R.anim.fade_out)
                     .start {
 
@@ -176,7 +176,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
 
     //완료 버튼 event
     fun completeAddNewCustomPackage(view: View){
-        Logger.v("커스텀 패키지 추가 완료 버튼 클릭")
+        Logger.d("커스텀 패키지 추가 완료 버튼 클릭")
 
         // TODO: 2020-09-26 현재  일단 startactivityforresult 로  값 가져가서  추가 하는 형태  뷰모델 적용시 구조 바뀔수 있음
         // TODO: 2020-09-24 일단  엑티비티 종료로 넣어둠  나중에  패키지 추가 작업 필요

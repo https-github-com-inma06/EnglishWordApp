@@ -17,7 +17,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 class MainBoardFragment : BaseUtility.BaseFragment<FragmentMainBoardBinding>(R.layout.fragment_main_board) {
 
     override fun FragmentMainBoardBinding.onCreateView() {
-        Logger.v("실행")
+        Logger.d("실행")
     }
 
 }

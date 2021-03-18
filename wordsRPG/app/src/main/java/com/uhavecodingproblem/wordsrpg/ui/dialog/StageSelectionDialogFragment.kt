@@ -124,7 +124,7 @@ class StageSelectionDialogFragment : DialogFragment() {
     }
 
     fun moveTest() {
-        Logger.v("MoveTest")
+        Logger.d("MoveTest")
     }
 
     override fun onResume() {

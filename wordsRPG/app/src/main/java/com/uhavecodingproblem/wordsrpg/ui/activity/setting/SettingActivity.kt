@@ -1,11 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity.setting
 
-import android.content.ContentResolver
 import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -14,11 +10,8 @@ import com.uhavecodingproblem.wordsrpg.databinding.ActivitySettingBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.RegisterActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import com.yalantis.ucrop.UCrop
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_setting.*
-import java.io.File
-import java.net.URI
 
 
 /**
@@ -37,7 +30,7 @@ class SettingActivity : BaseUtility.BaseActivity<ActivitySettingBinding>(R.layou
     }
 
     override fun ActivitySettingBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
         settingActivity = this@SettingActivity
     }
 

@@ -46,7 +46,7 @@ class SearchCustomPackageFragment: BaseUtility.BaseFragment<FragmentSearchCustom
 
 
     override fun FragmentSearchCustomPackageBinding.onCreateView() {
-       Logger.v("실행")
+       Logger.d("실행")
 
         thisFragment=this@SearchCustomPackageFragment
 
@@ -165,7 +165,7 @@ class SearchCustomPackageFragment: BaseUtility.BaseFragment<FragmentSearchCustom
 
     //내패키지 프래그먼트로 돌아가기
     fun backToMyCustomPackageFragment(view: View){
-        Logger.v("내패키지로  돌아가기")
+        Logger.d("내패키지로  돌아가기")
 
         keyboardToggle(visible = false)
 

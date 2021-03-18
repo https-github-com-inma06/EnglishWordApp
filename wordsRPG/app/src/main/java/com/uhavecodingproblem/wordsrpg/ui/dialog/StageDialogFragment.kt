@@ -200,13 +200,13 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private fun moveStudyOrTest(learning: Learning) {
         when (learning.stage_status) {
             "1" -> {
-                Logger.v("Move Test")
+                Logger.d("Move Test")
             }
             "2" -> {
-                Logger.v("Move Test")
+                Logger.d("Move Test")
             }
             "3" -> {
-                Logger.v("Move Test")
+                Logger.d("Move Test")
             }
             else -> throw IllegalStateException("StageStatus Strange")
         }
@@ -214,7 +214,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     fun exit() {
-        Logger.v("Exit")
+        Logger.d("Exit")
         val stageDialogFragment = parentFragmentManager.findFragmentByTag("StageDialog")
         if (stageDialogFragment != null) {
             (stageDialogFragment as StageDialogFragment).dismiss()

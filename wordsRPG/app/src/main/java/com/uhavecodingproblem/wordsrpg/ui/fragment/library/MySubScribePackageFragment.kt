@@ -19,7 +19,7 @@ import com.uhavecodingproblem.wordsrpg.util.hideKeyboard
 class MySubScribePackageFragment: BaseUtility.BaseFragment<FragmentMySubscribePackageBinding>(R.layout.fragment_my_subscribe_package) {
 
     override fun FragmentMySubscribePackageBinding.onCreateView() {
-        Logger.v("실행 됨")
+        Logger.d("실행 됨")
 
     }//onCreate() 끝
 

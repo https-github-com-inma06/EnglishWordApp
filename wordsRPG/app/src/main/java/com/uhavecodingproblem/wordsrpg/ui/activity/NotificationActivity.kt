@@ -18,7 +18,7 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 class NotificationActivity: BaseUtility.BaseActivity<ActivityNotificationBinding>(R.layout.activity_notification) {
 
     override fun ActivityNotificationBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
     }
 
 

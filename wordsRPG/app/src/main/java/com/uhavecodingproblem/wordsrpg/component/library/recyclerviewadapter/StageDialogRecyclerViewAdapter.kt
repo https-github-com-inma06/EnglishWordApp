@@ -85,12 +85,12 @@ class StageDialogRecyclerViewAdapter(
 
             layoutStageCollapse.setOnClickListener {
                 changeSparseArray()
-                Logger.v("collapse adapterPosition : $adapterposition prePosition : $preSelectPosition")
+                Logger.d("collapse adapterPosition : $adapterposition prePosition : $preSelectPosition")
                 listener.onItemClick()
             }
             layoutStageExpand.setOnClickListener {
                 changeSparseArray()
-                Logger.v("expand adapterPosition : $adapterposition prePosition : $preSelectPosition")
+                Logger.d("expand adapterPosition : $adapterposition prePosition : $preSelectPosition")
                 listener.onItemClick()
             }
 
@@ -118,13 +118,13 @@ class StageDialogRecyclerViewAdapter(
 
         private fun changeSparseArray() {
             if (!sparseBooleanArray[adapterPosition]) {
-                Logger.v("1 trigger ${sparseBooleanArray[adapterPosition]}")
+                Logger.d("1 trigger ${sparseBooleanArray[adapterPosition]}")
                 sparseBooleanArray.delete(preSelectPosition)
                 sparseBooleanArray.put(adapterPosition, true)
             } else {
-                Logger.v("2 trigger ${sparseBooleanArray[adapterPosition]}")
+                Logger.d("2 trigger ${sparseBooleanArray[adapterPosition]}")
                 sparseBooleanArray.delete(adapterPosition)
-                Logger.v("3 trigger ${sparseBooleanArray[adapterPosition]}")
+                Logger.d("3 trigger ${sparseBooleanArray[adapterPosition]}")
             }
             notifyItemChanged(preSelectPosition)
             notifyItemChanged(adapterPosition)

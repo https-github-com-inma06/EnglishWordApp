@@ -3,7 +3,6 @@ package com.uhavecodingproblem.wordsrpg.ui.activity.library
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,10 +23,6 @@ import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class StudyActivity :
@@ -43,7 +38,7 @@ class StudyActivity :
     private var isScrolling = false
 
     override fun ActivityStudyBinding.onCreate() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         loadingDialog = SearchLoadingDialog(this@StudyActivity)
         initTextToSpeech()
@@ -148,7 +143,7 @@ class StudyActivity :
 
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
-            Logger.v("Position :: $position")
+            Logger.d("Position :: $position")
             /**
              *
              * 이전코드는 아래와 같은 경고메세지를 받음

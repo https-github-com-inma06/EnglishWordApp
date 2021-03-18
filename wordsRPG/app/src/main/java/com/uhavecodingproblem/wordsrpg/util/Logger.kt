@@ -18,7 +18,7 @@ class Logger private constructor(){
     companion object{
 
         private val DEBUG = Application.DEBUG_AVAILABLE
-        private const val TAG = "english_rpg_game"
+        private const val TAG = "rucp" // 태그변경
 
         fun v(msg: String) = logger(Log.VERBOSE, msg)
         fun d(msg: String) = logger(Log.DEBUG, msg)

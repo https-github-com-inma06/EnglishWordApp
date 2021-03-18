@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.database.FirebaseDatabase
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
@@ -39,7 +38,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
 
     override fun FragmentBasicPackageBinding.onCreateView() {
 
-        Logger.v("실행")
+        Logger.d("실행")
         progressDialog = SearchLoadingDialog((requireContext()))
 
         initBinding()
@@ -83,7 +82,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
             else
                 progressDialog?.dismissLoading()
 
-            Logger.v("로딩중 :: $it")
+            Logger.d("로딩중 :: $it")
         })
     }
 
@@ -94,12 +93,12 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
 
     override fun onResume() {
         super.onResume()
-        Logger.v("BasicPackageFragment onResume")
+        Logger.d("BasicPackageFragment onResume")
     }
 
     override fun onPause() {
         super.onPause()
-        Logger.v("BasicPackageFragment onPause")
+        Logger.d("BasicPackageFragment onPause")
     }
 
 }

@@ -7,8 +7,6 @@ import android.net.Uri
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
@@ -32,7 +30,7 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
 
 
     override fun FragmentMyCustomPackageBinding.onCreateView() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         thisFragment = this@MyCustomPackageFragment
 
@@ -109,7 +107,7 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
 
     //fab 버튼 클릭 -> 새 커스텀 패키지 추가 엑티비티로 이동
     fun moveToAddNewCustomPackageActivity(){
-        Logger.v("AddNewCustomPackageActivity 로 이동")
+        Logger.d("AddNewCustomPackageActivity 로 이동")
 
         startActivityForResult(
             Intent(requireActivity(),
@@ -133,7 +131,7 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
                 val uid = mockMyPackageDataList.size+1
                 val ownerName = "초보"
                 val tagList=data?.getStringArrayListExtra("tagList")
-                Logger.v("실행됨  $name     uri -> $uri  uid -> $uid, 어레이 -> $tagList" )
+                Logger.d("실행됨  $name     uri -> $uri  uid -> $uid, 어레이 -> $tagList" )
 
                 //mockdata list 에 넣어줌.
                 mockMyPackageDataList.add(CustomPackageData( uid.toString(),ownerName,name,uri,0,0, tagList!!))

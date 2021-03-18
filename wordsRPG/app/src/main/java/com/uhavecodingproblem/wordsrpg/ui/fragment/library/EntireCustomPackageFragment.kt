@@ -1,6 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -32,7 +31,7 @@ class EntireCustomPackageFragment :
     private val db = FirebaseDatabase.getInstance().reference.child("Package")
 
     override fun FragmentEntireCustomPackageBinding.onCreateView() {
-        Logger.v("실행")
+        Logger.d("실행")
 
         thisFragment = this@EntireCustomPackageFragment
 
