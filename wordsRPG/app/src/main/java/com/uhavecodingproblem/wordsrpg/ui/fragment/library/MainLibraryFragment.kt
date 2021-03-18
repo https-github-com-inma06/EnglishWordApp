@@ -2,6 +2,7 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.application.Application
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainLibraryBinding

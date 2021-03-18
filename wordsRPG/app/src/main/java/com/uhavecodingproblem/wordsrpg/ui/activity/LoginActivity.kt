@@ -21,6 +21,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.ActivityLoginBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.NewPasswordCreateDialog
 import com.uhavecodingproblem.wordsrpg.ui.dialog.PasswordFindDialog
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.util.regex.Pattern
 
 
@@ -51,7 +52,7 @@ class LoginActivity : BaseUtility.BaseActivity<ActivityLoginBinding>(R.layout.ac
                 }
 
                 override fun onError(exception: FacebookException) {
-                    Log.d("asdasd", "$exception 로그인 실패")
+                    Logger.d("$exception 로그인 실패")
                 }
             })
     }
@@ -136,9 +137,10 @@ class LoginActivity : BaseUtility.BaseActivity<ActivityLoginBinding>(R.layout.ac
         // 로그인 공통 callback 구성
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.e("asdasd", "로그인 실패", error)
+                Logger.d("로그인 실패 error :: $error")
+
             } else if (token != null) {
-                Log.i("asdasd", "로그인 성공 ${token.accessToken}")
+                Logger.d("로그인 성공 ${token.accessToken}") // Log.i -> Logger.d 로 변경 ( 로그유출방지 )
             }
         }
 

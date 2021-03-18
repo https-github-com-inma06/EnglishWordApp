@@ -1,7 +1,6 @@
 package com.uhavecodingproblem.wordsrpg.util
 
 import android.util.Log
-import androidx.databinding.library.BuildConfig
 import com.uhavecodingproblem.wordsrpg.application.Application
 
 /**

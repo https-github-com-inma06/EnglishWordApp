@@ -112,9 +112,9 @@ class WordObserveViewModel : ViewModel() {
                                 param["stage_status"] = learning.stage_status
                             }
                             databaseReference.child("Learning").child(it).setValue(param).addOnSuccessListener {
-                                Logger.e("updateLearning Success")
+                                Logger.d("updateLearning Success")
                             }.addOnFailureListener { exception ->
-                                Logger.e("updateLearning Failure : $exception")
+                                Logger.d("updateLearning Failure : $exception")
                             }
                         }
                     }
@@ -122,7 +122,7 @@ class WordObserveViewModel : ViewModel() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Logger.e(error.message)
+                    Logger.d(error.message)
                 }
             })
     }

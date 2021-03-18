@@ -95,7 +95,7 @@ class StudyActivity :
             wordList.addAll(it)
             studyActivityRecyclerviewAdapter?.notifyDataSetChanged()
             setMoveToRecentPosition(stage?.current_page?.toInt())
-            Logger.e("${it.size} ${studyActivityRecyclerviewAdapter?.itemCount}")
+            Logger.d("${it.size} ${studyActivityRecyclerviewAdapter?.itemCount}")
         }
     }
 
@@ -218,7 +218,7 @@ class StudyActivity :
 
     override fun onMicClick(v: View, position: Int) {
 //        wordTextToSpeech?.let {
-//            Log.e("Test", "Mic")
+//            Logger.d("Test Mic")
 //
 //            it.setPitch(1.0f) // 기본톤
 //            it.setSpeechRate(1.0f) // 기본속도
