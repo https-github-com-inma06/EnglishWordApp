@@ -72,7 +72,7 @@ class StudyActivity :
         intent?.let {
             it.getParcelableExtra<Learning>("stage")?.let { learning ->
                 stage = learning
-                viewModel.loadWordLink(learning.p_id, learning.s_id)
+                viewModel.load(learning.p_id, learning.s_id)
             }
             it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
                 setToolbarTitle(packageInfo.package_name)
@@ -81,7 +81,7 @@ class StudyActivity :
     }
 
     private fun observeLoading() {
-        viewModel.isLoading.observe(this) {
+        viewModel.loading.observe(this) {
             if (it)
                 loadingDialog?.showLoading()
             else

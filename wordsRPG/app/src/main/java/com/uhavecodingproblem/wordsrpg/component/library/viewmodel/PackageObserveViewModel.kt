@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 /**
  * wordsrpg
@@ -18,104 +21,113 @@ import kotlinx.coroutines.launch
  * Created On 2020-09-27.
  * Description:
  */
-class PackageObserveViewModel(private val userId: String?) : ViewModel() {
+class PackageObserveViewModel(private val u_id: String) : ViewModel() {
 
-    //Loading 여부 true 로딩중 false 로딩 x
-    val isLoading: MutableLiveData<Boolean> get() = _isLoading
+    private val firebaseDatabase= FirebaseDatabase.getInstance()
+    private val firebaseStorage = FirebaseStorage.getInstance()
 
-    // 전체 기본 패키지들
-    val basicPackageInformation get() = _basicPackageInformation
+    val filteredBasicPackage get() = _filteredBasicPackage
+    val loading get() = _loading
 
-    private val basicPackageData = mutableListOf<Package>()
-    private val stageData = mutableListOf<Learning>()
-    private val currentStage = mutableListOf<Learning>() // 선택된 패키지의 스테이지
-    private val _basicPackageInformation = MutableLiveData<MutableList<PackageWithStage>>()
+    private val _filteredBasicPackage = MutableLiveData<MutableList<PackageWithStage>>()
+    private val _loading = MutableLiveData<Boolean>()
 
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
-
-
-    private val firebaseDatabase = FirebaseDatabase.getInstance()
-    private val databaseReference: DatabaseReference = firebaseDatabase.reference
+    private val basicPackageItem = mutableListOf<Package>()
+    private val userLearningItem = mutableListOf<Learning>()
 
     init {
-        loadPackage()
+        _loading.postValue(true)
+        load()
     }
 
-    private fun loadPackage() = viewModelScope.launch(Dispatchers.IO) {
+    private fun load() = viewModelScope.launch(Dispatchers.IO){
 
-        databaseReference.child("Package").addListenerForSingleValueEvent(object : ValueEventListener {
+        basicPackageItem.clear()
+        userLearningItem.clear()
+
+        basicPackageItem.addAll(loadBasicPackage())
+        userLearningItem.addAll(loadLearning())
+
+        filterBasicPackage(basicPackageItem, userLearningItem)
+
+        _loading.postValue(false)
+    }
+
+    private suspend fun loadBasicPackage(): MutableList<Package> = suspendCancellableCoroutine{
+        val packageItems = mutableListOf<Package>()
+        firebaseDatabase.reference.child("Package").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                basicPackageData.clear()
+                if (!isLoading())
+                    _loading.postValue(true)
 
-                for (childSnapShot in snapshot.children) {
-                    childSnapShot?.let {
-                        val data = it.getValue(Package::class.java)
-                        data?.let { packageInformation ->
-                            if (packageInformation.customCheck == "0")
-                                basicPackageData.add(packageInformation)
-                        }
+                for (childSnapshot in snapshot.children){
+                    val data = childSnapshot.getValue(Package::class.java)
+                    data?.let {packageData ->
+                        if (packageData.customCheck == "0")
+                            packageItems.add(packageData)
                     }
                 }
-
-                userId?.let {
-                    loadStage(it)
-                }
+                it.resume(packageItems)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("Load Package Error", error.message)
-                _isLoading.postValue(false)
+                Log.e("packageLoadError", error.message)
+                it.cancel()
+                _loading.postValue(false)
             }
         })
+
     }
-    private fun loadStage(u_id: String) = viewModelScope.launch(Dispatchers.IO) {
-        databaseReference.child("Learning").addValueEventListener(object : ValueEventListener {
+
+    private suspend fun loadLearning(): MutableList<Learning> = suspendCancellableCoroutine{
+        val learningItem = mutableListOf<Learning>()
+        firebaseDatabase.reference.child("Learning").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                val basicPackageWithStage = mutableListOf<PackageWithStage>()
-                stageData.clear()
+                if (!isLoading())
+                    _loading.postValue(true)
 
-                for (childSnapShot in snapshot.children) {
-                    childSnapShot?.let {
-                        val data = it.getValue(Learning::class.java)
-                        data?.let { stage ->
-                            if (stage.u_id == u_id)
-                                stageData.add(stage)
-                        }
+                for (childSnapshot in snapshot.children){
+                    val data = childSnapshot.getValue(Learning::class.java)
+                    data?.let {learning ->
+                        if (learning.u_id == u_id)
+                            learningItem.add(learning)
                     }
                 }
-
-                for (i in basicPackageData.indices) {
-                    val totalStage = stageData.filter { it.p_id == basicPackageData[i].p_id }.toMutableList().size.toString()
-                    val clearStage = stageData.filter { it.p_id == basicPackageData[i].p_id && it.stage_status == "3" }
-                        .toMutableList().size.toString()
-                    basicPackageWithStage.add(
-                        PackageWithStage(
-                            basicPackageData[i].p_id,
-                            basicPackageData[i].package_name,
-                            basicPackageData[i].package_thumbnail,
-                            totalStage,
-                            clearStage
-                        )
-                    )
-                }
-
-                _basicPackageInformation.postValue(basicPackageWithStage)
-                _isLoading.postValue(false)
+                it.resume(learningItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("Error:", "Load Stage Error")
-                _isLoading.postValue(false)
+                Log.e("LearningLoadError", error.message)
+                it.cancel()
+                _loading.postValue(false)
             }
         })
     }
 
-    fun selectedPackage(p_id: String): MutableList<Learning> {
-        currentStage.clear()
-        stageData.forEach { if (it.p_id == p_id) currentStage.add(it) }
-        return currentStage
+    private fun filterBasicPackage(basicPackageItem: MutableList<Package>, learningItem: MutableList<Learning>){
+
+        val filter = mutableListOf<PackageWithStage>()
+
+        basicPackageItem.forEach { basic ->
+            val totalPackageCount = learningItem.filter { learning -> learning.p_id == basic.p_id}.size.toString()
+            val clearPackageCount = learningItem.filter { learning -> learning.p_id == basic.p_id && learning.stage_status == "3"}.size.toString()
+            filter.add(PackageWithStage(basic.p_id, basic.package_name, basic.package_thumbnail, totalPackageCount, clearPackageCount))
+        }
+
+        _filteredBasicPackage.postValue(filter)
+    }
+
+    fun filterStage(p_id: String) : MutableList<Learning>{
+        return userLearningItem.filter { it.p_id == p_id }.toMutableList()
+    }
+
+    private fun isLoading(): Boolean{
+        _loading.value?.let {
+            return it
+        }
+        throw NullPointerException("Loading Value Null")
     }
 
 }

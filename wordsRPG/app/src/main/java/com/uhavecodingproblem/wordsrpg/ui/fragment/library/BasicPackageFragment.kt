@@ -29,8 +29,9 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
     MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
     private val tabName = listOf("수준별", "시험별", "카테고리별")
-    private val basicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel>{ ViewModelFactory(null, tabName) }
-    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { ViewModelFactory(Application.userId, null) }
+    private val basicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel>{ ViewModelFactory(Application.userId, tabName) }
+    private val packageObserveViewModel by viewModels<PackageObserveViewModel> { ViewModelFactory(Application.userId, tabName) }
+
     private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
     private var progressDialog: SearchLoadingDialog? = null
     private var dialogFragment: DialogFragment? = null
@@ -55,7 +56,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
     }
 
     private fun observeLoadBasicPackage() {
-        packageObserveViewModel.basicPackageInformation.observe(viewLifecycleOwner) {
+        packageObserveViewModel.filteredBasicPackage.observe(viewLifecycleOwner) {
             basicRecyclerViewAdapter?.submitList(it.toMutableList())
         }
 
@@ -76,7 +77,7 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
     }
 
     private fun observeLoading() {
-        packageObserveViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        packageObserveViewModel.loading.observe(viewLifecycleOwner, Observer {
             if (it)
                 progressDialog?.showLoading()
             else
