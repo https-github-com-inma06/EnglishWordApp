@@ -22,7 +22,7 @@ import com.uhavecodingproblem.wordsrpg.util.*
  *
  */
 class CustomPackageRecyclerViewAdapter(
-    private val customPackageList: MutableList<Package>, private var customPackageType: Int
+    var customPackageList: MutableList<Package>, private var customPackageType: Int
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -63,17 +63,16 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
         return when (viewType) {
 
-            0 -> {
+            0 ->
                 CustomPackageViewHolder(binding)
-            }
 
-            1 -> {
+
+            1 ->
                 AddNewMyCustomPackage(binding1)
-            }
-            else -> {
 
+            else ->
                 CustomPackageViewHolder(binding)
-            }
+
         }
     }
 
@@ -82,15 +81,13 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
         if (customPackageType == MY_CUSTOM_PACKAGE) {
 
-            if (position == 0) {
+            if (position == 0)
                 (holder as AddNewMyCustomPackage).onBind()
-            } else {
+             else
                 (holder as CustomPackageViewHolder).onBind(customPackageList[position])
-            }
 
         } else {
             (holder as CustomPackageViewHolder).onBind(customPackageList[position])
-
         }
     }
 
@@ -100,21 +97,17 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
          when (customPackageType) {
 
             ENTIRE_CUSTOM_PACKAGE -> {
-
                 return 0
             }
 
             MY_CUSTOM_PACKAGE -> {
-
-                return if (position == 0) {
+                return if (position == 0)
                     1
-                } else {
+                 else
                     0
-                }
             }
 
             else -> {
-
                 return 0
             }
         }

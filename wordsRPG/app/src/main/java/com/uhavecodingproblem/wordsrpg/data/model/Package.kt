@@ -21,5 +21,6 @@ data class Package(
     val total_word: String = "",
     val customCheck: String = "", //1일시 커스텀 패키지
     val customer_id: String? = "",
-    val hashTagList: MutableList<String>? = null
+    val hashTagList: MutableList<String>? = null,
+    val likeList:MutableList<String>? = null
 ):Serializable

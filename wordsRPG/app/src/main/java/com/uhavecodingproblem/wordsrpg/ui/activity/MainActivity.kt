@@ -1,17 +1,23 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.google.firebase.database.FirebaseDatabase
 import com.uhavecodingproblem.wordsrpg.R
+import com.uhavecodingproblem.wordsrpg.data.model.User
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityMainBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.setting.SettingActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
+import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil
+import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil.sharedInit
 
 
 /**
@@ -28,6 +34,11 @@ class MainActivity : BaseUtility.BaseActivity<ActivityMainBinding>(R.layout.acti
 
     override fun ActivityMainBinding.onCreate() {
         Logger.d("실행")
+
+        SharedPreferenceUtil.userIdx = "1"
+        Log.d("check123123",SharedPreferenceUtil.userIdx!!)
+
+
 
         configureToolbar()//1-1
         setUpNavigation()//1-2

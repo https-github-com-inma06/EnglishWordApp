@@ -137,15 +137,15 @@
                 android:id="@+id/img_selected_heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
-                app:srcCompat="@drawable/selected_heart" />
-
-            <ImageView
-                android:id="@+id/img_un_selected_heart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:srcCompat="@drawable/un_selected_heart" />
+                app:srcCompat="@drawable/bg_img_selected_heart" />
+
+<!--            <ImageView-->
+<!--                android:id="@+id/img_un_selected_heart"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:visibility="visible"-->
+<!--                app:srcCompat="@drawable/un_selected_heart" />-->
         </FrameLayout>
 
         <androidx.constraintlayout.widget.Guideline

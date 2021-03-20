@@ -9,6 +9,7 @@ import com.google.firebase.database.*
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.Package
+import com.uhavecodingproblem.wordsrpg.data.model.User
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentEntireCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.*
@@ -27,30 +28,103 @@ class EntireCustomPackageFragment :
 
 
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
-    private val dataList:MutableList<Package> = mutableListOf()
+    private var dataList:MutableList<Package> = mutableListOf()
     private val db = FirebaseDatabase.getInstance().reference.child("Package")
-
+    private val userDb = FirebaseDatabase.getInstance().reference.child("User")
+    private var filterMode:Int?=null
+    private var userData = User()
     override fun FragmentEntireCustomPackageBinding.onCreateView() {
         Logger.d("실행")
-
+        viewgroupLibrarySearch.checkPackage = ENTIRE_CUSTOM_PACKAGE
         thisFragment = this@EntireCustomPackageFragment
 
+        setUserDb()
+        setFilterMode()
         setCustomPackageRecyclerView()
+        setFilterListener()
+
+
+        viewgroupLibrarySearch.imgSelectedHeart.setOnClickListener {
+            it.isSelected = !it.isSelected
+        }
+    }
+
+    private fun setUserDb() {
+        userDb.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (snap in snapshot.children) {
+                    snap.getValue(User::class.java).also {
+                        if (it!!.u == SharedPreferenceUtil.userIdx)
+                            userData = it
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun FragmentEntireCustomPackageBinding.setFilterListener() {
+        viewgroupLibrarySearch.editTvSearchPackage.setOnEditorActionListener { v, actionId, event ->
+            FirebaseDatabase.getInstance().reference.child("Package").addListenerForSingleValueEvent(
+                object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val getTempList = mutableListOf<Package>()
+                        for (snap in snapshot.children) {
+                            snap.getValue(Package::class.java).also {
+                                if (it?.customCheck == "1")
+                                    getTempList.add(it)
+                            }
+                        }
+                        (recyclerviewCustomList.adapter as CustomPackageRecyclerViewAdapter).apply {
+                            val search = viewgroupLibrarySearch.editTvSearchPackage.text.toString()
+                            var filterList = if (filterMode == SEARCH_PACKAGE_TITLE)
+                                dataList.filter { it.package_name.contains(search)}
+                            else
+                                dataList.filter { it.hashTagList!!.contains(search) }
+
+                            if(viewgroupLibrarySearch.imgSelectedHeart.isSelected)
+                                filterList =
+                                    filterList.sortedBy { it.likeList?.contains(SharedPreferenceUtil.userIdx!!) }
+
+
+                            customPackageList.clear()
+                            customPackageList = filterList as MutableList<Package>
+                            notifyDataSetChanged()
+                            dataList = getTempList
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {}
+                })
+            true
+        }
+    }
+
+
+    private fun FragmentEntireCustomPackageBinding.setFilterMode() {
+        filterMode = if (viewgroupLibrarySearch.tvSearchFilter.text == getString(R.string.str_filter_title))
+            SEARCH_PACKAGE_TITLE
+        else
+            SEARCH_PACKAGE_TAG
     }
 
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
     private fun setCustomPackageRecyclerView() {
 
-        db.addValueEventListener(object :ValueEventListener{
+        db.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                dataList.clear()
                 for(snap in snapshot.children){
                     snap.getValue(Package::class.java).also {
-                        if (it?.customCheck == "1")
-                        dataList.add(it)
+                        if (it?.customCheck == "1") {
+                            dataList.add(it)
+                        }
                     }
                 }
+                /**테스트*/
                 recyclerViewAdapter = CustomPackageRecyclerViewAdapter(
-                    dataList,
+                    dataList.reversed() as MutableList<Package>,
                     ENTIRE_CUSTOM_PACKAGE
                 )
                 //adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
@@ -81,14 +155,13 @@ class EntireCustomPackageFragment :
         changeFilterAnimation(binding.viewgroupLibrarySearch.iconSearchFilter).start()
 
         when (filter) {
-            SEARCH_PACKAGE_TITLE -> {
-                binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_title)
-            }
+            SEARCH_PACKAGE_TITLE ->
+              binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_title)
 
-            SEARCH_PACKAGE_TAG -> {
+
+            SEARCH_PACKAGE_TAG ->
                 binding.viewgroupLibrarySearch.tvSearchFilter.setText(R.string.str_filter_tag)
 
-            }
         }
     }//filterChange 끝
 

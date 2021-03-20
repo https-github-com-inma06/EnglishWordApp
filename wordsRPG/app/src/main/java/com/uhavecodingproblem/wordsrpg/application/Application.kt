@@ -3,6 +3,7 @@ package com.uhavecodingproblem.wordsrpg.application
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
+import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil.sharedInit
 
 /**
  * wordsrpg
@@ -23,7 +24,7 @@ class Application:Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        sharedInit()
         //debug 가능 여부 넣어줌.
         DEBUG_AVAILABLE=isDebuggable(this)
     }
