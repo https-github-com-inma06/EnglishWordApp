@@ -35,18 +35,12 @@ class WordObserveViewModel : ViewModel() {
     private val _loading = MutableLiveData<Boolean>(true)
     private val _wordList = MutableLiveData<MutableList<WordsRead>>()
 
-    fun load(p_id: String, s_id: String) = viewModelScope.launch(Dispatchers.IO){
 
-        val packageWordItem = loadWordLink(p_id, s_id)
-        loadWords(packageWordItem)
-
-        _loading.postValue(false)
-    }
-
-    private suspend fun loadWordLink(p_id: String, s_id: String): MutableList<PackageWord> = suspendCancellableCoroutine {
-        val packageWordItem = mutableListOf<PackageWord>()
+    fun loadWordLink(p_id: String, s_id: String){
         databaseReference.child("PackageWord").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                val packageWordItem = mutableListOf<PackageWord>()
+
                 for (childSnapshot in snapshot.children) {
                     childSnapshot?.let {
                         val data = it.getValue(PackageWord::class.java)
@@ -56,18 +50,17 @@ class WordObserveViewModel : ViewModel() {
                         }
                     }
                 }
-                it.resume(packageWordItem)
+                loadWords(packageWordItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("loadWordLink Error", error.message)
                 _loading.postValue(false)
-                it.cancel()
             }
         })
     }
 
-    private suspend fun loadWords(packageWordItem: MutableList<PackageWord>) = suspendCancellableCoroutine<Unit> {
+    private fun loadWords(packageWordItem: MutableList<PackageWord>){
         databaseReference.child("Word").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val wordItem = mutableListOf<WordsRead>()
@@ -82,13 +75,12 @@ class WordObserveViewModel : ViewModel() {
                     }
                 }
                 _wordList.postValue(wordItem)
-                it.resume(Unit)
+                _loading.postValue(false)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("loadWords Error", error.message)
                 _loading.postValue(false)
-                it.cancel()
             }
         })
     }

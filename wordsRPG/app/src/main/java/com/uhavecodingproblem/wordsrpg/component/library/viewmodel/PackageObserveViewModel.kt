@@ -37,26 +37,13 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
 
     init {
         _loading.postValue(true)
-        load()
+        loadBasicPackage()
     }
 
-    private fun load() = viewModelScope.launch(Dispatchers.IO){
-
-        basicPackageItem.clear()
-        userLearningItem.clear()
-
-        basicPackageItem.addAll(loadBasicPackage())
-        userLearningItem.addAll(loadLearning())
-
-        filterBasicPackage(basicPackageItem, userLearningItem)
-
-        _loading.postValue(false)
-    }
-
-    private suspend fun loadBasicPackage(): MutableList<Package> = suspendCancellableCoroutine{
-        val packageItems = mutableListOf<Package>()
+    private fun loadBasicPackage(){
         firebaseDatabase.reference.child("Package").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                basicPackageItem.clear()
 
                 if (!isLoading())
                     _loading.postValue(true)
@@ -65,25 +52,24 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
                     val data = childSnapshot.getValue(Package::class.java)
                     data?.let {packageData ->
                         if (packageData.customCheck == "0")
-                            packageItems.add(packageData)
+                            basicPackageItem.add(packageData)
                     }
                 }
-                it.resume(packageItems)
+                loadLearning()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("packageLoadError", error.message)
-                it.cancel()
                 _loading.postValue(false)
             }
         })
 
     }
 
-    private suspend fun loadLearning(): MutableList<Learning> = suspendCancellableCoroutine{
-        val learningItem = mutableListOf<Learning>()
+    private fun loadLearning(){
         firebaseDatabase.reference.child("Learning").addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                userLearningItem.clear()
 
                 if (!isLoading())
                     _loading.postValue(true)
@@ -92,15 +78,14 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
                     val data = childSnapshot.getValue(Learning::class.java)
                     data?.let {learning ->
                         if (learning.u_id == u_id)
-                            learningItem.add(learning)
+                            userLearningItem.add(learning)
                     }
                 }
-                it.resume(learningItem)
+                filterBasicPackage(basicPackageItem, userLearningItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("LearningLoadError", error.message)
-                it.cancel()
                 _loading.postValue(false)
             }
         })
@@ -117,6 +102,7 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
         }
 
         _filteredBasicPackage.postValue(filter)
+        _loading.postValue(false)
     }
 
     fun filterStage(p_id: String) : MutableList<Learning>{
