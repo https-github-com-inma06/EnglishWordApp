@@ -10,7 +10,7 @@
         <!-- 전역상수       -->
         <variable
             name="constant"
-            type="com.uhavecodingproblem.wordsrpg.util.ConstatntKt"/>
+            type="com.uhavecodingproblem.wordsrpg.util.UtilityKt"/>
 
 
         <!-- 전체 커스텀 Fragment  -->

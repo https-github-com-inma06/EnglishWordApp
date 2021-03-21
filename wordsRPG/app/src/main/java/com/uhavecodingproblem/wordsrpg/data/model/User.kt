@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.data.model
 
-import java.io.Serializable
+import android.os.Parcel
+import android.os.Parcelable
 
 
 data class User(
@@ -19,4 +20,48 @@ data class User(
     var user_battleList: List<Int>? = null, //배틀 데이타 리스트
     var user_battleNotiList: List<Int>? = null // 알림(배틀) 관련 데이타 리스트
 
-):Serializable
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readString() ?: "",
+        parcel.readValue(Long::class.java.classLoader) as? Long,
+        parcel.readArrayList(Int::class.java.classLoader) as? List<Int>,
+        parcel.readArrayList(Int::class.java.classLoader) as? List<Int>,
+        parcel.readArrayList(Int::class.java.classLoader) as? List<Int>
+    )
+
+    override fun describeContents(): Int = 0
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+        dest?.let {
+            it.writeString(u)
+            it.writeString(user_id)
+            it.writeString(user_password)
+            it.writeString(user_email)
+            it.writeString(user_nickName)
+            it.writeString(user_profileImg)
+            it.writeString(user_rank)
+            it.writeString(user_ratingBadge)
+            it.writeValue(user_score)
+            it.writeList(user_friendList)
+            it.writeList(user_battleList)
+            it.writeList(user_battleNotiList)
+        }
+    }
+
+    companion object CREATOR : Parcelable.Creator<User> {
+        override fun createFromParcel(parcel: Parcel): User {
+            return User(parcel)
+        }
+
+        override fun newArray(size: Int): Array<User?> {
+            return arrayOfNulls(size)
+        }
+    }
+}
