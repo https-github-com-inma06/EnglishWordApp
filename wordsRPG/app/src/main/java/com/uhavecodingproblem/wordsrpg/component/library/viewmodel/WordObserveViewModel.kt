@@ -3,19 +3,19 @@ package com.uhavecodingproblem.wordsrpg.component.library.viewmodel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.uhavecodingproblem.wordsrpg.api.ServerApi
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWord
+import com.uhavecodingproblem.wordsrpg.data.model.RequestTest
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.util.Logger
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * wordsrpg
@@ -35,8 +35,14 @@ class WordObserveViewModel : ViewModel() {
     private val _loading = MutableLiveData<Boolean>(true)
     private val _wordList = MutableLiveData<MutableList<WordsRead>>()
 
+    private var compositeDisposable: CompositeDisposable? = null
 
-    fun loadWordLink(p_id: String, s_id: String){
+    init {
+        compositeDisposable = CompositeDisposable()
+    }
+
+
+    fun loadWordLink(p_id: String, s_id: String, isTest: Boolean) {
         databaseReference.child("PackageWord").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val packageWordItem = mutableListOf<PackageWord>()
@@ -50,7 +56,7 @@ class WordObserveViewModel : ViewModel() {
                         }
                     }
                 }
-                loadWords(packageWordItem)
+                loadWords(packageWordItem, isTest)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -60,10 +66,11 @@ class WordObserveViewModel : ViewModel() {
         })
     }
 
-    private fun loadWords(packageWordItem: MutableList<PackageWord>){
+    private fun loadWords(packageWordItem: MutableList<PackageWord>, isTest: Boolean) {
         databaseReference.child("Word").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val wordItem = mutableListOf<WordsRead>()
+
                 for (childSnapshot in snapshot.children) {
                     childSnapshot?.let {
                         val data = it.getValue(WordsRead::class.java)
@@ -75,7 +82,22 @@ class WordObserveViewModel : ViewModel() {
                     }
                 }
                 _wordList.postValue(wordItem)
-                _loading.postValue(false)
+
+                if (isTest) {
+                    val requestTestItem = mutableListOf<RequestTest>()
+                    val pId = packageWordItem[0].p_id
+                    wordItem.forEach {
+                        requestTestItem.add(
+                            RequestTest(
+                                if (requestTestItem.isNullOrEmpty()) 1 else requestTestItem.size + 1,
+                                pId,
+                                it.w_id
+                            )
+                        )
+                    }
+                    requestTest(requestTestItem)
+                } else
+                    _loading.postValue(false)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -119,4 +141,33 @@ class WordObserveViewModel : ViewModel() {
             })
     }
 
+    private fun requestTest(requestTest: List<RequestTest>) {
+
+
+        requestTest.forEach { Logger.d("${it.idx} ${it.idx} ${it.w_id}") }
+        compositeDisposable?.let {
+            it.add(
+                ServerApi.requestTest(requestTest).subscribeOn(Schedulers.io()).doOnTerminate { _loading.postValue(false) }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ success ->
+                        success.forEach { response ->
+                            response.test.forEach { test ->
+                                test.example.forEach { example ->
+                                    Logger.d("${example.example_word} ${example.example_mean}")
+                                }
+                            }
+                        }
+                    }, { error ->
+                        Logger.d("$error")
+                    })
+            )
+        }
+
+
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable = null
+    }
 }

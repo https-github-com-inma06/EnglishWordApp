@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
-import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyActivityViewPagerAdapter
+import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
@@ -27,11 +27,11 @@ import java.util.*
 
 class StudyActivity :
     BaseUtility.BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
-    StudyActivityViewPagerAdapter.ItemClickListener {
+    StudyViewPagerAdapter.ItemClickListener {
 
     private var stage: Learning? = null
     private var wordTextToSpeech: TextToSpeech? = null
-    private var studyActivityRecyclerviewAdapter: StudyActivityViewPagerAdapter? = null
+    private var studyRecyclerviewAdapter: StudyViewPagerAdapter? = null
     private val viewModel by viewModels<WordObserveViewModel>()
     private var loadingDialog: SearchLoadingDialog? = null
     private val wordList = mutableListOf<WordsRead>()
@@ -44,7 +44,7 @@ class StudyActivity :
         initTextToSpeech()
         setWord()
         initBinding()
-        setViewPager()
+        viewPagerInit()
 
         observeLoading()
         observeWord()
@@ -72,7 +72,7 @@ class StudyActivity :
         intent?.let {
             it.getParcelableExtra<Learning>("stage")?.let { learning ->
                 stage = learning
-                viewModel.loadWordLink(learning.p_id, learning.s_id)
+                viewModel.loadWordLink(learning.p_id, learning.s_id, false)
             }
             it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
                 setToolbarTitle(packageInfo.package_name)
@@ -93,20 +93,20 @@ class StudyActivity :
         viewModel.wordList.observe(this) {
             wordList.clear()
             wordList.addAll(it)
-            studyActivityRecyclerviewAdapter?.notifyDataSetChanged()
+            studyRecyclerviewAdapter?.notifyDataSetChanged()
             setMoveToRecentPosition(stage?.current_page?.toInt())
-            Logger.d("${it.size} ${studyActivityRecyclerviewAdapter?.itemCount}")
+            Logger.d("${it.size} ${studyRecyclerviewAdapter?.itemCount}")
         }
     }
 
-    private fun setViewPager() {
+    private fun viewPagerInit() {
         binding.viewpager2Study.apply {
-            studyActivityRecyclerviewAdapter =
-                StudyActivityViewPagerAdapter(
+            studyRecyclerviewAdapter =
+                StudyViewPagerAdapter(
                     wordList,
                     this@StudyActivity
                 )
-            adapter = studyActivityRecyclerviewAdapter
+            adapter = studyRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false
             registerOnPageChangeCallback(pageChangeCallback)
@@ -128,7 +128,7 @@ class StudyActivity :
                     viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                         override fun onGlobalLayout() {
                             viewTreeObserver.removeOnGlobalLayoutListener(this)
-                            studyActivityRecyclerviewAdapter?.setCurrentPosition(it - 1)
+                            studyRecyclerviewAdapter?.setCurrentPosition(it - 1)
                             recyclerview.scrollToPosition(it - 1)
                         }
                     })
@@ -153,8 +153,8 @@ class StudyActivity :
              */
 
             binding.viewpager2Study.post {
-                studyActivityRecyclerviewAdapter?.setCurrentPosition(position)
-                studyActivityRecyclerviewAdapter?.notifyItemChanged(position, Unit)
+                studyRecyclerviewAdapter?.setCurrentPosition(position)
+                studyRecyclerviewAdapter?.notifyItemChanged(position, Unit)
             }
         }
 
@@ -183,10 +183,10 @@ class StudyActivity :
                 exitStudyDialog()
             }
             R.id.hide_word -> {
-                studyActivityRecyclerviewAdapter?.hideWord()
+                studyRecyclerviewAdapter?.hideWord()
             }
             R.id.hide_mean -> {
-                studyActivityRecyclerviewAdapter?.hideMean()
+                studyRecyclerviewAdapter?.hideMean()
             }
             R.id.print_test_paper -> {
                 Toast.makeText(

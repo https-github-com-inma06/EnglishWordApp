@@ -15,6 +15,7 @@ import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.TestActivity
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 
@@ -124,7 +125,11 @@ class StageSelectionDialogFragment : DialogFragment() {
     }
 
     fun moveTest() {
-        Logger.d("MoveTest")
+        Intent(requireContext(), TestActivity::class.java).also {
+            it.putExtra("test", stage)
+            requireActivity().startActivity(it)
+            dismiss()
+        }
     }
 
     override fun onResume() {
