@@ -20,9 +20,9 @@ interface ServerApi {
     @GET("package_read.php")
     fun requestBasicPackage(@Query("package_name") package_name: String) : Call<Package>
 
-    @POST(".php")
+    @POST("learning_test.php")
     fun requestTest(
-        @Body param : List<RequestTest>
+        @Body question_word : List<RequestTest>
     ): Observable<List<ResponseTest>>
 
     companion object {

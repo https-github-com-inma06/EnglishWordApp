@@ -36,8 +36,10 @@ class MainMyRoomFragment : BaseUtility.BaseFragment<FragmentMainMyRoomBinding>(R
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for(snap in snapshot.children){
                          snap.getValue(User::class.java).also {
-                             if(it?.u == SharedPreferenceUtil.userIdx)
-                                 Log.d("UserData",it.toString())
+                             if(it?.u == SharedPreferenceUtil.userIdx) {
+                                 Logger.d(it.toString())
+                             }
+
                          }
 
                     }

@@ -89,7 +89,11 @@ class WordObserveViewModel : ViewModel() {
                     wordItem.forEach {
                         requestTestItem.add(
                             RequestTest(
-                                if (requestTestItem.isNullOrEmpty()) 1 else requestTestItem.size + 1,
+                                if (requestTestItem.isNullOrEmpty()){
+                                    "1" // 파라미터['idx'] String 변경
+                                } else {
+                                    (requestTestItem.size + 1).toString() // 파라미터['idx'] String 변경
+                                },
                                 pId,
                                 it.w_id
                             )
@@ -144,7 +148,9 @@ class WordObserveViewModel : ViewModel() {
     private fun requestTest(requestTest: List<RequestTest>) {
 
 
-        requestTest.forEach { Logger.d("${it.idx} ${it.idx} ${it.w_id}") }
+        requestTest.forEach {
+            Logger.d("${it.idx} ${it.idx} ${it.w_id}")
+        }
         compositeDisposable?.let {
             it.add(
                 ServerApi.requestTest(requestTest).subscribeOn(Schedulers.io()).doOnTerminate { _loading.postValue(false) }
@@ -158,7 +164,7 @@ class WordObserveViewModel : ViewModel() {
                             }
                         }
                     }, { error ->
-                        Logger.d("$error")
+                        Logger.d("error 에러 :: $error")
                     })
             )
         }
