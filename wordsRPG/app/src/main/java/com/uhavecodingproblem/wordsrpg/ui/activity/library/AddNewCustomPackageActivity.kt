@@ -35,7 +35,6 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
 
     override fun ActivityAddNewCustomPackageBinding.onCreate() {
         Logger.d("실행")
-
         thisActivity=this@AddNewCustomPackageActivity
 
     }
@@ -156,7 +155,7 @@ class AddNewCustomPackageActivity : BaseUtility.BaseActivity<ActivityAddNewCusto
                         Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPackageThumbnail)
                         Glide.with(binding.imgPackageThumbnail).load(it).error(R.drawable.on_my_room).centerCrop().into(binding.imgPreviewThumbnail)
 
-                        // TODO: 2020-09-26 뷰모델 적용시  지울것 
+                        // TODO: 2020-09-26 뷰모델 적용시  지울것
                         intent.putExtra("uri",it)
 
                     }

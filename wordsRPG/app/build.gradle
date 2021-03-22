@@ -138,6 +138,7 @@ dependencies {
     //파이어베이스 스토리지
     implementation 'com.google.firebase:firebase-storage'
 
+
     def card_view = "1.0.0"
     implementation "androidx.cardview:cardview:$card_view"
 

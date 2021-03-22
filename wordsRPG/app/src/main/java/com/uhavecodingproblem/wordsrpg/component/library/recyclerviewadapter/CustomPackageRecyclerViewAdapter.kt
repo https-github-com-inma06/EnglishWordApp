@@ -51,7 +51,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
         // TODO: 2020-10-31 추가아이템  자리 만들고 확인 위해서 일단 이렇게 해놓음. -> 추후 리팩토링
         //내 커스텀의 경우는  index 0쪽에 mock 값  넣어줌.
         if (customPackageType == MY_CUSTOM_PACKAGE) {
-            customPackageList.add(0, customPackageList[0])
+//            customPackageList.add(0, customPackageList[0])
         }
 
     }
@@ -84,10 +84,11 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
             if (position == 0)
                 (holder as AddNewMyCustomPackage).onBind()
              else
-                (holder as CustomPackageViewHolder).onBind(customPackageList[position])
+                (holder as CustomPackageViewHolder).onBind(customPackageList[position-1])
 
         } else {
-            (holder as CustomPackageViewHolder).onBind(customPackageList[position])
+                if(position !=0)
+            (holder as CustomPackageViewHolder).onBind(customPackageList[position-1])
         }
     }
 
@@ -113,8 +114,9 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
         }
 
     }
-
-    override fun getItemCount(): Int = customPackageList.size
+/**테스트*/
+//    override fun getItemCount(): Int = customPackageList.size
+    override fun getItemCount(): Int = customPackageList.size+1
 
 
 
