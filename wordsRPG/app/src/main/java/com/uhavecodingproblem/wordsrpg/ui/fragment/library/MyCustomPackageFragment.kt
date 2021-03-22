@@ -62,8 +62,8 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
                 }
 
                 // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
-//                recyclerViewAdapter= CustomPackageRecyclerViewAdapter(myList,
-//                    ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+                recyclerViewAdapter= CustomPackageRecyclerViewAdapter(myList,
+                    ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
                 recyclerViewAdapter=CustomPackageRecyclerViewAdapter(myList,
                     MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.

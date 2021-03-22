@@ -27,22 +27,25 @@ class CustomPackageRecyclerViewAdapter(
 
 
     private var onItemClickListener: OnItemClickListener? = null
-private var onAddItemClickListener: OnAddItemClickListener?=null
-//아이템 클릭 이벤트 받을  리스너 인터페이스
+    private var onAddItemClickListener: OnAddItemClickListener? = null
+
+    //아이템 클릭 이벤트 받을  리스너 인터페이스
     interface OnItemClickListener {
         fun onItemClick(view: View, packageName: String)
         // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
     }
+
     interface OnAddItemClickListener {
         fun onItemClick()
     }
+
     //외부에서  아이템 클릭 처리할 리스너
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
     //외부에서 추가버튼 클릭 처리할 리스너
-    fun setOnAddItemClickListener(addItemClickListener:OnAddItemClickListener) {
+    fun setOnAddItemClickListener(addItemClickListener: OnAddItemClickListener) {
         this.onAddItemClickListener = addItemClickListener
     }
 
@@ -83,19 +86,18 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
             if (position == 0)
                 (holder as AddNewMyCustomPackage).onBind()
-             else
-                (holder as CustomPackageViewHolder).onBind(customPackageList[position-1])
+            else
+                (holder as CustomPackageViewHolder).onBind(customPackageList[position - 1])
 
         } else {
-                if(position !=0)
-            (holder as CustomPackageViewHolder).onBind(customPackageList[position-1])
+            (holder as CustomPackageViewHolder).onBind(customPackageList[position])
         }
     }
 
 
     // TODO: 2020-10-31 일단 이렇게 적용하고 나중에 명확하게  코드 다시  작성
     override fun getItemViewType(position: Int): Int {
-         when (customPackageType) {
+        when (customPackageType) {
 
             ENTIRE_CUSTOM_PACKAGE -> {
                 return 0
@@ -104,7 +106,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
             MY_CUSTOM_PACKAGE -> {
                 return if (position == 0)
                     1
-                 else
+                else
                     0
             }
 
@@ -114,13 +116,15 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
         }
 
     }
-/**테스트*/
+
+    /**테스트*/
 //    override fun getItemCount(): Int = customPackageList.size
-    override fun getItemCount(): Int = customPackageList.size+1
-
-
-
-
+    override fun getItemCount(): Int {
+        return if (customPackageType == MY_CUSTOM_PACKAGE)
+            customPackageList.size + 1
+        else
+            customPackageList.size
+    }
 
 
     //추가 아이템 뷰홀더
