@@ -7,4 +7,4 @@ package com.uhavecodingproblem.wordsrpg.data.model
  * Created On 2021-03-23.
  * Description:
  */
-data class Test(val question: Question, val example: MutableList<Example>)
+data class Test(val index: String, val question: Question, val example: MutableList<Example>)
