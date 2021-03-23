@@ -1,42 +1,42 @@
 package com.uhavecodingproblem.wordsrpg.ui.dialog
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.DialogMyCustomPackageAddBinding
-import com.uhavecodingproblem.wordsrpg.util.FIREBASE_STORAGE_REFERENCE_URL
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil
 import gun0912.tedimagepicker.builder.TedImagePicker
 import gun0912.tedimagepicker.builder.type.ButtonGravity
 import gun0912.tedimagepicker.builder.type.MediaType
+import kotlinx.coroutines.*
 import kotlin.random.Random
+
 
 class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
     lateinit var binding: DialogMyCustomPackageAddBinding
     private var tagArray = mutableListOf<String>()
     private var profileImage: Uri? = null
 
-    private var db = FirebaseDatabase.getInstance().reference.child("Package")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
     }
 
     override fun onCreateView(
@@ -49,9 +49,24 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
         return binding.root
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
+            //옵저버
+            arguments?.getParcelable<Package>("package")?.also {
+                etMyPackageName.setText(it.package_name)
+                profileImage = Uri.parse(it.package_thumbnail)
+                Glide.with(ivPackageImage).load(it.package_thumbnail)
+                    .centerCrop().into(ivPackageImage)
+
+                repeat(it.hashTagList!!.size) { pos ->
+                    addTagViewInChipGroup(it.hashTagList[pos])
+                }
+                tagArray = it.hashTagList
+            }
+
+
             btnAdd.setOnClickListener {
                 addTagViewInChipGroup(etInsertTag.text.toString())
                 etInsertTag.setText("")
@@ -60,32 +75,55 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
                 pickThumbNailImageFromGallery()
             }
             btnAddPackage.setOnClickListener {
-//                if (profileImage == null)
-//                    Toast.makeText(context, "사진을 선택해주세요", Toast.LENGTH_SHORT).show()
-//
-//                if (tagArray.isEmpty())
-//                    Toast.makeText(context, "사용할 태그를 적어주세요", Toast.LENGTH_SHORT).show()
 
-                /**테스트*/
-                val path = Random.nextInt().toString() + "packageImage.jpg"
+                if (profileImage == null) {
+                    Toast.makeText(context, "사진을 선택해주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (tagArray.isEmpty()) {
+                    Toast.makeText(context, "사용할 태그를 적어주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                if (etMyPackageName.text.toString().isEmpty()) {
+                    Toast.makeText(context, "패키지 이름을 적어주세요", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+
                 val packid = Random.nextInt().toString() + "packName"
-                FirebaseStorage.getInstance().reference.child("images/").child(path)
-                    .putFile(profileImage!!).addOnSuccessListener {
-                        db.push().setValue(
-                            Package(
-                                packid,
-                                etMyPackageName.text.toString(), "50",
-                                FIREBASE_STORAGE_REFERENCE_URL + "images/"+path, "0",
-                                "1", SharedPreferenceUtil.userIdx, tagArray, mutableListOf()
-                            )
-                        ).addOnCanceledListener {
-                            Toast.makeText(context, "업로드 되었습니다.", Toast.LENGTH_SHORT).show()
-                            this@MyCustomPackageAddDialogFragment.dismiss()
-                        }
-                    }
-            }
-        }
+                val wordDialog = MyCustomPackageAddFirstDialogFragment()
+                val packageData = Package(
+                    packid, etMyPackageName.text.toString(), "0",
+                    profileImage.toString(), "0", "1",
+                    SharedPreferenceUtil.userIdx, tagArray, mutableListOf()
+                )
+                wordDialog.arguments = bundleOf("package" to packageData)
+                wordDialog.show(parentFragmentManager, "MyCustomPackageAddFirstDialogFragment")
+                dismiss()
 
+//               private var db = FirebaseDatabase.getInstance().reference.child("Package")
+//                val path = Random.nextInt().toString() + "packageImage.jpg"
+//                val storageRef = FirebaseStorage.getInstance().reference
+//                storageRef.child("images/").child(path)
+//                    .putFile(profileImage!!).addOnSuccessListener {
+//
+//                        storageRef.child(FIREBASE_STORAGE_IMAGE + path).downloadUrl.addOnSuccessListener {
+//                            db.push().setValue(
+//                                Package(
+//                                    packid,
+//                                    etMyPackageName.text.toString(), "50",
+//                                    it.toString(), "0",
+//                                    "1", SharedPreferenceUtil.userIdx, tagArray, mutableListOf()
+//                                )
+//                            ).addOnSuccessListener {
+//                                Toast.makeText(context, "업로드 되었습니다.", Toast.LENGTH_SHORT).show()
+//                                dismiss()
+//                            }
+//                        }
+//                    }
+            }
+
+        }
     }
 
     //패키지 썸네일 이미지 갤러리에서 가져오기
@@ -127,22 +165,20 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
     //chip뷰에 담아 동적 추가 진행
     private fun addTagViewInChipGroup(tagString: String) {
 
-        val chip = Chip(requireContext())
 
         //chip close icon 때문에 커스텀 style 추가
+        val chip = Chip(context)
         chip.setChipDrawable(
             ChipDrawable.createFromAttributes(
                 requireContext(),
                 null, 0, R.style.tag_view_style
             )
         )
-        chip.setBackgroundColor(Color.parseColor("#AFAFAF"))
         chip.text = tagString//유저가 입력한 태그 내용 넣어줌.
 
         //chipgroup에 동적 추가
         binding.chipGroup.addView(chip)
 
-        tagArray.add(tagString)
 
         //chip뷰에  close icon 클릭 event
         chip.setOnCloseIconClickListener {
@@ -159,7 +195,9 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
             })
             it.startAnimation(anim)
         }
+        tagArray.add(tagString)
 
     }//addTagViewInChipGroup() 끝
+
 
 }

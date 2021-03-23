@@ -25,6 +25,7 @@
         <activity android:name=".ui.activity.library.StudyActivity" />
         <activity android:name=".ui.activity.library.AddNewCustomPackageActivity" />
         <activity android:name=".ui.activity.MainActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
             >
 
         <intent-filter>

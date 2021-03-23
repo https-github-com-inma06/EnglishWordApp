@@ -3,7 +3,10 @@ package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMyCustomPackageAddBinding
@@ -144,7 +147,8 @@ class CustomPackageRecyclerViewAdapter(
 
 
     //뷰홀더
-    inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         //item 뷰에  데이터 바인딩 적용
         fun onBind(packAge: Package) {
@@ -160,21 +164,32 @@ class CustomPackageRecyclerViewAdapter(
 
             //아이템 클릭 리스너
             binding.layoutCustomPackage.setOnClickListener {
-                customPackageList[pos].package_name
-
+                if (customPackageType == MY_CUSTOM_PACKAGE)
+                    customPackageList[pos - 1].package_name
+                else
+                    customPackageList[pos].package_name
                 if (pos != RecyclerView.NO_POSITION) {
 
-                    // 리스너 객체의 메서드 호출.
-                    onItemClickListener?.onItemClick(
-                        view = it,
-                        packageName = customPackageList[pos].package_name
-                    )
+                    if (customPackageType == MY_CUSTOM_PACKAGE)
+                        onItemClickListener?.onItemClick(
+                            view = it,
+                            packageName = customPackageList[pos - 1].package_name
+                        )
+                    else
+                        onItemClickListener?.onItemClick(
+                            view = it,
+                            packageName = customPackageList[pos].package_name
+                        )
+
 
                 }
+
 
             }//아이템 클릭리스너 끝
 
 
         }
+
+
     }
 }

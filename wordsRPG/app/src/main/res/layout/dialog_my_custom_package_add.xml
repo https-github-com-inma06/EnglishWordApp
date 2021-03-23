@@ -13,7 +13,7 @@
         >
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/iv_back"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="32dp"
@@ -34,10 +34,10 @@
 
             android:textColor="#00B2E2"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageView4" />
+            app:layout_constraintTop_toTopOf="@+id/iv_back" />
 
 
         <Button
@@ -50,10 +50,11 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/dialog_my_custom_package_add_btn_bg"
             android:fontFamily="@font/binggraemelonabold"
-            android:gravity="center"
-            android:text="내 패키지 추가"
             android:textColor="#fff"
             android:textSize="32sp"
+            android:gravity="center"
+            android:text="패키지 단어 추가"
+            android:stateListAnimator="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

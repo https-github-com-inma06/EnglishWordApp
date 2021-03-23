@@ -24,7 +24,6 @@
 
     <!-- material design chip 형태의 '태그' 뷰 style     -->
     <style name="tag_view_style" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="android:checkable">false</item>
         <item name="closeIconVisible">true</item>
         <item name="chipBackgroundColor">@color/colorWhite</item>
         <item name="android:textColor">@color/colorBlack</item>

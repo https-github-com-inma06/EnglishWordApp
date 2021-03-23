@@ -134,7 +134,7 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
         Logger.d("AddNewCustomPackageActivity 로 이동")
 
         val dialog = MyCustomPackageAddDialogFragment()
-        dialog.show(parentFragmentManager,null)
+        dialog.show(parentFragmentManager,"MyCustomPackageAddDialogFragment")
 
 //        startActivityForResult(
 //            Intent(requireActivity(),
