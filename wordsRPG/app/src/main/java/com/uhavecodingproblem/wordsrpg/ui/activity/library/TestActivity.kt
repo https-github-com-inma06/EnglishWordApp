@@ -1,6 +1,5 @@
 package com.uhavecodingproblem.wordsrpg.ui.activity.library
 
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
@@ -12,7 +11,6 @@ import com.uhavecodingproblem.wordsrpg.data.model.RequestTest
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityTestBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
-import com.uhavecodingproblem.wordsrpg.util.Logger
 
 class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.activity_test) {
 
@@ -28,14 +26,14 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
         observeWord()
     }
 
-    private fun setUpTestItem(){
+    private fun setUpTestItem() {
         intent.getParcelableExtra<Learning>("test")?.let {
             wordViewModel.loadWordLink(it.p_id, it.s_id, true)
         }
     }
 
-    private fun observeWord(){
-        wordViewModel.wordList.observe(this@TestActivity){list->
+    private fun observeWord() {
+        wordViewModel.wordList.observe(this@TestActivity) { list ->
 
 //            testItem.clear()
 //            testItem.addAll(it)
@@ -43,7 +41,7 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
         }
     }
 
-    private fun viewPagerInit(){
+    private fun viewPagerInit() {
         binding.viewpager2Test.apply {
             testAdapter = TestViewPagerAdapter(testItem)
             adapter = testAdapter

@@ -23,7 +23,7 @@ interface ServerApi {
     @POST("learning_test.php")
     fun requestTest(
         @Body question_word : List<RequestTest>
-    ): Observable<List<ResponseTest>>
+    ): Observable<ResponseTest>
 
     companion object {
         fun requestWordData(package_name: String): Call<List<PackageInformation>> {
@@ -34,7 +34,7 @@ interface ServerApi {
             return ClientServer().create(ServerApi::class.java).requestBasicPackage(package_name)
         }
 
-        fun requestTest(param: List<RequestTest>) : Observable<List<ResponseTest>>{
+        fun requestTest(param: List<RequestTest>) : Observable<ResponseTest>{
             return ClientServer().create(ServerApi::class.java).requestTest(param)
         }
 
