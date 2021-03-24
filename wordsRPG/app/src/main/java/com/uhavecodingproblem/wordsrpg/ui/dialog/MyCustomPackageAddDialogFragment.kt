@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +18,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.model.Package
+import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.DialogMyCustomPackageAddBinding
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil
@@ -37,6 +37,7 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
+
     }
 
     override fun onCreateView(
@@ -52,6 +53,9 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
     @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val wordList = arguments?.getParcelableArrayList<WordsRead>("wordList") ?: mutableListOf<WordsRead>()
+
         binding.apply {
             //옵저버
             arguments?.getParcelable<Package>("package")?.also {
@@ -91,38 +95,25 @@ class MyCustomPackageAddDialogFragment : BottomSheetDialogFragment() {
 
 
                 val packid = Random.nextInt().toString() + "packName"
-                val wordDialog = MyCustomPackageAddFirstDialogFragment()
+                val wordDialog = MyCustomPackageAddCompleteDialogFragment()
                 val packageData = Package(
                     packid, etMyPackageName.text.toString(), "0",
                     profileImage.toString(), "0", "1",
                     SharedPreferenceUtil.userIdx, tagArray, mutableListOf()
                 )
-                wordDialog.arguments = bundleOf("package" to packageData)
+                wordDialog.arguments = bundleOf(
+                    "package" to packageData,
+                    "wordList" to wordList
+                )
                 wordDialog.show(parentFragmentManager, "MyCustomPackageAddFirstDialogFragment")
                 dismiss()
 
-//               private var db = FirebaseDatabase.getInstance().reference.child("Package")
-//                val path = Random.nextInt().toString() + "packageImage.jpg"
-//                val storageRef = FirebaseStorage.getInstance().reference
-//                storageRef.child("images/").child(path)
-//                    .putFile(profileImage!!).addOnSuccessListener {
-//
-//                        storageRef.child(FIREBASE_STORAGE_IMAGE + path).downloadUrl.addOnSuccessListener {
-//                            db.push().setValue(
-//                                Package(
-//                                    packid,
-//                                    etMyPackageName.text.toString(), "50",
-//                                    it.toString(), "0",
-//                                    "1", SharedPreferenceUtil.userIdx, tagArray, mutableListOf()
-//                                )
-//                            ).addOnSuccessListener {
-//                                Toast.makeText(context, "업로드 되었습니다.", Toast.LENGTH_SHORT).show()
-//                                dismiss()
-//                            }
-//                        }
-//                    }
+
             }
 
+            ivBack.setOnClickListener {
+                dismiss()
+            }
         }
     }
 

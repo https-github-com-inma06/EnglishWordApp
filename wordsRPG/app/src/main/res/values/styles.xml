@@ -16,6 +16,12 @@
     </style>
 
 
+    <style name="myCustomAddWordDialog_bg" parent="android:Theme" >
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">#82000000</item>
+    </style>
+
     <!-- 메인 화면  bottom 네비게이션 뷰 스타일
          현재는 글씨 확대 이슈 해결 위한  textsize만 지정 -->
     <style name="bottom_nav_menu_theme">
@@ -74,6 +80,8 @@
 
     <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/dialog_custom_mypackage_add_bg</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
     </style>
 </resources>
 
