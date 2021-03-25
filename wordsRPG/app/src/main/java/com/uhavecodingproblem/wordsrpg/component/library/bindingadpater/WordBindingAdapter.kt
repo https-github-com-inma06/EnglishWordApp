@@ -4,6 +4,7 @@ import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.lang.NumberFormatException
 
 /**
@@ -20,6 +21,7 @@ object WordBindingAdapter {
     fun progress(progressBar: ProgressBar, item: PackageWithStage?) {
         try{
             item?.let {
+                Logger.d("${it.package_name} ${it.clear_stage} ${it.total_stage}")
                 progressBar.max = item.total_stage.toInt()
                 progressBar.progress = item.clear_stage.toInt()
             }

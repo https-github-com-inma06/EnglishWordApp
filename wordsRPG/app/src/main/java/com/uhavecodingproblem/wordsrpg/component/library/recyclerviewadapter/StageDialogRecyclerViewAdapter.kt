@@ -99,7 +99,6 @@ class StageDialogRecyclerViewAdapter(
             }
 
             openCloseStage()
-            binding.executePendingBindings()
         }
 
         private fun initBinding() = with(binding as ItemStageDialogBinding) {

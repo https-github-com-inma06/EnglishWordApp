@@ -1,6 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.ui.dialog
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -18,6 +19,7 @@ import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
+import com.uhavecodingproblem.wordsrpg.ui.activity.library.TestActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
@@ -190,7 +192,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
 
     private fun findOtherStatus() {
         for (i in stage.indices) {
-            if (stage[i].stage_status != "0") {
+            if (stage[i].stage_status == "1" || stage[i].stage_status == "2") {
                 moveStudyOrTest(stage[i])
                 return
             }
@@ -200,13 +202,20 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     private fun moveStudyOrTest(learning: Learning) {
         when (learning.stage_status) {
             "1" -> {
-                Logger.d("Move Test")
+                Intent(requireContext(), TestActivity::class.java).also {
+                    it.putExtra("packageWithStage", currentPackage)
+                    it.putExtra("test", learning)
+                    requireActivity().startActivity(it)
+                    dismiss()
+                }
             }
             "2" -> {
-                Logger.d("Move Test")
-            }
-            "3" -> {
-                Logger.d("Move Test")
+                Intent(requireContext(), TestActivity::class.java).also {
+                    it.putExtra("packageWithStage", currentPackage)
+                    it.putExtra("test", learning)
+                    requireActivity().startActivity(it)
+                    dismiss()
+                }
             }
             else -> throw IllegalStateException("StageStatus Strange")
         }
