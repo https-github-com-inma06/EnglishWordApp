@@ -106,6 +106,7 @@
     <string name="facebook_app_id">687653535291177</string>
     <string name="fb_login_protocol_scheme">fb687653535291177</string>
     <string name="test_result">결과</string>
+    <string name="submission">제출</string>
     <string name="test_right_answer">정답 개수 : %s</string>
     <string name="test_wrong_answer">틀린 개수 : %s</string>
     <string name="test_total_score">총점 : %s0점</string>

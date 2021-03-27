@@ -74,8 +74,8 @@ class StudyActivity :
                 stage = learning
                 viewModel.loadWordLink(learning.p_id, learning.s_id, false)
             }
-            it.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
-                setToolbarTitle(packageInfo.package_name)
+            it.getStringExtra("packageName")?.let { packageName ->
+                setToolbarTitle(packageName)
             }
         }
     }

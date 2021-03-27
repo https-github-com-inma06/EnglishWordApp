@@ -11,10 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.TestViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.data.model.Learning
-import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
-import com.uhavecodingproblem.wordsrpg.data.model.RequestTest
-import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
+import com.uhavecodingproblem.wordsrpg.data.model.*
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityTestBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.TestResultDialogFragment
@@ -28,8 +25,17 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     private val wordViewModel by viewModels<WordObserveViewModel>()
     private var progressCountDownAnimator: ObjectAnimator? = null
     private var abnormalTermination = false
+    private var learning: Learning? = null
 
-    private val requestTestItem = mutableListOf<RequestTest>()
+    private val responseTestList = mutableListOf<Test>(
+        Test("1", Question("air", "공기"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에"))),
+        Test("2", Question("act", "행동"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에"))),
+        Test("2", Question("address", "주소"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에"))),
+        Test("2", Question("afraid", "두려워하여"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에"))),
+        Test("2", Question("after", "후에"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에")))
+    )
+
+    private val correctAnswerList = mutableListOf<CorrectAnswer>()
 
     override fun ActivityTestBinding.onCreate() {
         setUpTestItem()
@@ -39,12 +45,16 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     }
 
     private fun setUpTestItem() {
-        intent.getParcelableExtra<Learning>("test")?.let {
-            wordViewModel.loadWordLink(it.p_id, it.s_id, true)
+        intent.also {
+            it.getParcelableExtra<Learning>("test")?.let {learning->
+                this.learning = learning
+                wordViewModel.loadWordLink(learning.p_id, learning.s_id, true)
+            }
+            it.getStringExtra("packageName")?.let { packageName ->
+                setToolbarTitle(packageName)
+            }
         }
-        intent.getParcelableExtra<PackageWithStage>("packageWithStage")?.let { packageInfo ->
-            setToolbarTitle(packageInfo.package_name)
-        }
+
     }
 
     private fun setToolbarTitle(packageName: String){
@@ -83,16 +93,21 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     }
 
     private fun showResultDialog(){
-        val dialog = TestResultDialogFragment.getInstance(object : TestResultDialogFragment.OnDialogFragmentExit{
-            override fun onDismissDialog() {
-                finish()
-            }
+        correctAnswerList.forEach { Logger.d("${it.type} ${it.correct_answer}") }
 
-            override fun onCancelDialog() {
-                finish()
-            }
-        })
-        dialog.show(supportFragmentManager, "Result")
+        learning?.let {
+            val dialog = TestResultDialogFragment.getInstance(it, responseTestList, correctAnswerList, object : TestResultDialogFragment.OnDialogFragmentExit{
+                override fun onDismissDialog() {
+                    finish()
+                }
+
+                override fun onCancelDialog() {
+                    finish()
+                }
+            })
+            dialog.show(supportFragmentManager, "Result")
+        }
+
     }
 
     private fun progressCountDown(){
@@ -126,7 +141,28 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
 
     private fun viewPagerInit() {
         binding.viewpager2Test.apply {
-            testAdapter = TestViewPagerAdapter(testItem)
+            val shuffleNum = mutableListOf(1,2,3,4,5,6,7,8,9,10).shuffled().toMutableList()
+            for (i in responseTestList.indices){
+                responseTestList[i].example = responseTestList[i].example.shuffled().toMutableList()
+            }
+            testAdapter = TestViewPagerAdapter(shuffleNum ,responseTestList, object : TestViewPagerAdapter.OnItemClickListener{
+                override fun onNextBtnClickEvent(type: Int, answer: String) {
+                    correctAnswerList.add(CorrectAnswer(type, answer))
+                    binding.viewpager2Test.currentItem += 1
+                }
+
+                override fun onResultPage(type: Int, answer: String) {
+                    correctAnswerList.add(CorrectAnswer(type, answer))
+                    if (countDownTimer != null) {
+                        countDownTimer?.cancel()
+                        countDownTimer = null
+                    }
+                    if (progressCountDownAnimator != null){
+                        progressCountDownAnimator?.cancel()
+                        progressCountDownAnimator = null
+                    }
+                }
+            })
             adapter = testAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             isUserInputEnabled = false

@@ -3,15 +3,18 @@ package com.uhavecodingproblem.wordsrpg.ui.dialog
 import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.TestResultCalculatorViewModel
-import com.uhavecodingproblem.wordsrpg.data.model.RequestTest
-import com.uhavecodingproblem.wordsrpg.data.model.ResponseTest
+import com.uhavecodingproblem.wordsrpg.data.model.CorrectAnswer
+import com.uhavecodingproblem.wordsrpg.data.model.Learning
+import com.uhavecodingproblem.wordsrpg.data.model.Test
 import com.uhavecodingproblem.wordsrpg.databinding.DialogTestResultBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 
 /**
@@ -25,6 +28,10 @@ class TestResultDialogFragment: BaseUtility.BaseDialogFragment<DialogTestResultB
 
     private val resultViewModel by viewModels<TestResultCalculatorViewModel>()
 
+    private val answerItem = mutableListOf<Test>()
+    private val correctAnswerItem = mutableListOf<CorrectAnswer>()
+    private var learning: Learning? = null
+
     interface OnDialogFragmentExit{
         fun onDismissDialog()
         fun onCancelDialog()
@@ -34,9 +41,16 @@ class TestResultDialogFragment: BaseUtility.BaseDialogFragment<DialogTestResultB
 
         private var exitListener : OnDialogFragmentExit? = null
 
-        fun getInstance(answerList: MutableList<ResponseTest>, correctAnswerList: MutableList<String>, listener: OnDialogFragmentExit) : TestResultDialogFragment{
+        fun getInstance(learning: Learning, answerList: MutableList<Test>, correctAnswer: MutableList<CorrectAnswer>, listener: OnDialogFragmentExit) : TestResultDialogFragment{
             exitListener = listener
-            return TestResultDialogFragment()
+            val dialogFragment = TestResultDialogFragment()
+            val bundle = Bundle().apply {
+                putParcelable("learning", learning)
+                putParcelableArrayList("answer", answerList as ArrayList<Test>)
+                putParcelableArrayList("correctAnswer", correctAnswer as ArrayList<CorrectAnswer>)
+            }
+            dialogFragment.arguments = bundle
+            return dialogFragment
         }
     }
 
@@ -44,6 +58,21 @@ class TestResultDialogFragment: BaseUtility.BaseDialogFragment<DialogTestResultB
     override fun onResume() {
         super.onResume()
         requireContext().dialogResize(this@TestResultDialogFragment, 0.8f, 0.4f)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            it.getParcelableArrayList<Test>("answer")?.let { test ->
+                answerItem.addAll(test)
+            }
+            it.getParcelableArrayList<CorrectAnswer>("correctAnswer")?.let { correctAnswer->
+                correctAnswerItem.addAll(correctAnswer)
+            }
+            it.getParcelable<Learning>("learning")?.let{learning->
+                this.learning = learning
+            }
+        }
     }
 
     override fun DialogTestResultBinding.onViewCreated() {
@@ -58,9 +87,14 @@ class TestResultDialogFragment: BaseUtility.BaseDialogFragment<DialogTestResultB
             requestFeature(Window.FEATURE_NO_TITLE)
         }
 
+        Logger.d("${answerItem.size} , ${correctAnswerItem.size}")
+
         binding.apply {
-            rightAnswer = "7"
-            wrongAnswer = "3"
+            val result =resultViewModel.calculatorScore(answerItem, correctAnswerItem)
+            learning?.let {resultViewModel.updateResult(result.totalQuestion, result.correct, it)}
+
+            rightAnswer = result.correct.toString()
+            wrongAnswer = result.wrong.toString()
         }
     }
 
