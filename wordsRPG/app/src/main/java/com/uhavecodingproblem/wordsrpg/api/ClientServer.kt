@@ -5,6 +5,7 @@ import com.uhavecodingproblem.wordsrpg.util.BASIC_PACKAGE
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -32,6 +33,7 @@ class ClientServer {
         fun getWordRetrofit(): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(BASIC_PACKAGE).addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
                 .client(ClientServer().createOkHttpClient()).build()
         }
 

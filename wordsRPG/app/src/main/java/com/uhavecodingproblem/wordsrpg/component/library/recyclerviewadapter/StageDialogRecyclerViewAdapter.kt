@@ -26,6 +26,8 @@ class StageDialogRecyclerViewAdapter(
 
     private var preSelectPosition = 0
     private val sparseBooleanArray = SparseBooleanArray()
+    private var totalItemSize = 0
+    private var calculatorItemSize = 0
 
     interface ItemClickListener {
         fun onItemClick()
@@ -33,6 +35,11 @@ class StageDialogRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int = calculatorSize()
+
+    override fun submitList(list: MutableList<Learning>?) {
+        super.submitList(list)
+        list?.let { totalItemSize = it.size }
+    }
 
     private fun calculatorSize(): Int {
         var size = 0
@@ -45,6 +52,7 @@ class StageDialogRecyclerViewAdapter(
             if (count > 1)
                 break
         }
+        calculatorItemSize = size
         return size
     }
 
@@ -99,7 +107,6 @@ class StageDialogRecyclerViewAdapter(
             }
 
             openCloseStage()
-            binding.executePendingBindings()
         }
 
         private fun initBinding() = with(binding as ItemStageDialogBinding) {

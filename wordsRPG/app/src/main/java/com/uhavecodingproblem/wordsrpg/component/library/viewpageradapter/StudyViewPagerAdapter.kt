@@ -22,7 +22,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBind
  * image swipe ViewPager2
  *
  */
-class StudyActivityViewPagerAdapter(
+class StudyViewPagerAdapter(
     private var word: MutableList<WordsRead>,
     private val listener: ItemClickListener
 ) :

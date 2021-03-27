@@ -10,8 +10,8 @@
         <item name="android:textViewStyle">@style/customTextViewFontStyle</item>
         <item name="android:buttonStyle">@style/customTextViewFontStyle</item>
         <item name="android:editTextStyle">@style/customTextViewFontStyle</item>
-        <item name="android:radioButtonStyle">@style/customTextViewFontStyle</item>
-        <item name="android:checkboxStyle">@style/customTextViewFontStyle</item>
+        <!--<item name="android:radioButtonStyle">@style/customTextViewFontStyle</item>-->
+<!--        <item name="android:checkboxStyle">@style/customTextViewFontStyle</item>-->
 
     </style>
 
