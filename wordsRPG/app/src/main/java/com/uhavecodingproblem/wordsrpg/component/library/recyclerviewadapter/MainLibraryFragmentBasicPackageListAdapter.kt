@@ -50,7 +50,6 @@ class MainLibraryFragmentBasicPackageListAdapter(private val listener: BasicPack
             root.setOnClickListener {
                 listener.onItemClick(getItem(adapterPosition))
             }
-            binding.executePendingBindings()
         }
     }
 }

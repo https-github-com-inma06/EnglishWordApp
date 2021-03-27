@@ -19,6 +19,29 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
 
+        <ProgressBar
+            android:id="@+id/progress_timer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            app:layout_constraintTop_toBottomOf="@id/test_toolbar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_timer"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_percent="0.65"/>
+
+        <TextView
+            android:id="@+id/tv_timer"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/test_toolbar"
+            app:layout_constraintLeft_toRightOf="@id/progress_timer"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHeight_percent="0.1"
+            app:layout_constraintWidth_percent="0.25"/>
+
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewpager2_test"
             android:layout_width="match_parent"

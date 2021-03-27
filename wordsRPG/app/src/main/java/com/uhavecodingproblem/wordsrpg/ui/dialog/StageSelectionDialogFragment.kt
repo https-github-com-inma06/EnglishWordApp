@@ -117,7 +117,7 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     fun moveStudy() {
         Intent(requireContext(), StudyActivity::class.java).also {
-            it.putExtra("packageWithStage", currentPackage)
+            it.putExtra("packageName", currentPackage.package_name)
             it.putExtra("stage", stage)
             requireContext().startActivity(it)
             dismiss()
@@ -126,6 +126,7 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     fun moveTest() {
         Intent(requireContext(), TestActivity::class.java).also {
+            it.putExtra("packageName", currentPackage.package_name)
             it.putExtra("test", stage)
             requireActivity().startActivity(it)
             dismiss()

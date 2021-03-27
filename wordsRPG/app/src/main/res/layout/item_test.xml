@@ -4,12 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="word"
             type="String" />
+
+        <variable
+            name="totalPosition"
+            type="int" />
+
+        <variable
+            name="position"
+            type="int" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/colorLightBlue2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,68 +29,72 @@
             android:layout_height="0dp"
             android:elevation="10dp"
             android:gravity="center"
-            android:textSize="30sp"
             android:text="@{word}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/radio_group_answer"
-            app:layout_constraintHeight_percent="0.2" />
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@id/group_checkbox"
+            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-        <RadioGroup
-            android:id="@+id/radio_group_answer"
-            app:layout_constraintTop_toBottomOf="@id/tv_question"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/group_checkbox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_constraintHeight_percent="0.6" >
+            app:layout_constraintHeight_percent="0.5"
+            app:layout_constraintTop_toBottomOf="@id/tv_question"
+            app:layout_constraintBottom_toTopOf="@id/btn_next">
 
-            <RadioButton
-                android:id="@+id/radio_btn_answer_num_one"
+            <CheckBox
+                android:id="@+id/checkbox_one"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="1번"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <RadioButton
-                android:id="@+id/radio_btn_answer_num_two"
+            <CheckBox
+                android:id="@+id/checkbox_two"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="2번"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_one"/>
 
-            <RadioButton
-                android:id="@+id/radio_btn_answer_num_three"
+            <CheckBox
+                android:id="@+id/checkbox_three"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="3번"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_two"/>
 
-            <RadioButton
-                android:id="@+id/radio_btn_answer_num_four"
+            <CheckBox
+                android:id="@+id/checkbox_four"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="4번"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_three"/>
 
-            <RadioButton
-                android:id="@+id/radio_btn_answer_num_five"
+            <CheckBox
+                android:id="@+id/checkbox_five"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:text="5번"
-                android:gravity="center_vertical"
-                android:textSize="16sp"
-                android:layout_weight="1"/>
+                app:layout_constraintHeight_percent="0.2"
+                app:layout_constraintTop_toBottomOf="@id/checkbox_four"/>
 
-        </RadioGroup>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="@{totalPosition -1 == position ? @string/submission : @string/next}"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:background="@drawable/basic_package_dialog_item_button_round"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.15"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/group_checkbox"
+            app:layout_constraintWidth_percent="0.3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
