@@ -26,14 +26,19 @@ object CustomPackageBindingAdapter {
     @JvmStatic
     fun loadImage(
         imageView: ImageView,
-        url:String,
+        url:String?,
         error: Drawable
     ){
-        Glide.with(imageView.context)
-            .load(url)
-            .error(error)
-            .centerCrop()
-            .into(imageView)
+        try {
+            Glide.with(imageView.context)
+                .load(url)
+                .error(error)
+                .centerCrop()
+                .into(imageView)
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
     }
 
 

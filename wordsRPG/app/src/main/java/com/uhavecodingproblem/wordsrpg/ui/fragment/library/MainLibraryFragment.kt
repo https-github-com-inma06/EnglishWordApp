@@ -10,14 +10,6 @@ import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.util.Logger
 
 
-/**
- * wordsrpg
- * Class: MainLibraryFragment.
- * Created by leedonghun.
- * Created On 2020-09-16.
- * Description:
- * 라이브러리 프레그먼트입니다.
- */
 class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>(R.layout.fragment_main_library) {
 
 

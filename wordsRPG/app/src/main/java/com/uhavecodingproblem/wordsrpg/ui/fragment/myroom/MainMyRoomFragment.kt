@@ -23,7 +23,8 @@ import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil
  * Description:
  * 마이룸 프레그먼트입니다.
  */
-class MainMyRoomFragment : BaseUtility.BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
+class MainMyRoomFragment :
+    BaseUtility.BaseFragment<FragmentMainMyRoomBinding>(R.layout.fragment_main_my_room) {
     override fun FragmentMainMyRoomBinding.onCreateView() {
         Logger.d("실행")
 

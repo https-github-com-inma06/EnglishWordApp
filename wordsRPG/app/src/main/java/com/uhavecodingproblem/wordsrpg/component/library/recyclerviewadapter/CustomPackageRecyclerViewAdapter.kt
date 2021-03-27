@@ -3,7 +3,10 @@ package com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.ItemCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMyCustomPackageAddBinding
@@ -27,22 +30,25 @@ class CustomPackageRecyclerViewAdapter(
 
 
     private var onItemClickListener: OnItemClickListener? = null
-private var onAddItemClickListener: OnAddItemClickListener?=null
-//아이템 클릭 이벤트 받을  리스너 인터페이스
+    private var onAddItemClickListener: OnAddItemClickListener? = null
+
+    //아이템 클릭 이벤트 받을  리스너 인터페이스
     interface OnItemClickListener {
         fun onItemClick(view: View, packageName: String)
         // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
     }
+
     interface OnAddItemClickListener {
         fun onItemClick()
     }
+
     //외부에서  아이템 클릭 처리할 리스너
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.onItemClickListener = onItemClickListener
     }
 
     //외부에서 추가버튼 클릭 처리할 리스너
-    fun setOnAddItemClickListener(addItemClickListener:OnAddItemClickListener) {
+    fun setOnAddItemClickListener(addItemClickListener: OnAddItemClickListener) {
         this.onAddItemClickListener = addItemClickListener
     }
 
@@ -51,7 +57,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
         // TODO: 2020-10-31 추가아이템  자리 만들고 확인 위해서 일단 이렇게 해놓음. -> 추후 리팩토링
         //내 커스텀의 경우는  index 0쪽에 mock 값  넣어줌.
         if (customPackageType == MY_CUSTOM_PACKAGE) {
-            customPackageList.add(0, customPackageList[0])
+//            customPackageList.add(0, customPackageList[0])
         }
 
     }
@@ -83,8 +89,8 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
             if (position == 0)
                 (holder as AddNewMyCustomPackage).onBind()
-             else
-                (holder as CustomPackageViewHolder).onBind(customPackageList[position])
+            else
+                (holder as CustomPackageViewHolder).onBind(customPackageList[position - 1])
 
         } else {
             (holder as CustomPackageViewHolder).onBind(customPackageList[position])
@@ -94,7 +100,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
     // TODO: 2020-10-31 일단 이렇게 적용하고 나중에 명확하게  코드 다시  작성
     override fun getItemViewType(position: Int): Int {
-         when (customPackageType) {
+        when (customPackageType) {
 
             ENTIRE_CUSTOM_PACKAGE -> {
                 return 0
@@ -103,7 +109,7 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
             MY_CUSTOM_PACKAGE -> {
                 return if (position == 0)
                     1
-                 else
+                else
                     0
             }
 
@@ -114,11 +120,14 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
     }
 
-    override fun getItemCount(): Int = customPackageList.size
-
-
-
-
+    /**테스트*/
+//    override fun getItemCount(): Int = customPackageList.size
+    override fun getItemCount(): Int {
+        return if (customPackageType == MY_CUSTOM_PACKAGE)
+            customPackageList.size + 1
+        else
+            customPackageList.size
+    }
 
 
     //추가 아이템 뷰홀더
@@ -138,7 +147,8 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
 
     //뷰홀더
-    inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class CustomPackageViewHolder(val binding: ItemCustomPackageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         //item 뷰에  데이터 바인딩 적용
         fun onBind(packAge: Package) {
@@ -154,21 +164,32 @@ private var onAddItemClickListener: OnAddItemClickListener?=null
 
             //아이템 클릭 리스너
             binding.layoutCustomPackage.setOnClickListener {
-                customPackageList[pos].package_name
-
+                if (customPackageType == MY_CUSTOM_PACKAGE)
+                    customPackageList[pos - 1].package_name
+                else
+                    customPackageList[pos].package_name
                 if (pos != RecyclerView.NO_POSITION) {
 
-                    // 리스너 객체의 메서드 호출.
-                    onItemClickListener?.onItemClick(
-                        view = it,
-                        packageName = customPackageList[pos].package_name
-                    )
+                    if (customPackageType == MY_CUSTOM_PACKAGE)
+                        onItemClickListener?.onItemClick(
+                            view = it,
+                            packageName = customPackageList[pos - 1].package_name
+                        )
+                    else
+                        onItemClickListener?.onItemClick(
+                            view = it,
+                            packageName = customPackageList[pos].package_name
+                        )
+
 
                 }
+
 
             }//아이템 클릭리스너 끝
 
 
         }
+
+
     }
 }

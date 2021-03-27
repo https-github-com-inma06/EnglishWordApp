@@ -15,7 +15,7 @@ data class Package(
     val p_id: String = "",
     val package_name: String = "",
     val package_difficulty: String = "", //
-    val package_thumbnail: String = "",
+    var package_thumbnail: String = "",
     val total_word: String = "",
     val customCheck: String = "", //1일시 커스텀 패키지
     val customer_id: String? = "",

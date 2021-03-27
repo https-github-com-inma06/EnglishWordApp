@@ -7,13 +7,21 @@ import android.net.Uri
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
+import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
+import com.uhavecodingproblem.wordsrpg.ui.dialog.MyCustomPackageAddDialogFragment
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
@@ -29,11 +37,11 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
     lateinit var recyclerViewAdapter: CustomPackageRecyclerViewAdapter
 
 
+    private var db = FirebaseDatabase.getInstance().reference.child("Package")
     override fun FragmentMyCustomPackageBinding.onCreateView() {
         Logger.d("실행")
 
         thisFragment = this@MyCustomPackageFragment
-
         setCustomPackageRecyclerView()
 
     }//onCreateView()끝
@@ -43,34 +51,50 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
 
     //커스텀 패키지를 뿌려줄 리사이클러뷰 세팅
     private fun setCustomPackageRecyclerView(){
+        db.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val myList = mutableListOf<Package>()
+                for(packData in snapshot.children){
+                    packData.getValue(Package::class.java).also {
+                        if(SharedPreferenceUtil.userIdx == it?.customer_id)
+                            myList.add(it!!)
+                    }
+                }
 
-        // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
-//        recyclerViewAdapter= CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-//            ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
-//
-//        recyclerViewAdapter=CustomPackageRecyclerViewAdapter(mockMyPackageDataList,
-//            MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+                // TODO: 2020-09-25 현재 임시 구성된 mock data list가  적용됨.
+                recyclerViewAdapter= CustomPackageRecyclerViewAdapter(myList,
+                    ORIGINAL_PACKAGE_TYPE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
 
-//         binding.recyclerviewMyCustomList.apply {
-//             layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
-//             adapter = recyclerViewAdapter
-//         }
+                recyclerViewAdapter=CustomPackageRecyclerViewAdapter(myList,
+                    MY_CUSTOM_PACKAGE)//adatper 연결 -> 리사이클러뷰 TYPE은 ORIGINAL 타입으로 -> 리스트 다 뿌려줌.
+
+                binding.recyclerviewMyCustomList.apply {
+                    layoutManager = GridLayoutManager(requireActivity(), 3)//grid 형태로  뿌려줌
+                    adapter = recyclerViewAdapter
+                }
 
 
-        //각 패키지 아이템 클릭시  넘어감 처리  구현
-//        recyclerViewAdapter.apply {
-//            setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-//                override fun onItemClick(view: View, packageName: String) {
-//                    Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-//
-//                }
-//            })
-//            setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
-//                override fun onItemClick() {
-//                    moveToAddNewCustomPackageActivity()
-//                }
-//            })
-//        }
+//        각 패키지 아이템 클릭시  넘어감 처리  구현
+                recyclerViewAdapter.apply {
+                    setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
+                        override fun onItemClick(view: View, packageName: String) {
+                            Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
+
+                        }
+                    })
+                    setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
+                        override fun onItemClick() {
+                            moveToAddNewCustomPackageActivity()
+                        }
+                    })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
+
 
 
     }//initRecyclerView()끝
@@ -109,10 +133,13 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
     fun moveToAddNewCustomPackageActivity(){
         Logger.d("AddNewCustomPackageActivity 로 이동")
 
-        startActivityForResult(
-            Intent(requireActivity(),
-            AddNewCustomPackageActivity::class.java),
-            MAKE_CUSTOM_PACKAGE_REQUEST_CODE)
+        val dialog = MyCustomPackageAddDialogFragment()
+        dialog.show(parentFragmentManager,"MyCustomPackageAddDialogFragment")
+
+//        startActivityForResult(
+//            Intent(requireActivity(),
+//            AddNewCustomPackageActivity::class.java),
+//            MAKE_CUSTOM_PACKAGE_REQUEST_CODE)
 
     }//moveToAddNewCustomPackageActivity() 끝
 
