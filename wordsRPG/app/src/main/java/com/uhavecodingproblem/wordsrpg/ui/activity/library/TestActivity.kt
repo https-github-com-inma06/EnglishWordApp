@@ -165,7 +165,7 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
             })
             adapter = testAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            isUserInputEnabled = false
+            isUserInputEnabled = true //변경 아타나시오
         }
     }
 

@@ -37,6 +37,7 @@ class StudyViewPagerAdapter(
 
     interface ItemClickListener {
         fun onMicClick(v: View, position: Int)
+        fun onMicSlowClick(v: View, position: Int)
         fun onVideoClick(v: View, position: Int)
         fun onNextBtnClick(v: View, position: Int)
         fun onPreviousBtnClick(v: View, position: Int)
@@ -89,6 +90,10 @@ class StudyViewPagerAdapter(
 
             binding.wordMic.setOnClickListener {
                 listener.onMicClick(it, adapterPosition)
+            }
+
+            binding.wordMicSlow.setOnClickListener {
+                listener.onMicSlowClick(it, adapterPosition)
             }
 
             binding.btnPrevious.setOnClickListener {

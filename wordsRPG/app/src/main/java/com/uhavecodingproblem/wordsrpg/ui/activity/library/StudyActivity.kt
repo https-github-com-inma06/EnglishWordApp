@@ -3,13 +3,11 @@ package com.uhavecodingproblem.wordsrpg.ui.activity.library
 import android.media.AudioManager
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.MotionEventCompat
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -108,7 +106,7 @@ class StudyActivity :
                 )
             adapter = studyRecyclerviewAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            isUserInputEnabled = false
+            isUserInputEnabled = true // 변경 아타나시오
             registerOnPageChangeCallback(pageChangeCallback)
         }
     }
@@ -216,15 +214,26 @@ class StudyActivity :
         }
     }
 
-    override fun onMicClick(v: View, position: Int) {
-//        wordTextToSpeech?.let {
-//            Logger.d("Test Mic")
-//
-//            it.setPitch(1.0f) // 기본톤
-//            it.setSpeechRate(1.0f) // 기본속도
-//            it.speak(stageInformationInformation?.wordList!![position].word, TextToSpeech.QUEUE_FLUSH, null, null)
-//        }
+    override fun onMicSlowClick(v: View, position: Int) {
+        wordTextToSpeech?.let {
+            Logger.d("Test Mic Slow")
+
+            it.setPitch(1.0f) // 기본톤
+            it.setSpeechRate(0.75f) // 기본속도
+            it.speak(wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
     }
+
+    override fun onMicClick(v: View, position: Int) {
+        wordTextToSpeech?.let {
+            Logger.d("Test Mic")
+
+            it.setPitch(1.0f) // 기본톤
+            it.setSpeechRate(1.0f) // 기본속도
+            it.speak(wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+        }
+    }
+
 
     override fun onNextBtnClick(v: View, position: Int) {
         if (!isScrolling) {
