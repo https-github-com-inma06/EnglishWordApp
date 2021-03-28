@@ -22,7 +22,8 @@ class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>
         Logger.d("실행")
 
         initBinding()
-        setDisableSwipe()
+        setEnableSwipe()
+//        setDisableSwipe() // 리사이클러뷰 제스처와 같이 쓸 시 불편할 수 있어서 잠금
     }
 
     private fun initBinding(){
@@ -35,6 +36,10 @@ class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>
 
     private fun setDisableSwipe(){
         binding.viewpager2Library.isUserInputEnabled = false
+    }
+
+    private fun setEnableSwipe(){
+        binding.viewpager2Library.isUserInputEnabled = true
     }
 
 }
