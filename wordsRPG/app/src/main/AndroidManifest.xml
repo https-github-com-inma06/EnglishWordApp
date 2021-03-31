@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activity.library.TestActivity"></activity>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:windowSoftInputMode="adjustPan" /> <!-- uCrop cropping activity -->
