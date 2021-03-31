@@ -80,8 +80,8 @@
 
     <string name="package_thumbnail">페키지 썸네일</string>
     <string name="package_writer">\[ %s \]</string>
-    <string name="move_study">STUDY</string>
-    <string name="move_test">TEST</string>
+    <string name="move_study">학습하기</string>
+    <string name="move_test">시험보기</string>
 
     <string name="study_mic">TTS</string>
     <string name="exit">종료</string>
