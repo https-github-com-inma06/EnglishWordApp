@@ -6,9 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
+import com.uhavecodingproblem.wordsrpg.api.ServerApi
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.util.Logger
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -35,9 +40,27 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
     private val basicPackageItem = mutableListOf<Package>()
     private val userLearningItem = mutableListOf<Learning>()
 
+    private var compositeDisposable : CompositeDisposable? = null
+
     init {
         _loading.postValue(true)
         loadBasicPackage()
+        test()
+    }
+
+    private fun test(){
+        compositeDisposable = CompositeDisposable()
+        compositeDisposable?.let {
+            it.add(ServerApi.requestTest("1").observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread()).subscribe ({response->
+                response.basicPackage.forEach {
+                        basic -> basic.stageList.forEach {
+                        stage-> stage.wordList.forEach {
+                        word-> Logger.d("${response.success} ${basic.packageID} ${stage.stageID} ${word.word}") } } }
+            },{error->
+                Logger.d(error.toString())
+            }))
+        }
+
     }
 
     private fun loadBasicPackage(){
@@ -116,4 +139,8 @@ class PackageObserveViewModel(private val u_id: String) : ViewModel() {
         throw NullPointerException("Loading Value Null")
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable = null
+    }
 }

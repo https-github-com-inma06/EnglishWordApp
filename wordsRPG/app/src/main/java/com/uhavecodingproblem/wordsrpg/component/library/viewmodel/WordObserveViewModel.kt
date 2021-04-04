@@ -99,7 +99,6 @@ class WordObserveViewModel : ViewModel() {
                             )
                         )
                     }
-                    requestTest(requestTestItem)
                 } else
                     _loading.postValue(false)
             }
@@ -145,37 +144,37 @@ class WordObserveViewModel : ViewModel() {
             })
     }
 
-    private fun requestTest(requestTest: List<RequestTest>) {
-
-
-        requestTest.forEach {
-            Logger.d("${it.idx} ${it.idx} ${it.w_id}")
-        }
-        compositeDisposable?.let {
-            it.add(
-                //io Thread 에서 requestTest 실행 = subscribeOn
-                //doOnTerminate 는 subscribe 결과가 오면 해당 스코프 실행
-                //통신 결과는 main Thread 에서 실행 = observeOn
-                //subscribe 결과는 성공과 실패로 오게됨 성공시 success 실패시 error
-                ServerApi.requestTest(requestTest).subscribeOn(Schedulers.io()).doOnTerminate { _loading.postValue(false) }
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ success ->
-                        //success = ResponseTest
-                        success.test.forEach { test ->
-                            //test = mutableList<Example>
-                            test.example.forEach { example ->
-                                Logger.d("${example.example_word} ${example.example_mean}")
-                            }
-                        }
-
-                    }, { error ->
-                        Logger.d("error 에러 :: $error")
-                    })
-            )
-        }
-
-
-    }
+//    private fun requestTest(requestTest: List<RequestTest>) {
+//
+//
+//        requestTest.forEach {
+//            Logger.d("${it.idx} ${it.idx} ${it.w_id}")
+//        }
+//        compositeDisposable?.let {
+//            it.add(
+//                //io Thread 에서 requestTest 실행 = subscribeOn
+//                //doOnTerminate 는 subscribe 결과가 오면 해당 스코프 실행
+//                //통신 결과는 main Thread 에서 실행 = observeOn
+//                //subscribe 결과는 성공과 실패로 오게됨 성공시 success 실패시 error
+//                ServerApi.requestTest(requestTest).subscribeOn(Schedulers.io()).doOnTerminate { _loading.postValue(false) }
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({ success ->
+//                        //success = ResponseTest
+//                        success.test.forEach { test ->
+//                            //test = mutableList<Example>
+//                            test.example.forEach { example ->
+//                                Logger.d("${example.example_word} ${example.example_mean}")
+//                            }
+//                        }
+//
+//                    }, { error ->
+//                        Logger.d("error 에러 :: $error")
+//                    })
+//            )
+//        }
+//
+//
+//    }
 
     override fun onCleared() {
         super.onCleared()

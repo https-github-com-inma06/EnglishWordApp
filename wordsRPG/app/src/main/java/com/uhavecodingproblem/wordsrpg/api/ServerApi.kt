@@ -2,8 +2,7 @@ package com.uhavecodingproblem.wordsrpg.api
 
 import com.uhavecodingproblem.wordsrpg.data.mockdata.PackageInformation
 import com.uhavecodingproblem.wordsrpg.data.model.Package
-import com.uhavecodingproblem.wordsrpg.data.model.RequestTest
-import com.uhavecodingproblem.wordsrpg.data.model.ResponseTest
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.http.*
@@ -20,10 +19,10 @@ interface ServerApi {
     @GET("package_read.php")
     fun requestBasicPackage(@Query("package_name") package_name: String) : Call<Package>
 
-    @POST("learning_test.php")
+    @POST("basic_package_test.php")
     fun requestTest(
-        @Body question_word : List<RequestTest>
-    ): Observable<ResponseTest>
+        @Query("user_id") user_id : String
+    ): Observable<ResponseBasicPackage.ResponseBasic>
 
     companion object {
         fun requestWordData(package_name: String): Call<List<PackageInformation>> {
@@ -34,7 +33,7 @@ interface ServerApi {
             return ClientServer().create(ServerApi::class.java).requestBasicPackage(package_name)
         }
 
-        fun requestTest(param: List<RequestTest>) : Observable<ResponseTest>{
+        fun requestTest(param: String) : Observable<ResponseBasicPackage.ResponseBasic>{
             return ClientServer().create(ServerApi::class.java).requestTest(param)
         }
 
