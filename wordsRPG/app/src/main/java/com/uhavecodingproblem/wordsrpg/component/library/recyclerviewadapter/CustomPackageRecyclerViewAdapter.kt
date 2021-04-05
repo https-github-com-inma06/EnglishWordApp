@@ -34,7 +34,7 @@ class CustomPackageRecyclerViewAdapter(
 
     //아이템 클릭 이벤트 받을  리스너 인터페이스
     interface OnItemClickListener {
-        fun onItemClick(view: View, packageName: String)
+        fun onItemClick(view: View, packageData: Package)
         // TODO: 2020-09-27 임시적으로 패키지네임만 넘기게  구성  필요한  정보 더 추가해서 넘겨줘야됨
     }
 
@@ -173,12 +173,12 @@ class CustomPackageRecyclerViewAdapter(
                     if (customPackageType == MY_CUSTOM_PACKAGE)
                         onItemClickListener?.onItemClick(
                             view = it,
-                            packageName = customPackageList[pos - 1].package_name
+                            packageData = customPackageList[pos - 1]
                         )
                     else
                         onItemClickListener?.onItemClick(
                             view = it,
-                            packageName = customPackageList[pos].package_name
+                            packageData = customPackageList[pos]
                         )
 
 

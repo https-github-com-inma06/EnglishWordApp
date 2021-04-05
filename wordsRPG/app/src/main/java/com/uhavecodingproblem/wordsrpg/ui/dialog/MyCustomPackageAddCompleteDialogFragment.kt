@@ -1,18 +1,14 @@
 package com.uhavecodingproblem.wordsrpg.ui.dialog
 
 import android.annotation.SuppressLint
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -56,26 +52,6 @@ class MyCustomPackageAddCompleteDialogFragment : BottomSheetDialogFragment() {
                 /**테스트*/
                 rvWordList.visibility = View.VISIBLE
                 rvWordList.adapter = MyCustomPackageAddWordRecyclerViewAdapter(wordList)
-//                tvPackageInfo.visibility = View.VISIBLE
-//                tvGetPackageName.visibility = View.VISIBLE
-//                ivMyPackageImage.visibility = View.VISIBLE
-//                tvTagList.visibility = View.VISIBLE
-//                llTagList.visibility = View.VISIBLE
-//                packageName = packageData!!.package_name
-//                image = packageData.package_thumbnail
-
-//                packageData.hashTagList?.forEach { tag->
-//                    val tv = TextView(context)
-//                    val lp = LinearLayout.LayoutParams(
-//                        LinearLayout.LayoutParams.WRAP_CONTENT,
-//                        LinearLayout.LayoutParams.WRAP_CONTENT)
-//                    val dp = resources.displayMetrics.density
-//                    lp.setMargins((4*dp).toInt(),0,0,0)
-//                    tv.text = tag
-//                    tv.setTypeface(null ,Typeface.BOLD)
-//                    tv.setBackgroundResource(R.drawable.dialog_my_custom_package_add_view_bg)
-//                    llTagList.addView(tv)
-//                }
             }
 
         }

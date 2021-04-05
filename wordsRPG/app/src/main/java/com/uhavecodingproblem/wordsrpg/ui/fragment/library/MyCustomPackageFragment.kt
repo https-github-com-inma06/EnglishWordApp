@@ -3,11 +3,13 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,9 +21,9 @@ import com.uhavecodingproblem.wordsrpg.data.model.CustomPackageData
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
 import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMyCustomPackageBinding
-import com.uhavecodingproblem.wordsrpg.ui.activity.library.AddNewCustomPackageActivity
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.MyCustomPackageAddDialogFragment
+import com.uhavecodingproblem.wordsrpg.ui.dialog.MyCustomPackageModifyDialogFragment
 import com.uhavecodingproblem.wordsrpg.util.*
 
 /**
@@ -77,9 +79,10 @@ class MyCustomPackageFragment: BaseUtility.BaseFragment<FragmentMyCustomPackageB
 //        각 패키지 아이템 클릭시  넘어감 처리  구현
                 recyclerViewAdapter.apply {
                     setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-                        override fun onItemClick(view: View, packageName: String) {
-                            Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
-
+                        override fun onItemClick(view: View, packageData: Package) {
+                            val dialog = MyCustomPackageModifyDialogFragment()
+                            dialog.arguments = bundleOf("package" to packageData)
+                            dialog.show(parentFragmentManager,null)
                         }
                     })
                     setOnAddItemClickListener(object : CustomPackageRecyclerViewAdapter.OnAddItemClickListener{
