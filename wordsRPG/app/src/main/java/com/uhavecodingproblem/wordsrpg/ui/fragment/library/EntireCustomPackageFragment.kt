@@ -132,8 +132,8 @@ class EntireCustomPackageFragment :
 
                 //각 패키지 아이템 클릭시  넘어감 처리  구현
                 recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener {
-                    override fun onItemClick(view: View, packageName: String) {
-                        Toast.makeText(requireActivity(), "이 패키지로 넘기기 -> $packageName", Toast.LENGTH_SHORT).show()
+                    override fun onItemClick(view: View, packageData: Package) {
+                        Toast.makeText(requireActivity(), "이 패키지로 넘기기 -> ${packageData.package_name}", Toast.LENGTH_SHORT).show()
                     }
                 })
 

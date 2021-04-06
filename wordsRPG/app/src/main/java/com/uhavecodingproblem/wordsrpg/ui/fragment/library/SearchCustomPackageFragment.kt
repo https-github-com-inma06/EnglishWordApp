@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.CustomPackageRecyclerViewAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.CustomMyPackageListMocKData
+import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentSearchCustomPackageBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
@@ -130,8 +131,8 @@ class SearchCustomPackageFragment: BaseUtility.BaseFragment<FragmentSearchCustom
 
         //각 패키지 아이템 클릭시  넘어감 처리  구현
         recyclerViewAdapter.setOnItemClickListener(object : CustomPackageRecyclerViewAdapter.OnItemClickListener{
-            override fun onItemClick(view: View, packageName: String) {
-                Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> $packageName",Toast.LENGTH_SHORT).show()
+            override fun onItemClick(view: View, packageData: Package) {
+                Toast.makeText(requireActivity(),"이 패키지로 넘기기 -> ${packageData.package_name}",Toast.LENGTH_SHORT).show()
 //                val i= Intent(requireActivity(),StudyActivity::class.java)
 //                i.putExtra("packagename",packageName)
 //                startActivity(i)
