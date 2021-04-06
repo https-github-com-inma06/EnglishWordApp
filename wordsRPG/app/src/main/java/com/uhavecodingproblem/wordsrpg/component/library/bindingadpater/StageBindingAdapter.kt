@@ -1,7 +1,10 @@
 package com.uhavecodingproblem.wordsrpg.component.library.bindingadpater
 
+import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 
 /**
@@ -14,18 +17,18 @@ import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 object StageBindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("score")
-    fun getScore(textView: TextView, stageInformationData: StageInformation) {
-        var score = 0
-        for (i in stageInformationData.wordList.indices) {
-            if (stageInformationData.wordList[i].isTestPassed)
-                score++
+    @BindingAdapter("stageBackGroundColorLockCheck", "stageBackGroundColorTestCheck")
+    fun stageBackground(viewGroup: ViewGroup, isLock: String, isTestPass: String){
+
+        if (isLock == "lock") viewGroup.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.colorGray))
+        else{
+            if (isTestPass == "pass")
+                viewGroup.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.colorLightBlue2))
+            else
+                viewGroup.setBackgroundColor(ContextCompat.getColor(viewGroup.context, R.color.basic_dialog_text_color))
+
         }
-        val result: String = if (score == 0)
-            "에러발생"
-        else
-            "획득점수 : ${score * 10} / 100"
-        textView.text = result
+
     }
 
 }

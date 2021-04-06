@@ -4,6 +4,7 @@ import android.widget.ProgressBar
 import androidx.databinding.BindingAdapter
 import com.uhavecodingproblem.wordsrpg.data.mockdata.StageInformation
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.util.Logger
 import java.lang.NumberFormatException
 
@@ -14,17 +15,17 @@ import java.lang.NumberFormatException
  * Created On 2020-10-05.
  * Description:
  */
-object WordBindingAdapter {
+object BasicPackageBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("progress")
-    fun progress(progressBar: ProgressBar, item: PackageWithStage?) {
+    fun progress(progressBar: ProgressBar, item: ResponseBasicPackage.BasicPackage) {
         try{
-            item?.let {
-                Logger.d("${it.package_name} ${it.clear_stage} ${it.total_stage}")
-                progressBar.max = item.total_stage.toInt()
-                progressBar.progress = item.clear_stage.toInt()
-            }
+            var clearStage = 0
+            item.stageList.forEach { if(it.stageTestStatus == "pass") clearStage++ }
+
+            progressBar.max = item.stageList.size
+            progressBar.progress = clearStage
         }catch (e: NumberFormatException){
             progressBar.max = 0
             progressBar.progress = 0

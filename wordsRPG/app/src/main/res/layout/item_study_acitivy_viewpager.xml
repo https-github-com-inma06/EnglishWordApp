@@ -7,8 +7,8 @@
         <import type="android.view.View"/>
 
         <variable
-            name="wordRead"
-            type="com.uhavecodingproblem.wordsrpg.data.model.WordsRead" />
+            name="word"
+            type="com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage.Word" />
 
         <variable
             name="wordarray"
@@ -62,12 +62,12 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/word"
+                    android:id="@+id/tv_word"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@color/basic_dialog_text_color"
                     android:gravity="center"
-                    android:text="@{wordarray.get(position)? null : wordRead.word}"
+                    android:text="@{wordarray.get(position)? null : word.word}"
                     android:textColor="@color/colorWhite"
                     android:textStyle="bold"
                     android:textSize="52sp"
@@ -75,33 +75,33 @@
                     app:layout_constraintHeight_percent="0.5"/>
 
                 <TextView
-                    android:id="@+id/mean"
+                    android:id="@+id/tv_mean"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@color/colorLightBlue2"
                     android:gravity="center"
-                    android:text="@{meanarray.get(position)? null : wordRead.mean}"
+                    android:text="@{meanarray.get(position)? null : word.mean}"
                     android:textColor="@color/black"
                     android:textSize="52sp"
                     android:textStyle="bold"
                     app:layout_constraintHeight_percent="0.3"
-                    app:layout_constraintTop_toBottomOf="@id/word" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_word" />
 
                 <ImageView
-                    android:id="@+id/word_mic_slow"
+                    android:id="@+id/iv_word_mic_slow"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="16dp"
                     android:contentDescription="@string/study_mic"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_baseline_mic_24"
-                    app:layout_constraintBottom_toBottomOf="@+id/word_mic"
-                    app:layout_constraintEnd_toStartOf="@+id/word_mic"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_word_mic"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_word_mic"
                     app:layout_constraintHeight_percent="0.1"
                     app:layout_constraintWidth_percent="0.1" />
 
                 <ImageView
-                    android:id="@+id/word_mic"
+                    android:id="@+id/iv_word_mic"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="15dp"
@@ -110,15 +110,15 @@
                     android:scaleType="fitCenter"
                     app:layout_constraintHeight_percent="0.1"
                     app:layout_constraintWidth_percent="0.1"
-                    app:layout_constraintRight_toRightOf="@id/word"
-                    app:layout_constraintBottom_toBottomOf="@id/word"
+                    app:layout_constraintRight_toRightOf="@id/tv_word"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_word"
                     android:contentDescription="@string/study_mic"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@color/basic_dialog_text_color"
-                    app:layout_constraintTop_toBottomOf="@id/mean"
+                    app:layout_constraintTop_toBottomOf="@id/tv_mean"
                     app:layout_constraintHeight_percent="0.2">
 
                     <TextView
@@ -127,7 +127,7 @@
                         android:layout_height="match_parent"
                         android:paddingStart="15dp"
                         android:gravity="center_vertical"
-                        android:text="@{wordRead.example}"
+                        android:text="@{word.wordExample}"
                         android:textStyle="bold"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintLeft_toLeftOf="parent"

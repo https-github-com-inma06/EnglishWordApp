@@ -10,13 +10,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.data.model.Learning
-import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionNoneBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageSelectionOtherBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.StudyActivity
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.TestActivity
-import com.uhavecodingproblem.wordsrpg.util.Logger
 import com.uhavecodingproblem.wordsrpg.util.dialogResize
 
 /**
@@ -28,16 +26,20 @@ import com.uhavecodingproblem.wordsrpg.util.dialogResize
  */
 class StageSelectionDialogFragment : DialogFragment() {
 
-    private lateinit var stage: Learning
-    private lateinit var currentPackage: PackageWithStage
-    private lateinit var binding: ViewBinding
+    private lateinit var stageItem: ResponseBasicPackage.Stage
+    private lateinit var currentPackage: ResponseBasicPackage.BasicPackage
+    private val binding get() = _binding
+    private var _binding: ViewBinding? = null
 
     companion object {
-        fun newInstance(packageWithStage: PackageWithStage, stage: Learning): StageSelectionDialogFragment {
+        fun newInstance(
+            basicPackage: ResponseBasicPackage.BasicPackage,
+            stage: ResponseBasicPackage.Stage
+        ): StageSelectionDialogFragment {
             val fragment = StageSelectionDialogFragment()
             val bundle = Bundle()
-            bundle.putParcelable("packageWithStage", packageWithStage)
-            bundle.putParcelable("stage", stage)
+            bundle.putParcelable("currentBasicPackage", basicPackage)
+            bundle.putParcelable("selectStage", stage)
             fragment.arguments = bundle
             return fragment
         }
@@ -46,21 +48,21 @@ class StageSelectionDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { bundle ->
-            bundle.getParcelable<PackageWithStage>("packageWithStage")?.let {
+            bundle.getParcelable<ResponseBasicPackage.BasicPackage>("currentBasicPackage")?.let {
                 currentPackage = it
             }
-            bundle.getParcelable<Learning>("stage")?.let {
-                stage = it
+            bundle.getParcelable<ResponseBasicPackage.Stage>("selectStage")?.let {
+                stageItem = it
             }
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = if (stage.stage_status == "0")
+        _binding = if (stageItem.stageTestStatus == "none" && stageItem.stageLearningStatus == "not_learning")
             DataBindingUtil.inflate(inflater, R.layout.dialog_stage_selection_none, container, false)
         else
             DataBindingUtil.inflate(inflater, R.layout.dialog_stage_selection_other, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,32 +83,29 @@ class StageSelectionDialogFragment : DialogFragment() {
     }
 
     private fun setInit() {
-        binding.apply {
-            if (stage.stage_status == "0"){
-                val bind = this as DialogStageSelectionNoneBinding
-                bind.apply {
-                    name = currentPackage.package_name
-                    thumbnailuri = currentPackage.package_thumbnail
-                    learning = stage
-                    dialog = this@StageSelectionDialogFragment
+        binding?.let {
+            it.apply {
+                if (stageItem.stageTestStatus == "none" && stageItem.stageLearningStatus == "not_learning") {
+                    val bind = this as DialogStageSelectionNoneBinding
+                    bind.apply {
+                        basicPackge = currentPackage
+                        stage = stageItem
+                        dialog = this@StageSelectionDialogFragment
 
-                    layoutSelectionDialog.clipToOutline = true
-                }
-            } else {
-                val bind = this as DialogStageSelectionOtherBinding
-                bind.apply {
-                    name = currentPackage.package_name
-                    thumbnailuri = currentPackage.package_thumbnail
-                    learning = stage
-                    dialog = this@StageSelectionDialogFragment
+                        layoutSelectionDialog.clipToOutline = true
+                    }
+                } else {
+                    val bind = this as DialogStageSelectionOtherBinding
+                    bind.apply {
+                        basicPackge = currentPackage
+                        stage = stageItem
+                        dialog = this@StageSelectionDialogFragment
 
-                    layoutSelectionDialog.clipToOutline = true
+                        layoutSelectionDialog.clipToOutline = true
+                    }
                 }
             }
-
-
         }
-
     }
 
     fun exit() {
@@ -117,8 +116,8 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     fun moveStudy() {
         Intent(requireContext(), StudyActivity::class.java).also {
-            it.putExtra("packageName", currentPackage.package_name)
-            it.putExtra("stage", stage)
+            it.putExtra("currentBasicPackage", currentPackage)
+            it.putExtra("selectStage", stageItem)
             requireContext().startActivity(it)
             dismiss()
         }
@@ -126,8 +125,8 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     fun moveTest() {
         Intent(requireContext(), TestActivity::class.java).also {
-            it.putExtra("packageName", currentPackage.package_name)
-            it.putExtra("test", stage)
+            it.putExtra("currentBasicPackage", currentPackage)
+            it.putExtra("selectStage", stageItem)
             requireActivity().startActivity(it)
             dismiss()
         }
@@ -149,5 +148,10 @@ class StageSelectionDialogFragment : DialogFragment() {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

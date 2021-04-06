@@ -3,13 +3,10 @@ package com.uhavecodingproblem.wordsrpg.ui.activity.library
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.os.CountDownTimer
-import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.activity.viewModels
-import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.TestViewPagerAdapter
 import com.uhavecodingproblem.wordsrpg.data.model.*
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityTestBinding
@@ -22,10 +19,9 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     private var testAdapter: TestViewPagerAdapter? = null
     private var testItem = mutableListOf<WordsRead>()
     private var countDownTimer: CountDownTimer? = null
-    private val wordViewModel by viewModels<WordObserveViewModel>()
     private var progressCountDownAnimator: ObjectAnimator? = null
     private var abnormalTermination = false
-    private var learning: Learning? = null
+    private var currentPackage: ResponseBasicPackage.BasicPackage? = null
 
     private val responseTestList = mutableListOf<Test>(
         Test("1", Question("air", "공기"), mutableListOf(Example("air", "공기"), Example("act", "행동"), Example("address", "주소"), Example("afraid", "두려워하여"), Example("after", "후에"))),
@@ -46,12 +42,12 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
 
     private fun setUpTestItem() {
         intent.also {
-            it.getParcelableExtra<Learning>("test")?.let {learning->
-                this.learning = learning
-                wordViewModel.loadWordLink(learning.p_id, learning.s_id, true)
+            it.getParcelableExtra<ResponseBasicPackage.BasicPackage>("currentBasicPackage")?.let { packageInformation->
+                currentPackage = packageInformation
+                setToolbarTitle(packageInformation.packageName)
             }
-            it.getStringExtra("packageName")?.let { packageName ->
-                setToolbarTitle(packageName)
+            it.getParcelableExtra<ResponseBasicPackage.Stage>("selectStage")?.let { stage ->
+
             }
         }
 
@@ -95,18 +91,7 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     private fun showResultDialog(){
         correctAnswerList.forEach { Logger.d("${it.type} ${it.correct_answer}") }
 
-        learning?.let {
-            val dialog = TestResultDialogFragment.getInstance(it, responseTestList, correctAnswerList, object : TestResultDialogFragment.OnDialogFragmentExit{
-                override fun onDismissDialog() {
-                    finish()
-                }
 
-                override fun onCancelDialog() {
-                    finish()
-                }
-            })
-            dialog.show(supportFragmentManager, "Result")
-        }
 
     }
 
@@ -131,12 +116,7 @@ class TestActivity : BaseUtility.BaseActivity<ActivityTestBinding>(R.layout.acti
     }
 
     private fun observeWord() {
-        wordViewModel.wordList.observe(this@TestActivity) { list ->
 
-//            testItem.clear()
-//            testItem.addAll(it)
-//            testAdapter?.notifyDataSetChanged()
-        }
     }
 
     private fun viewPagerInit() {

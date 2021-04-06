@@ -5,18 +5,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.StageDialogRecyclerViewAdapter
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.PackageObserveViewModel
-import com.uhavecodingproblem.wordsrpg.data.model.Learning
-import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.databinding.DialogCustomSnackbarBinding
 import com.uhavecodingproblem.wordsrpg.databinding.DialogStageBinding
 import com.uhavecodingproblem.wordsrpg.ui.activity.library.TestActivity
@@ -38,18 +34,17 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     StageDialogRecyclerViewAdapter.ItemClickListener {
 
     private lateinit var stageDialogRecyclerViewAdapter: StageDialogRecyclerViewAdapter
-    private val packageObserveViewModel by viewModels<PackageObserveViewModel>({ requireParentFragment() })
-    private lateinit var currentPackage: PackageWithStage
-    private var stage = mutableListOf<Learning>()
+    private lateinit var currentPackage: ResponseBasicPackage.BasicPackage
+    private var stageItem = mutableListOf<ResponseBasicPackage.Stage>()
     private var snackbar: Snackbar? = null
     private var isScrolling = false
     private var isFirstCreate = false
 
     companion object {
-        fun newInstance(packageWithStage: PackageWithStage): StageDialogFragment {
+        fun newInstance(basicPackage: ResponseBasicPackage.BasicPackage): StageDialogFragment {
             val dialogFragment = StageDialogFragment()
             val bundle = Bundle()
-            bundle.putParcelable("packageWithStage", packageWithStage)
+            bundle.putParcelable("basicPackage", basicPackage)
             dialogFragment.arguments = bundle
             return dialogFragment
         }
@@ -58,7 +53,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.getParcelable<PackageWithStage>("packageWithStage")?.let {
+        arguments?.getParcelable<ResponseBasicPackage.BasicPackage>("basicPackage")?.let {
             currentPackage = it
         }
     }
@@ -82,27 +77,16 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     private fun setUpRecyclerData() {
-        stage.clear()
-        stage = packageObserveViewModel.filterStage(currentPackage.p_id)
-        if (!isFirstCreate) {
-            var position = 0
-            for (i in stage.indices) {
-                if (stage[i].stage_status != "3") {
-                    position = i
-                    break
-                }
-            }
-            stageDialogRecyclerViewAdapter.setUpFirstFocus(position)
-        }
-        isFirstCreate = true
-        stageDialogRecyclerViewAdapter.submitList(stage)
+        stageItem.clear()
+        stageItem.addAll(currentPackage.stageList)
+        stageDialogRecyclerViewAdapter.submitList(stageItem)
     }
 
 
     private fun setInit() {
         binding.apply {
             stage = this@StageDialogFragment
-            this.packageWithStage = currentPackage
+            this.basicPackage = currentPackage
 
             layoutDialog.clipToOutline = true
 
@@ -151,12 +135,12 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     private fun stageStatus() {
-        for (i in stage.indices) {
-            if (stage[i].stage_status == "1") {
+        for (i in stageItem.indices) {
+            if (stageItem[i].stageLockStatus == "unlock" && stageItem[i].stageTestStatus == "none") {
                 snackbar = customSnackBar(binding.layoutParent, "STAGE ${i + 1}의 테스트를 아직 보지않으셨네요. \n지금보러갈까요?")
                 snackbar?.show()
                 break
-            } else if (stage[i].stage_status == "2") {
+            } else if (stageItem[i].stageLockStatus == "unlock" && stageItem[i].stageTestStatus == "fail") {
                 snackbar = customSnackBar(binding.layoutParent, "STAGE ${i + 1}의 테스트를 통과하지 못하셨네요. \n다시보러갈까요?")
                 snackbar?.show()
                 break
@@ -193,33 +177,20 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     private fun findOtherStatus() {
-        for (i in stage.indices) {
-            if (stage[i].stage_status == "1" || stage[i].stage_status == "2") {
-                moveStudyOrTest(stage[i])
+        for (i in stageItem.indices) {
+            if (stageItem[i].stageLockStatus == "unlock" && stageItem[i].stageTestStatus != "pass") {
+                moveStudyOrTest(stageItem[i])
                 return
             }
         }
     }
 
-    private fun moveStudyOrTest(learning: Learning) {
-        when (learning.stage_status) {
-            "1" -> {
-                Intent(requireContext(), TestActivity::class.java).also {
-                    it.putExtra("packageName", currentPackage.package_name)
-                    it.putExtra("test", learning)
-                    requireActivity().startActivity(it)
-                }
-            }
-            "2" -> {
-                Intent(requireContext(), TestActivity::class.java).also {
-                    it.putExtra("packageName", currentPackage.package_name)
-                    it.putExtra("test", learning)
-                    requireActivity().startActivity(it)
-                }
-            }
-            else -> throw IllegalStateException("StageStatus Strange")
+    private fun moveStudyOrTest(stage: ResponseBasicPackage.Stage) {
+        Intent(requireContext(), TestActivity::class.java).also {
+            it.putExtra("currentBasicPackage", currentPackage)
+            it.putExtra("selectStage", stage)
+            requireActivity().startActivity(it)
         }
-
     }
 
     fun exit() {
@@ -257,7 +228,7 @@ class StageDialogFragment : BaseUtility.BaseDialogFragment<DialogStageBinding>(R
     }
 
     override fun onMoveOption(position: Int) {
-        val dialogFragment = StageSelectionDialogFragment.newInstance(currentPackage, stage[position])
+        val dialogFragment = StageSelectionDialogFragment.newInstance(currentPackage, stageItem[position])
         dialogFragment.show(childFragmentManager, "OptionDialog")
         snackbar?.dismiss()
     }

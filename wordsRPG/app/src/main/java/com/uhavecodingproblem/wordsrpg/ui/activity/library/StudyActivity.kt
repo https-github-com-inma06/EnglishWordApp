@@ -5,18 +5,12 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.ERROR
 import android.view.*
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.MotionEventCompat
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.WordObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewpageradapter.StudyViewPagerAdapter
-import com.uhavecodingproblem.wordsrpg.data.model.Learning
-import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
-import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.databinding.ActivityStudyBinding
 import com.uhavecodingproblem.wordsrpg.ui.base.BaseUtility
 import com.uhavecodingproblem.wordsrpg.ui.dialog.SearchLoadingDialog
@@ -27,12 +21,10 @@ class StudyActivity :
     BaseUtility.BaseActivity<ActivityStudyBinding>(R.layout.activity_study),
     StudyViewPagerAdapter.ItemClickListener {
 
-    private var stage: Learning? = null
+    private lateinit var stage: ResponseBasicPackage.Stage
     private var wordTextToSpeech: TextToSpeech? = null
     private var studyRecyclerviewAdapter: StudyViewPagerAdapter? = null
-    private val viewModel by viewModels<WordObserveViewModel>()
     private var loadingDialog: SearchLoadingDialog? = null
-    private val wordList = mutableListOf<WordsRead>()
     private var isScrolling = false
 
     override fun ActivityStudyBinding.onCreate() {
@@ -44,8 +36,7 @@ class StudyActivity :
         initBinding()
         viewPagerInit()
 
-        observeLoading()
-        observeWord()
+        setMoveToRecentPosition(stage.stageCurrentPage)
     }
 
     /**
@@ -68,32 +59,12 @@ class StudyActivity :
 
     private fun setWord() {
         intent?.let {
-            it.getParcelableExtra<Learning>("stage")?.let { learning ->
+            it.getParcelableExtra<ResponseBasicPackage.Stage>("selectStage")?.let { learning ->
                 stage = learning
-                viewModel.loadWordLink(learning.p_id, learning.s_id, false)
             }
-            it.getStringExtra("packageName")?.let { packageName ->
-                setToolbarTitle(packageName)
+            it.getParcelableExtra<ResponseBasicPackage.BasicPackage>("currentBasicPackage")?.let { basicPackage ->
+                setToolbarTitle(basicPackage.packageName)
             }
-        }
-    }
-
-    private fun observeLoading() {
-        viewModel.loading.observe(this) {
-            if (it)
-                loadingDialog?.showLoading()
-            else
-                loadingDialog?.dismissLoading()
-        }
-    }
-
-    private fun observeWord() {
-        viewModel.wordList.observe(this) {
-            wordList.clear()
-            wordList.addAll(it)
-            studyRecyclerviewAdapter?.notifyDataSetChanged()
-            setMoveToRecentPosition(stage?.current_page?.toInt())
-            Logger.d("${it.size} ${studyRecyclerviewAdapter?.itemCount}")
         }
     }
 
@@ -101,7 +72,7 @@ class StudyActivity :
         binding.viewpager2Study.apply {
             studyRecyclerviewAdapter =
                 StudyViewPagerAdapter(
-                    wordList,
+                    stage.wordList,
                     this@StudyActivity
                 )
             adapter = studyRecyclerviewAdapter
@@ -220,7 +191,7 @@ class StudyActivity :
 
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(0.75f) // 기본속도
-            it.speak(wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+            it.speak(stage.wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
@@ -230,21 +201,17 @@ class StudyActivity :
 
             it.setPitch(1.0f) // 기본톤
             it.setSpeechRate(1.0f) // 기본속도
-            it.speak(wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
+            it.speak(stage.wordList[position].word, TextToSpeech.QUEUE_FLUSH, null, null)
         }
     }
 
 
     override fun onNextBtnClick(v: View, position: Int) {
         if (!isScrolling) {
-            if (position == wordList.size - 1)
+            if (position == stage.wordList.size - 1)
                 Toast.makeText(this, "테스트 보러가기", Toast.LENGTH_SHORT).show()
             else
                 binding.viewpager2Study.currentItem += 1
-
-            stage?.let {
-                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
-            }
         }
 
     }
@@ -252,16 +219,13 @@ class StudyActivity :
     override fun onPreviousBtnClick(v: View, position: Int) {
         if (!isScrolling) {
             binding.viewpager2Study.currentItem -= 1
-            stage?.let {
-                viewModel.updateLearning(it.l_id, it, binding.viewpager2Study.currentItem + 1)
-            }
         }
     }
 
     override fun onVideoClick(v: View, position: Int) {
         Toast.makeText(
             this,
-            "Move To YoutubePlayer word = ${wordList[position].word}",
+            "Move To YoutubePlayer word = ${stage.wordList[position].word}",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -273,6 +237,7 @@ class StudyActivity :
             wordTextToSpeech!!.shutdown()
             wordTextToSpeech = null
         }
+        Logger.d("onDestroy")
         binding.viewpager2Study.unregisterOnPageChangeCallback(pageChangeCallback)
     }
 

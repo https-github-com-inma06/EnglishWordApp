@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.data.mockdata.WordInformation
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBinding
 
@@ -23,7 +24,7 @@ import com.uhavecodingproblem.wordsrpg.databinding.ItemStudyAcitivyViewpagerBind
  *
  */
 class StudyViewPagerAdapter(
-    private var word: MutableList<WordsRead>,
+    private var word: MutableList<ResponseBasicPackage.Word>,
     private val listener: ItemClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -62,7 +63,7 @@ class StudyViewPagerAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind() {
-            binding.wordRead = word[adapterPosition]
+            binding.word = word[adapterPosition]
             binding.wordarray = wordSparseBooleanArray
             binding.meanarray = meanSparseBooleanArray
             binding.position = adapterPosition
@@ -71,7 +72,7 @@ class StudyViewPagerAdapter(
             val count = "${adapterPosition + 1} / ${word.size}"
             binding.wordCount.text = count
 
-            binding.word.setOnClickListener {
+            binding.tvWord.setOnClickListener {
                 if (!wordSparseBooleanArray.get(adapterPosition))
                     wordSparseBooleanArray.put(adapterPosition, true)
                 else
@@ -80,7 +81,7 @@ class StudyViewPagerAdapter(
                 notifyItemChanged(adapterPosition, Unit)
             }
 
-            binding.mean.setOnClickListener {
+            binding.tvMean.setOnClickListener {
                 if (!meanSparseBooleanArray.get(adapterPosition))
                     meanSparseBooleanArray.put(adapterPosition, true)
                 else
@@ -88,11 +89,11 @@ class StudyViewPagerAdapter(
                 notifyItemChanged(adapterPosition, Unit)
             }
 
-            binding.wordMic.setOnClickListener {
+            binding.ivWordMic.setOnClickListener {
                 listener.onMicClick(it, adapterPosition)
             }
 
-            binding.wordMicSlow.setOnClickListener {
+            binding.ivWordMicSlow.setOnClickListener {
                 listener.onMicSlowClick(it, adapterPosition)
             }
 

@@ -15,12 +15,8 @@ interface ServerApi {
     @GET("package_read.php")
     fun requestWord(@Query("package_name") package_name: String) : Call<List<PackageInformation>>
 
-    // 패키지조회 1회차
-    @GET("package_read.php")
-    fun requestBasicPackage(@Query("package_name") package_name: String) : Call<Package>
-
     @POST("basic_package_test.php")
-    fun requestTest(
+    fun requestBasicPackage(
         @Query("user_id") user_id : String
     ): Observable<ResponseBasicPackage.ResponseBasic>
 
@@ -29,12 +25,8 @@ interface ServerApi {
             return ClientServer().create(ServerApi::class.java).requestWord(package_name)
         }
 
-        fun requestBasicPackage(package_name: String) : Call<Package>{
-            return ClientServer().create(ServerApi::class.java).requestBasicPackage(package_name)
-        }
-
-        fun requestTest(param: String) : Observable<ResponseBasicPackage.ResponseBasic>{
-            return ClientServer().create(ServerApi::class.java).requestTest(param)
+        fun requestBasicPackage(user_id: String) : Observable<ResponseBasicPackage.ResponseBasic>{
+            return ClientServer().create(ServerApi::class.java).requestBasicPackage(user_id)
         }
 
     }

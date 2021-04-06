@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.model.PackageWithStage
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.databinding.ItemMainlibrayFragmentBasicPackageRecyclerviewBinding
 import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
 
@@ -19,10 +20,10 @@ import com.uhavecodingproblem.wordsrpg.util.BaseDiffUtil
  * Description:
  */
 class MainLibraryFragmentBasicPackageListAdapter(private val listener: BasicPackageGridItemClickListener) :
-    ListAdapter<PackageWithStage, RecyclerView.ViewHolder>(BaseDiffUtil<PackageWithStage>()) {
+    ListAdapter<ResponseBasicPackage.BasicPackage, RecyclerView.ViewHolder>(BaseDiffUtil<ResponseBasicPackage.BasicPackage>()) {
 
     interface BasicPackageGridItemClickListener {
-        fun onItemClick(selectedItem: PackageWithStage)
+        fun onItemClick(selectedItem: ResponseBasicPackage.BasicPackage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -45,7 +46,7 @@ class MainLibraryFragmentBasicPackageListAdapter(private val listener: BasicPack
     inner class ItemViewHolder(private val binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind() = with(binding as ItemMainlibrayFragmentBasicPackageRecyclerviewBinding) {
-            packageWithStage = getItem(adapterPosition)
+            basicPackage = getItem(adapterPosition)
             basicPackageLayout.clipToOutline = true
             root.setOnClickListener {
                 listener.onItemClick(getItem(adapterPosition))

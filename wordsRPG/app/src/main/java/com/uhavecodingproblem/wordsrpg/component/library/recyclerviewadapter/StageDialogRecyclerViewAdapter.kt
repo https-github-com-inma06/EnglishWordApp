@@ -4,12 +4,14 @@ import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.uhavecodingproblem.wordsrpg.R
 import com.uhavecodingproblem.wordsrpg.data.model.Learning
+import com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage
 import com.uhavecodingproblem.wordsrpg.databinding.ItemStageDialogBinding
 import com.uhavecodingproblem.wordsrpg.util.*
 
@@ -22,53 +24,39 @@ import com.uhavecodingproblem.wordsrpg.util.*
  */
 class StageDialogRecyclerViewAdapter(
     private val listener: ItemClickListener
-) : ListAdapter<Learning, RecyclerView.ViewHolder>(BaseDiffUtil<Learning>()) {
+) : ListAdapter<ResponseBasicPackage.Stage, RecyclerView.ViewHolder>(BaseDiffUtil<ResponseBasicPackage.Stage>()) {
 
     private var preSelectPosition = 0
     private val sparseBooleanArray = SparseBooleanArray()
-    private var totalItemSize = 0
-    private var calculatorItemSize = 0
 
     interface ItemClickListener {
         fun onItemClick()
         fun onMoveOption(position: Int)
     }
 
-    override fun getItemCount(): Int = calculatorSize()
+    override fun getItemCount(): Int = calculatorItem()
 
-    override fun submitList(list: MutableList<Learning>?) {
+    override fun submitList(list: MutableList<ResponseBasicPackage.Stage>?) {
         super.submitList(list)
-        list?.let { totalItemSize = it.size }
+        list?.let {
+            setUpFirstFocus(it.lastIndexOf(it.findLast { stage-> stage.stageLockStatus == "unlock" && stage.stageTestStatus != "pass"}))
+        }
     }
 
-    private fun calculatorSize(): Int {
-        var size = 0
+    private fun calculatorItem() : Int{
         var count = 0
-        for (i in currentList.indices) {
-            if (currentList[i].stage_status != "3")
-                count++
-
-            size++
-            if (count > 1)
+        for (i in currentList.indices){
+            count++
+            if (currentList[i].stageLockStatus == "lock")
                 break
         }
-        calculatorItemSize = size
-        return size
+        return count
     }
 
-    fun setUpFirstFocus(position: Int){
+    private fun setUpFirstFocus(position: Int){
         sparseBooleanArray.clear()
         sparseBooleanArray.put(position, true)
         preSelectPosition = position
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return when (getItem(position).stage_status) {
-            "0" -> STAGE_NONE
-            "1" -> STAGE_STUDYING
-            "2" -> STAGE_TEST_FAIL
-            else -> STAGE_TEST_CLEAR
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -85,20 +73,19 @@ class StageDialogRecyclerViewAdapter(
 
             initBinding()
 
-            if (adapterposition == itemCount - 1){
+            if (getItem(adapterPosition).stageLockStatus == "lock"){
                 layoutStageExpand.isEnabled = false
                 layoutStageCollapse.isEnabled = false
             }
 
-
             layoutStageCollapse.setOnClickListener {
                 changeSparseArray()
-                Logger.d("collapse adapterPosition : $adapterposition prePosition : $preSelectPosition")
+                Logger.d("collapse adapterPosition : $adapterPosition prePosition : $preSelectPosition")
                 listener.onItemClick()
             }
             layoutStageExpand.setOnClickListener {
                 changeSparseArray()
-                Logger.d("expand adapterPosition : $adapterposition prePosition : $preSelectPosition")
+                Logger.d("expand adapterPosition : $adapterPosition prePosition : $preSelectPosition")
                 listener.onItemClick()
             }
 
@@ -110,10 +97,8 @@ class StageDialogRecyclerViewAdapter(
         }
 
         private fun initBinding() = with(binding as ItemStageDialogBinding) {
-            learning = getItem(adapterPosition)
-            adapterposition = adapterPosition
-            bottomposition = if (itemCount > 1) itemCount - 1 else 0
-            morestage = moreStageStatus()
+            stage = getItem(adapterPosition)
+            lock = moreStageStatus()
             layoutDialogItem.clipToOutline = true
         }
 
@@ -143,7 +128,7 @@ class StageDialogRecyclerViewAdapter(
             if (sparseBooleanArray[adapterPosition]) {
                 layoutStageCollapse.visibility = View.GONE
                 layoutStageExpand.visibility = View.VISIBLE
-                if (adapterposition != if (itemCount > 2) itemCount - 2 else 0) {
+                if (adapterPosition != if (itemCount > 2) itemCount - 2 else 0) {
                     tvResult.visibility = View.VISIBLE
                     tvStageExpandDescription.visibility = View.GONE
                 } else {

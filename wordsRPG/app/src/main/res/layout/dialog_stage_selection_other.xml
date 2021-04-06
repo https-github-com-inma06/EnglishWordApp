@@ -6,16 +6,12 @@
     <data>
 
         <variable
-            name="name"
-            type="String" />
+            name="basicPackge"
+            type="com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage.BasicPackage" />
 
         <variable
-            name="thumbnailuri"
-            type="String" />
-
-        <variable
-            name="learning"
-            type="com.uhavecodingproblem.wordsrpg.data.model.Learning" />
+            name="stage"
+            type="com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage.Stage" />
 
         <variable
             name="dialog"
@@ -30,7 +26,7 @@
 
         <ImageView
             error="@{@drawable/loading}"
-            image="@{thumbnailuri}"
+            image="@{basicPackge.packageThumbNail}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/package_thumbnail" />
@@ -75,7 +71,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center"
-                android:text="@{name}"
+                android:text="@{basicPackge.packageName}"
                 android:maxLines="1"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"
@@ -93,7 +89,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:gravity="center_horizontal"
-                android:text="@{@string/stage(learning.s_id)}"
+                android:text="@{@string/stage(stage.stageID)}"
                 android:maxLines="1"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"

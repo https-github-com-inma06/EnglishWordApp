@@ -6,24 +6,12 @@
     <data>
 
         <variable
-            name="study"
+            name="lock"
             type="String" />
 
         <variable
-            name="adapterposition"
-            type="int" />
-
-        <variable
-            name="bottomposition"
-            type="int" />
-
-        <variable
-            name="morestage"
-            type="String" />
-
-        <variable
-            name="learning"
-            type="com.uhavecodingproblem.wordsrpg.data.model.Learning" />
+            name="stage"
+            type="com.uhavecodingproblem.wordsrpg.data.model.ResponseBasicPackage.Stage" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,7 +28,8 @@
             android:id="@+id/layout_stage_collapse"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@{adapterposition == bottomposition? @color/colorGray : (adapterposition == bottomposition - 1)? @color/basic_dialog_text_color : @color/colorLightBlue2}"
+            stageBackGroundColorLockCheck="@{stage.stageLockStatus}"
+            stageBackGroundColorTestCheck="@{stage.stageTestStatus}"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -49,10 +38,9 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingStart="10dp"
-                android:text="@{adapterposition == bottomposition? morestage : @string/stage(learning.s_id)}"
-                android:textColor="@{adapterposition == bottomposition? @color/colorWhite : @color/colorBlack}"
                 android:textSize="16dp"
                 android:textStyle="bold"
+                android:text="@{stage.stageLockStatus.equalsIgnoreCase(`lock`)? lock : @string/stage(stage.stageID)}"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintWidth_percent="0.9" />
 
@@ -64,7 +52,7 @@
                 android:background="@null"
                 android:contentDescription="@string/expand_and_collapse"
                 android:scaleType="fitCenter"
-                android:src="@{adapterposition == bottomposition? @drawable/img_vector_white_lock : @drawable/img_vector_block_arrow_drop_down}"
+                android:src="@{stage.stageLockStatus.equalsIgnoreCase(`lock`)? @drawable/img_vector_white_lock : @drawable/img_vector_block_arrow_drop_down}"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent="0.1" />
@@ -75,8 +63,9 @@
             android:id="@+id/layout_stage_expand"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:background="@{adapterposition == (bottomposition -1)? @color/basic_dialog_text_color : @color/colorLightBlue2}"
             android:visibility="gone"
+            stageBackGroundColorLockCheck="@{stage.stageLockStatus}"
+            stageBackGroundColorTestCheck="@{stage.stageTestStatus}"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -86,8 +75,7 @@
                 android:gravity="bottom"
                 android:maxLines="1"
                 android:paddingStart="10dp"
-                android:text="@{@string/stage(learning.s_id)}"
-                android:textColor="@{adapterposition == (bottomposition - 1)? @color/colorWhite : @color/colorBlack}"
+                android:text="@{@string/stage(stage.stageID)}"
                 android:textStyle="bold"
                 app:autoSizeMaxTextSize="1000sp"
                 app:autoSizeMinTextSize="1sp"
@@ -118,7 +106,6 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:paddingStart="10dp"
-                android:text="@{study}"
                 android:textColor="@color/colorWhite"
                 android:textSize="20dp"
                 android:textStyle="bold"
