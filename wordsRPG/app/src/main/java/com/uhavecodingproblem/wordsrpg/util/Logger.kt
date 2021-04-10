@@ -1,7 +1,7 @@
 package com.uhavecodingproblem.wordsrpg.util
 
 import android.util.Log
-import com.uhavecodingproblem.wordsrpg.application.Application
+import com.uhavecodingproblem.wordsrpg.application.RUCPApplication
 
 /**
  * wordsrpg
@@ -16,7 +16,7 @@ import com.uhavecodingproblem.wordsrpg.application.Application
 class Logger private constructor(){
     companion object{
 
-        private val DEBUG = Application.DEBUG_AVAILABLE
+        private val DEBUG = RUCPApplication.DEBUG_AVAILABLE
         private const val TAG = "rucp" // 태그변경
 
         fun v(msg: String) = logger(Log.VERBOSE, msg)

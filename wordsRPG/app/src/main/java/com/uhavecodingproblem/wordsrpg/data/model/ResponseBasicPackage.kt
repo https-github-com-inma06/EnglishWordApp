@@ -2,6 +2,9 @@ package com.uhavecodingproblem.wordsrpg.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -43,7 +46,10 @@ object ResponseBasicPackage {
 
     }
 
+    @Entity
     data class BasicPackage(
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "p_id")
         @SerializedName("p_id") val packageID: Int,
         @SerializedName("package_name") val packageName: String,
         @SerializedName("package_thumbnail") val packageThumbNail: String,
@@ -78,7 +84,10 @@ object ResponseBasicPackage {
         }
     }
 
+    @Entity
     data class Stage(
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "s_id")
         @SerializedName("s_id") val stageID: Int,
         @SerializedName("lean_stat") var stageLearningStatus: String,
         @SerializedName("test_stat") var stageTestStatus: String,
@@ -123,7 +132,10 @@ object ResponseBasicPackage {
 
     }
 
+    @Entity
     data class Word(
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "w_id")
         @SerializedName("w_id") val wordID: Int,
         @SerializedName("word") val word: String,
         @SerializedName("mean") val mean: String,

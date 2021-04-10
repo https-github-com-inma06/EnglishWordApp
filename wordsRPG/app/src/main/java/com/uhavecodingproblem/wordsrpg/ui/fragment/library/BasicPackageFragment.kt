@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.application.Application
+import com.uhavecodingproblem.wordsrpg.application.RUCPApplication
 import com.uhavecodingproblem.wordsrpg.component.library.recyclerviewadapter.MainLibraryFragmentBasicPackageListAdapter
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
@@ -27,7 +27,7 @@ import com.uhavecodingproblem.wordsrpg.util.Logger
 class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBinding>(R.layout.fragment_basic_package),
     MainLibraryFragmentBasicPackageListAdapter.BasicPackageGridItemClickListener {
 
-    private val basicPackageViewModel by viewModels<BasicPackageViewModel> { ViewModelFactory(Application.userId, null) }
+    private val basicPackageViewModel by viewModels<BasicPackageViewModel> { ViewModelFactory(RUCPApplication.userId, null, (requireActivity().application as RUCPApplication).repository) }
 
     private var basicRecyclerViewAdapter: MainLibraryFragmentBasicPackageListAdapter? = null
     private var progressDialog: SearchLoadingDialog? = null
@@ -51,8 +51,8 @@ class BasicPackageFragment : BaseUtility.BaseFragment<FragmentBasicPackageBindin
     }
 
     private fun observeLoadBasicPackage() {
-        basicPackageViewModel.basicPackage.observe(viewLifecycleOwner){
-            basicRecyclerViewAdapter?.submitList(it.basicPackage.toMutableList())
+        basicPackageViewModel.selectBasicPackage.observe(viewLifecycleOwner){
+            basicRecyclerViewAdapter?.submitList(it.toMutableList())
         }
 
     }

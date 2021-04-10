@@ -3,6 +3,8 @@ package com.uhavecodingproblem.wordsrpg.application
 import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.repository.RUCPRepository
+import com.uhavecodingproblem.wordsrpg.room.RUCPDatabase
 import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil.sharedInit
 
 /**
@@ -12,7 +14,16 @@ import com.uhavecodingproblem.wordsrpg.util.SharedPreferenceUtil.sharedInit
  * Created On 2020-09-17.
  * Description:
  */
-class Application:Application() {
+class RUCPApplication:Application() {
+
+    private val rucpDatabase by lazy {
+        RUCPDatabase.getInstance(this)
+    }
+
+    val repository by lazy {
+        RUCPRepository(rucpDatabase.rucpDao())
+    }
+
     companion object{
 
         //debug 가능 여부 -> default 값은  false

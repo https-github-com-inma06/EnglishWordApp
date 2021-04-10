@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageViewModel
+import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.repository.RUCPRepository
 
 /**
  * wordsrpg
@@ -13,14 +14,14 @@ import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageV
  * Description:
  */
 @Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val userId: String, private val tabName: List<String>?) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val userId: String, private val tabName: List<String>?, private val rucpRepository: RUCPRepository) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         when{
             modelClass.isAssignableFrom(BasicPackageTabObserveViewModel::class.java)->{
                 return BasicPackageTabObserveViewModel(tabName) as T
             }
             modelClass.isAssignableFrom(BasicPackageViewModel::class.java)->{
-                return BasicPackageViewModel(userId) as T
+                return BasicPackageViewModel(userId, rucpRepository) as T
             }
         }
         throw IllegalStateException("Unknown ViewModel Class")

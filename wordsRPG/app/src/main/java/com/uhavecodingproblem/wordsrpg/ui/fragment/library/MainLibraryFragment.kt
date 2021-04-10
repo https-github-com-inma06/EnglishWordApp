@@ -2,7 +2,7 @@ package com.uhavecodingproblem.wordsrpg.ui.fragment.library
 
 import androidx.fragment.app.viewModels
 import com.uhavecodingproblem.wordsrpg.R
-import com.uhavecodingproblem.wordsrpg.application.Application
+import com.uhavecodingproblem.wordsrpg.application.RUCPApplication
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.BasicPackageTabObserveViewModel
 import com.uhavecodingproblem.wordsrpg.component.library.viewmodel.factory.ViewModelFactory
 import com.uhavecodingproblem.wordsrpg.databinding.FragmentMainLibraryBinding
@@ -14,7 +14,7 @@ class MainLibraryFragment : BaseUtility.BaseFragment<FragmentMainLibraryBinding>
 
 
     private val tabName = listOf("기본 패키지", "커스텀", "구독", "내 패키지")
-    private val mainBasicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel> { ViewModelFactory(Application.userId, tabName)}
+    private val mainBasicPackageTabObserveViewModel by viewModels<BasicPackageTabObserveViewModel> { ViewModelFactory(RUCPApplication.userId, tabName, (requireActivity().application as RUCPApplication).repository)}
 
 
     override fun FragmentMainLibraryBinding.onCreateView() {

@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +20,7 @@ import com.uhavecodingproblem.wordsrpg.data.model.Package
 import com.uhavecodingproblem.wordsrpg.data.model.WordsRead
 import com.uhavecodingproblem.wordsrpg.databinding.DialogMyCustomPackageAddCompleteBinding
 import com.uhavecodingproblem.wordsrpg.util.FIREBASE_STORAGE_IMAGE
+import com.uhavecodingproblem.wordsrpg.util.Logger
 import kotlin.random.Random
 
 
@@ -93,6 +96,22 @@ class MyCustomPackageAddCompleteDialogFragment : BottomSheetDialogFragment() {
                     }
                 }
         }
+
+//        binding.rvWordList.isNestedScrollingEnabled = true
+//        binding.rvWordList.setOnTouchListener { v, event ->
+//            when(event.action){
+//                MotionEvent.ACTION_DOWN ->{
+//                    Logger.d("TEST ACTION_DOWN")
+//                    v.parent.requestDisallowInterceptTouchEvent(true)
+//                }
+//                MotionEvent.ACTION_UP ->{
+//                    Logger.d("TEST ACTION_UP")
+//                    v.parent.requestDisallowInterceptTouchEvent(false)
+//                }
+//            }
+//            v.onTouchEvent(event)
+//            true
+//        }
 
     }
 
